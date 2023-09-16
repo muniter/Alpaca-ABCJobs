@@ -37,7 +37,7 @@ jobs:
       - name: Build and push gestion-evaluaciones
         uses: docker/build-push-action@v5
         env:
-          REPOSITORY: ${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'gestion-evaluaciones') }}
+          REPOSITORY: ${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}
         with:
           context: services/gestion-evaluaciones
           push: true
