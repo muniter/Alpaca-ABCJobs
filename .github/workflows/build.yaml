@@ -34,10 +34,9 @@ jobs:
       - name: Set variables
         run: |
           echo SHORT_COMMIT_HASH=$(git rev-parse --short HEAD) > $GITHUB_ENV
-          echo "REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}" >> $GITHUB_ENV
-          echo "IMAGE=$REPOSITORY:SHORT_COMMIT_HASH" >> $GITHUB_ENV
-          echo "IMAGE_LATEST=$REPOSITORY:latest" >> $GITHUB_ENV
-          # Debug echoing all variables
+          echo REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }} >> $GITHUB_ENV
+          echo IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH >> $GITHUB_ENV
+          echo IMAGE_LATEST=$REPOSITORY:latest >> $GITHUB_ENV
           echo "All variables:"
           echo $SHORT_COMMIT_HASH $REPOSITORY $IMAGE $IMAGE_LATEST
 
