@@ -1,0 +1,22 @@
+version: '3'
+services:
+  gestion-evaluaciones:
+    container_name: gestion-evaluciones
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluciones:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      DB_NAME: abc
+      DB_HOST: database
+      DB_USER: abc
+      DB_PASSWORD: abc
+  database:
+    container_name: ge-database
+    image: postgres
+    environment:
+      POSTGRES_DB: abc
+      POSTGRES_USER: abc
+      POSTGRES_PASSWORD: abc

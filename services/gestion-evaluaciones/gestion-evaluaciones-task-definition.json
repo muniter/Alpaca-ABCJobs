@@ -1,0 +1,19 @@
+{
+  "family": "nginx-task",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "nginx-container",
+      "image": "nginx:latest",
+      "portMappings": [
+        {
+          "containerPort": 80
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512"
+}

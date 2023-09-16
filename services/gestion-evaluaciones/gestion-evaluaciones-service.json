@@ -1,0 +1,19 @@
+{
+  "cluster": "abc-cluster",
+  "serviceName": "nginx-service",
+  "taskDefinition": "nginx-task:3",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-02be9ab57fea970ff",
+        "subnet-09765ef03abf53d69"
+      ],
+      "securityGroups": [
+        "sg-0944d5bacc41faa08"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  }
+}
