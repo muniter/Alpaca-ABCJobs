@@ -19,7 +19,8 @@
           "awslogs-group": "/abc/ecs/gestion-evaluaciones",
           "awslogs-create-group": "true",
           "awslogs-region": "us-east-1",
-          "awslogs-stream-prefix": "ecs"
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-multiline-pattern": "^(INFO|DEBUG|WARN|ERROR|CRITICAL)"
         }
       },
       "healthCheck": {
