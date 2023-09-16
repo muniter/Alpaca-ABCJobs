@@ -7,6 +7,20 @@
     {
       "name": "gestion-evaluaciones",
       "image": "428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluaciones:latest",
+      "environment": [
+        {
+          "name": "AWS",
+          "value": "1"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/abc/ecs/gestion-evaluaciones",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
       "portMappings": [
         {
           "containerPort": 80
