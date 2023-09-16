@@ -8,13 +8,18 @@ class ConfigurationError(Exception):
 
 
 class AppConfiguration:
-    in_aws: bool
-    in_aws: bool
-    db_uri: str
+    in_aws: bool = False
+    aws_metadata_uri: str | None = None
+    db_uri: str = ''
+    task_data: dict = {}
 
     def __init__(self):
-        self.in_aws = os.getenv("ECS_CONTAINER_METADATA_URI_V4") is not None
-        self.database_configuration()
+        self.aws_metadata_uri = os.getenv("ECS_CONTAINER_METADATA_URI_V4")
+        self.in_aws = self.aws_metadata_uri is not None
+        if self.in_aws:
+            self.extract_metadata()
+
+        # self.database_configuration()
 
     def database_configuration(self):
         db_name = os.getenv("DB_NAME")
@@ -31,7 +36,20 @@ class AppConfiguration:
         if not db_host:
             raise ConfigurationError("DB_HOST is not set")
 
-        self.db_uri = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}/{db_name}"
+        self.db_uri = (
+            f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}/{db_name}"
+        )
+
+    def extract_metadata(self):
+        if not self.in_aws:
+            return
+        import requests
+
+        response = requests.get(f"{self.aws_metadata_uri}")
+        if response.status_code != 200:
+            raise ConfigurationError("Unable to retrieve task metadata")
+        data = response.json()
+        self.task_data = data
 
 
 configuration = AppConfiguration()

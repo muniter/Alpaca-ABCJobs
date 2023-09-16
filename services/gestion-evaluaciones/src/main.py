@@ -21,5 +21,10 @@ def ping():
 
 @app.get("/health")
 def health(source: str = "unknown"):
-    data = {"status": "healthy", "source": source, "aws": configuration.in_aws}
+    data = {
+        "status": "healthy",
+        "source": source,
+        "aws": configuration.in_aws,
+        "task_data": configuration.task_data,
+    }
     return data
