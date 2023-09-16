@@ -1,9 +1,11 @@
-name: Build and Push Container Image
+name: Build and Push Gestión Evaluaciones
 on:
   workflow_dispatch:
   push:
     branches:
       - '*'
+    paths:
+      - 'services/gestion-evaluaciones/**'
   pull_request:
     branches:
       - 'master'
