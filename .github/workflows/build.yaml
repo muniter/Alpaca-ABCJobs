@@ -33,12 +33,18 @@ jobs:
 
       - name: Set variables
         run: |
-          echo SHORT_COMMIT_HASH=$(git rev-parse --short HEAD) > $GITHUB_ENV
-          echo REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }} >> $GITHUB_ENV
-          echo IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH >> $GITHUB_ENV
-          echo IMAGE_LATEST=$REPOSITORY:latest >> $GITHUB_ENV
-          echo "All variables:"
-          echo "short $SHORT_COMMIT_HASH repo $REPOSITORY image $IMAGE image_latest $IMAGE_LATEST"
+          SHORT_COMMIT_HASH=$(git rev-parse --short HEAD)
+          REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}
+          IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH
+          IMAGE_LATEST=$REPOSITORY:latest
+          # Now set the varialbes for the next job steps
+          echo "SHORT_COMMIT_HASH=$SHORT_COMMIT_HASH" >> $GITHUB_ENV
+          echo "REPOSITORY=$REPOSITORY" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          echo "IMAGE_LATEST=$IMAGE_LATEST" >> $GITHUB_ENV
+          # Debugging
+          echo "Set the variables short $SHORT_COMMIT_HASH, repo $REPOSITORY, image $IMAGE, image latest $IMAGE_LATEST"
+
 
 
       - name: Build and push gestion-evaluaciones
