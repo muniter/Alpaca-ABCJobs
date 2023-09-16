@@ -1,5 +1,6 @@
 import os
 import urllib.parse
+import requests
 
 
 # Configuration error Exception
@@ -10,7 +11,7 @@ class ConfigurationError(Exception):
 class AppConfiguration:
     in_aws: bool = False
     aws_metadata_uri: str | None = None
-    db_uri: str = ''
+    db_uri: str = ""
     task_data: dict = {}
 
     def __init__(self):
@@ -43,13 +44,21 @@ class AppConfiguration:
     def extract_metadata(self):
         if not self.in_aws:
             return
-        import requests
 
         response = requests.get(f"{self.aws_metadata_uri}")
         if response.status_code != 200:
             raise ConfigurationError("Unable to retrieve task metadata")
         data = response.json()
-        self.task_data = data
+        keys = [
+            "Name",
+            "Image",
+            "ContainerARN",
+            "Labels",
+            "CreatedAt",
+            "StartedAt",
+            "DesiredStatus",
+        ]
+        self.task_data = {k: data.get(k) for k in keys}
 
 
 configuration = AppConfiguration()
