@@ -1,7 +1,7 @@
 {
   "cluster": "abc-cluster",
-  "serviceName": "nginx-service",
-  "taskDefinition": "nginx-task:3",
+  "serviceName": "gestion-evaluaciones",
+  "taskDefinition": "gestion-evaluaciones:1",
   "desiredCount": 1,
   "launchType": "FARGATE",
   "networkConfiguration": {

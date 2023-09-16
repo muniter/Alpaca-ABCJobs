@@ -34,15 +34,28 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Set repository and image
+        run: |
+          echo "REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}" >> $GITHUB_ENV
+          echo "IMAGE=$REPOSITORY:${{ env.SHORT_COMMIT_HASH }}" >> $GITHUB_ENV
+          echo "IMAGE_LATEST=$REPOSITORY:latest" >> $GITHUB_ENV
+
+
       - name: Build and push gestion-evaluaciones
         uses: docker/build-push-action@v5
-        env:
-          REPOSITORY: ${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}
         with:
           context: services/gestion-evaluaciones
           push: true
-          tags: ${{ format('{0}:{1}', env.REPOSITORY, 'latest') }}, ${{ format('{0}:{1}', env.REPOSITORY, github.sha) }}, ${{ format('{0}:{1}', env.REPOSITORY, env.SHORT_COMMIT_HASH) }}
+          tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }} }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: services/gestion-evaluaciones/task-definition.json
+          container-name: gestion-evaluaciones
+          image: ${{ env.IMAGE }}

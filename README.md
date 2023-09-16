@@ -22,7 +22,10 @@ Los servicios son definidos como ecs tacks y services, y los desplegamos usando 
 ### Gestión de evaluaciones
 
 ```bash
+# Login to the AWS ECR
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 428011609647.dkr.ecr.us-east-1.amazonaws.com
+# Build and push the image
+docker build -t gestion-evaluaciones .
 # Crear o actualizar el stack
 aws ecs register-task-definition --cli-input-json file://infra/gestion-evaluaciones-task-definition.json
-# Crear el servicio
-aws ecs create-service --cli-input-json file://infra/gestion-evaluaciones-service.json
+```
