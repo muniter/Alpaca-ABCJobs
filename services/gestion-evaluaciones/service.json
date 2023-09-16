@@ -6,7 +6,7 @@
   "launchType": "FARGATE",
   "loadBalancers": [
     {
-      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-evaluaciones/4e19229376cb4dfa",
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-evaluaciones/56a512419e0abece",
       "containerName": "gestion-evaluaciones",
       "containerPort": 80
     }

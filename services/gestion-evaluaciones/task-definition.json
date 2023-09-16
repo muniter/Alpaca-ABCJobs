@@ -13,6 +13,12 @@
           "value": "1"
         }
       ],
+      "secrets": [
+        {
+          "name": "DB_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:428011609647:secret:abc-rds-secret-ZDtuCV"
+        }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -25,7 +31,8 @@
       },
       "healthCheck": {
         "command": [
-          "CMD-SHELL", "curl -f localhost/health?source=ecs || exit 1"
+          "CMD-SHELL",
+          "curl -f localhost/health?source=ecs || exit 1"
         ],
         "interval": 30,
         "timeout": 5,

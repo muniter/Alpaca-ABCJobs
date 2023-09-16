@@ -17,11 +17,21 @@ export class LoadBalancerStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: LoadBalancerStackProps) {
     super(scope, id, props);
 
+    const albSg = new ec2.SecurityGroup(this, 'ALBSG', {
+      vpc: props.vpc,
+      securityGroupName: 'ABC ALB',
+      description: 'Security grup for the abc load balancer',
+      allowAllOutbound: true,
+    })
+    albSg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), 'Allow HTTP from anywhere');
+    albSg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(443), 'Allow HTTPS from anywhere');
+
     const alb = new elbv2.ApplicationLoadBalancer(this, 'ALB', {
       vpc: props.vpc,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PUBLIC
       },
+      securityGroup: albSg,
       internetFacing: true,
       loadBalancerName: 'abc-alb'
     });
@@ -80,7 +90,7 @@ export class LoadBalancerStack extends cdk.Stack {
     // Add an action to the httpsListener to route traffic with path /gestion to the gestionTargetGroup
     httpsListener.addAction('RouteToGestion', {
       priority: 10,
-      conditions: [elbv2.ListenerCondition.pathPatterns(['/gestion'])],
+      conditions: [elbv2.ListenerCondition.pathPatterns(['/gestion/*'])],
       action: elbv2.ListenerAction.forward([gestionTargetGroup])
     });
 
@@ -88,8 +98,6 @@ export class LoadBalancerStack extends cdk.Stack {
       description: 'Gestion de evaluaciones TG ARN',
       value: gestionTargetGroup.targetGroupArn,
     });
-
-
 
   }
 }
