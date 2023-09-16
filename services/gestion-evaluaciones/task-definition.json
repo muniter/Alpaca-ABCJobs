@@ -28,8 +28,8 @@
         ],
         "interval": 30,
         "timeout": 5,
-        "retries": 0,
-        "startPeriod": 0
+        "retries": 3,
+        "startPeriod": 3
       },
       "portMappings": [
         {
