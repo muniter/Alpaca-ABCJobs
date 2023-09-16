@@ -16,6 +16,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
+          "awslogs-create-group": "true",
           "awslogs-group": "/abc/ecs/gestion-evaluaciones",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
