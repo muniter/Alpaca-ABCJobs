@@ -17,9 +17,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set short commit hash
-        run: echo SHORT_COMMIT_HASH=$(git rev-parse --short HEAD) > $GITHUB_ENV
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -34,11 +31,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Set repository and image
+      - name: Set variables
         run: |
+          echo SHORT_COMMIT_HASH=$(git rev-parse --short HEAD) > $GITHUB_ENV
           echo "REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}" >> $GITHUB_ENV
-          echo "IMAGE=$REPOSITORY:${{ env.SHORT_COMMIT_HASH }}" >> $GITHUB_ENV
+          echo "IMAGE=$REPOSITORY:SHORT_COMMIT_HASH" >> $GITHUB_ENV
           echo "IMAGE_LATEST=$REPOSITORY:latest" >> $GITHUB_ENV
+          # Debug echoing all variables
+          echo "All variables:"
+          echo $SHORT_COMMIT_HASH $REPOSITORY $IMAGE $IMAGE_LATEST
 
 
       - name: Build and push gestion-evaluaciones
