@@ -38,7 +38,7 @@ jobs:
           echo IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH >> $GITHUB_ENV
           echo IMAGE_LATEST=$REPOSITORY:latest >> $GITHUB_ENV
           echo "All variables:"
-          echo $SHORT_COMMIT_HASH $REPOSITORY $IMAGE $IMAGE_LATEST
+          echo "short $SHORT_COMMIT_HASH repo $REPOSITORY image $IMAGE image_latest $IMAGE_LATEST"
 
 
       - name: Build and push gestion-evaluaciones
@@ -46,7 +46,7 @@ jobs:
         with:
           context: services/gestion-evaluaciones
           push: true
-          tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }} }}
+          tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
