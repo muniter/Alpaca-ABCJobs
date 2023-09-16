@@ -35,13 +35,13 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push gestion-evaluaciones
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           REPOSITORY: ${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'gestion-evaluaciones') }}
         with:
           context: services/gestion-evaluaciones
           push: true
-          tags: latest, ${{ format('{0}:{1}', env.REPOSITORY, github.sha) }}, ${{ format('{0}:{1}', env.REPOSITORY, env.SHORT_COMMIT_HASH) }}
+          tags: ${{ format('{0}:{1}', env.REPOSITORY, latest) }}, ${{ format('{0}:{1}', env.REPOSITORY, github.sha) }}, ${{ format('{0}:{1}', env.REPOSITORY, env.SHORT_COMMIT_HASH) }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
