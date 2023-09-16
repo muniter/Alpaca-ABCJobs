@@ -67,3 +67,10 @@ jobs:
           task-definition: services/gestion-evaluaciones/task-definition.json
           container-name: gestion-evaluaciones
           image: ${{ env.IMAGE }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          service: gestion-evaluaciones
+          cluster: abc-cluster
