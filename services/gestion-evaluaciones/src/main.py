@@ -22,6 +22,7 @@ def ping():
 
 
 @router.get("/health/bad")
+@router.get("/health/bad")
 def set_unhealthy():
     with open("/tmp/unhealthy", "w") as f:
         f.write("0")
@@ -35,7 +36,6 @@ def set_healthy():
     return {"message": "now healthy"}
 
 
-@app.get("/health")
 @router.get("/health")
 def health(response: Response, source: str = "unknown"):
     data_status = "healthy"
@@ -53,4 +53,6 @@ def health(response: Response, source: str = "unknown"):
     return data
 
 
+app.include_router(router)  # Regiser alone so everything is at root
+# Register under /gestion for prod
 app.include_router(router, prefix="/gestion", tags=["gestion"])
