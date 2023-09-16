@@ -1,8 +1,9 @@
 import os
-from fastapi import FastAPI, Response, status
+from fastapi import APIRouter, FastAPI, Response, status
 from .config import configuration
 
 app = FastAPI()
+router = APIRouter()
 
 
 def startup():
@@ -14,20 +15,20 @@ async def startup_event():
     startup()
 
 
-@app.get("/")
-@app.get("/ping")
+@router.get("/")
+@router.get("/ping")
 def ping():
     return "pong"
 
 
-@app.get("/health/bad")
+@router.get("/health/bad")
 def set_unhealthy():
     with open("/tmp/unhealthy", "w") as f:
         f.write("0")
     return {"message": "now unhealthy"}
 
 
-@app.get("/health/ok")
+@router.get("/health/ok")
 def set_healthy():
     if os.path.exists("/tmp/unhealthy"):
         os.remove("/tmp/unhealthy")
@@ -35,7 +36,8 @@ def set_healthy():
 
 
 @app.get("/health")
-def health(response: Response, source: str = 'unknown'):
+@router.get("/health")
+def health(response: Response, source: str = "unknown"):
     data_status = "healthy"
 
     if os.path.exists("/tmp/unhealthy"):
@@ -49,3 +51,6 @@ def health(response: Response, source: str = 'unknown'):
         "task_data": configuration.task_data,
     }
     return data
+
+
+app.include_router(router, prefix="/gestion", tags=["gestion"])
