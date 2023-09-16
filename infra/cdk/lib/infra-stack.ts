@@ -72,7 +72,7 @@ export class InfraStack extends cdk.Stack {
 
     // Create ecr repositories
     const ecrGestion = new ecr.Repository(this, 'ECRRepositoryGestionEvaluaciones', {
-      repositoryName: 'abc-gestion-evaluciones',
+      repositoryName: 'abc-gestion-evaluaciones',
     });
     ecrGestion.addLifecycleRule({ maxImageCount: 10 });
 
