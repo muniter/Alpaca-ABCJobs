@@ -41,7 +41,7 @@ jobs:
         with:
           context: services/gestion-evaluaciones
           push: true
-          tags: ${{ format('{0}:{1}', env.REPOSITORY, latest) }}, ${{ format('{0}:{1}', env.REPOSITORY, github.sha) }}, ${{ format('{0}:{1}', env.REPOSITORY, env.SHORT_COMMIT_HASH) }}
+          tags: ${{ format('{0}:{1}', env.REPOSITORY, 'latest') }}, ${{ format('{0}:{1}', env.REPOSITORY, github.sha) }}, ${{ format('{0}:{1}', env.REPOSITORY, env.SHORT_COMMIT_HASH) }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
