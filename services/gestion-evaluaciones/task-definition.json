@@ -1,6 +1,8 @@
 {
   "family": "gestion-evaluaciones-task",
   "networkMode": "awsvpc",
+  "taskExecutionRoleArn": "arn:aws:iam::428011609647:role/abc-task-execution-role",
+  "taskRoleArn": "arn:aws:iam::428011609647:role/abc-task-role",
   "containerDefinitions": [
     {
       "name": "gestion-evaluaciones",

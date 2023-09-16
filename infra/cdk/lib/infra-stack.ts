@@ -76,6 +76,34 @@ export class InfraStack extends cdk.Stack {
     });
     ecrGestion.addLifecycleRule({ maxImageCount: 10 });
 
+    // Task execution role (this is used by ECS itself)
+    const taskExecutionRole = new iam.Role(this, 'TaskExecutionRole', {
+      roleName: 'abc-task-execution-role',
+      assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AmazonECSTaskExecutionRolePolicy')
+      ]
+    });
+    // Output
+    new cdk.CfnOutput(this, 'TaskExecutionRoleArn', {
+      description: 'Task execution role arn',
+      value: taskExecutionRole.roleArn
+    });
+
+    // Task role (this is used by the containers, the services we write)
+    const taskRole = new iam.Role(this, 'TaskRole', {
+      roleName: 'abc-task-role',
+      assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSQSFullAccess'),
+      ]
+    });
+    // Output
+    new cdk.CfnOutput(this, 'TaskRoleArn', {
+      description: 'Task role arn',
+      value: taskRole.roleArn
+    });
 
     // Usuario para integración continua
     const user = new iam.User(this, 'GithubActionsUser');
