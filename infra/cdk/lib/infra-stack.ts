@@ -79,20 +79,7 @@ export class InfraStack extends cdk.Stack {
 
     // Usuario para integración continua
     const user = new iam.User(this, 'GithubActionsUser');
-
-    const role = new iam.Role(this, 'GithubActionsRole', {
-      assumedBy: new iam.ArnPrincipal(user.userArn),
-      description: 'Role that grants ECR and ECS full access.',
-    });
-    role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonEC2ContainerRegistryFullAccess'));
-    role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonECS_FullAccess'));
-
-    // Allow user to assume the role
-    const assumeRolePolicy = new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: ['sts:AssumeRole'],
-      resources: [role.roleArn]
-    });
-    user.addToPolicy(assumeRolePolicy);
+    user.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonEC2ContainerRegistryFullAccess'));
+    user.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonECS_FullAccess'));
   }
 }
