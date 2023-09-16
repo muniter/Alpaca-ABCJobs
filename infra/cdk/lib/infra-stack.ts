@@ -8,6 +8,9 @@ import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class InfraStack extends cdk.Stack {
+  vpc: ec2.Vpc;
+  servicesSecurityGroup: ec2.SecurityGroup;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -21,6 +24,7 @@ export class InfraStack extends cdk.Stack {
         cidrMask: 24
       }]
     });
+    this.vpc = vpc;
     // Output public subnets
     new cdk.CfnOutput(this, 'PublicSubnet1', {
       description: 'Public subnet 1',
@@ -49,7 +53,8 @@ export class InfraStack extends cdk.Stack {
       description: 'Security group for services',
       allowAllOutbound: true
     });
-    servicesSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(80), 'Allow internet to connect to services http');
+    servicesSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(80), 'Allow HTTP');
+    this.servicesSecurityGroup = servicesSecurityGroup;
     // Output the security group id
     new cdk.CfnOutput(this, 'ServicesSecurityGroupId', {
       description: 'Services security group id',
@@ -65,7 +70,17 @@ export class InfraStack extends cdk.Stack {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PUBLIC
       },
+      credentials: rds.Credentials.fromGeneratedSecret('abc', {
+        secretName: 'abc-rds-secret',
+      }),
     });
+
+    // Output the secret ARN
+    new cdk.CfnOutput(this, 'RDSSecretArn', {
+      description: 'RDS secret arn',
+      value: rdsInstance.secret?.secretArn || ''
+    });
+
 
     // Allow connection to the database
     rdsInstance.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.tcp(5432), 'Allow internet to connect to RDS');
