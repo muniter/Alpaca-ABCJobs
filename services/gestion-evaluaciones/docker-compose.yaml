@@ -2,7 +2,7 @@ version: '3'
 services:
   gestion-evaluaciones:
     container_name: gestion-evaluciones
-    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluciones:latest
+    # image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluciones:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,6 +15,10 @@ services:
       DB_HOST: database
       DB_USER: abc
       DB_PASSWORD: abc
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
   database:
     container_name: ge-database
     image: postgres
