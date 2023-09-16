@@ -1,9 +1,16 @@
 {
   "cluster": "abc-cluster",
   "serviceName": "gestion-evaluaciones",
-  "taskDefinition": "gestion-evaluaciones-task:1",
+  "taskDefinition": "gestion-evaluaciones-task",
   "desiredCount": 1,
   "launchType": "FARGATE",
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-evaluaciones/4e19229376cb4dfa",
+      "containerName": "gestion-evaluaciones",
+      "containerPort": 80
+    }
+  ],
   "networkConfiguration": {
     "awsvpcConfiguration": {
       "subnets": [
