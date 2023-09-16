@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from .config import configuration
 
 app = FastAPI()
 
@@ -16,3 +17,9 @@ async def startup_event():
 @app.get("/ping")
 def ping():
     return "pong"
+
+
+@app.get("/health")
+def health(source: str = "unknown"):
+    data = {"status": "healthy", "source": source, "aws": configuration.in_aws}
+    return data

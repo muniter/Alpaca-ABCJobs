@@ -22,6 +22,15 @@
           "awslogs-stream-prefix": "ecs"
         }
       },
+      "healthCheck": {
+        "command": [
+          "curl -f localhost/health=ecs || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 0,
+        "startPeriod": 0
+      },
       "portMappings": [
         {
           "containerPort": 80
