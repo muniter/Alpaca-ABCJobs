@@ -6,7 +6,7 @@
   "containerDefinitions": [
     {
       "name": "gestion-evaluaciones",
-      "image": "428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluaciones:6a76dc09e081616963fafd0ec89041707269cbc2",
+      "image": "428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluaciones:latest",
       "portMappings": [
         {
           "containerPort": 80

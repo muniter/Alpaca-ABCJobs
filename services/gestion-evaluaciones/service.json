@@ -1,7 +1,7 @@
 {
   "cluster": "abc-cluster",
   "serviceName": "gestion-evaluaciones",
-  "taskDefinition": "gestion-evaluaciones:1",
+  "taskDefinition": "gestion-evaluaciones-task:1",
   "desiredCount": 1,
   "launchType": "FARGATE",
   "networkConfiguration": {
