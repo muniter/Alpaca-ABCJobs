@@ -84,6 +84,14 @@ export class InfraStack extends cdk.Stack {
         iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AmazonECSTaskExecutionRolePolicy')
       ]
     });
+    // Allow create log groups
+    taskExecutionRole.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'logs:CreateLogGroup',
+      ],
+      resources: ['*']
+    }));
     // Output
     new cdk.CfnOutput(this, 'TaskExecutionRoleArn', {
       description: 'Task execution role arn',
