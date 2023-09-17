@@ -55,7 +55,7 @@ def monitor_health():
             status = data["status"]
             container_arn = data["task_data"]["ContainerARN"]
 
-            if status == "healthy":
+            if status == "healthy" and container_arn != OriginalContainerARN:
                 logger.info(
                     "Service is now healthy, container ARN is %s", container_arn
                 )
@@ -87,7 +87,7 @@ def summaryze():
     healthy = datetime.fromisoformat(special_events["healthy"]["timestamp"])
     unresponsive = datetime.fromisoformat(special_events["unresponsive"]["timestamp"])
     time_to_recovery = (healthy - unhealthy).seconds
-    time_to_removal = (unresponsive - unresponsive).seconds
+    time_to_removal = (unresponsive - unhealthy).seconds
     time_of_replacement = (healthy - unresponsive).seconds
     print(f"Tiempo de recuperación: {time_to_recovery} segundos")
     print(f"Tiempo desde unhealthy hasta removido: {time_to_removal} segundos")
