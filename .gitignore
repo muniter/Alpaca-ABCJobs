@@ -2,3 +2,4 @@
 .venv/
 .idea/
 cdk.context.json
+.env

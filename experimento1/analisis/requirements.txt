@@ -1,0 +1,6 @@
+grequests
+requests
+matplotlib 
+numpy
+ffmpeg-python
+ipympl
