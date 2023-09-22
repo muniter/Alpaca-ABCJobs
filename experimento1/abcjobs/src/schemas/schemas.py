@@ -16,6 +16,8 @@ class Status(BaseModel):
 
 class Response(Status):
   latency_ms: int
+  cpu_perc: float
+  mem_perc: float
   
   class Config:
     json_schema_extra = {
@@ -24,6 +26,8 @@ class Response(Status):
         "status": "right",
         "message": "Right answer",
         "latency_ms": "300",
+        "cpu_perc": "20.5",
+        "mem_perc": "mem_perc"
       }
     }
     
