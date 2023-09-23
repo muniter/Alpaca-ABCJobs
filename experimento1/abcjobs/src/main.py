@@ -46,8 +46,8 @@ def answer_check(question_id: int, answer_id: int, db: Session = Depends(get_db)
   time_diff = (end_time - start_time)
   execution_time = math.ceil(time_diff.microseconds/1000)
   cpu_load_avg = convert_to_percent(psutil.getloadavg())
-  cpu_percent = cpu_load_avg[0]
-  #cpu_percent = psutil.cpu_percent()
+  cpu_avg = cpu_load_avg[0]
+  cpu_percent = psutil.cpu_percent()
   mem = psutil.virtual_memory()
   mem_percent = mem.percent
 
@@ -59,7 +59,7 @@ def answer_check(question_id: int, answer_id: int, db: Session = Depends(get_db)
     message = "Right answer"
     
   return {"ok": True, "status": status, "message": message, 
-          "latency_ms": execution_time, "cpu_perc": cpu_percent, "mem_perc": mem_percent}
+          "latency_ms": execution_time, "cpu_perc": cpu_percent, "cpu_avg": cpu_avg, "mem_perc": mem_percent}
 
 @app.get(
   "/truncquizes",
