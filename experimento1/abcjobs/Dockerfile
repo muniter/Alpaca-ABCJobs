@@ -1,5 +1,5 @@
-#FROM python:3.11-bookworm AS builder
-FROM python:3.10.12 AS builder
+FROM python:3.11-bookworm AS builder
+#FROM python:3.10.12 AS builder
 
 WORKDIR /usr/src/app
 
