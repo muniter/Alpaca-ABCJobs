@@ -61,30 +61,30 @@ export class InfraStack extends cdk.Stack {
       value: servicesSecurityGroup.securityGroupId
     });
 
-    // Create RDS instance
-    const rdsInstance = new rds.DatabaseInstance(this, 'RDSInstance', {
-      engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_15 }),
-      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-      databaseName: 'abc',
-      vpc,
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC
-      },
-      credentials: rds.Credentials.fromGeneratedSecret('abc', {
-        secretName: 'abc-rds-secret',
-      }),
-    });
-
-    // Output the secret ARN
-    new cdk.CfnOutput(this, 'RDSSecretArn', {
-      description: 'RDS secret arn',
-      value: rdsInstance.secret?.secretArn || ''
-    });
-
-
-    // Allow connection to the database
-    rdsInstance.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.tcp(5432), 'Allow internet to connect to RDS');
-
+    // // Create RDS instance
+    // const rdsInstance = new rds.DatabaseInstance(this, 'RDSInstance', {
+    //   engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_15 }),
+    //   instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
+    //   databaseName: 'abc',
+    //   vpc,
+    //   vpcSubnets: {
+    //     subnetType: ec2.SubnetType.PUBLIC
+    //   },
+    //   credentials: rds.Credentials.fromGeneratedSecret('abc', {
+    //     secretName: 'abc-rds-secret',
+    //   }),
+    // });
+    //
+    // // Output the secret ARN
+    // new cdk.CfnOutput(this, 'RDSSecretArn', {
+    //   description: 'RDS secret arn',
+    //   value: rdsInstance.secret?.secretArn || ''
+    // });
+    //
+    //
+    // // Allow connection to the database
+    // rdsInstance.connections.allowFrom(ec2.Peer.anyIpv4(), ec2.Port.tcp(5432), 'Allow internet to connect to RDS');
+    //
     // Create ecr repositories
     const ecrGestion = new ecr.Repository(this, 'ECRRepositoryGestionEvaluaciones', {
       repositoryName: 'abc-gestion-evaluaciones',

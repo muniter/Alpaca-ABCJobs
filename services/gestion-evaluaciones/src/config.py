@@ -31,7 +31,8 @@ class AppConfiguration:
 
     def database_configuration(self):
         if self.in_aws:
-            self.database_configuration_aws()
+            return
+            # self.database_configuration_aws()
         else:
             self.database_configuration_docker()
 
