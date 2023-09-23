@@ -17,6 +17,7 @@ class Status(BaseModel):
 class Response(Status):
   latency_ms: int
   cpu_perc: float
+  cpu_avg: float
   mem_perc: float
   
   class Config:
@@ -27,6 +28,7 @@ class Response(Status):
         "message": "Right answer",
         "latency_ms": "300",
         "cpu_perc": "20.5",
+        "cpu_avg": "cpu_avg",
         "mem_perc": "mem_perc"
       }
     }
