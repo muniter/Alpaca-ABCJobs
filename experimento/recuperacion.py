@@ -49,7 +49,7 @@ def monitor_health():
     assert OriginalContainerARN is not None
     url = f"{BASE_URL}/health"
     while True:
-        response = requests.get(url, timeout=3)
+        response = requests.get(url, timeout=5)
         if response.ok:
             data = response.json()
             status = data["status"]
@@ -74,7 +74,7 @@ def monitor_health():
 
 
 def save_events():
-    time = datetime.now().strftime("%Y%m%d%H%M%S")
+    time = datetime.now().strftime("%Y%m%d_%H%M%S")
     with open(f"{time}_experimento_recuperacion.csv", "w") as f:
         writer = csv.DictWriter(f, fieldnames=["timestamp", "name"])
         writer.writeheader()
@@ -90,7 +90,7 @@ def summaryze():
     time_to_removal = (unresponsive - unhealthy).seconds
     time_of_replacement = (healthy - unresponsive).seconds
     print(f"Tiempo de recuperación: {time_to_recovery} segundos")
-    print(f"Tiempo desde unhealthy hasta removido: {time_to_removal} segundos")
+    print(f"Tiempo de remoción: {time_to_removal} segundos")
     print(
         f"Tiempo de reemplazo (entre unresponsive a healthy): {time_of_replacement} segundos"
     )
