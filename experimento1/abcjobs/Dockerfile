@@ -3,11 +3,14 @@ FROM python:3.11-bookworm AS builder
 
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y python3 python3-pip --no-install-recommends git
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt \
+    apt-get update && apt-get install -y python3 python3-pip --no-install-recommends git
 
 COPY requirements.txt ./
 
-RUN pip install -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
 
 COPY ./src ./src
 
