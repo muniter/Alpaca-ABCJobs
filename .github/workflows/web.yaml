@@ -29,32 +29,29 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json
 
       - name: Install dependencies
-        run: |
-          cd web
-          npm install
+        working-directory: ./web
+        run: npm ci
 
       - name: Test
         if: false
-        run: |
-          cd web
-          nnpm run test
+        working-directory: ./web
+        run: npm run test
 
       - name: Build
-        run: |
-          cd web
-          npm run build
+        working-directory: ./web
+        run: npm run build
 
       - name: Deploy to AWS S3
-        run: |
-          cd web
-          aws s3 sync dist/ s3://abc-jobs-web --delete
+        working-directory: ./web
+        run: aws s3 sync dist/ s3://abc-jobs-web --delete
 
       - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation --distribution-id E1ZJZQZQZQZQZQ --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E3TQ75W44SV303 --paths "/*"
