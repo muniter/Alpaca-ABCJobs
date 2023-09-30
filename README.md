@@ -12,3 +12,7 @@
 [@miso-alejosaur]: https://github.com/miso-alejosaur
 [@htenezaca]: https://github.com/htenezaca
 [@jlopezgr]: https://github.com/jlopezgr
+
+## Instrucciones / Guía Técnica
+
+[La puede encontrar en la Wiki](https://github.com/muniter/Alpaca-ABCJobs/wiki/guia_tecnica)
