@@ -1,4 +1,4 @@
-name: Build and Push Gestión Evaluaciones
+name: Build, test and deploy Gestión Evaluaciones
 on:
   workflow_dispatch:
   push:
@@ -49,8 +49,6 @@ jobs:
           # Debugging
           echo "Set the variables short $SHORT_COMMIT_HASH, repo $REPOSITORY, image $IMAGE, image latest $IMAGE_LATEST"
 
-
-
       - name: Build and push gestion-evaluaciones
         uses: docker/build-push-action@v5
         with:
@@ -61,6 +59,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
+
+      - name: Pruebas unitarias
+        if: false
+        run: |
+          cd services/gestion-evaluaciones
+          docker-compose up -d
+          docker-compose exec gestion-evaluaciones pytest
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

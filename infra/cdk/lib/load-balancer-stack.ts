@@ -8,12 +8,15 @@ import { Construct } from 'constructs';
 
 interface LoadBalancerStackProps extends cdk.StackProps {
   vpc: ec2.Vpc;
-  servicesSecurityGroup: ec2.SecurityGroup;
   certificate: Certificate,
   hostedZone: IHostedZone,
 }
 
 export class LoadBalancerStack extends cdk.Stack {
+  loadBalancer: elbv2.ApplicationLoadBalancer;
+  httpListener: elbv2.ApplicationListener;
+  httpsListener: elbv2.ApplicationListener;
+
   constructor(scope: Construct, id: string, props: LoadBalancerStackProps) {
     super(scope, id, props);
 
@@ -67,11 +70,6 @@ export class LoadBalancerStack extends cdk.Stack {
       defaultTargetGroups: [defaultTargetGroup],  // Associate the default target group
     });
 
-    // Otput the loadBalancer ARN
-    new cdk.CfnOutput(this, 'ALBArnOutput', {
-      description: 'Load balancer ARN',
-      value: alb.loadBalancerArn,
-    })
     const gestionTargetGroup = new elbv2.ApplicationTargetGroup(this, 'GestionTargetGroup', {
       vpc: props.vpc,
       port: 80,
@@ -93,11 +91,5 @@ export class LoadBalancerStack extends cdk.Stack {
       conditions: [elbv2.ListenerCondition.pathPatterns(['/gestion/*'])],
       action: elbv2.ListenerAction.forward([gestionTargetGroup])
     });
-
-    new cdk.CfnOutput(this, 'GestionEvaluacionsTGOutput', {
-      description: 'Gestion de evaluaciones TG ARN',
-      value: gestionTargetGroup.targetGroupArn,
-    });
-
   }
 }
