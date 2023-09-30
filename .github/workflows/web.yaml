@@ -51,7 +51,7 @@ jobs:
 
       - name: Deploy to AWS S3
         working-directory: ./web
-        run: aws s3 sync dist/ s3://abc-jobs-web --delete
+        run: aws s3 sync dist/output/ s3://abc-jobs-web --delete
 
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id E3TQ75W44SV303 --paths "/*"

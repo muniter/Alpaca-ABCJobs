@@ -43,7 +43,7 @@ function site(scope: Construct, props: DataStackProps) {
 
   siteBucket.addToResourcePolicy(new iam.PolicyStatement({
     actions: ['s3:GetObject'],
-    resources: [`${siteBucket.bucketArn}/*`],
+    resources: [siteBucket.arnForObjects('*')],
     principals: [new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
   }))
 

@@ -73,6 +73,13 @@ export default class GithubActionsStack extends cdk.Stack {
         }),
         new iam.PolicyStatement({
           effect: iam.Effect.ALLOW,
+          resources: ['*'],
+          actions: [
+            'cloudfront:*',
+          ],
+        }),
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
           actions: [
             'iam:PassRole',
           ],
