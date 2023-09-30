@@ -13,25 +13,6 @@
 [@htenezaca]: https://github.com/htenezaca
 [@jlopezgr]: https://github.com/jlopezgr
 
-## Infraestructure
-
-Parte de la Infraestructura está definida como código usando el CDK de AWS. Esto lo encontramos en la carpeta [`infra/`](infra/).
-
-Los servicios son definidos como ecs tacks y services, y los desplegamos usando el aws cli, pues en esta tapa requerimos de mucha iteracción y el aws cdk suele ser más útil cuando ya se ha establecido exactamente que se quiere.
-
-### Gestión de evaluaciones
-
-```bash
-# Login to the AWS ECR
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 428011609647.dkr.ecr.us-east-1.amazonaws.com
-# Build and push the image
-docker build -t gestion-evaluaciones .
-# Tarea
-aws ecs register-task-definition --cli-input-json file://services/gestion-evaluaciones/task.json
-# Servicio
-aws ecs create-service --cli-input-json file://services/gestion-evaluaciones/service.json
-```
-
 # Guía de Instalación
 
 ## Desarrollo backend
@@ -119,7 +100,9 @@ npm install -g aws-cdk
 aws configure
 ```
 
-### Ejemplo de despliegue de toda la IAC
+### Ejemplo de despliegue de toda la Infraestructura como Código
+
+La fuente se puede ver en [./infra/cdk](./infra/cdk).
 
 1. Instalar las dependencias
 
@@ -135,6 +118,10 @@ cdk deploy --all
 ```
 
 3. Ir a la consola de AWS y verificar que los servicios estén corriendo
+
+#### Usuarios de acceso
+
+Todos los usuarios serán generados una vez en la consola de AWS y compartido a cada uno de los integrantes.
 
 ### Despliegues continuos
 
@@ -175,12 +162,21 @@ ng test
 
 Se despliega a un bucket de S3 y se sirve con CloudFront. El proceso está automatizado con el siguiente [pipeline](./.github/workflows/web.yaml).
 
+## Desarrollo de la aplicación móvil
 
+El desarrollo de la aplicación móvil se realiza utilizando Android Studio.
 
+### Requisitos
 
+- Android Studio
+- Kotlin
 
+#### Ejemplos de uso
 
+1. Abrir el proyecto en Android Studio
+2. Instalar las dependencias
+3. Correr la aplicación (se puede hacer en un emulador o en un dispositivo físico)
 
-#### Usuarios de acceso
+## Despliegue en producción de la aplicación móvil
 
-Todos los usuarios serán generados una vez en la consola de AWS y compartido a cada uno de los integrantes.
+Para cada versión de la aplicación se genera un APK que se deja como un artefacto en el pipeline de GitHub Actions (por construir). Este APK se puede descargar y se puede instalar en cualquier dispositivo Android.

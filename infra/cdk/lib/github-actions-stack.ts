@@ -13,8 +13,8 @@ export default class GithubActionsStack extends cdk.Stack {
     super(scope, id, props);
 
     const federatedPrincipal = new iam.FederatedPrincipal(`arn:aws:iam::${cdk.Aws.ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com`, {
-      ["StringEquals"]: {
-        "token.actions.githubusercontent.com:sub": "repo:muniter/Alpaca-ABCJobs"
+      ["StringLike"]: {
+        "token.actions.githubusercontent.com:sub": "repo:muniter/Alpaca-ABCJobs:*"
       },
       ["ForAllValues:StringEquals"]: {
         "token.actions.githubusercontent.com:iss": "https://token.actions.githubusercontent.com",
