@@ -7,6 +7,7 @@ on:
       - '*'
     paths:
       - 'services/gestion-evaluaciones/**'
+      - 'services/common/**'
   pull_request:
     branches:
       - 'master'
@@ -76,6 +77,7 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
+        if: github.ref == 'refs/heads/master'
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: services/gestion-evaluaciones/task-definition.json
@@ -84,6 +86,7 @@ jobs:
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        if: github.ref == 'refs/heads/master'
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: gestion-evaluaciones
