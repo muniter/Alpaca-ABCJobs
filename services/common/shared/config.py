@@ -27,7 +27,7 @@ class AppConfiguration:
         self.in_aws = self.aws_metadata_uri is not None
         if self.in_aws:
             self.extract_metadata()
-        self.database_configuration()
+        # self.database_configuration()
 
     def database_configuration(self):
         if self.in_aws:

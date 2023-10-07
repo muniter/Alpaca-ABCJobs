@@ -1,6 +1,8 @@
 import os
 from fastapi import APIRouter, FastAPI, Response, status
-from .config import configuration
+from .shared.config import configuration
+from .shared import db
+
 
 app = FastAPI()
 router = APIRouter()
@@ -8,6 +10,10 @@ router = APIRouter()
 
 def startup():
     print("Starting up")
+    if configuration.in_aws:
+        print("Running on AWS")
+    else:
+        print("Not running on AWS")
 
 
 @app.on_event("startup")

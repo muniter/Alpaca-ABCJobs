@@ -2,14 +2,15 @@ version: '3'
 services:
   gestion-evaluaciones:
     container_name: gestion-evaluciones
-    # image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluciones:latest
+    image: gestion-evaluaciones
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: gestion-evaluaciones/Dockerfile
     ports:
       - "3000:80"
     volumes:
       - ./src:/usr/src/app/src
+      - ../common/shared:/usr/src/app/src/shared
     environment:
       DB_NAME: abc
       DB_HOST: database
