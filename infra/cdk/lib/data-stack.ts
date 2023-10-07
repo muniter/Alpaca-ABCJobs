@@ -26,7 +26,7 @@ export class DataStack extends cdk.Stack {
 
     site(this, props);
     // Expensive don't deploy for now
-    // database(this, 'Database', props);
+    database(this, 'Database', props);
   }
 }
 
