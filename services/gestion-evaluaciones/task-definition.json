@@ -13,7 +13,12 @@
           "value": "1"
         }
       ],
-      "secrets": [],
+      "secrets": [
+        {
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:428011609647:secret:abc-rds-secret-FxgmsY",
+          "name": "DB_SECRET"
+        }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

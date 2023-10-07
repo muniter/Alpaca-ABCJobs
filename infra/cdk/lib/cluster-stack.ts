@@ -2,7 +2,6 @@
 import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
-import * as ecr from 'aws-cdk-lib/aws-ecr';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 import { ApplicationListener, ILoadBalancerV2 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
@@ -44,12 +43,6 @@ export class ClusterStack extends cdk.Stack {
     });
     servicesSecurityGroup.connections.allowFromAnyIpv4(ec2.Port.tcp(80), 'Allow HTTP');
     this.servicesSecurityGroup = servicesSecurityGroup;
-
-    // Create ecr repositories
-    const ecrGestion = new ecr.Repository(this, 'ECRRepositoryGestionEvaluaciones', {
-      repositoryName: 'abc-gestion-evaluaciones',
-    });
-    ecrGestion.addLifecycleRule({ maxImageCount: 10 });
 
     // Task execution role (this is used by ECS itself)
     this.taskExecutionRole = new iam.Role(this, 'TaskExecutionRole', {

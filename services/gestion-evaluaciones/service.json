@@ -6,7 +6,7 @@
   "launchType": "FARGATE",
   "loadBalancers": [
     {
-      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-evaluaciones/56a512419e0abece",
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-evaluaciones-tg/a01ebc46d9fb5fde",
       "containerName": "gestion-evaluaciones",
       "containerPort": 80
     }
@@ -18,7 +18,7 @@
         "subnet-09765ef03abf53d69"
       ],
       "securityGroups": [
-        "sg-0944d5bacc41faa08"
+        "sg-0e9000d9de402c4b9"
       ],
       "assignPublicIp": "ENABLED"
     }

@@ -12,6 +12,14 @@ interface LoadBalancerStackProps extends cdk.StackProps {
   hostedZone: IHostedZone,
 }
 
+type CreateServiceTargetGroupProps = {
+  vpc: ec2.Vpc;
+  serviceName: string;
+  path: string;
+  listener: elbv2.ApplicationListener;
+  priority: number;
+}
+
 export class LoadBalancerStack extends cdk.Stack {
   loadBalancer: elbv2.ApplicationLoadBalancer;
   httpListener: elbv2.ApplicationListener;
@@ -70,11 +78,72 @@ export class LoadBalancerStack extends cdk.Stack {
       defaultTargetGroups: [defaultTargetGroup],  // Associate the default target group
     });
 
-    const gestionTargetGroup = new elbv2.ApplicationTargetGroup(this, 'GestionTargetGroup', {
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-empresas',
+      path: '/empresas/*',
+      listener: httpsListener,
+      priority: 11,
+    });
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-pagos',
+      path: '/pagos/*',
+      listener: httpsListener,
+      priority: 20,
+    });
+
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-usuarios',
+      path: '/usuarios/*',
+      listener: httpsListener,
+      priority: 30,
+    });
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-candidatos',
+      path: '/candidatos/*',
+      listener: httpsListener,
+      priority: 40,
+    });
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-evaluaciones',
+      path: '/evaluaciones/*',
+      listener: httpsListener,
+      priority: 50,
+    });
+
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'gestion-proyectos',
+      path: '/proyectos/*',
+      listener: httpsListener,
+      priority: 60,
+    });
+
+    this.creteServiceTargetGroup({
+      vpc: props.vpc,
+      serviceName: 'integracion-externa',
+      path: '/externa/*',
+      listener: httpsListener,
+      priority: 70,
+    });
+  }
+
+  private creteServiceTargetGroup(props: CreateServiceTargetGroupProps) {
+
+    const tg = new elbv2.ApplicationTargetGroup(this, `${props.serviceName}-tg`, {
       vpc: props.vpc,
       port: 80,
       targetType: elbv2.TargetType.IP,
-      targetGroupName: 'gestion-evaluaciones',
+      targetGroupName: props.serviceName + '-tg',
       healthCheck: {
         protocol: elbv2.Protocol.HTTP,
         path: '/health',
@@ -86,10 +155,11 @@ export class LoadBalancerStack extends cdk.Stack {
     });
 
     // Add an action to the httpsListener to route traffic with path /gestion to the gestionTargetGroup
-    httpsListener.addAction('RouteToGestion', {
-      priority: 10,
-      conditions: [elbv2.ListenerCondition.pathPatterns(['/gestion/*'])],
-      action: elbv2.ListenerAction.forward([gestionTargetGroup])
+    props.listener.addAction(`${props.serviceName}-route`, {
+      conditions: [elbv2.ListenerCondition.pathPatterns([props.path])],
+      action: elbv2.ListenerAction.forward([tg]),
+      priority: props.priority,
     });
+
   }
 }
