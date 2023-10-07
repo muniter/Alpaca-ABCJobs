@@ -60,7 +60,8 @@ jobs:
       - name: Build and push gestion-evaluaciones
         uses: docker/build-push-action@v5
         with:
-          context: services/gestion-evaluaciones
+          context: services/
+          file: services/gestion-evaluaciones/Dockerfile
           push: true
           tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }}
           platforms: linux/amd64
