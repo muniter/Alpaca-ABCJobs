@@ -9,8 +9,8 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - ./src:/usr/src/app/src
-      - ../common/shared:/usr/src/app/src/shared
+      - ./gestion-evaluaciones/src:/usr/src/app/src
+      - ./common/shared:/usr/src/app/src/shared
     env_file: .env
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
