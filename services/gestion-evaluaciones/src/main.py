@@ -12,6 +12,7 @@ def startup():
     print("Starting up")
     if configuration.in_aws:
         print("Running on AWS")
+        print(f"Db uri: {configuration.db_uri}")
     else:
         print("Not running on AWS")
 
