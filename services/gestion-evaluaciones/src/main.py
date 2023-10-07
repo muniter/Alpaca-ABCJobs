@@ -61,5 +61,5 @@ def health(response: Response, source: str = "unknown"):
 
 
 app.include_router(router)  # Regiser alone so everything is at root
-# Register under /gestion for prod
-app.include_router(router, prefix="/gestion", tags=["gestion"])
+# Register under /evaluaciones for prod
+app.include_router(router, prefix="/evaluaciones", tags=["evaluaciones"])
