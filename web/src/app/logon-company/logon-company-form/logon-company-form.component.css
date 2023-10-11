@@ -1,0 +1,21 @@
+mat-form-field {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+mat-checkbox {
+    width: 100%;
+    margin-bottom: 0.8rem;
+}
+
+.mdc-label{
+    opacity: 60%;
+}
+
+.logon-company-body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;
+}

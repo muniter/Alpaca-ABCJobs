@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', serif;
+    background-color: var(--lightColor);
+}
+
+:root {
+    --contrastCandidateColor: #5885DD;
+    --contrastCompanyColor: #3E9B73;
+    --darkColor: #191919;
+    --lightColor: #E4E4E4;
+}
+
+app-login-logon-container{
+    max-width: 35%;
+}
