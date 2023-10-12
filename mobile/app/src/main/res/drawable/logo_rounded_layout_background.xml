@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/gray" />
+            <corners android:radius="48dp" />
+        </shape>
+    </item>
+    <item>
+        <bitmap android:src="@mipmap/logo_laucher" />
+    </item>
+</layer-list>
