@@ -1,0 +1,8 @@
+::ng-deep .tricky-input .mat-mdc-text-field-wrapper {
+    display: none !important;
+}
+
+::ng-deep .tricky-input {
+    margin-top: -11px;
+    display: block !important;
+}

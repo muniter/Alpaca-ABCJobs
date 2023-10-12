@@ -1,14 +1,16 @@
-mat-form-field {
-    width: 100%;
+.form-field {
     margin-bottom: 0.5rem;
 }
 
-mat-checkbox {
-    width: 100%;
-    margin-bottom: 0.8rem;
+.checkbox-field {
+    margin-bottom: 1rem;
 }
 
-.mdc-label{
+.full-width {
+    width: 100%;
+}
+
+.mdc-label {
     opacity: 60%;
 }
 
@@ -18,4 +20,9 @@ mat-checkbox {
     display: flex;
     align-items: safe center;
     justify-content: safe center;
+}
+
+
+.hidden {
+    display: none;
 }

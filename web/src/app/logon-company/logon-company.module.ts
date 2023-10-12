@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -16,6 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
     SharedModule
   ],
   declarations: [LogonCompanyFormComponent],

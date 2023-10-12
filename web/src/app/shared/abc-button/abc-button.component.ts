@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AbcButtonComponent implements OnInit {
 
   @Input() color: string = "primary"; //primary / accent / basic
-  @Input() label: string = "";
+  @Input() disabled: boolean = false;
 
   constructor() { }
 
