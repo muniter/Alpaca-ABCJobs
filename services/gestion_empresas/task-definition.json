@@ -1,0 +1,55 @@
+{
+  "family": "gestion-empresas-task",
+  "networkMode": "awsvpc",
+  "taskRoleArn": "arn:aws:iam::428011609647:role/abc-task-role",
+  "executionRoleArn": "arn:aws:iam::428011609647:role/abc-task-execution-role",
+  "containerDefinitions": [
+    {
+      "name": "gestion-empresas",
+      "image": "428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-empresas:latest",
+      "environment": [
+        {
+          "name": "AWS",
+          "value": "1"
+        }
+      ],
+      "secrets": [
+        {
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:428011609647:secret:abc-rds-secret-FxgmsY",
+          "name": "DB_SECRET"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/abc/ecs/gestion-empresas",
+          "awslogs-create-group": "true",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-multiline-pattern": "^(INFO|DEBUG|WARN|ERROR|CRITICAL)"
+        }
+      },
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f localhost/health?source=ecs || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 3
+      },
+      "portMappings": [
+        {
+          "containerPort": 80
+        }
+      ],
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512"
+}

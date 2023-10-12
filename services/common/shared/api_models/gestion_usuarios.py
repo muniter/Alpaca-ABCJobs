@@ -1,0 +1,51 @@
+from pydantic import BaseModel, StringConstraints, model_validator
+from typing import Annotated, Optional, Union
+
+
+class UsuarioCandidatoDTO(BaseModel):
+    id: int
+    email: str
+    id_candidato: int
+
+
+class UsuarioEmpresaDTO(BaseModel):
+    id: int
+    email: str
+    id_empresa: int
+
+
+UsuarioDTO = Union[UsuarioCandidatoDTO, UsuarioEmpresaDTO]
+
+
+class UsuarioLoginDTO(BaseModel):
+    email: Annotated[
+        str,
+        StringConstraints(
+            max_length=255, min_length=5, strip_whitespace=True, pattern=r".*@.*"
+        ),
+    ]
+    password: Annotated[str, StringConstraints(max_length=20, min_length=8)]
+
+
+class UsuarioRegisterDTO(BaseModel):
+    email: Annotated[
+        str,
+        StringConstraints(
+            max_length=255, min_length=5, strip_whitespace=True, pattern=r".*@.*"
+        ),
+    ]
+    password: Annotated[str, StringConstraints(max_length=20, min_length=8)]
+    id_empresa: Optional[int] = None
+    id_candidato: Optional[int] = None
+
+    # One of the two
+    @model_validator(mode="after")
+    def one_of_two(cls, v):
+        if not (v.id_empresa or v.id_candidato):
+            raise ValueError("One of id_empresa or id_candidato must be set")
+        return v
+
+
+class UsuarioLoginResponseDTO(BaseModel):
+    usuario: UsuarioDTO
+    token: str
