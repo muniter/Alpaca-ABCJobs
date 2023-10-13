@@ -1,14 +1,43 @@
-
 .login-company-body{
     height: 100%;
     width: 100%;
-    overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: safe center;
+    justify-content: safe center;
 }
 
 .inline-button {
     display: inline-block;
+    width: 100%;
+}
+
+.bottom-margin{
+    margin-bottom: 0.4rem;
+}
+
+.top-margin{
+    margin-top: 0.4rem;
+}
+
+.logo-img {
+    width: 100%;
+    margin: 0.4rem;
+}
+
+.logo-div {
+    max-width: 30%;
+    border-radius: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--contrastCompanyColor);
+    margin-bottom: 1rem;
+}
+
+.form-field {
+    margin-bottom: 0.5rem;
+}
+
+.full-width {
     width: 100%;
 }

@@ -1,4 +1,8 @@
 .login-logon-container{
     background-color: white;
     padding: 1rem;
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;
+    flex-direction: column;
 }

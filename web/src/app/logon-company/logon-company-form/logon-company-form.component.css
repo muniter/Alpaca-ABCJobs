@@ -22,7 +22,10 @@
     justify-content: safe center;
 }
 
-
 .hidden {
     display: none;
+}
+
+.form{
+    margin-top: 1rem;
 }
