@@ -13,10 +13,20 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": { 
+        "sourceLocale": "es",
+        "locales": { 
+          "en": { 
+            "translation": "src/locale/messages.en.xlf" 
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": true, 
+            "i18nMissingTranslation": "error", 
             "outputPath": "dist/output",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,6 +45,12 @@
             "scripts": []
           },
           "configurations": {
+            "es": {
+              "localize": ["es"]
+            },
+            "en": {
+              "localize": ["en"]
+            },
             "production": {
               "budgets": [
                 {
@@ -69,6 +85,12 @@
             },
             "development": {
               "browserTarget": "ABCJobs:build:development"
+            },
+            "es": {
+              "browserTarget": "ABCJobs:build:development,es"
+            },
+            "en": {
+              "browserTarget": "ABCJobs:build:development,en"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +98,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ABCJobs:build"
+            "browserTarget": "ABCJobs:build",
+            "format": "xlf",
+            "outputPath": "src/locale"
           }
         },
         "test": {

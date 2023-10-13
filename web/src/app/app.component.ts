@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ABCJobs';
+  localesList = [
+    { code: 'es', label: 'Español' },
+    { code: 'en', label: 'English' }
+  ];
 }
