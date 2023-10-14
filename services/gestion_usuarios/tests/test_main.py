@@ -180,7 +180,7 @@ def test_service_login_email_invalido():
     usuario_empresa = crear_usuario_empresa()
     result = service.login(
         UsuarioLoginDTO(
-            email="hola",
+            email="hola@soytuamigo.com",
             password=usuario_empresa.password,
         )
     )
