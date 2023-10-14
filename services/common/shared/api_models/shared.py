@@ -29,7 +29,6 @@ APIResponse = Union[SuccessResponse[T], ErrorResponse]
 
 class ErrorBuilder:
     has_error: bool = False
-    _errors: Dict[str, List[str]]
 
     def __init__(self, model: Optional[BaseModel] = None):
         self._model = model

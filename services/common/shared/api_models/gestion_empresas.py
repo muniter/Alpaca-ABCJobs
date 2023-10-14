@@ -23,6 +23,6 @@ class EmpresaDTO(BaseModel):
     email: str
 
 
-class CreateEmpresaResponseDTO(BaseModel):
+class EmpresaCreateResponseDTO(BaseModel):
     empresa: EmpresaDTO
     token: str

@@ -4,9 +4,8 @@ from sqlalchemy.orm import Session
 
 from fastapi import Depends
 from common.shared.api_models.gestion_empresas import (
-    CreateEmpresaResponseDTO,
+    EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
-    EmpresaDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -73,7 +72,7 @@ class EmpresaService:
 
     def crear(
         self, data: EmpresaCreateDTO
-    ) -> Union[CreateEmpresaResponseDTO, ErrorBuilder]:
+    ) -> Union[EmpresaCreateResponseDTO, ErrorBuilder]:
         error = ErrorBuilder(data)
         if self.repository.get_by_email(data.email):
             error.add("email", "Email ya registrado")
@@ -90,12 +89,8 @@ class EmpresaService:
         )
         empresa = self.repository.crear(empresa)
         usuario = self.__crear_usuario(empresa, data.password)
-        return CreateEmpresaResponseDTO(
-            empresa=EmpresaDTO(
-                id=empresa.id,
-                nombre=empresa.nombre,
-                email=empresa.email,
-            ),
+        return EmpresaCreateResponseDTO(
+            empresa=empresa.build_empresa_dto(),
             token=usuario.token,
         )
 
