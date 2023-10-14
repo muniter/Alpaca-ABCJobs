@@ -75,7 +75,7 @@ jobs:
           cd services
           mv .env.example .env
           docker-compose up -d
-          docker-compose exec -T gestion_evaluaciones pytest --cov
+          docker-compose exec -T gestion_evaluaciones pytest --cov --cov-fail-under=80
 
       - name: Push the image
         if: github.ref == 'refs/heads/master'

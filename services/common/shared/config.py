@@ -22,11 +22,15 @@ class AppConfiguration:
     db_uri: str = ""
     task_data: dict = {}
     debug: bool = False
+    jwt_secret_key: str
+    jwt_algorithm: str
 
     def __init__(self):
         self.aws_metadata_uri = os.getenv("ECS_CONTAINER_METADATA_URI_V4")
         self.in_aws = self.aws_metadata_uri is not None
         self.debug = True if os.environ.get("DEBUG") else False
+        self.jwt_algorithm = os.getenv("JWT_ALGORITHM", "HS256")
+        self.jwt_secret_key = os.getenv("JWT_SECRET_KEY", "secret")
         if self.in_aws:
             self.extract_metadata()
         self.database_configuration()

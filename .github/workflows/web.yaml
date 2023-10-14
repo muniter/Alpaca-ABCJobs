@@ -10,6 +10,8 @@ on:
   pull_request:
     branches:
       - 'master'
+    paths:
+      - 'web/**'
 
 jobs:
   build:
@@ -50,8 +52,10 @@ jobs:
         run: npm run build
 
       - name: Deploy to AWS S3
+        if: github.ref == 'refs/heads/master'
         working-directory: ./web
         run: aws s3 sync dist/output/ s3://abc-jobs-web --delete
 
       - name: Invalidate CloudFront cache
+        if: github.ref == 'refs/heads/master'
         run: aws cloudfront create-invalidation --distribution-id E3TQ75W44SV303 --paths "/*"

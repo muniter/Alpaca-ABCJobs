@@ -14,8 +14,8 @@ services:
       - ./common:/usr/src/app/common
     env_file: .env
     depends_on:
-      database:
-        condition: service_healthy
+      init_container:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
@@ -35,8 +35,8 @@ services:
       - ./common:/usr/src/app/common
     env_file: .env
     depends_on:
-      database:
-        condition: service_healthy
+      init_container:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
@@ -56,8 +56,8 @@ services:
       - ./common:/usr/src/app/common
     env_file: .env
     depends_on:
-      database:
-        condition: service_healthy
+      init_container:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
@@ -77,12 +77,25 @@ services:
       - ./common:/usr/src/app/common
     env_file: .env
     depends_on:
-      database:
-        condition: service_healthy
+      init_container:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
       retries: 5
+
+  init_container:
+    container_name: init_container
+    build:
+      context: .
+      dockerfile: common/Dockerfile
+    volumes:
+      - ./common:/usr/src/app/common
+    env_file: .env
+    command: 'python -c "from common import init_container"'
+    depends_on:
+      database:
+        condition: service_healthy
 
   database:
     container_name: abc_database

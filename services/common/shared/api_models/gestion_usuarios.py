@@ -17,6 +17,16 @@ class UsuarioEmpresaDTO(BaseModel):
 UsuarioDTO = Union[UsuarioCandidatoDTO, UsuarioEmpresaDTO]
 
 
+def build_usuario_dto(usuario_data: dict) -> UsuarioDTO:
+
+    if usuario_data.get("id_candidato", None):
+        return UsuarioCandidatoDTO.model_validate(usuario_data)
+    elif usuario_data.get("id_empresa", None):
+        return UsuarioEmpresaDTO.model_validate(usuario_data)
+    else:
+        raise ValueError("Usuario data must have id_candidato or id_empresa")
+
+
 class UsuarioLoginDTO(BaseModel):
     email: Annotated[
         str,

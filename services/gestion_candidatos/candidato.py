@@ -6,7 +6,6 @@ from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateResponseDTO,
     CandidatoCreateDTO,
-    CandidatoDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -87,12 +86,7 @@ class CandidatoService:
         candidato = self.repository.crear(candidato)
         usuario = self.__crear_usuario(candidato, data.password)
         return CandidatoCreateResponseDTO(
-            candidato=CandidatoDTO(
-                id=candidato.id,
-                nombres=candidato.nombres,
-                apellidos=candidato.apellidos,
-                email=candidato.email,
-            ),
+            candidato=candidato.build_candidato_dto(),
             token=usuario.token,
         )
 

@@ -2,7 +2,10 @@ from typing import Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
-from common.shared.api_models import gestion_empresas as gem
+from common.shared.api_models.gestion_empresas import (
+    EmpresaCreateResponseDTO,
+    EmpresaCreateDTO,
+)
 from common.shared.api_models.shared import (
     ErrorBuilder,
     SuccessResponse,
@@ -27,11 +30,11 @@ def recreate():
 
 @router.post(
     "/crear",
-    response_model=Union[SuccessResponse[gem.CreateEmpresaResponseDTO], ErrorResponse],
+    response_model=Union[SuccessResponse[EmpresaCreateResponseDTO], ErrorResponse],
     status_code=status.HTTP_201_CREATED,
 )
 def crear(
-    data: gem.EmpresaCreateDTO,
+    data: EmpresaCreateDTO,
     response: Response,
     service: EmpresaService = Depends(get_empresa_service),
 ):
