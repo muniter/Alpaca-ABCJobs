@@ -4,6 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from .api_models.shared import ErrorBuilder
 from .config import configuration
 from fastapi import FastAPI, Request, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from .logger import logger
 
 
@@ -49,3 +50,12 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
             logger.info("Running on local environment")
 
         logger.info(f"Startup complete")
+
+    # CORS
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["https://jobs.abc.muniter.link"],
+        allow_origin_regex='http://localhost:.*',
+        allow_headers=["*"],
+        allow_methods=["*"],
+    )
