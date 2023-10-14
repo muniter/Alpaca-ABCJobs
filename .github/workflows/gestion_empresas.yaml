@@ -83,13 +83,13 @@ jobs:
           docker-compose exec -T gestion_empresas pytest --cov
 
       - name: Push the image
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         run: |
           docker push --all-tags ${{ env.REPOSITORY }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: services/gestion_empresas/task-definition.json
@@ -98,7 +98,7 @@ jobs:
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: gestion-empresas
