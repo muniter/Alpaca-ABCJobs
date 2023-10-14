@@ -1,13 +1,14 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
-name: Build, test and deploy Gestión Evaluaciones
+name: Gestión Usuarios
 on:
   workflow_dispatch:
   push:
     branches:
       - '*'
     paths:
-      - 'services/gestion-evaluaciones/**'
+      - 'services/gestion_usuarios/**'
       - 'services/common/**'
+      - '.github/workflows/gestion_usuarios.yaml'
   pull_request:
     branches:
       - 'master'
@@ -31,6 +32,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Setup Buildx builder
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -46,7 +52,7 @@ jobs:
       - name: Set variables
         run: |
           SHORT_COMMIT_HASH=$(git rev-parse --short HEAD)
-          REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-evaluaciones') }}
+          REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-usuarios') }}
           IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH
           IMAGE_LATEST=$REPOSITORY:latest
           # Now set the varialbes for the next job steps
@@ -57,12 +63,12 @@ jobs:
           # Debugging
           echo "Set the variables short $SHORT_COMMIT_HASH, repo $REPOSITORY, image $IMAGE, image latest $IMAGE_LATEST"
 
-      - name: Build and push gestion-evaluaciones
+      - name: Build gestion_usuarios
         uses: docker/build-push-action@v5
         with:
           context: services/
-          file: services/gestion-evaluaciones/Dockerfile
-          push: true
+          file: services/gestion_usuarios/Dockerfile
+          load: true
           tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }}
           platforms: linux/amd64
           cache-from: type=gha
@@ -70,19 +76,24 @@ jobs:
           provenance: false
 
       - name: Pruebas unitarias
-        if: false
         run: |
-          cd services/gestion-evaluaciones
+          cd services
+          mv .env.example .env
           docker-compose up -d
-          docker-compose exec gestion-evaluaciones pytest
+          docker-compose exec -T gestion_usuarios pytest --cov
+
+      - name: Push the image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push --all-tags ${{ env.REPOSITORY }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         if: github.ref == 'refs/heads/master'
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: services/gestion-evaluaciones/task-definition.json
-          container-name: gestion-evaluaciones
+          task-definition: services/gestion_usuarios/task-definition.json
+          container-name: gestion-usuarios
           image: ${{ env.IMAGE }}
 
       - name: Deploy to Amazon ECS service
@@ -90,5 +101,6 @@ jobs:
         if: github.ref == 'refs/heads/master'
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: gestion-evaluaciones
+          service: gestion-usuarios
           cluster: abc-cluster
+

@@ -1,26 +1,100 @@
 version: '3'
 services:
-  gestion-evaluaciones:
-    container_name: gestion-evaluciones
-    image: gestion-evaluaciones
+  gestion_evaluaciones:
+    container_name: gestion_evaluaciones
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-evaluaciones:latest
     build:
       context: .
-      dockerfile: gestion-evaluaciones/Dockerfile
+      dockerfile: gestion_evaluaciones/Dockerfile
+      target: base
     ports:
       - "3000:80"
     volumes:
-      - ./gestion-evaluaciones/src:/usr/src/app/src
-      - ./common/shared:/usr/src/app/src/shared
+      - ./gestion_evaluaciones:/usr/src/app/gestion_evaluaciones
+      - ./common:/usr/src/app/common
     env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
+
+  gestion_empresas:
+    container_name: gestion_empresas
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-empresas:latest
+    build:
+      context: .
+      dockerfile: gestion_empresas/Dockerfile
+      target: base
+    ports:
+      - "3001:80"
+    volumes:
+      - ./gestion_empresas:/usr/src/app/gestion_empresas
+      - ./common:/usr/src/app/common
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
+
+  gestion_candidatos:
+    container_name: gestion_candidatos
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-candidatos:latest
+    build:
+      context: .
+      dockerfile: gestion_candidatos/Dockerfile
+      target: base
+    ports:
+      - "3003:80"
+    volumes:
+      - ./gestion_candidatos:/usr/src/app/gestion_candidatos
+      - ./common:/usr/src/app/common
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
+
+  gestion_usuarios:
+    container_name: gestion_usuarios
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-usuarios:latest
+    build:
+      context: .
+      dockerfile: gestion_usuarios/Dockerfile
+      target: base
+    ports:
+      - "3002:80"
+    volumes:
+      - ./gestion_usuarios:/usr/src/app/gestion_usuarios
+      - ./common:/usr/src/app/common
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
       retries: 5
 
   database:
-    container_name: abc-database
+    container_name: abc_database
     image: postgres
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_DB: abc
       POSTGRES_USER: abc
       POSTGRES_PASSWORD: abc
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U abc"]
+      interval: 1s
+      timeout: 5s
+      retries: 30
