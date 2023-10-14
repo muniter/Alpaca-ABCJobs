@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+name: Gestión Candidatos
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '*'
+    paths:
+      - 'services/gestion_candidatos/**'
+      - 'services/common/**'
+      - '.github/workflows/gestion_candidatos.yaml'
+  pull_request:
+    branches:
+      - 'master'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup Buildx builder
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: 'true'
+
+      - name: Set variables
+        run: |
+          SHORT_COMMIT_HASH=$(git rev-parse --short HEAD)
+          REPOSITORY=${{ format('{0}/{1}', steps.login-ecr.outputs.registry, 'abc-gestion-candidatos') }}
+          IMAGE=$REPOSITORY:$SHORT_COMMIT_HASH
+          IMAGE_LATEST=$REPOSITORY:latest
+          # Now set the varialbes for the next job steps
+          echo "SHORT_COMMIT_HASH=$SHORT_COMMIT_HASH" >> $GITHUB_ENV
+          echo "REPOSITORY=$REPOSITORY" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          echo "IMAGE_LATEST=$IMAGE_LATEST" >> $GITHUB_ENV
+          # Debugging
+          echo "Set the variables short $SHORT_COMMIT_HASH, repo $REPOSITORY, image $IMAGE, image latest $IMAGE_LATEST"
+
+      - name: Build gestion_candidatos
+        uses: docker/build-push-action@v5
+        with:
+          context: services/
+          file: services/gestion_candidatos/Dockerfile
+          load: true
+          tags: ${{ env.IMAGE }}, ${{ env.IMAGE_LATEST }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+      - name: Pruebas unitarias
+        run: |
+          cd services
+          mv .env.example .env
+          docker-compose up -d
+          docker-compose exec -T gestion_candidatos pytest --cov
+
+      - name: Push the image
+        # if: github.ref == 'refs/heads/master'
+        run: |
+          docker push --all-tags ${{ env.REPOSITORY }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        # if: github.ref == 'refs/heads/master'
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: services/gestion_candidatos/task-definition.json
+          container-name: gestion-candidatos
+          image: ${{ env.IMAGE }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        # if: github.ref == 'refs/heads/master'
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: gestion-candidatos
+          cluster: abc-cluster
+

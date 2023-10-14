@@ -42,6 +42,27 @@ services:
       timeout: 7s
       retries: 5
 
+  gestion_candidatos:
+    container_name: gestion_candidatos
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-candidatos:latest
+    build:
+      context: .
+      dockerfile: gestion_candidatos/Dockerfile
+      target: base
+    ports:
+      - "3003:80"
+    volumes:
+      - ./gestion_candidatos:/usr/src/app/gestion_candidatos
+      - ./common:/usr/src/app/common
+    env_file: .env
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
+
   gestion_usuarios:
     container_name: gestion_usuarios
     image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-usuarios:latest
