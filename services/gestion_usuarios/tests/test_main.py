@@ -1,5 +1,9 @@
 from fastapi.testclient import TestClient
-from common.shared.api_models.gestion_usuarios import UsuarioLoginDTO, UsuarioLoginResponseDTO
+from common.shared.api_models.gestion_usuarios import (
+    UsuarioLoginDTO,
+    UsuarioLoginResponseDTO,
+    UsuarioRegisterDTO,
+)
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
 from common.shared.database.models import Empresa, Usuario
@@ -187,3 +191,29 @@ def test_service_login_email_invalido():
     assert isinstance(result, ErrorBuilder)
     assert result.has_error
     assert result.serialize()["email"] is not None
+
+
+def test_service_create_candidato_no_existe():
+    result = service.crear(
+        UsuarioRegisterDTO(
+            email=faker.email(),
+            password=faker.password(),
+            id_candidato=-1,
+        )
+    )
+    assert isinstance(result, ErrorBuilder)
+    assert result.has_error
+    assert result.serialize()["id_candidato"] is not None
+
+
+def test_service_create_empresa_no_existe():
+    result = service.crear(
+        UsuarioRegisterDTO(
+            email=faker.email(),
+            password=faker.password(),
+            id_empresa=-1,
+        )
+    )
+    assert isinstance(result, ErrorBuilder)
+    assert result.has_error
+    assert result.serialize()["id_empresa"] is not None
