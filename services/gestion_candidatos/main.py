@@ -11,7 +11,6 @@ from common.shared.api_models.shared import (
     SuccessResponse,
     ErrorResponse,
 )
-from common.shared.database.db import recreate_all
 from .candidato import CandidatoService, get_candidato_service
 
 app = FastAPI(
@@ -20,12 +19,6 @@ app = FastAPI(
 )
 router = APIRouter()
 shared_app_setup(app, router)
-
-
-@app.on_event("startup")
-async def startup():
-    recreate_all()
-
 
 @router.post(
     "/crear",
