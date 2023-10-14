@@ -19,9 +19,10 @@ router = APIRouter()
 shared_app_setup(app, router)
 
 
-@app.on_event("startup")
-async def startup():
+@router.get("/db_recreate")
+def recreate():
     recreate_all()
+    return {"status": "ok"}
 
 
 @router.post(
