@@ -20,6 +20,7 @@ app = FastAPI(
 router = APIRouter()
 shared_app_setup(app, router)
 
+
 @router.post(
     "/crear",
     response_model=Union[SuccessResponse[CandidatoCreateResponseDTO], ErrorResponse],

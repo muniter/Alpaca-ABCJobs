@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import APIRouter, Depends, FastAPI, Response
 from common.shared.api_models.gestion_usuarios import (
+    UsuarioLoginDTO,
     UsuarioLoginResponseDTO,
     UsuarioRegisterDTO,
 )
@@ -27,6 +28,24 @@ def crear(
     service: UsuarioService = Depends(get_usuario_service),
 ):
     result = service.crear_login(data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.post(
+    "/login",
+    response_model=Union[SuccessResponse[UsuarioLoginResponseDTO], ErrorResponse],
+    status_code=200,
+)
+def login(
+    data: UsuarioLoginDTO,
+    response: Response,
+    service: UsuarioService = Depends(get_usuario_service),
+):
+    result = service.login(data)
     if isinstance(result, ErrorBuilder):
         response.status_code = 400
         return ErrorResponse(errors=result)

@@ -5,14 +5,14 @@ from sqlalchemy import select, func
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginDTO,
     UsuarioLoginResponseDTO,
-    UsuarioCandidatoDTO,
     UsuarioDTO,
-    UsuarioEmpresaDTO,
     UsuarioRegisterDTO,
 )
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
 from common.shared.database.models import Usuario
+from common.shared.jwt import create_token, get_usuario_from_token
+
 
 class UsuarioRepository:
     session: Session
@@ -40,7 +40,21 @@ class UsuarioService:
     def __init__(self, repository: UsuarioRepository):
         self.repository = repository
 
-    def login(self, data: UsuarioLoginDTO) -> Union[Usuario, ErrorBuilder]:
+    def create_token(
+        self,
+        data: UsuarioDTO,
+    ) -> str:
+        return create_token(data.model_dump())
+
+    def get_usuario_from_token(
+        self,
+        token: str,
+    ) -> UsuarioDTO:
+        return get_usuario_from_token(token)
+
+    def login(
+        self, data: UsuarioLoginDTO
+    ) -> Union[UsuarioLoginResponseDTO, ErrorBuilder]:
         usuario = self.repository.get_by_email(data.email)
         error = ErrorBuilder(data)
         if not usuario:
@@ -51,8 +65,11 @@ class UsuarioService:
             error.add("password", "Password incorrecto")
             return error
 
-        # TODO: Generar token
-        return usuario
+        usuario_dto = usuario.build_usuario_dto()
+        return UsuarioLoginResponseDTO(
+            usuario=usuario_dto,
+            token=self.create_token(usuario_dto),
+        )
 
     def crear(self, data: UsuarioRegisterDTO) -> Union[Usuario, ErrorBuilder]:
         error = ErrorBuilder(data)
@@ -85,26 +102,11 @@ class UsuarioService:
 
         usuario = result
 
-        usuario_dto: UsuarioDTO
-
-        if usuario.id_empresa:
-            usuario_dto = UsuarioEmpresaDTO(
-                id=usuario.id,
-                email=usuario.email,
-                id_empresa=usuario.id_empresa,
-            )
-        elif usuario.id_candidato:
-            usuario_dto = UsuarioCandidatoDTO(
-                id=usuario.id,
-                email=usuario.email,
-                id_candidato=usuario.id_candidato,
-            )
-        else:
-            raise Exception("Usuario no tiene empresa ni candidato")
+        usuario_dto = usuario.build_usuario_dto()
 
         return UsuarioLoginResponseDTO(
             usuario=usuario_dto,
-            token="hola",
+            token=self.create_token(usuario_dto),
         )
 
 
