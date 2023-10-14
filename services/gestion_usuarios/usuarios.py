@@ -10,7 +10,7 @@ from common.shared.api_models.gestion_usuarios import (
 )
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
-from common.shared.database.models import Usuario
+from common.shared.database.models import Candidato, Empresa, Usuario
 from common.shared.jwt import create_token, get_usuario_from_token
 
 
@@ -27,6 +27,14 @@ class UsuarioRepository:
     def get_by_email(self, email: str) -> Union[Usuario, None]:
         query = select(Usuario).where(func.lower(Usuario.email) == func.lower(email))
         return self.session.execute(query).scalar_one_or_none()
+
+    def check_empresa_exists(self, id_empresa: int) -> bool:
+        query = select(Empresa).where(Empresa.id == id_empresa)
+        return self.session.execute(query).scalar_one_or_none() is not None
+
+    def check_candidate_exists(self, id_candidato: int) -> bool:
+        query = select(Candidato).where(Candidato.id == id_candidato)
+        return self.session.execute(query).scalar_one_or_none() is not None
 
     def crear(self, data: Usuario) -> Usuario:
         self.session.add(data)
@@ -75,6 +83,15 @@ class UsuarioService:
         error = ErrorBuilder(data)
         if self.repository.get_by_email(data.email):
             error.add("email", "Email ya registrado")
+
+
+        if data.id_empresa:
+            if not self.repository.check_empresa_exists(data.id_empresa):
+                error.add("id_empresa", "Empresa no existe")
+
+        if data.id_candidato:
+            if not self.repository.check_candidate_exists(data.id_candidato):
+                error.add("id_candidato", "Candidato no existe")
 
         if error.has_error:
             return error
