@@ -59,7 +59,7 @@
                         android:textColor="@color/accent" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_user_registered2"
+                        android:id="@+id/button_user_register_candidate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -70,7 +70,7 @@
                         android:text="@string/candidato_text" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_welcome_register2"
+                        android:id="@+id/button_welcome_register_enterprise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

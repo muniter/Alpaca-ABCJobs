@@ -7,7 +7,6 @@
     tools:context=".CandidatoRegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -108,6 +107,13 @@
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
                                 android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelNameError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#F44336" />
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 

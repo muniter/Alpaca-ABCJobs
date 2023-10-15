@@ -18,5 +18,14 @@
         android:id="@+id/registerTypeFragment"
         android:name="com.example.abc_jobs_alpaca.RegisterTypeFragment"
         android:label="fragment_register_type"
-        tools:layout="@layout/fragment_register_type" />
+        tools:layout="@layout/fragment_register_type" >
+        <action
+            android:id="@+id/action_registerTypeFragment_to_candidatoRegisterFragment"
+            app:destination="@id/candidatoRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/candidatoRegisterFragment"
+        android:name="com.example.abc_jobs_alpaca.CandidatoRegisterFragment"
+        android:label="fragment_candidato_register"
+        tools:layout="@layout/fragment_candidato_register" />
 </navigation>

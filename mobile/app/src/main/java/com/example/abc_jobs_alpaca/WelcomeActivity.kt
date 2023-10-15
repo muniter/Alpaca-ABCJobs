@@ -5,13 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 
-class WelcomeActivity: AppCompatActivity(){
-
+class WelcomeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_candidato_register)
+        setContentView(R.layout.activity_welcome)
     }
+
 
 
 }

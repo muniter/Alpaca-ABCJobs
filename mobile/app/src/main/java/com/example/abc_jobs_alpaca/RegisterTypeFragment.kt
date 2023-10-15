@@ -10,13 +10,14 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.databinding.FragmentRegisterTypeBinding
 
 /**
  * An example full-screen fragment that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class RegisterTypeFragment : Fragment() {
+class RegisterTypeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)
 
     @Suppress("InlinedApi")
@@ -91,6 +92,9 @@ class RegisterTypeFragment : Fragment() {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         dummyButton?.setOnTouchListener(delayHideTouchListener)
+
+        val btn3: Button = view.findViewById((R.id.button_user_register_candidate))
+        btn3.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -184,4 +188,14 @@ class RegisterTypeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.button_user_register_candidate -> {
+                v?.findNavController()
+                    ?.navigate(R.id.action_registerTypeFragment_to_candidatoRegisterFragment)
+            }
+        }
+    }
 }
+
