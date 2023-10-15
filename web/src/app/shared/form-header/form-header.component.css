@@ -1,9 +1,3 @@
-mat-divider {
-    background-color: var(--darkColor);
-    opacity: 44%;
-    margin: 1em 0em;
-}
-
 .logo-div {
     max-width: 20%;
     border-radius: 100%;
@@ -16,6 +10,7 @@ mat-divider {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 1rem;
 }
 
 .candidate{

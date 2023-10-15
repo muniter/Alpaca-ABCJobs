@@ -2,6 +2,62 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="es-ES" target-language="en" datatype="plaintext" original="ng2.template">
     <body>
+    <trans-unit id="email" datatype="html">
+        <source>Correo electrónico</source>
+        <target>E-mail address</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <source>Contraseña</source>
+        <target>Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>INICIAR SESIÓN</source>
+        <target>LOGIN</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registerinabc" datatype="html">
+        <source>REGISTRARSE EN ABC JOBS</source>
+        <target>SIGN-UP FOR ABC JOBS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatesportal" datatype="html">
+        <source>REGISTRARSE EN ABC JOBS</source>
+        <target>PORTAL DE CANDIDATOS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatesportal" datatype="html">
+        <source>PORTAL DE CANDIDATOS</source>
+        <target>CANDIDATES PORTAL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="companyregister" datatype="html">
         <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>empresa</source>
         <target>Sign Up as<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>company</target>
@@ -16,22 +72,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
           <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>Correo electrónico</source>
-        <target>E-mail address</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="password" datatype="html">
-        <source>Contraseña</source>
-        <target>Password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="passwordconfirm" datatype="html">
