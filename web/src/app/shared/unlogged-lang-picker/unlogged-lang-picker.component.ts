@@ -9,16 +9,13 @@ export class UnloggedLangPickerComponent implements OnInit {
 
   @Input() route: string = "";
 
-  constructor() {
-    console.log("route:" + this.route);
+  constructor() {  }
 
+  ngOnInit() {
+    console.log("route:2 " + this.route);
     if (this.route.startsWith('en/') || this.route.startsWith('es/')) {
       this.route = this.route.substring(this.route.indexOf("/") + 1);
     }
-
-  }
-
-  ngOnInit() {
   }
 
 }
