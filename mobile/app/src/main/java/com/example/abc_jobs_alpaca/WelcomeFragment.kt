@@ -11,13 +11,16 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 /**
  * An example full-screen fragment that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class WelcomeFragment : Fragment() {
+class WelcomeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)
+
 
     @Suppress("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -26,14 +29,14 @@ class WelcomeFragment : Fragment() {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        val flags =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        activity?.window?.decorView?.systemUiVisibility = flags
+        //val flags =
+        //    View.SYSTEM_UI_FLAG_LOW_PROFILE or
+        //            View.SYSTEM_UI_FLAG_FULLSCREEN or
+        //            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+        //            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+        //            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+        //            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        //activity?.window?.decorView?.systemUiVisibility = flags
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
     private val showPart2Runnable = Runnable {
@@ -48,12 +51,12 @@ class WelcomeFragment : Fragment() {
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private val delayHideTouchListener = View.OnTouchListener { _, _ ->
-        if (AUTO_HIDE) {
-            delayedHide(AUTO_HIDE_DELAY_MILLIS)
-        }
-        false
-    }
+    //private val delayHideTouchListener = View.OnTouchListener { _, _ ->
+    //    if (AUTO_HIDE) {
+    //        delayedHide(AUTO_HIDE_DELAY_MILLIS)
+    //   }
+    //    false
+    //}
 
     private var dummyButton: Button? = null
     private var fullscreenContent: View? = null
@@ -90,7 +93,13 @@ class WelcomeFragment : Fragment() {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        dummyButton?.setOnTouchListener(delayHideTouchListener)
+        //dummyButton?.setOnTouchListener(delayHideTouchListener)
+
+        val btn: Button = view.findViewById(R.id.button_user_registered)
+        btn.setOnClickListener(this)
+
+        val btn2: Button = view.findViewById(R.id.button_welcome_unregistered)
+        btn2.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -108,7 +117,7 @@ class WelcomeFragment : Fragment() {
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         // Clear the systemUiVisibility flag
-        activity?.window?.decorView?.systemUiVisibility = 0
+        //activity?.window?.decorView?.systemUiVisibility = 0
         show()
     }
 
@@ -118,6 +127,8 @@ class WelcomeFragment : Fragment() {
         fullscreenContent = null
         fullscreenContentControls = null
     }
+
+
 
     private fun toggle() {
         if (visible) {
@@ -140,9 +151,9 @@ class WelcomeFragment : Fragment() {
     @Suppress("InlinedApi")
     private fun show() {
         // Show the system bar
-        fullscreenContent?.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        //fullscreenContent?.systemUiVisibility =
+        //    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+        //            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         visible = true
 
         // Schedule a runnable to display UI elements after a delay
@@ -180,8 +191,19 @@ class WelcomeFragment : Fragment() {
         private const val UI_ANIMATION_DELAY = 300
     }
 
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.button_welcome_unregistered ->{
+                v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
+            }
+        }
     }
 }

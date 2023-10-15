@@ -4,4 +4,25 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+
+
+    <style name="NoBottomLineTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+    </style>
+
+    <style name="TransparentBoxStroke" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/transparent</item>
+    </style>
+
+    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:paddingTop">16dp</item> <!-- Ajusta el valor según tus necesidades -->
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
+
 </resources>
+
+

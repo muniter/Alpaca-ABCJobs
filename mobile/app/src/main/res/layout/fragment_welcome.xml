@@ -50,7 +50,7 @@
                     android:text="@string/userRegisteredLabelButton" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_welcome_register"
+                    android:id="@+id/button_welcome_unregistered"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
