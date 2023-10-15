@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ABC-Jobs_Alpaca</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="userRegisteredLabelButton">Ya tengo cuenta en ABC</string>
+    <string name="userUnRegisteredLabelButton">Registrarse</string>
+    <string name="question_register_type_text">Como quieres registrarte?:</string>
+    <string name="candidato_text">Candidato</string>
+    <string name="empresa_text">Empresa Contratante</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="candidatos_text_apptopbar">Registro de candidatos</string>
+</resources>

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.abc_jobs_alpaca.databinding.FragmentHomeBinding
+import com.example.abc_jobs_alpaca.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 

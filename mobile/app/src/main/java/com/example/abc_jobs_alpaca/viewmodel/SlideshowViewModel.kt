@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca.ui.slideshow
+package com.example.abc_jobs_alpaca.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

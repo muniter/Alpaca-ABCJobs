@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayoutCandidateRegister"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CandidatoRegisterFragment">
@@ -15,6 +16,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintBottom_toTopOf="@+id/scrollView"
@@ -51,8 +53,8 @@
         <ScrollView
             android:id="@+id/scrollView"
             style="@android:style/Widget.ScrollView"
-            android:layout_width="364dp"
-            android:layout_height="643dp"
+            android:layout_width="362dp"
+            android:layout_height="581dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -72,6 +74,21 @@
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_register"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/button_rounded"
+                        android:enabled="true"
+                        android:fontFamily="@font/font_roboto"
+                        android:text="Registrarse"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutName"
@@ -352,6 +369,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
+                        android:id="@+id/linearLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -401,14 +419,6 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_rounded"
-                    android:fontFamily="@font/font_roboto"
-                    android:text="Registrarse" />
 
             </LinearLayout>
         </ScrollView>
