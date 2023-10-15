@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginCompanyFormComponent } from './login-company-form/login-company-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,8 +11,10 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule,
-    MatDividerModule
+    MatFormFieldModule,
+    MatDividerModule,
+    MatInputModule,
+    SharedModule
   ],
   declarations: [
     LoginCompanyFormComponent

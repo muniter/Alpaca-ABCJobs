@@ -42,6 +42,10 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
@@ -87,7 +91,7 @@
         <target>Candidate name cannot be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidatename" datatype="html">
@@ -95,7 +99,7 @@
         <target>Candidate name must be between 2 and 100 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidatelastname" datatype="html">
@@ -103,7 +107,7 @@
         <target>Candidate's last name cannot be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidatelastname" datatype="html">
@@ -111,7 +115,7 @@
         <target>Candidate's last name must be between 2 and 100 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidateemail" datatype="html">
@@ -119,7 +123,7 @@
         <target>Candidate email cannot be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidateemail" datatype="html">
@@ -127,7 +131,7 @@
         <target>Candidate email must be between 2 and 255 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidformatcandidateemail" datatype="html">
@@ -135,7 +139,7 @@
         <target>Email is not in a valid format</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptypassword" datatype="html">
@@ -143,7 +147,7 @@
         <target>Password field can not be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -155,7 +159,7 @@
         <target>Password must have a length between 8 and 20</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -167,7 +171,7 @@
         <target>Invalid password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -179,7 +183,7 @@
         <target>Confirm password field can not be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">93</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -191,7 +195,7 @@
         <target>Password and confirm password fields does not match</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -203,19 +207,47 @@
         <target>You must accept terms and conditions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="candidateportal" datatype="html">
-        <source>PORTAL DE CANDIDATOS</source>
-        <target>CANDIDATE PORTAL</target>
+      <trans-unit id="email" datatype="html">
+        <source>Correo electrónico</source>
+        <target>E-mail address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>INICIAR SESIÓN</source>
+        <target>LOGIN</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="registerinabc" datatype="html">
+        <source>REGISTRARSE EN ABC JOBS</source>
+        <target>SIGN-UP FOR ABC JOBS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatesportal" datatype="html">
+        <source>PORTAL DE CANDIDATOS</source>
+        <target>CANDIDATES PORTAL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyregister" datatype="html">
@@ -233,15 +265,7 @@
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>Correo electrónico</source>
-        <target>E-mail address</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>      
+      </trans-unit>   
       <trans-unit id="nonemptycompanyname" datatype="html">
         <source>El nombre de la empresa no puede ser vacío</source>
         <target>Company name can not be empty</target>
