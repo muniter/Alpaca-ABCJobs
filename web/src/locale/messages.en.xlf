@@ -2,6 +2,222 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="es-ES" target-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="candidateregister" datatype="html">
+        <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>cantidato</source>
+        <target>Sign Up as<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>candidate</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatename" datatype="html">
+        <source>Nombres</source>
+        <target>Names</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatelastname" datatype="html">
+        <source>Apellidos</source>
+        <target>Lastnames</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidateemail" datatype="html">
+        <source>Correo electrónico</source>
+        <target>Email</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <source>Contraseña</source>
+        <target>Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordconfirm" datatype="html">
+        <source>Confirmación de contraseña</source>
+        <target>Confirm password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="termsconditions" datatype="html">
+        <source> Acepto los <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;"/>términos y condiciones de ABC Jobs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <target> I accept the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;"/>terms and conditions of ABC Jobs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="register" datatype="html">
+        <source>REGISTRARSE</source>
+        <target>REGISTER</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycantidatename" datatype="html">
+        <source>El nombre del candidato no puede ser vacío</source>
+        <target>Candidate name cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcandidatename" datatype="html">
+        <source>El nombre del candidato debe tener entre 2 y 100 caracteres</source>
+        <target>Candidate name must be between 2 and 100 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycantidatelastname" datatype="html">
+        <source>El apellido del candidato no puede ser vacío</source>
+        <target>Candidate's last name cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcandidatelastname" datatype="html">
+        <source>El apellido del candidato debe tener entre 2 y 100 caracteres</source>
+        <target>Candidate's last name must be between 2 and 100 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycantidateemail" datatype="html">
+        <source>El correo electrónico del candidato no puede ser vacío</source>
+        <target>Candidate email cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcandidateemail" datatype="html">
+        <source>El correo electrónico del candidato debe tener entre 2 y 255 caracteres</source>
+        <target>Candidate email must be between 2 and 255 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidformatcandidateemail" datatype="html">
+        <source>El correo electrónico no tiene un formato válido</source>
+        <target>Email is not in a valid format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypassword" datatype="html">
+        <source>La contraseña no puede ser vacía</source>
+        <target>Password field can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthpassword" datatype="html">
+        <source>La contraseña debe tener entre 8 y 20 caracteres</source>
+        <target>Password must have a length between 8 and 20</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidpassword" datatype="html">
+        <source>La contraseña ingresada es inválida</source>
+        <target>Invalid password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypasswordconfirm" datatype="html">
+        <source>La confirmación de contraseña es obligatoria</source>
+        <target>Confirm password field can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonmatchingpasswordconfirm" datatype="html">
+        <source>Las contraseñas no coinciden</source>
+        <target>Password and confirm password fields does not match</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonselectedterms" datatype="html">
+        <source>Debe aceptar los términos y condiciones</source>
+        <target>You must accept terms and conditions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidateportal" datatype="html">
+        <source>PORTAL DE CANDIDATOS</source>
+        <target>CANDIDATE PORTAL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="companyregister" datatype="html">
         <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>empresa</source>
         <target>Sign Up as<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>company</target>
@@ -25,39 +241,7 @@
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="password" datatype="html">
-        <source>Contraseña</source>
-        <target>Password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="passwordconfirm" datatype="html">
-        <source>Confirmación de contraseña</source>
-        <target>Confirm password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="termsconditions" datatype="html">
-        <source> Acepto los <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;"/>términos y condiciones de ABC Jobs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
-        <target> I accept the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;"/>terms and conditions of ABC Jobs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">39,40</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="register" datatype="html">
-        <source>REGISTRARSE</source>
-        <target>REGISTER</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
+      </trans-unit>      
       <trans-unit id="nonemptycompanyname" datatype="html">
         <source>El nombre de la empresa no puede ser vacío</source>
         <target>Company name can not be empty</target>
@@ -97,55 +281,7 @@
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
           <context context-type="linenumber">62</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="nonemptypassword" datatype="html">
-        <source>La contraseña no puede ser vacía</source>
-        <target>Password field can not be empty</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="invalidlengthpassword" datatype="html">
-        <source>La contraseña debe tener entre 8 y 20 caracteres</source>
-        <target>Password must have a length between 8 and 20</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="invalidpassword" datatype="html">
-        <source>La contraseña ingresada es inválida</source>
-        <target>Invalid password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nonemptypasswordconfirm" datatype="html">
-        <source>La confirmación de contraseña es obligatoria</source>
-        <target>Confirm password field can not be empty</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nonmatchingpasswordconfirm" datatype="html">
-        <source>Las contraseñas no coinciden</source>
-        <target>Password and confirm password fields does not match</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">79</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="nonselectedterms" datatype="html">
-        <source>Debe aceptar los términos y condiciones</source>
-        <target>You must accept terms and conditions</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-      </trans-unit>
+      </trans-unit> 
     </body>
   </file>
 </xliff>

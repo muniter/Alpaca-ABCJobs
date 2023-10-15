@@ -1,0 +1,64 @@
+<div class="candidate-register-body candidate-theme">
+  <app-login-logon-container>
+    <app-form-header portal="candidate" i18n="@@candidateregister">Registro de <br>cantidato</app-form-header>
+    <form [formGroup]="candidateRegisterForm" (ngSubmit)="candidateRegister()">
+      <div class="form">
+
+        <mat-form-field class="form-field meddium-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@candidatename">Nombres</mat-label>
+          <input matInput id="candidateNames" class="form-control" formControlName="candidateNames">
+          <mat-error *ngIf="candidateRegisterForm.get('candidateNames')!.invalid">
+            {{ getErrorMessage('candidateNames') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field meddium-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@candidatelastname">Apellidos</mat-label>
+          <input matInput id="candidateLastNames" class="form-control" formControlName="candidateLastNames">
+          <mat-error *ngIf="candidateRegisterForm.get('candidateLastNames')!.invalid">
+            {{ getErrorMessage('candidateLastNames') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@candidateemail">Correo electrónico</mat-label>
+          <input matInput id="candidateEmail" class="form-control" formControlName="candidateEmail">
+          <mat-error *ngIf="candidateRegisterForm.get('candidateEmail')!.invalid">
+            {{ getErrorMessage('candidateEmail') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@password">Contraseña</mat-label>
+          <input matInput id="passwordBase" type="password" class="form-control" formControlName="password">
+          <mat-error *ngIf="candidateRegisterForm.get('password')!.invalid">
+            {{ getErrorMessage('password') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@passwordconfirm">Confirmación de contraseña</mat-label>
+          <input matInput id="passwordConfirm" type="password" class="form-control" formControlName="passwordConfirm">
+          <mat-error *ngIf="candidateRegisterForm.get('passwordConfirm')!.invalid">
+            {{ getErrorMessage('passwordConfirm') }}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="checkbox-field full-width">
+          <mat-checkbox matInput class="form-control full-width" formControlName="termsCheck" (change)="MarkTouchedAux()" i18n="@@termsconditions">
+            Acepto los <a href="https://www.google.com" target="_blank">términos y condiciones de ABC Jobs</a>
+          </mat-checkbox>
+          <mat-form-field [ngClass]="candidateRegisterForm.get('termsCheck')!.invalid && candidateRegisterForm.get('termsCheck2')!.touched ? '' : 'hidden'" class="tricky-input" appearance="outline" subscriptSizing="dynamic">
+            <input matInput id="termsCheck2" class="form-control" formControlName="termsCheck2">
+            <mat-error *ngIf="candidateRegisterForm.get('termsCheck')!.invalid">
+              {{ getErrorMessage('termsCheck') }}
+            </mat-error>
+          </mat-form-field>
+  
+        </div>
+
+        <app-abc-button type="submit" [disabled]="!candidateRegisterForm.valid" class="inline-button" color="primary" i18n="@@register">REGISTRARSE</app-abc-button>
+      </div>
+    </form>
+  </app-login-logon-container>
+</div>
