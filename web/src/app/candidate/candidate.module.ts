@@ -16,8 +16,8 @@ import { CandidateRegisterComponent } from './candidate-register/candidate-regis
     ReactiveFormsModule,
     MatFormFieldModule,
     //MatIconModule,
-    MatInputModule,
-    MatCheckboxModule
+    MatInputModule, 
+    MatCheckboxModule 
   ],
   exports: [CandidateRegisterComponent],
   declarations: [CandidateRegisterComponent]
