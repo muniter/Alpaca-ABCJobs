@@ -1,0 +1,36 @@
+.bottom-right {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+
+a {
+    color: inherit;
+    /* blue colors for links too */
+    text-decoration: inherit;
+    /* no underline */
+}
+
+.bottom-right ::ng-deep .mdc-notched-outline {
+    opacity: 0;
+}
+
+.bottom-right ::ng-deep .mat-mdc-select-arrow {
+    display: none;
+}
+
+.bottom-right ::ng-deep .mat-mdc-form-field-infix {
+    width: auto;
+}
+
+.bottom-right ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0 26px 0 5px;
+}
+
+.selector-label {
+    line-height: 24px;
+}

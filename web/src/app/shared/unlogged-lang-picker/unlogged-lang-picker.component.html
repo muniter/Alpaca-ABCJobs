@@ -1,0 +1,17 @@
+<div class="bottom-right">
+  <p class="selector-label" i18n="@@language">Idioma: </p>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-select value="es">
+      <mat-option value="es">
+        <div fxLayout="row">
+          <span><a [href]="[route]">Español</a></span>
+        </div>
+      </mat-option>
+      <mat-option value="en">
+        <div fxLayout="row">
+          <span><a [href]="['/en/' + route]">English</a></span>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
