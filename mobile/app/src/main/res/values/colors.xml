@@ -7,4 +7,6 @@
     <color name="gray_300">#F2F2F2</color>
     <color name="black_overlay">#66000000</color>
     <color name="transparent">#00000000</color>
+    <color name="error_message">#CF0000</color>
+    <color name="success_message">#28A745</color>
 </resources>

@@ -14,10 +14,13 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="20dp">
+            app:layout_constraintBottom_toTopOf="@+id/scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -47,12 +50,14 @@
 
         <ScrollView
             android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@android:style/Widget.ScrollView"
+            android:layout_width="364dp"
+            android:layout_height="643dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="40dp"
+            android:scrollbarStyle="insideInset"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +118,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="#F44336" />
+                                android:textColor="@color/error_message" />
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -158,6 +163,13 @@
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
                                 android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelLastNameError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,6 +211,13 @@
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
                                 android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelEmailError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -266,6 +285,14 @@
                                 </LinearLayout>
 
                             </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/labelPasswordError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+
                         </LinearLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -312,27 +339,64 @@
                                 android:textColorHint="@color/accent"
                                 android:typeface="normal"
                                 app:hintTextAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                            <TextView
+                                android:id="@+id/labelRepeatPasswordError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+
                         </LinearLayout>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-                        <CheckBox
-                            android:id="@+id/checkBoxTerms"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/checkBoxTerms"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Acepto los"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/textViewTerms"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autoLink="web"
+                                android:clickable="true"
+                                android:cursorVisible="true"
+                                android:text=" términos y condiciones"
+                                android:textColor="#47528F" />
+
+                        </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/labelTermsError"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Acepto los términos y condiciones"
-                            android:textColor="@color/black" />
+                            android:layout_weight="1"
+                            android:textColor="@color/error_message" />
+
                     </LinearLayout>
 
 
@@ -342,15 +406,9 @@
                     android:id="@+id/button_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp"
                     android:background="@drawable/button_rounded"
                     android:fontFamily="@font/font_roboto"
-                    android:text="Registrarse"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+                    android:text="Registrarse" />
 
             </LinearLayout>
         </ScrollView>
