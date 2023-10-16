@@ -30,4 +30,17 @@ export default class SharedCustomValidators {
             }
         };
     }
+
+    /* static ConfirmedSaveValidator() {
+      return (formGroup: FormGroup) => {
+        console.log("entra a ConfirmedSaveValidator");
+        Object.keys(formGroup.controls).forEach(key => {
+          if(formGroup.controls[key].errors && 
+             formGroup.controls[key].errors?.['responseMessageError']) {
+              console.log(`key: ${key} detecta error responseMessageError`);
+              formGroup.controls[key].setErrors({ responseMessageError: true });
+          } 
+       });
+      };
+    } */
 }

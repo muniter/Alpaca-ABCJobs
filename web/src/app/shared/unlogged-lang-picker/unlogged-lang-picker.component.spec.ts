@@ -2,6 +2,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 import { UnloggedLangPickerComponent } from './unlogged-lang-picker.component';
 
@@ -11,6 +13,10 @@ describe('UnloggedLangPickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatFormFieldModule,
+        MatSelectModule
+      ],
       declarations: [ UnloggedLangPickerComponent ]
     })
     .compileComponents();

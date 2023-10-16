@@ -1,0 +1,39 @@
+.form-field {
+  margin-bottom: 0.5rem;
+}
+
+.checkbox-field {
+  margin-bottom: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.meddium-width {
+  width: 48%;
+}
+
+mat-form-field:nth-of-type(2) {
+  float: right;
+}
+
+.mdc-label {
+  opacity: 60%;
+}
+
+.candidate-register-body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+}
+
+.candidate-register-body form {
+  padding-top: 1rem;
+}
+
+.hidden {
+  display: none;
+}

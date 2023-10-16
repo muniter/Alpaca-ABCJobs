@@ -15,15 +15,17 @@
 
 .candidate{
     background-color: var(--contrastCandidateColor);
+    padding: 0.4rem;
 }
 
 .company{
     background-color: var(--contrastCompanyColor);
+    padding: 0.4rem;
 }
 
 .logo-img {
     width: 100%;
-    margin: 0.4rem;
+    /* margin: 0.4rem; */
 }
 
 .title {
