@@ -30,6 +30,10 @@ mat-form-field:nth-of-type(2) {
   justify-content: safe center;
 }
 
+.candidate-register-body form {
+  padding-top: 1rem;
+}
+
 .hidden {
   display: none;
 }
