@@ -82,56 +82,80 @@
         <source>El nombre del candidato no puede ser vacío</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidatename" datatype="html">
         <source>El nombre del candidato debe tener entre 2 y 100 caracteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responsemessageerrorcandidatenames" datatype="html">
+        <source>Revisar nombres: 
+                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;names&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">63,64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidatelastname" datatype="html">
         <source>El apellido del candidato no puede ser vacío</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidatelastname" datatype="html">
         <source>El apellido del candidato debe tener entre 2 y 100 caracteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responsemessageerrorcandidatelastnames" datatype="html">
+        <source>Revisar apellidos: 
+                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">75,76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidateemail" datatype="html">
         <source>El correo electrónico del candidato no puede ser vacío</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcandidateemail" datatype="html">
-        <source>El correo electrónico del candidato debe tener entre 2 y 255 caracteres</source>
+        <source>El correo electrónico del candidato debe tener entre 5 y 255 caracteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidformatcandidateemail" datatype="html">
         <source>El correo electrónico no tiene un formato válido</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responsemessageerrorcandidateemail" datatype="html">
+        <source>Revisar correo electrónico: 
+                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">89,90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptypassword" datatype="html">
         <source>La contraseña no puede ser vacía</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -142,7 +166,7 @@
         <source>La contraseña debe tener entre 8 y 20 caracteres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -153,18 +177,26 @@
         <source>La contraseña ingresada es inválida</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="responsemessageerrorcandidatepass" datatype="html">
+        <source>Revisar password: 
+                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
+          <context context-type="linenumber">102,103</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nonemptypasswordconfirm" datatype="html">
         <source>La confirmación de contraseña es obligatoria</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -175,7 +207,7 @@
         <source>Las contraseñas no coinciden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -186,7 +218,7 @@
         <source>Debe aceptar los términos y condiciones</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
@@ -272,6 +304,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
           <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="language" datatype="html">
+        <source>Idioma: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/unlogged-lang-picker/unlogged-lang-picker.component.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
     </body>
