@@ -12,6 +12,7 @@ import { CandidateFormRegister, mapKeys } from '../candidate';
 export class CandidateRegisterComponent implements OnInit {
 
   candidateRegisterForm!: FormGroup;
+  registerSucess: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -138,7 +139,7 @@ export class CandidateRegisterComponent implements OnInit {
       .userSignUp(candidate)
       .subscribe({
         error: (exception) => this.setErrorBack(exception),
-        complete: () => console.info("complete")
+        complete: () => this.registerSucess = true
       })
   }
 

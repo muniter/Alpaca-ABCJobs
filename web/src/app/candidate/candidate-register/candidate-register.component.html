@@ -58,6 +58,7 @@
         </div>
 
         <app-abc-button type="submit" [disabled]="!candidateRegisterForm.valid" class="inline-button" color="primary" i18n="@@register">REGISTRARSE</app-abc-button>
+        <p class="success" *ngIf="registerSucess" i18n="@@candidateregistersuccess">Registro exitoso</p>
       </div>
     </form>
   </app-login-logon-container>
