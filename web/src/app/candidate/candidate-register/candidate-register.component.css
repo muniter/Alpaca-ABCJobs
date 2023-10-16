@@ -37,3 +37,11 @@ mat-form-field:nth-of-type(2) {
 .hidden {
   display: none;
 }
+
+.success {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
+}
