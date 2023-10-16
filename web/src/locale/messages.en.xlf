@@ -86,6 +86,14 @@
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="candidateregistersuccess" datatype="html">
+        <source>Registro exitoso</source>
+        <target>Successful registration</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nonemptycantidatename" datatype="html">
         <source>El nombre del candidato no puede ser vacío</source>
         <target>Candidate name cannot be empty</target>
