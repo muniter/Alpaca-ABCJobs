@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import { CandidateFormRegister, CandidateServiceSchema } from './candidate';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,14 @@ export class CandidateService {
 
   constructor(private http: HttpClient) { }
 
-  userSignUp(
-    names: string,
-    lastnames: string,
-    email: string,
-    password: string
-  ): Observable<any> {
-    return this.http.post<any>(`${this.backCandidateUrl}/crear`, {
-      nombres: names,
-      apellidos: lastnames,
-      email: email,
-      password: password
-    });
+  userSignUp(candidate: CandidateFormRegister): Observable<any> {
+    let candidateServiceSchema = new CandidateServiceSchema(
+      candidate.names,
+      candidate.lastnames,
+      candidate.email,
+      candidate.password
+    );
+    return this.http.post<any>(`${this.backCandidateUrl}/crear`,candidateServiceSchema);
   }
 
 }
