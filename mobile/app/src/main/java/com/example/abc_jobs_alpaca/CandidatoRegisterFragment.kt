@@ -205,8 +205,11 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[CandidateRegisterModel::class.java]
     }
+
     private fun validateAndShowNameError(text: String, labelError: TextView) {
-        if (text.isEmpty() || text.isBlank() || text.length < 2 || text.length > 100) {
+        val isValid = validateName(text)
+
+        if (!isValid) {
             labelError.visibility = View.VISIBLE
             labelError.text = "Debe tener entre 2 y 100 caracteres y no puede estar vacío."
             isValidName = false
@@ -219,8 +222,12 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
         }
     }
 
+
+    // Uso de la función
     private fun validateAndShowLastNameError(text: String, labelError: TextView) {
-        if (text.isEmpty() || text.isBlank() || text.length < 2 || text.length > 100) {
+        val isValid = validateLastName(text)
+
+        if (!isValid) {
             labelError.visibility = View.VISIBLE
             labelError.text = "Debe tener entre 2 y 100 caracteres y no puede estar vacío."
             isValidLastName = false
@@ -232,6 +239,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
 
     private fun validateEmail(email: String, labelError: TextView) {
         if (email.isEmpty() || email.length < 5 || email.length > 255 || !isValidEmail(email)) {
@@ -245,15 +253,13 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
             isValidEmail = true
         }
     }
-    private fun isValidEmail(email: String): Boolean {
-        val pattern = Patterns.EMAIL_ADDRESS
-        return pattern.matcher(email).matches()
-    }
 
     private fun validatePassword(password: String, labelError: TextView) {
-        if (password.isEmpty() || password.length < 8 || password.length > 255) {
+        val isValid = isPasswordValid(password)
+
+        if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "La contraseña debe tener entre 8 y 20 caracteres."
+            labelError.text = "La contraseña debe tener entre 8 y 255 caracteres."
             isValidPassword = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -265,7 +271,9 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun validateRePassword(password: String, rePassword: String, labelError: TextView) {
-        if (password != rePassword) {
+        val isValid = areStringsEqual(password, rePassword)
+
+        if (!isValid) {
             labelError.visibility = View.VISIBLE
             labelError.text = "Las contraseñas no coinciden."
             isValidRePassword = false
@@ -277,6 +285,26 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
+    fun validateName(text: String): Boolean {
+        return text.isNotEmpty() && text.length in 2..100
+    }
+
+    fun validateLastName(text: String): Boolean {
+        return text.isNotEmpty() && text.length in 2..100
+    }
+    fun isValidEmail(email: String): Boolean {
+        val pattern = Patterns.EMAIL_ADDRESS
+        return pattern.matcher(email).matches()
+    }
+    fun isPasswordValid(password: String): Boolean {
+        return password.length in 8..255
+    }
+
+    fun areStringsEqual(str1: String, str2: String): Boolean {
+        return str1 == str2
+    }
+
 
     private fun handleTermsCheckBox(isChecked: Boolean, labelError: TextView) {
         if (!isChecked) {
@@ -323,6 +351,14 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
                 val lastName = view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.text.toString()
                 val email = view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.text.toString()
                 val password = view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.text.toString()
+
+                view?.findViewById<Button>(R.id.button_register)?.isEnabled = false
+                view?.findViewById<TextInputEditText>(R.id.editTextName)?.isEnabled = false
+                view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.isEnabled = false
+                view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = false
+                view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = false
+                view?.findViewById<TextInputEditText>(R.id.editTextRepeatPassword)?.isEnabled = false
+                view?.findViewById<CheckBox>(R.id.checkBoxTerms)?.isEnabled = false
 
                 val candidate = Candidate(
                     0,

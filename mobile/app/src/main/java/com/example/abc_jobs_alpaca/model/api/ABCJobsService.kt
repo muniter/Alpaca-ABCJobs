@@ -15,7 +15,9 @@ import kotlin.coroutines.suspendCoroutine
 class ABCJobsService constructor(context: Context){
 
     companion object{
-
+        private var BASEURL = "https://api.abc.muniter.link/"
+        private var CANDIDATES_PATH = "candidatos"
+        private var CREATE_PATH = "/crear"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -30,30 +32,45 @@ class ABCJobsService constructor(context: Context){
     }
 
 
-    suspend fun postCandidate(newCandidate: JSONObject) = suspendCoroutine<Candidate> { cont ->
-        requestQueue.add(
-            postRequest("", newCandidate, { response ->
-                val candidate = deserializeCandidate(JSONObject(response))
-                cont.resume(candidate)
-            }, {
-                if (it.networkResponse != null) {
-                    Log.d("NetErr", it.networkResponse.toString())
-                } else {
-                    Log.d("NetErr", "NetworkResponse es nulo")
-                }
-                cont.resumeWithException(it)
-            })
-        )
+    suspend fun postCandidate(newCandidate: JSONObject): Result<Candidate> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
+                        cont.resume(JSONObject(response))
+                    }, {
+                        if (it.networkResponse != null) {
+                            Log.d("NetErr", it.networkResponse.toString())
+                        } else {
+                            Log.d("NetErr", "NetworkResponse is null")
+                        }
+                        cont.resumeWithException(it)
+                    })
+                )
+            }
+
+            if (response.optBoolean("success", false)) {
+                val candidate = deserializeCandidate(response)
+                Result.success(candidate)
+            } else {
+                Result.failure(Exception("Request failed"))
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
     }
+
 
     private fun postRequest(
         path: String,
+        action: String,
         body: JSONObject,
         responseListener: Response.Listener<String>,
         errorListener: Response.ErrorListener,
     ): StringRequest {
         return object : StringRequest(
-            Method.POST, "https://api.abc.muniter.link/candidatos/crear", responseListener, errorListener
+            Method.POST, BASEURL+path+action, responseListener, errorListener
         ) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
