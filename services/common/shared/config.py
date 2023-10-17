@@ -21,10 +21,16 @@ class AppConfiguration:
     aws_metadata_uri: str | None = None
     db_uri: str = ""
     task_data: dict = {}
+    debug: bool = False
+    jwt_secret_key: str
+    jwt_algorithm: str
 
     def __init__(self):
         self.aws_metadata_uri = os.getenv("ECS_CONTAINER_METADATA_URI_V4")
         self.in_aws = self.aws_metadata_uri is not None
+        self.debug = True if os.environ.get("DEBUG") else False
+        self.jwt_algorithm = os.getenv("JWT_ALGORITHM", "HS256")
+        self.jwt_secret_key = os.getenv("JWT_SECRET_KEY", "secret")
         if self.in_aws:
             self.extract_metadata()
         self.database_configuration()
@@ -61,7 +67,9 @@ class AppConfiguration:
 
         try:
             s = DBSecret.model_validate_json(secret_data)
-            self.db_uri = f"postgresql+psycopg2://{s.username}:{s.password}@{s.host}/{s.dbname}"
+            self.db_uri = (
+                f"postgresql+psycopg2://{s.username}:{s.password}@{s.host}/{s.dbname}"
+            )
         except pydantic.ValidationError as e:
             raise ConfigurationError("DB_SECRET is not valid JSON") from e
 
@@ -83,6 +91,11 @@ class AppConfiguration:
             "DesiredStatus",
         ]
         self.task_data = {k: data.get(k) for k in keys}
+
+    def db_connection_check(self):
+        from .database.db import connection_check
+
+        return connection_check()
 
 
 configuration = AppConfiguration()

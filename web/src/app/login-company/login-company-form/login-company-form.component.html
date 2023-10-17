@@ -1,0 +1,33 @@
+<div class="login-company-body client-theme">
+  <app-login-logon-container>
+    <div class="logo-div">
+         <img class="logo-img" src="../../../assets/logo.png">
+</div>
+    <form>
+      <div class="form">
+
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@email">Correo electrónico</mat-label>
+          <input matInput id="companyEmail" class="form-control" formControlName="companyEmail">
+          <mat-error>
+
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-label i18n="@@password">Contraseña</mat-label>
+          <input matInput id="passwordBase" type="password" class="form-control" formControlName="password">
+          <mat-error>
+            
+          </mat-error>
+        </mat-form-field>
+
+    <app-abc-button class="inline-button bottom-margin" color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
+    <app-abc-button class="inline-button bottom-margin" routerLink="/company-logon" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
+    <mat-divider></mat-divider>
+    <app-abc-button class="inline-button top-margin" routerLink="/candidate-register" color="basic" i18n="@@candidatesportal" i18n="@@candidatesportal">PORTAL DE CANDIDATOS</app-abc-button>
+      </div>
+    </form>
+  </app-login-logon-container>
+  <app-unlogged-lang-picker route="company-login"></app-unlogged-lang-picker>
+</div>

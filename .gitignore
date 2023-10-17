@@ -3,3 +3,6 @@
 .idea/
 cdk.context.json
 .env
+__pycache__/
+*.egg-info/
+.coverage

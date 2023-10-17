@@ -1,0 +1,26 @@
+{
+  "cluster": "abc-cluster",
+  "serviceName": "gestion-candidatos",
+  "taskDefinition": "gestion-candidatos-task",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-candidatos-tg/91e5fc02d48dcfab",
+      "containerName": "gestion-candidatos",
+      "containerPort": 80
+    }
+  ],
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-02be9ab57fea970ff",
+        "subnet-09765ef03abf53d69"
+      ],
+      "securityGroups": [
+        "sg-0e9000d9de402c4b9"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  }
+}

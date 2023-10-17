@@ -1,0 +1,15 @@
+::ng-deep .tricky-input .mat-mdc-text-field-wrapper {
+    display: none !important;
+}
+
+::ng-deep .tricky-input {
+    margin-top: -11px;
+    display: block !important;
+}
+
+::ng-deep mat-divider {
+    background-color: var(--darkColor);
+    opacity: 44%;
+    width: 100%;
+}
+
