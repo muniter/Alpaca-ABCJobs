@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import SharedCustomValidators from "../../shared/utils/shared-custom-validators"
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
 
 @Component({
-  selector: 'app-logon-company-form',
-  templateUrl: './logon-company-form.component.html',
-  styleUrls: ['./logon-company-form.component.css']
+  selector: 'app-company-register',
+  templateUrl: './company-register.component.html',
+  styleUrls: ['./company-register.component.css']
 })
-
-export class LogonCompanyFormComponent implements OnInit {
+export class CompanyRegisterComponent implements OnInit {
 
   companyLogonForm!: FormGroup;
 
@@ -88,8 +87,6 @@ export class LogonCompanyFormComponent implements OnInit {
         return "";
       }
     }
-
   }
+
 }
-
-

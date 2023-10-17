@@ -2,24 +2,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 
-import { AbcButtonComponent } from './abc-button.component';
+import { CompanyLoginComponent } from './company-login.component';
 
-describe('AbcButtonComponent', () => {
-  let component: AbcButtonComponent;
-  let fixture: ComponentFixture<AbcButtonComponent>;
+describe('CompanyLoginComponent', () => {
+  let component: CompanyLoginComponent;
+  let fixture: ComponentFixture<CompanyLoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AbcButtonComponent],
-      imports: [MatButtonModule]
+      declarations: [ CompanyLoginComponent ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AbcButtonComponent);
+    fixture = TestBed.createComponent(CompanyLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

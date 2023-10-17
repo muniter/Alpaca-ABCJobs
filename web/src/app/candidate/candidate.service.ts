@@ -19,7 +19,7 @@ export class CandidateService {
       candidate.email,
       candidate.password
     );
-    return this.http.post<any>(`${this.backCandidateUrl}/crear`,candidateServiceSchema);
+    return this.http.post<any>(`${this.backCandidateUrl}/crear`, candidateServiceSchema);
   }
 
 }

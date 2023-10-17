@@ -37,11 +37,11 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -52,7 +52,7 @@
           <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -63,7 +63,7 @@
           <context context-type="linenumber">48,49</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">40,41</context>
         </context-group>
       </trans-unit>
@@ -74,7 +74,7 @@
           <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
@@ -165,8 +165,8 @@
           <context context-type="linenumber">96</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthpassword" datatype="html">
@@ -176,8 +176,8 @@
           <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidpassword" datatype="html">
@@ -187,8 +187,8 @@
           <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatepass" datatype="html">
@@ -206,8 +206,8 @@
           <context context-type="linenumber">109</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonmatchingpasswordconfirm" datatype="html">
@@ -217,8 +217,8 @@
           <context context-type="linenumber">111</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonselectedterms" datatype="html">
@@ -228,89 +228,89 @@
           <context context-type="linenumber">116</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="email" datatype="html">
         <source>Correo electrónico</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="login" datatype="html">
         <source>INICIAR SESIÓN</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="registerinabc" datatype="html">
         <source>REGISTRARSE EN ABC JOBS</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
         <source>PORTAL DE CANDIDATOS</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login-company/login-company-form/login-company-form.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyregister" datatype="html">
         <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>empresa</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyname" datatype="html">
         <source>Nombre de la empresa</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycompanyname" datatype="html">
         <source>El nombre de la empresa no puede ser vacío</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthcompanyname" datatype="html">
         <source>El nombre de la empresa debe tener entre 2 y 255 caracteres</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyemail" datatype="html">
         <source>La dirección de correo electrónico no puede ser vacía</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthemail" datatype="html">
         <source>La dirección de correo electrónico debe tener entre 2 y 255 caracteres</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidemail" datatype="html">
         <source>La dirección de correo electrónico ingresada es inválida</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/logon-company/logon-company-form/logon-company-form.component.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language" datatype="html">

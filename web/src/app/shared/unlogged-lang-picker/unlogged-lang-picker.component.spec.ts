@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 import { UnloggedLangPickerComponent } from './unlogged-lang-picker.component';
 
@@ -15,7 +16,8 @@ describe('UnloggedLangPickerComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatFormFieldModule,
-        MatSelectModule
+        MatSelectModule,
+        BrowserAnimationsModule
       ],
       declarations: [ UnloggedLangPickerComponent ]
     })
