@@ -1,12 +1,14 @@
 from typing import Union
 from fastapi import APIRouter, Depends, FastAPI, Response
 from common.shared.api_models.gestion_usuarios import (
+    UsuarioDTO,
     UsuarioLoginDTO,
     UsuarioLoginResponseDTO,
     UsuarioRegisterDTO,
 )
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse, SuccessResponse
 from common.shared.fastapi import shared_app_setup
+from common.shared.jwt import get_request_user
 from gestion_usuarios.usuarios import UsuarioService, get_usuario_service
 
 app = FastAPI(
@@ -51,6 +53,17 @@ def login(
         return ErrorResponse(errors=result)
 
     return SuccessResponse(data=result)
+
+
+@router.get(
+    "/me",
+    response_model=Union[SuccessResponse[UsuarioDTO], ErrorResponse],
+    status_code=200,
+)
+def me(
+    user: UsuarioDTO = Depends(get_request_user),
+):
+    return SuccessResponse(data=user)
 
 
 app.include_router(router)  # Regiser alone so everything is at root

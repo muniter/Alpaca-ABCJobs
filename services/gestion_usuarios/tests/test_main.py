@@ -141,6 +141,26 @@ def test_login_password_invalido():
     assert json["errors"]["password"] is not None
 
 
+def test_me_endpoint():
+    usuario_empresa = crear_usuario_empresa()
+    result = service.login(
+        UsuarioLoginDTO(
+            email=usuario_empresa.email,
+            password=usuario_empresa.password,
+        )
+    )
+    assert isinstance(result, UsuarioLoginResponseDTO)
+
+    response = client.get(
+        "/usuarios/me",
+        headers={"Authorization": f"Bearer {result.token}"},
+    )
+    json = response.json()
+    assert response.status_code == 200
+    assert json["data"]["id"] == usuario_empresa.id
+    assert json["data"]["email"] == usuario_empresa.email
+
+
 repository = UsuarioRepository(session=get_db_session())
 service = UsuarioService(repository=repository)
 
