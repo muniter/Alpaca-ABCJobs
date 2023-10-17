@@ -2,17 +2,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CompanyLoginComponent } from './company-login/company-login.component';
 import { CompanyRegisterComponent } from './company-register/company-register.component';
+import { AppRoutesEnum } from '../core/enums';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'company-login',
+        path: AppRoutesEnum.companyLogin,
         component: CompanyLoginComponent
       },
       {
-        path: 'company-register',
+        path: AppRoutesEnum.companyRegister,
         component: CompanyRegisterComponent
       }
     ]

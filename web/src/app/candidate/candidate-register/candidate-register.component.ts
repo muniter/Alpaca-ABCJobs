@@ -35,8 +35,7 @@ export class CandidateRegisterComponent implements OnInit {
         termsCheck2: ["", [Validators.required]]
       },
       {
-        validator: SharedCustomValidators.ConfirmedPassValidator('password', 'passwordConfirm')/* ,
-        validator2: SharedCustomValidators.ConfirmedSaveValidator() */
+        validator: SharedCustomValidators.ConfirmedPassValidator('password', 'passwordConfirm')
       }
     )
   }

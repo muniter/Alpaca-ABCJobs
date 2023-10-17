@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
+import { CompanyRegisterForm } from '../company';
+import { CompanyService } from '../company.service';
 
 @Component({
   selector: 'app-company-register',
@@ -9,13 +11,19 @@ import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validator
 })
 export class CompanyRegisterComponent implements OnInit {
 
-  companyLogonForm!: FormGroup;
+  private mapKeys: { [index: string]: string } = {
+    "nombre": "companyName",
+    "email": "companyEmail",
+    "password": "password"
+  };
 
-  constructor(private formBuilder: FormBuilder) {
+  companyRegisterForm!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private companyService: CompanyService) {
   }
 
   ngOnInit() {
-    this.companyLogonForm = this.formBuilder.group({
+    this.companyRegisterForm = this.formBuilder.group({
       companyName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(255), SharedCustomValidators.spaceOnlyValidator]],
       companyEmail: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(255), SharedCustomValidators.spaceOnlyValidator, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(20), SharedCustomValidators.spaceOnlyValidator]],
@@ -29,57 +37,63 @@ export class CompanyRegisterComponent implements OnInit {
   }
 
   MarkTouchedAux() {
-    this.companyLogonForm.controls["termsCheck2"].markAsTouched();
+    this.companyRegisterForm.controls["termsCheck2"].markAsTouched();
 
-    if (!this.companyLogonForm.controls["termsCheck"].value) {
-      this.companyLogonForm.controls["termsCheck2"].setErrors({ required: true });
+    if (!this.companyRegisterForm.controls["termsCheck"].value) {
+      this.companyRegisterForm.controls["termsCheck2"].setErrors({ required: true });
     }
     else {
-      this.companyLogonForm.controls["termsCheck2"].setErrors(null);
+      this.companyRegisterForm.controls["termsCheck2"].setErrors(null);
     }
   }
 
   getErrorMessage(field: String) {
     switch (field) {
       case "companyName": {
-        return (this.companyLogonForm.get('companyName')!.hasError('required') ||
-          this.companyLogonForm.get('companyName')!.hasError('isOnlyWhiteSpace')) ?
+        return (this.companyRegisterForm.get('companyName')!.hasError('required') ||
+          this.companyRegisterForm.get('companyName')!.hasError('isOnlyWhiteSpace')) ?
           $localize`:@@nonemptycompanyname:El nombre de la empresa no puede ser vacío` :
-          (this.companyLogonForm.get('companyName')!.hasError('minlength') ||
-            this.companyLogonForm.get('companyName')!.hasError('maxlength')) ?
+          (this.companyRegisterForm.get('companyName')!.hasError('minlength') ||
+            this.companyRegisterForm.get('companyName')!.hasError('maxlength')) ?
             $localize`:@@invalidlengthcompanyname:El nombre de la empresa debe tener entre 2 y 255 caracteres` :
+            this.companyRegisterForm.get('companyName')!.hasError('responseMessageError') ?
+              $localize`:@@responseerrorcompanyname:Error en el registro: ${this.companyRegisterForm.get('companyName')?.getError('responseMessageError')}` :
             "";
       }
       case "companyEmail": {
-        return (this.companyLogonForm.get('companyEmail')!.hasError('required') ||
-          this.companyLogonForm.get('companyEmail')!.hasError('isOnlyWhiteSpace')) ?
+        return (this.companyRegisterForm.get('companyEmail')!.hasError('required') ||
+          this.companyRegisterForm.get('companyEmail')!.hasError('isOnlyWhiteSpace')) ?
           $localize`:@@nonemptyemail:La dirección de correo electrónico no puede ser vacía` :
-          (this.companyLogonForm.get('companyEmail')!.hasError('minlength') ||
-            this.companyLogonForm.get('companyEmail')!.hasError('maxlength')) ?
+          (this.companyRegisterForm.get('companyEmail')!.hasError('minlength') ||
+            this.companyRegisterForm.get('companyEmail')!.hasError('maxlength')) ?
             $localize`:@@invalidlengthemail:La dirección de correo electrónico debe tener entre 2 y 255 caracteres` :
-            this.companyLogonForm.get('companyEmail')!.hasError('email') ?
+            this.companyRegisterForm.get('companyEmail')!.hasError('email') ?
               $localize`:@@invalidemail:La dirección de correo electrónico ingresada es inválida` :
+              this.companyRegisterForm.get('companyEmail')!.hasError('responseMessageError') ?
+                $localize`:@@responseerrorcompanyemail:Error en el registro: ${this.companyRegisterForm.get('companyEmail')?.getError('responseMessageError')}` :
               "";
       }
       case "password": {
-        return (this.companyLogonForm.get('password')!.hasError('required')) ?
+        return (this.companyRegisterForm.get('password')!.hasError('required')) ?
           $localize`:@@nonemptypassword:La contraseña no puede ser vacía` :
-          (this.companyLogonForm.get('password')!.hasError('minlength') ||
-            this.companyLogonForm.get('password')!.hasError('maxlength')) ?
+          (this.companyRegisterForm.get('password')!.hasError('minlength') ||
+            this.companyRegisterForm.get('password')!.hasError('maxlength')) ?
             $localize`:@@invalidlengthpassword:La contraseña debe tener entre 8 y 20 caracteres` :
-            (this.companyLogonForm.get('password')!.hasError('isOnlyWhiteSpace')) ?
+            (this.companyRegisterForm.get('password')!.hasError('isOnlyWhiteSpace')) ?
               $localize`:@@invalidpassword:La contraseña ingresada es inválida` :
+              this.companyRegisterForm.get('password')!.hasError('responseMessageError') ?
+                $localize`:@@responseerrorcompanypass:Error en el registro: ${this.companyRegisterForm.get('password')?.getError('responseMessageError')}` :
               "";
       }
       case "passwordConfirm": {
-        return (this.companyLogonForm.get('passwordConfirm')!.hasError('required')) ?
+        return (this.companyRegisterForm.get('passwordConfirm')!.hasError('required')) ?
           $localize`:@@nonemptypasswordconfirm:La confirmación de contraseña es obligatoria` :
-          (this.companyLogonForm.get('passwordConfirm')!.hasError('confirmedValidator')) ?
+          (this.companyRegisterForm.get('passwordConfirm')!.hasError('confirmedValidator')) ?
             $localize`:@@nonmatchingpasswordconfirm:Las contraseñas no coinciden` :
             "";
       }
       case "termsCheck": {
-        return (this.companyLogonForm.get('termsCheck')!.hasError('required')) ?
+        return (this.companyRegisterForm.get('termsCheck')!.hasError('required')) ?
           $localize`:@@nonselectedterms:Debe aceptar los términos y condiciones` :
           "";
       }
@@ -87,6 +101,30 @@ export class CompanyRegisterComponent implements OnInit {
         return "";
       }
     }
+  }
+
+  setErrorBack(exception: any) {
+    if (exception.error?.errors !== undefined) {
+      Object.entries(exception.error.errors).forEach(([key, value]) => {
+        this.companyRegisterForm.controls[this.mapKeys[key]].setErrors({ "responseMessageError": value });
+      });
+
+    } else {
+      console.log("Exception response sin array de errores");
+    }
+  }
+
+  registerCompany(company: NgForm) {
+    console.log(company);
+
+    let companyData = new CompanyRegisterForm(this.companyRegisterForm.get('companyName')?.value,
+      this.companyRegisterForm.get('companyEmail')?.value,
+      this.companyRegisterForm.get('password')?.value);
+
+    this.companyService.companySignUp(companyData).subscribe({
+      error: (exception) => this.setErrorBack(exception),
+      complete: () => console.log("oki")
+    })
   }
 
 }

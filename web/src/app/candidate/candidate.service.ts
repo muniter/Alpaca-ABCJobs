@@ -8,7 +8,7 @@ import { CandidateFormRegister, CandidateServiceSchema } from './candidate';
   providedIn: 'root'
 })
 export class CandidateService {
-  private backCandidateUrl = environment.backCandidateUrl;
+  private backCandidateUrl = environment.baseUrl + 'candidatos';
 
   constructor(private http: HttpClient) { }
 
