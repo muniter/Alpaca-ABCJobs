@@ -2,6 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AbcButtonComponent } from './abc-button.component';
 
@@ -11,9 +12,10 @@ describe('AbcButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AbcButtonComponent ]
+      declarations: [AbcButtonComponent],
+      imports: [MatButtonModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
