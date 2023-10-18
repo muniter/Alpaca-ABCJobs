@@ -188,8 +188,12 @@
           <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthpassword" datatype="html">
@@ -206,14 +210,17 @@
       </trans-unit>
       <trans-unit id="invalidpassword" datatype="html">
         <source>La contraseña ingresada es inválida</source>
-        <target>Invalid password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
           <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatepass" datatype="html">
@@ -298,6 +305,38 @@
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nonemptyemail" datatype="html">
+        <source>La dirección de correo electrónico no puede ser vacía</source>
+        <target>E-mail address can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidemail" datatype="html">
+        <source>La dirección de correo electrónico ingresada es inválida</source>
+        <target>E-mail address is invalid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcompanylogin" datatype="html">
+        <source>Falló el inicio de sesión, inténtelo de nuevo.</source>
+        <target>Login failed, please try again.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="companyregister" datatype="html">
         <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>empresa</source>
         <target>Sign Up as<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>company</target>
@@ -330,12 +369,12 @@
           <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="nonemptyemail" datatype="html">
-        <source>La dirección de correo electrónico no puede ser vacía</source>
-        <target>E-mail address can not be empty</target>
+      <trans-unit id="responseerrorcompanyname" datatype="html">
+        <source>Error en el registro: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;companyName&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Error during registration: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;companyName&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthemail" datatype="html">
@@ -346,14 +385,22 @@
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="invalidemail" datatype="html">
-        <source>La dirección de correo electrónico ingresada es inválida</source>
-        <target>E-mail address is invalid</target>
+      <trans-unit id="responseerrorcompanyemail" datatype="html">
+        <source>Error en el registro: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;companyEmail&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Error during registration: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;companyEmail&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">75</context>
         </context-group>
-      </trans-unit> 
+      </trans-unit>
+      <trans-unit id="responseerrorcompanypass" datatype="html">
+        <source>Error en el registro: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Error during registration: <x id="PH" equiv-text="this.companyRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="language" datatype="html">
         <source>Idioma: </source>
         <target>Language: </target>

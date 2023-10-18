@@ -6,7 +6,7 @@ import { AppRoutesEnum } from '../core/enums';
 
 const routes: Routes = [
   {
-    path: '',
+    path: AppRoutesEnum.company,
     children: [
       {
         path: AppRoutesEnum.companyLogin,

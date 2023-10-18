@@ -1,7 +1,7 @@
 <div class="logon-company-body client-theme">
   <app-login-logon-container>
     <app-form-header portal="company" i18n="@@companyregister">Registro de <br>empresa</app-form-header>
-    <form #form="ngForm" [formGroup]="companyRegisterForm" (ngSubmit)="registerCompany(companyRegisterForm.value)" >
+    <form [formGroup]="companyRegisterForm" (ngSubmit)="registerCompany()" >
       <div class="form">
 
         <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">

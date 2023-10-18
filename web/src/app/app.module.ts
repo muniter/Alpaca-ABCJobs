@@ -9,6 +9,7 @@ import { CandidateModule } from './candidate/candidate.module';
 import { CommonModule } from '@angular/common';
 import { CompanyModule } from './company/company.module';
 import { CompanyRoutingModule } from './company/company-routing.routing';
+import { CandidateRoutingModule } from './candidate/candidate-routing.routing';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CompanyRoutingModule } from './company/company-routing.routing';
     BrowserAnimationsModule,
     CompanyModule,
     CompanyRoutingModule,
-    CandidateModule
+    CandidateModule,
+    CandidateRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

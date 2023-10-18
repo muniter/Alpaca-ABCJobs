@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
-import { CompanyRegisterForm } from '../company';
+import { CompanyRegisterRequest } from '../company';
 import { CompanyService } from '../company.service';
+import { AppRoutesEnum } from 'src/app/core/enums';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-register',
@@ -19,7 +21,7 @@ export class CompanyRegisterComponent implements OnInit {
 
   companyRegisterForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private companyService: CompanyService) {
+  constructor(private formBuilder: FormBuilder, private companyService: CompanyService, private router: Router) {
   }
 
   ngOnInit() {
@@ -114,16 +116,14 @@ export class CompanyRegisterComponent implements OnInit {
     }
   }
 
-  registerCompany(company: NgForm) {
-    console.log(company);
-
-    let companyData = new CompanyRegisterForm(this.companyRegisterForm.get('companyName')?.value,
+  registerCompany() {
+    let companyData = new CompanyRegisterRequest(this.companyRegisterForm.get('companyName')?.value,
       this.companyRegisterForm.get('companyEmail')?.value,
       this.companyRegisterForm.get('password')?.value);
 
     this.companyService.companySignUp(companyData).subscribe({
       error: (exception) => this.setErrorBack(exception),
-      complete: () => console.log("oki")
+      complete: () => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}`)
     })
   }
 

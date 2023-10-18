@@ -3,32 +3,32 @@
     <div class="logo-div">
       <img class="logo-img" src="../../../assets/logo.png">
     </div>
-    <form [formGroup]="companyLoginForm">
-      <div class="form">
+    <form [formGroup]="companyLoginForm" (ngSubmit)="loginCompany()">
+      <div class="form"> 
 
         <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n="@@email">Correo electrónico</mat-label>
           <input matInput id="companyEmail" class="form-control" formControlName="companyEmail">
-          <mat-error>
-
+          <mat-error *ngIf="companyLoginForm.get('companyEmail')!.invalid">
+            {{ getErrorMessage('companyEmail') }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n="@@password">Contraseña</mat-label>
-          <input matInput id="passwordBase" type="password" class="form-control" formControlName="password">
-          <mat-error>
-
+          <input matInput id="password" type="password" class="form-control" formControlName="password">
+          <mat-error *ngIf="companyLoginForm.get('password')!.invalid">
+            {{ getErrorMessage('password') }}
           </mat-error>
         </mat-form-field>
 
-        <app-abc-button class="inline-button bottom-margin" color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
-        <app-abc-button class="inline-button bottom-margin" routerLink="/company-register" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
+        <app-abc-button type="submit" [disabled]="!companyLoginForm.valid" class="inline-button bottom-margin" color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
+        <app-abc-button class="inline-button bottom-margin" routerLink="/company/register" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
         <mat-divider></mat-divider>
-        <app-abc-button class="inline-button top-margin" routerLink="/candidate-register" color="basic"
+        <app-abc-button class="inline-button top-margin" routerLink="/candidate/register" color="basic"
           i18n="@@candidatesportal" i18n="@@candidatesportal">PORTAL DE CANDIDATOS</app-abc-button>
       </div>
     </form>
   </app-login-logon-container>
-  <app-unlogged-lang-picker route="company-login"></app-unlogged-lang-picker>
+  <app-unlogged-lang-picker route="company/login"></app-unlogged-lang-picker>
 </div>

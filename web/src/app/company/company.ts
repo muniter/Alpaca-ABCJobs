@@ -8,12 +8,22 @@ export class Company {
     }
 }
 
-export class CompanyRegisterForm extends Company {
+export class CompanyRegisterRequest extends Company {
     password: string;
 
     public constructor(nombre: string, email: string, password: string) {
         super(nombre, email);
 
+        this.password = password;
+    }
+}
+
+export class CompanyLoginRequest {
+    email: string;
+    password: string;
+
+    public constructor(email: string, password: string) {
+        this.email = email;
         this.password = password;
     }
 }
