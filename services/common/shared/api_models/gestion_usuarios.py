@@ -60,9 +60,5 @@ class UsuarioLoginResponseDTO(BaseModel):
     token: str
 
 
-class UsuarioSetConfigDTO(BaseModel):
-    config: dict
-
-
 class UsuarioConfigDTO(BaseModel):
     config: dict
