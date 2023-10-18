@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +17,7 @@ describe('CandidateRegisterComponent', () => {
   let component: CandidateRegisterComponent;
   let fixture: ComponentFixture<CandidateRegisterComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
@@ -29,9 +29,9 @@ describe('CandidateRegisterComponent', () => {
         MatCheckboxModule,
         BrowserAnimationsModule
       ],
-      declarations: [ CandidateRegisterComponent ]
+      declarations: [CandidateRegisterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -46,9 +46,9 @@ describe('CandidateRegisterComponent', () => {
 
   it("should register candidate", () => {
     spyOn(component, 'candidateRegister').and.callThrough();
-    let pass = faker.lorem.word({ length: { min: 8, max: 20 }});
-    component.candidateRegisterForm.controls['names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 }}));
-    component.candidateRegisterForm.controls['lastnames'].setValue(faker.lorem.word({ length: { min: 2, max: 50 }}));
+    let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
+    component.candidateRegisterForm.controls['names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
+    component.candidateRegisterForm.controls['lastnames'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
     component.candidateRegisterForm.controls['email'].setValue(faker.internet.email());
     component.candidateRegisterForm.controls['password'].setValue(pass);
     component.candidateRegisterForm.controls['passwordConfirm'].setValue(pass);
@@ -81,11 +81,11 @@ describe('CandidateRegisterComponent', () => {
 
     names.setValue('');
     expect(names.hasError('required')).toBeTruthy();
-    
-    names.setValue(faker.lorem.word({ length: { min: 1, max: 1 }}));
+
+    names.setValue(faker.lorem.word({ length: { min: 1, max: 1 } }));
     expect(names.hasError('minlength')).toBeTruthy();
 
-    names.setValue(faker.lorem.words({min:101, max: 102}));
+    names.setValue(faker.lorem.words({ min: 101, max: 102 }));
     expect(names.hasError('maxlength')).toBeTruthy();
 
     names.setValue('     ');
@@ -99,10 +99,10 @@ describe('CandidateRegisterComponent', () => {
     lastnames.setValue('');
     expect(lastnames.hasError('required')).toBeTruthy();
 
-    lastnames.setValue(faker.lorem.word({ length: { min: 1, max: 1 }}));
+    lastnames.setValue(faker.lorem.word({ length: { min: 1, max: 1 } }));
     expect(lastnames.hasError('minlength')).toBeTruthy();
 
-    lastnames.setValue(faker.lorem.words({min:101, max: 102}));
+    lastnames.setValue(faker.lorem.words({ min: 101, max: 102 }));
     expect(lastnames.hasError('maxlength')).toBeTruthy();
 
     lastnames.setValue('     ');
@@ -116,16 +116,16 @@ describe('CandidateRegisterComponent', () => {
     email.setValue('');
     expect(email.hasError('required')).toBeTruthy();
 
-    email.setValue(faker.lorem.word({ length: { min: 1, max: 1 }}));
+    email.setValue(faker.lorem.word({ length: { min: 1, max: 1 } }));
     expect(email.hasError('minlength')).toBeTruthy();
 
-    email.setValue(faker.lorem.words({min:256, max: 257}));
+    email.setValue(faker.lorem.words({ min: 256, max: 257 }));
     expect(email.hasError('maxlength')).toBeTruthy();
 
     email.setValue('     ');
     expect(email.hasError('isOnlyWhiteSpace')).toBeTruthy();
-    
-    email.setValue(faker.lorem.word({length:5}));
+
+    email.setValue(faker.lorem.word({ length: 5 }));
     expect(email.hasError('email')).toBeTruthy();
 
   });
@@ -137,10 +137,10 @@ describe('CandidateRegisterComponent', () => {
     password.setValue('');
     expect(password.hasError('required')).toBeTruthy();
 
-    password.setValue(faker.lorem.word({ length: { min: 1, max: 1 }}));
+    password.setValue(faker.lorem.word({ length: { min: 1, max: 1 } }));
     expect(password.hasError('minlength')).toBeTruthy();
 
-    password.setValue(faker.lorem.words({min:21, max: 22}));
+    password.setValue(faker.lorem.words({ min: 21, max: 22 }));
     expect(password.hasError('maxlength')).toBeTruthy();
 
     password.setValue('     ');
@@ -150,7 +150,7 @@ describe('CandidateRegisterComponent', () => {
   it('termsCheck field validity', () => {
     const termsCheck = component.candidateRegisterForm.controls['termsCheck'];
     expect(termsCheck.valid).toBeFalsy();
-    
+
     termsCheck.setValue(true);
     expect(termsCheck.valid).toBeTruthy();
 
