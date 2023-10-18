@@ -89,7 +89,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gestion_usuarios_cov_report
-          path: gestion_usuarios/cov_report
+          path: services/gestion_usuarios/cov_report
           if-no-files-found: error
 
       - name: Push the image
