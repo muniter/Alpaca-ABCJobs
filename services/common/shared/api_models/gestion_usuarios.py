@@ -18,7 +18,6 @@ UsuarioDTO = Union[UsuarioCandidatoDTO, UsuarioEmpresaDTO]
 
 
 def build_usuario_dto(usuario_data: dict) -> UsuarioDTO:
-
     if usuario_data.get("id_candidato", None):
         return UsuarioCandidatoDTO.model_validate(usuario_data)
     elif usuario_data.get("id_empresa", None):
@@ -59,3 +58,7 @@ class UsuarioRegisterDTO(BaseModel):
 class UsuarioLoginResponseDTO(BaseModel):
     usuario: UsuarioDTO
     token: str
+
+
+class UsuarioConfigDTO(BaseModel):
+    config: dict
