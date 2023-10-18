@@ -19,7 +19,6 @@ concurrency:
 permissions:
   id-token: write
   contents: read
-  pages: write
 
 jobs:
   build:
@@ -28,7 +27,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      pages: write
 
     steps:
       - name: Checkout Repository
@@ -86,7 +84,13 @@ jobs:
           mv .env.example .env
           docker-compose up -d
           docker-compose exec -T gestion_usuarios pytest --cov --cov-report html:cov_report --cov-report term --cov-fail-under=80
-          cp -r gestion_usuarios/cov_report /tmp/cov_report
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: gestion_usuarios_cov_report
+          path: gestion_usuarios/cov_report
+          if-no-files-found: error
 
       - name: Push the image
         if: github.ref == 'refs/heads/master'
@@ -110,17 +114,3 @@ jobs:
           service: gestion-usuarios
           cluster: abc-cluster
 
-      - name: Checkout Github Pages
-        uses: actions/checkout@v4
-        with:
-          path: gh-pages
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: '/tmp/cov_report'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
