@@ -83,7 +83,7 @@ jobs:
           cd services
           mv .env.example .env
           docker-compose up -d
-          docker-compose exec -T gestion_candidatos pytest --cov --cov-fail-under=80
+          docker-compose exec -T gestion_candidatos pytest --cov --cov-report html:cov_report --cov-report term --cov-fail-under=80
 
       - name: Archive code coverage results
         if: github.ref == 'refs/heads/master'
