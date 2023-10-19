@@ -33,10 +33,12 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
 
     @router.get("/")
     @router.get("/ping")
+    @app.get("/ping")
     def ping():
         return {"ping": "pong"}
 
     @router.get("/health")
+    @app.get("/health")
     def health(source: str = "unknown"):
         data_status = "healthy"
 
