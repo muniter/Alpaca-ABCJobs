@@ -1,3 +1,4 @@
+from typing import Generator
 from sqlalchemy.orm import Session
 from ..config import configuration
 from sqlalchemy import create_engine, text
@@ -20,8 +21,19 @@ def recreate_all():
 
 
 def get_db_session() -> Session:
-    session = Session(engine)
+    session = Session(engine, autoflush=False)
     return session
+
+
+def get_db_session_dependency() -> Generator[Session, None, None]:
+    session = get_db_session()
+    try:
+        yield session
+    except Exception as e:
+        session.rollback()
+        raise e
+    finally:
+        session.close()
 
 
 def connection_check():

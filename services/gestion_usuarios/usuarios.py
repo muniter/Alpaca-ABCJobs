@@ -9,7 +9,7 @@ from common.shared.api_models.gestion_usuarios import (
     UsuarioRegisterDTO,
 )
 from common.shared.api_models.shared import ErrorBuilder
-from common.shared.database.db import get_db_session
+from common.shared.database.db import get_db_session_dependency
 from common.shared.database.models import Candidato, Empresa, Usuario
 from common.shared.jwt import create_token, get_usuario_from_token
 
@@ -132,7 +132,7 @@ class UsuarioService:
 
 
 def get_usuario_repository(
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_db_session_dependency),
 ) -> UsuarioRepository:
     return UsuarioRepository(session)
 

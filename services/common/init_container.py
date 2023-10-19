@@ -1,6 +1,6 @@
-from common.shared.database.db import recreate_all
+from common.shared.database.seed import seed
 
 print("Recreating database")
-recreate_all()
+seed()
 print("Database recreated")
 exit(0)
