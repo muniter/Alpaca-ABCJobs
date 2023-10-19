@@ -1,7 +1,7 @@
 from typing import List
 from typing import Optional
 from sqlalchemy import ForeignKey
-from sqlalchemy import String
+from sqlalchemy import String, JSON
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -69,6 +69,8 @@ class Usuario(Base):
     id_candidato: Mapped[Optional[int]] = mapped_column(
         ForeignKey("candidato.id"), nullable=True, unique=True
     )
+    # JSON config column
+    config: Mapped[dict] = mapped_column(JSON, nullable=False, default={})
 
     def build_usuario_dto(self) -> UsuarioDTO:
         if self.id_candidato:

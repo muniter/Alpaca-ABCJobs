@@ -83,7 +83,15 @@ jobs:
           cd services
           mv .env.example .env
           docker-compose up -d
-          docker-compose exec -T gestion_candidatos pytest --cov --cov-fail-under=80
+          docker-compose exec -T gestion_candidatos pytest --cov --cov-report html:cov_report --cov-report term --cov-fail-under=80
+
+      - name: Archive code coverage results
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v3
+        with:
+          name: gestion_usuarios_cov_report
+          path: services/gestion_candidatos/cov_report
+          if-no-files-found: error
 
       - name: Push the image
         if: github.ref == 'refs/heads/master'

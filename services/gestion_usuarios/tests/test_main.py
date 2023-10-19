@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginDTO,
@@ -26,6 +27,24 @@ def crear_empresa():
     session.commit()
     session.refresh(empresa)
     return empresa
+
+
+def login_with_api(email, password):
+    response = client.post(
+        "/usuarios/login",
+        json={
+            "email": email,
+            "password": password,
+        },
+    )
+    json = response.json()
+    assert response.status_code == 200
+    assert json["data"]["token"] is not None
+    return json["data"]["token"]
+
+
+def headers_with_token(token):
+    return {"Authorization": f"Bearer {token}"}
 
 
 def crear_usuario_empresa():
@@ -141,6 +160,55 @@ def test_login_password_invalido():
     assert json["errors"]["password"] is not None
 
 
+def test_me_endpoint():
+    usuario_empresa = crear_usuario_empresa()
+
+    response = client.post(
+        "/usuarios/login",
+        json={
+            "email": usuario_empresa.email,
+            "password": usuario_empresa.password,
+        },
+    )
+    result = service.login(
+        UsuarioLoginDTO(
+            email=usuario_empresa.email,
+            password=usuario_empresa.password,
+        )
+    )
+    assert isinstance(result, UsuarioLoginResponseDTO)
+
+    response = client.get(
+        "/usuarios/me",
+        headers={"Authorization": f"Bearer {result.token}"},
+    )
+    json = response.json()
+    assert response.status_code == 200
+    assert json["data"]["id"] == usuario_empresa.id
+    assert json["data"]["email"] == usuario_empresa.email
+
+
+def test_config_api():
+    usuario_empresa = crear_usuario_empresa()
+    token = login_with_api(usuario_empresa.email, usuario_empresa.password)
+    config = {"hola": "mundo"}
+    response = client.post(
+        "/usuarios/config",
+        json={
+            "config": config,
+        },
+        headers=headers_with_token(token),
+    )
+    assert response.status_code == 200
+
+    response = client.get(
+        "/usuarios/config",
+        headers=headers_with_token(token),
+    )
+    assert response.status_code == 200
+    assert response.json()["data"]["config"] == config
+
+
 repository = UsuarioRepository(session=get_db_session())
 service = UsuarioService(repository=repository)
 
@@ -217,3 +285,11 @@ def test_service_create_empresa_no_existe():
     assert isinstance(result, ErrorBuilder)
     assert result.has_error
     assert result.serialize()["id_empresa"] is not None
+
+
+def test_repository_config():
+    usuario_empresa = crear_usuario_empresa()
+    config = {"hola": "mundo"}
+    repository.set_config(usuario_empresa.id, config)
+    result = repository.get_config(usuario_empresa.id)
+    assert result == config
