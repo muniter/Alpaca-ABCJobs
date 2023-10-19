@@ -13,7 +13,7 @@ from common.shared.api_models.gestion_usuarios import (
 )
 from common.shared.clients.usuario import UsuarioClient
 from common.shared.database.models import Empresa
-from common.shared.database.db import get_db_session
+from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
 
 
@@ -96,7 +96,7 @@ class EmpresaService:
 
 
 def get_empresa_repository(
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_db_session_dependency),
 ) -> EmpresaRepository:
     return EmpresaRepository(session)
 

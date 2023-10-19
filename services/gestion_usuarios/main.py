@@ -96,8 +96,8 @@ def get_config(
     repository: UsuarioRepository = Depends(get_usuario_repository),
 ):
     user_model = repository.get_by_id(current_user.id)
+    assert user_model is not None
     assert current_user is not None
-    print(user_model.config)
     return SuccessResponse(data=UsuarioConfigDTO(config=user_model.config))
 
 

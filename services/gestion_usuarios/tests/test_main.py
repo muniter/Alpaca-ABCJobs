@@ -15,10 +15,10 @@ from gestion_usuarios.usuarios import UsuarioRepository, UsuarioService
 
 faker = Faker()
 client = TestClient(app)
+session = get_db_session()
 
 
 def crear_empresa():
-    session = get_db_session()
     empresa = Empresa(
         nombre=faker.company(),
         email=faker.email(),
@@ -54,7 +54,6 @@ def crear_usuario_empresa():
         password=faker.password(),
         id_empresa=empresa.id,
     )
-    session = get_db_session()
     session.add(usuario)
     session.commit()
     session.refresh(usuario)
@@ -209,7 +208,7 @@ def test_config_api():
     assert response.json()["data"]["config"] == config
 
 
-repository = UsuarioRepository(session=get_db_session())
+repository = UsuarioRepository(session=session)
 service = UsuarioService(repository=repository)
 
 
