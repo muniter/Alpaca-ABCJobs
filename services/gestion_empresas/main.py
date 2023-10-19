@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
+from common.shared.config import configuration
 from common.shared.api_models.gestion_empresas import (
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
@@ -46,5 +47,6 @@ def crear(
     return SuccessResponse(data=result)
 
 
-app.include_router(router)
+if not configuration.in_aws:
+    app.include_router(router)
 app.include_router(router, prefix="/empresas", tags=["empresas"])

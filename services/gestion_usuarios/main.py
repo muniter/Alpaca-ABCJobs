@@ -7,6 +7,7 @@ from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
     UsuarioRegisterDTO,
 )
+from common.shared.config import configuration
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse, SuccessResponse
 from common.shared.fastapi import shared_app_setup
 from common.shared.jwt import get_request_user
@@ -101,6 +102,7 @@ def get_config(
     return SuccessResponse(data=UsuarioConfigDTO(config=user_model.config))
 
 
-app.include_router(router)  # Regiser alone so everything is at root
+if not configuration.in_aws:
+    app.include_router(router)
 # Register under /evaluaciones for prod
 app.include_router(router, prefix="/usuarios", tags=["usuarios"])

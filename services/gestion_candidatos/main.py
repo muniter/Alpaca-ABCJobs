@@ -7,6 +7,7 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoPersonalInformationUpdateDTO,
     CountryDTO,
 )
+from common.shared.config import configuration
 from common.shared.api_models.gestion_usuarios import UsuarioDTO
 from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
@@ -16,13 +17,19 @@ from common.shared.api_models.shared import (
     SuccessResponse,
     ErrorResponse,
 )
-from .candidato import CandidatoService, CountryRepository, get_candidato_service, get_country_repository
+from .candidato import (
+    CandidatoService,
+    CountryRepository,
+    get_candidato_service,
+    get_country_repository,
+)
 
 app = FastAPI(
     openapi_url="/candidatos/openapi.json",
     docs_url="/candidatos/docs",
 )
 router = APIRouter()
+utils_router = APIRouter()
 shared_app_setup(app, router)
 
 
@@ -80,7 +87,7 @@ def get_personal_info(
     return SuccessResponse(data=result)
 
 
-@router.get(
+@utils_router.get(
     "/utils/countries",
     response_model=SuccessResponse[List[CountryDTO]],
     status_code=status.HTTP_200_OK,
@@ -92,5 +99,9 @@ def get_countries(
     return SuccessResponse(data=result)
 
 
-app.include_router(router)
+if not configuration.in_aws:
+    app.include_router(router)
+    app.include_router(utils_router)
+
 app.include_router(router, prefix="/candidatos", tags=["candidatos"])
+app.include_router(utils_router, prefix="/candidatos", tags=["utils"])
