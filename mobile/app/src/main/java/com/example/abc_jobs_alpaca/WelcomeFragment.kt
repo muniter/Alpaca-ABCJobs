@@ -1,6 +1,7 @@
 package com.example.abc_jobs_alpaca
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
@@ -15,14 +18,11 @@ import androidx.fragment.app.Fragment
 import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.abc_jobs_alpaca.utils.LocalHelper
 
-/**
- * An example full-screen fragment that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class WelcomeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)
-
+    private lateinit var context: Context
 
     @Suppress("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -48,11 +48,7 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     private var visible: Boolean = false
     private val hideRunnable = Runnable { hide() }
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
+
     private val delayHideTouchListener = View.OnTouchListener { _, _ ->
         if (AUTO_HIDE) {
             delayedHide(AUTO_HIDE_DELAY_MILLIS)
@@ -75,33 +71,47 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
+        // Obtén una referencia al Spinner y configúralo
+        val languageSpinner = binding.root?.findViewById<Spinner>(R.id.spinner)
+        val languageOptions = arrayOf("Español", "Inglés") // Agrega más idiomas según tus necesidades
 
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languageOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        languageSpinner?.adapter = adapter
+
+        // Agrega un escuchador para manejar la selección del idioma en el Spinner
+        languageSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedLanguage = languageOptions[position]
+
+                // Llama a la función setLocale de LocalHelper para cambiar el idioma
+                val newContext = LocalHelper.setLocale(requireContext(), getLanguageCode(selectedLanguage))
+
+                // Actualiza el contexto de la aplicación para reflejar el nuevo idioma
+                val newIntent = Intent(newContext, WelcomeActivity::class.java)
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                //startActivity(newIntent)
+                //requireActivity().recreate()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Manejar caso de que no se seleccione ningún idioma
+            }
+        }
 
         return binding.root
-
     }
 
-    interface OnLanguageChangeListener {
-        fun onLanguageSelected(newLanguage: String)
-    }
-
-    private var languageChangeListener: OnLanguageChangeListener? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnLanguageChangeListener) {
-            languageChangeListener = context
-        } else {
-            throw ClassCastException("$context must implement OnLanguageChangeListener")
+    // Función para obtener el código de idioma a partir del idioma seleccionado
+    private fun getLanguageCode(selectedLanguage: String): String {
+        return when (selectedLanguage) {
+            "Inglés" -> "en"
+            "Español" -> "es"
+            // Agrega más idiomas aquí si es necesario
+            else -> "es" // Valor predeterminado en caso de idioma no reconocido
         }
-    }
-
-    // Llamar a esta función cuando se seleccione un idioma en el fragmento
-    fun notifyLanguageSelected(selectedLanguage: String) {
-        languageChangeListener?.onLanguageSelected(selectedLanguage)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,22 +119,13 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
         visible = true
 
-        //dummyButton = binding.dummyButton
-        //fullscreenContent = binding.fullscreenContent
-        fullscreenContentControls = binding.fullscreenContentControls
-        // Set up the user interaction to manually show or hide the system UI.
-        fullscreenContent?.setOnClickListener { toggle() }
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        //dummyButton?.setOnTouchListener(delayHideTouchListener)
-
         val btn: Button = view.findViewById(R.id.button_user_registered)
         btn.setOnClickListener(this)
 
         val btn2: Button = view.findViewById(R.id.button_welcome_unregistered)
         btn2.setOnClickListener(this)
+
+
 
 
     }
@@ -231,8 +232,9 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
             R.id.button_welcome_unregistered ->{
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
+            R.id.button_user_registered ->{
+                v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
+            }
         }
-
-
     }
 }

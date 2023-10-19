@@ -21,6 +21,7 @@ import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import com.google.android.material.textfield.TextInputEditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.abc_jobs_alpaca.utils.Validators
 
 class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
 
@@ -31,11 +32,11 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
     private var isValidRePassword: Boolean = false
     private var isValidTerms: Boolean = false
     private lateinit var viewModel:  CandidateRegisterModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_candidato_register, container, false)
         val btn: Button = view.findViewById(R.id.button_register)
         btn.setOnClickListener(this)
@@ -207,7 +208,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun validateAndShowNameError(text: String, labelError: TextView) {
-        val isValid = validateName(text)
+        val isValid = Validators().validateName(text)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -225,7 +226,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
 
     // Uso de la función
     private fun validateAndShowLastNameError(text: String, labelError: TextView) {
-        val isValid = validateLastName(text)
+        val isValid = Validators().validateLastName(text)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -242,7 +243,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
 
 
     private fun validateEmail(email: String, labelError: TextView) {
-        if (email.isEmpty() || email.length < 5 || email.length > 255 || !isValidEmail(email)) {
+        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
             labelError.text = "El correo electrónico no es válido. (ej: nombre@dominio.com)."
             isValidEmail = false
@@ -255,7 +256,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun validatePassword(password: String, labelError: TextView) {
-        val isValid = isPasswordValid(password)
+        val isValid = Validators().isPasswordValid(password)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -271,7 +272,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
     }
 
     private fun validateRePassword(password: String, rePassword: String, labelError: TextView) {
-        val isValid = areStringsEqual(password, rePassword)
+        val isValid = Validators().areStringsEqual(password, rePassword)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -284,25 +285,6 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
             isValidRePassword = true
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
-    }
-
-    fun validateName(text: String): Boolean {
-        return text.isNotEmpty() && text.length in 2..100
-    }
-
-    fun validateLastName(text: String): Boolean {
-        return text.isNotEmpty() && text.length in 2..100
-    }
-    fun isValidEmail(email: String): Boolean {
-        val pattern = Patterns.EMAIL_ADDRESS
-        return pattern.matcher(email).matches()
-    }
-    fun isPasswordValid(password: String): Boolean {
-        return password.length in 8..255
-    }
-
-    fun areStringsEqual(str1: String, str2: String): Boolean {
-        return str1 == str2
     }
 
 
@@ -342,6 +324,8 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener {
             button?.isEnabled = true
         }
     }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {

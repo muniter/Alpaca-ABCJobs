@@ -9,6 +9,15 @@ data class Candidate(
     val password: String,
     )
 
+data class LoginCandidateRequest(
+    val email: String,
+    val password: String
+)
+
+//data class LoginCandidateResponse(
+
+//)
+
 fun deserializeCandidate(json: JSONObject): Candidate {
     val dataObject = json.optJSONObject("data")
     val candidatoObject = dataObject?.optJSONObject("candidato")
@@ -22,7 +31,6 @@ fun deserializeCandidate(json: JSONObject): Candidate {
             password = candidatoObject.optString("password"),
         )
     } else {
-        // Manejar un caso en el que los datos no están disponibles o la estructura es diferente
         Candidate(0, "", "", "", "")
     }
 }

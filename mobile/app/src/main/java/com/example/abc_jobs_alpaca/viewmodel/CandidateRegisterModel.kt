@@ -46,8 +46,6 @@ class CandidateRegisterModel(application: Application) : AndroidViewModel(applic
             } catch (e: Exception) {
                 Log.d("NETWORK_ERROR", e.toString())
                 showToastMessage("Network error: ${e.message}")
-
-
             }
         }
     }

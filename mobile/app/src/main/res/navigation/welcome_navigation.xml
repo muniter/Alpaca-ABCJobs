@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_registerTypeFragment"
             app:destination="@id/registerTypeFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerTypeFragment"
@@ -28,4 +31,8 @@
         android:name="com.example.abc_jobs_alpaca.CandidatoRegisterFragment"
         android:label="fragment_candidato_register"
         tools:layout="@layout/fragment_candidato_register" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.abc_jobs_alpaca.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

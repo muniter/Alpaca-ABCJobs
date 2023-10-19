@@ -8,6 +8,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.abc_jobs_alpaca.model.models.*
+import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -17,7 +18,9 @@ class ABCJobsService constructor(context: Context){
     companion object{
         private var BASEURL = "https://api.abc.muniter.link/"
         private var CANDIDATES_PATH = "candidatos"
+        private var USERS_PATH = "usuarios"
         private var CREATE_PATH = "/crear"
+        private var LOGIN_PATH = "/login"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -31,7 +34,26 @@ class ABCJobsService constructor(context: Context){
         Volley.newRequestQueue(context.applicationContext)
     }
 
+    private fun postRequest(
+        path: String,
+        action: String,
+        body: JSONObject,
+        responseListener: Response.Listener<String>,
+        errorListener: Response.ErrorListener,
+    ): StringRequest {
+        return object : StringRequest(
+            Method.POST, BASEURL+path+action, responseListener, errorListener
+        ) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=utf-8"
+            }
 
+            override fun getBody(): ByteArray {
+                Log.d("Sending body", body.toString())
+                return body.toString().toByteArray()
+            }
+        }
+    }
     suspend fun postCandidate(newCandidate: JSONObject): Result<Candidate> {
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
@@ -62,24 +84,32 @@ class ABCJobsService constructor(context: Context){
     }
 
 
-    private fun postRequest(
-        path: String,
-        action: String,
-        body: JSONObject,
-        responseListener: Response.Listener<String>,
-        errorListener: Response.ErrorListener,
-    ): StringRequest {
-        return object : StringRequest(
-            Method.POST, BASEURL+path+action, responseListener, errorListener
-        ) {
-            override fun getBodyContentType(): String {
-                return "application/json; charset=utf-8"
+    suspend fun postLoginCandidate(loginCandidateJson: JSONObject): Result<LoginCandidate> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    postRequest(USERS_PATH, LOGIN_PATH, loginCandidateJson, { response ->
+                        cont.resume(JSONObject(response))
+                    }, {
+                        if (it.networkResponse != null) {
+                            Log.d("NetErr", it.networkResponse.toString())
+                        } else {
+                            Log.d("NetErr", "NetworkResponse is null")
+                        }
+                        cont.resumeWithException(it)
+                    })
+                )
             }
 
-            override fun getBody(): ByteArray {
-                Log.d("Sending body", body.toString())
-                return body.toString().toByteArray()
+            if (response.optBoolean("success", false)) {
+                val loginCandidate = deserializeLoginCandidate(response)
+                Result.success(loginCandidate)
+            } else {
+                Result.failure(Exception("Request failed"))
             }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
         }
     }
 
