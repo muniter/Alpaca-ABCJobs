@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
@@ -65,8 +67,31 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+
+
+
         return binding.root
 
+    }
+
+    interface OnLanguageChangeListener {
+        fun onLanguageSelected(newLanguage: String)
+    }
+
+    private var languageChangeListener: OnLanguageChangeListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnLanguageChangeListener) {
+            languageChangeListener = context
+        } else {
+            throw ClassCastException("$context must implement OnLanguageChangeListener")
+        }
+    }
+
+    // Llamar a esta función cuando se seleccione un idioma en el fragmento
+    fun notifyLanguageSelected(selectedLanguage: String) {
+        languageChangeListener?.onLanguageSelected(selectedLanguage)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
