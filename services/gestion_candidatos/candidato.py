@@ -68,6 +68,11 @@ class LenguajeRepository:
         query = select(Lenguaje).where(Lenguaje.id == id)
         return self.session.execute(query).scalar_one_or_none()
 
+    def get_all(self) -> List[Lenguaje]:
+        query = select(Lenguaje)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
 
 class CandidatoRepository:
     session: Session

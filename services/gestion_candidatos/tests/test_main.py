@@ -106,6 +106,16 @@ def test_get_countries():
     assert len(data["data"]) > 0
 
 
+def test_get_languages():
+    response = client.get("/utils/languages")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["data"]) > 0
+    assert data["data"][0]["id"] is not None
+    assert data["data"][0]["name"] is not None
+
+
+
 def test_crear_candidato_error():
     test_data = {
         "nombres": "a",

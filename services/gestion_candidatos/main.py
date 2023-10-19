@@ -6,6 +6,7 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
     CountryDTO,
+    LenguajeDTO,
 )
 from common.shared.config import configuration
 from common.shared.api_models.gestion_usuarios import UsuarioDTO
@@ -20,8 +21,10 @@ from common.shared.api_models.shared import (
 from .candidato import (
     CandidatoService,
     CountryRepository,
+    LenguajeRepository,
     get_candidato_service,
     get_country_repository,
+    get_lenguaje_repository,
 )
 
 app = FastAPI(
@@ -96,6 +99,20 @@ def get_countries(
     repository: CountryRepository = Depends(get_country_repository),
 ):
     result = repository.get_all()
+    return SuccessResponse(data=result)
+
+
+@utils_router.get(
+    "/utils/languages",
+    response_model=SuccessResponse[List[LenguajeDTO]],
+    status_code=status.HTTP_200_OK,
+)
+def get_languages(repository: LenguajeRepository = Depends(get_lenguaje_repository)):
+    languages = repository.get_all()
+    result = []
+    for language in languages:
+        result.append(LenguajeDTO(id=language.id, name=language.nombre))
+
     return SuccessResponse(data=result)
 
 
