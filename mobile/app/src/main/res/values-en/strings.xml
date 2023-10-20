@@ -17,13 +17,14 @@
     <string name="question_register_type_text">Como quieres registrarte?:</string>
     <string name="candidato_text">Candidato</string>
     <string name="empresa_text">Empresa Contratante</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="candidatos_text_apptopbar">Registro de candidatos</string>
+    <string name="candidatos_text_apptopbar">Candidate register</string>
 
     <string-array name="language_options">
-        <item>Español</item>
-        <item>Inglés</item>
+        <item>Spanish</item>
+        <item>English</item>
 
     </string-array>
 </resources>
