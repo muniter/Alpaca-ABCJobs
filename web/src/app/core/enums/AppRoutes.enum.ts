@@ -6,5 +6,7 @@ export enum AppRoutesEnum {
   company='company',
   companyLogin='login',
   companyRegister='register',
-  companyHome='home'
+  companyHome='home', 
+  user='usuario',
+  login='login'
 }

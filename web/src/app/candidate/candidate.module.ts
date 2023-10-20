@@ -5,7 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { CandidateLoginComponent } from './candidate-login/candidate-login.component';
 
 @NgModule({
   imports: [
@@ -15,9 +17,16 @@ import { CandidateRegisterComponent } from './candidate-register/candidate-regis
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule, 
-    MatCheckboxModule 
+    MatCheckboxModule,
+    MatDividerModule
   ],
-  exports: [CandidateRegisterComponent],
-  declarations: [CandidateRegisterComponent]
+  exports: [
+    CandidateRegisterComponent,
+    CandidateLoginComponent
+  ],
+  declarations: [
+    CandidateRegisterComponent,
+    CandidateLoginComponent
+  ]
 })
 export class CandidateModule { }
