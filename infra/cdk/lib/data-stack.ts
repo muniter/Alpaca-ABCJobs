@@ -41,12 +41,6 @@ function site(scope: Construct, props: DataStackProps) {
     accessControl: s3.BucketAccessControl.PRIVATE,
   });
 
-  new s3.Bucket(scope, 'ArtifactsBucket', {
-    bucketName: 'abc-jobs-artifacts',
-    accessControl: s3.BucketAccessControl.PRIVATE,
-  });
-
-
   siteBucket.addToResourcePolicy(new iam.PolicyStatement({
     actions: ['s3:GetObject'],
     resources: [siteBucket.arnForObjects('*')],
@@ -80,6 +74,47 @@ function site(scope: Construct, props: DataStackProps) {
     recordName: 'jobs.abc.muniter.link',
     target: route53.RecordTarget.fromAlias(new route53_targets.CloudFrontTarget(distribution)),
   });
+
+  const artifactBucket = new s3.Bucket(scope, 'ArtifactsBucket', {
+    bucketName: 'abc-jobs-artifacts',
+    accessControl: s3.BucketAccessControl.PRIVATE,
+  });
+
+  artifactBucket.addToResourcePolicy(new iam.PolicyStatement({
+    actions: ['s3:GetObject'],
+    resources: [artifactBucket.arnForObjects('*')],
+    principals: [new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
+  }))
+
+  const artifactDistribution = new cloudfront.Distribution(scope, 'ArtifactsDistribution', {
+    comment: 'Distribution for the abc jobs website',
+    certificate: props.certificate,
+    domainNames: ['artifacts.abc.muniter.link'],
+    defaultRootObject: 'index.html',
+    errorResponses: [
+      {
+        httpStatus: 403,
+        responseHttpStatus: 403,
+        responsePagePath: '/error.html',
+      }
+    ],
+    defaultBehavior: {
+      origin: new cloudfront_origins.S3Origin(artifactBucket, {
+        originAccessIdentity: cloudfrontOAI,
+      }),
+      compress: true,
+      allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+      viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+    }
+  })
+
+  new route53.ARecord(scope, 'ArtifactSiteAliasRecord', {
+    zone: props.hostedZone,
+    recordName: 'artifacts.abc.muniter.link',
+    target: route53.RecordTarget.fromAlias(new route53_targets.CloudFrontTarget(artifactDistribution)),
+  });
+
+
 }
 
 function database(scope: Construct, id: string, props: DataStackProps) {
