@@ -85,43 +85,36 @@ class ABCJobsService constructor(context: Context){
 
 
 
-    suspend fun postLoginCandidate(loginCandidateJson: JSONObject): Result<Boolean>{
-        return try {
+    suspend fun postLoginUser(loginUserJson: JSONObject): Result<UserLoginResponse> {
+        try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
-                    postRequest(USERS_PATH, LOGIN_PATH, loginCandidateJson, { response ->
+                    postRequest(USERS_PATH, LOGIN_PATH, loginUserJson, { response ->
                         cont.resume(JSONObject(response))
-                        Log.d("SUCCESS", response.toString())
-
-                    }, {
-                        if (it.networkResponse != null) {
-                            Log.d("NetErr", it.networkResponse.toString())
+                    }, { error ->
+                        if (error.networkResponse != null) {
+                            Log.d("NetErr", error.networkResponse.toString())
                         } else {
                             Log.d("NetErr", "NetworkResponse is null")
                         }
-                        cont.resumeWithException(it)
+                        cont.resumeWithException(error)
                     })
                 )
             }
-            Log.d("response", response.toString())
-            //{"success":true,"data":{"usuario":{"id":20,"email":"usertest@email.com","id_candidato":18},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAzMTE5NzAuNjIyMjc4LCJ1c3VhcmlvIjp7ImlkIjoyMCwiZW1haWwiOiJ1c2VydGVzdEBlbWFpbC5jb20iLCJpZF9jYW5kaWRhdG8iOjE4fX0.CiVPVUZdqXfS265mjNd-TEYGw9u__CZTCCrcI9LqYvc"}}
-            if(response.getBoolean("success") == true)
-            {
-                Log.d("SUCCESS", "FFF")
-                Result.success(true)
 
+            if (response.getBoolean("success")) {
+                val userLoginResponse = deserializeLoginCandidate(response)
+                return Result.success(userLoginResponse)
+            } else {
+                Log.d("ERROR", "Login failed")
+                return Result.failure(Exception("Login failed"))
             }
-            else {
-                Log.d("ERROR", "FFF")
-                Result.success(false)
-            }
-
-
         } catch (e: Exception) {
             Log.d("NETWORK_ERROR", e.toString())
-            Result.failure(e)
+            return Result.failure(e)
         }
     }
+
 
 
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.LoginFragment
-import com.example.abc_jobs_alpaca.model.models.LoginCandidate
+import com.example.abc_jobs_alpaca.model.models.UserLoginRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,20 +34,15 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
         val userEmail = email.value
 
         val loginCandidate = userEmail?.takeIf { userPassword != null }?.let {
-            LoginCandidate(it, userPassword!!)
+            UserLoginRequest(it, userPassword!!)
         }
 
         viewModelScope.launch(Dispatchers.Default) {
             try {
-                loginCandidate?.let { abcJobsRepository.postLoginCandidate(it) }
-                    ?.onSuccess {
-                            success ->
-                        if (success) {
+                loginCandidate?.let { abcJobsRepository.postLoginUser(it) }
+                    ?.onSuccess {response ->
+                        if(response.success)
                             navigationListener?.navigateToNextScreen()
-                        } else {
-                            // Hacer algo en caso de que no haya éxito (puede mostrar un mensaje de error, etc.)
-                        }
-
                     }
             } catch (e: Exception) {
                 Log.d("NETWORK_ERROR", e.toString())

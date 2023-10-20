@@ -43,7 +43,6 @@ class CandidateRegisterModel(application: Application) : AndroidViewModel(applic
 
                 }
                 result.onFailure { error ->
-                    // Request was not successful. Handle it accordingly.
                     when (error) {
                         is NetworkError -> {
                             showToastMessage("Network error: ${error.message}")

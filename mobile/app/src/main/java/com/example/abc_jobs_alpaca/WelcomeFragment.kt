@@ -67,10 +67,7 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
-
-
         return binding.root
-
     }
 
     interface OnLanguageChangeListener {
@@ -136,7 +133,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     }
 
 
-
     private fun toggle() {
         if (visible) {
             hide()
@@ -196,9 +192,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         private const val UI_ANIMATION_DELAY = 300
     }
 
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -207,9 +200,11 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_welcome_unregistered ->{
+
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
             R.id.button_user_registered ->{
+
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
             }
         }

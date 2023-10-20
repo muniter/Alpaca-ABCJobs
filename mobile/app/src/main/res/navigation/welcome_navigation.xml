@@ -36,7 +36,8 @@
         android:name="com.example.abc_jobs_alpaca.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_candidatoRegisterFragment"
-            app:destination="@id/candidatoRegisterFragment" />
+            android:id="@+id/action_loginFragment_to_mobile_navigation"
+            app:destination="@id/mobile_navigation" />
     </fragment>
+    <include app:graph="@navigation/mobile_navigation" />
 </navigation>
