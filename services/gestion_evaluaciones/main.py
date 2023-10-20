@@ -12,4 +12,5 @@ shared_app_setup(app, router)
 if not configuration.in_aws:
     app.include_router(router)
 
+
 app.include_router(router, prefix="/evaluaciones", tags=["evaluaciones"])
