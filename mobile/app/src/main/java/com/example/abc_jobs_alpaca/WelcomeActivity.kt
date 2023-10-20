@@ -74,14 +74,10 @@ class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeList
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val resources = resources
-        val configuration = Configuration(resources.configuration)
+        val configuration = resources.configuration
         configuration.setLocale(locale)
         resources.updateConfiguration(configuration, resources.displayMetrics)
 
-        val sharedPreferences = getSharedPreferences("LanguagePrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("language", languageCode)
-        editor.apply()
     }
 
     // ...
