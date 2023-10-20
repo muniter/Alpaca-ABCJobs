@@ -1,8 +1,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 name: Test report
 on:
-  push:
   workflow_call:
+  push:
+    paths:
+      - 'others/test_report.html'
+      - '.github/workflows/test_report.yaml'
   workflow_run:
     workflows:
       - Gestión Evaluaciones
@@ -11,14 +14,13 @@ on:
       - Gestión Evaluaciones
     types:
       - completed
-    # branches:
-    #   - master
+    branches:
+      - master
 permissions:
   contents: write
   id-token: write
 
 jobs:
-  # Github pages
   build:
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
