@@ -88,14 +88,6 @@ jobs:
           path: services/gestion_evaluaciones/cov_report
           if-no-files-found: error
 
-      - name: Archive code coverage results
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v3
-        with:
-          name: gestion_usuarios_cov_report
-          path: services/gestion_evaluaciones/cov_report
-          if-no-files-found: error
-
       - name: Push the image
         if: github.ref == 'refs/heads/master'
         run: |
