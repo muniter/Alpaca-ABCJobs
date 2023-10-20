@@ -1,23 +1,14 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
-name: Test report
+name: Artifacts index
 on:
   workflow_call:
   push:
-    paths:
-      - 'others/test_report.html'
-      - '.github/workflows/test_report.yaml'
-  workflow_run:
-    workflows:
-      - Gestión Evaluaciones
-      - Gestión Empresas
-      - Gestión Usuarios
-      - Gestión Evaluaciones
-    types:
-      - completed
     branches:
-      - master
+      - 'master'
+    paths:
+      - others/artifacts_index.html
+
 permissions:
-  contents: write
   id-token: write
 
 jobs:
@@ -36,15 +27,5 @@ jobs:
 
       - name: Download reports from aws
         run: |
-          aws s3 sync s3://abc-jobs-artifacts/test_reports _site
-
-      - name: Copy index.html
-        run: |
-          cp others/test_report.html _site/index.html
-          ls -la _site
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: _site
-          clean: true
+          # https://abc-jobs-artifacts.s3.amazonaws.com/index.html
+          aws s3 cp others/artifacts_index.html s3://abc-jobs-artifacts/index.html
