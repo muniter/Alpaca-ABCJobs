@@ -13,6 +13,8 @@ on:
       - completed
     # branches:
     #   - master
+permissions:
+  contents: write
 
 
 jobs:
@@ -20,10 +22,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     # concurrency: ci-${{ github.ref }}
-    permissions:
-      contents: write
-      id-token: write
-      pages: write
 
     steps:
       - name: Configure AWS Credentials
