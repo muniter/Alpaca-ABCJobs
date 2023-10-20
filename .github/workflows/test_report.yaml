@@ -26,6 +26,12 @@ jobs:
       pages: write
 
     steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
+
       - name: Download reports from aws
         run: |
           aws s3 sync s3://abc-jobs-artifacts/test_reports _site

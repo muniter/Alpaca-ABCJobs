@@ -35,11 +35,11 @@ jobs:
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v3
       #
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v4
-      #   with:
-      #     aws-region: us-east-1
-      #     role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
       #
       # - name: Login to ECR
       #   id: login-ecr
