@@ -22,7 +22,6 @@ import java.util.Locale
 class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeListener {
     private lateinit var viewModel: CandidateRegisterModel
     private val toastMessage = MutableLiveData<String>()
-    private var currentLanguage: String = "es"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -39,12 +38,11 @@ class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeList
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        var isRecreating = false  // Agrega esta variable de control
-
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (view != null) {
                     val selectedLanguage = languageOptions[position]
+                    var currentLanguage = Configuration(resources.configuration).locales.get(0).toString();
                     when (selectedLanguage) {
                         "Inglés" -> {
                             if (currentLanguage != "en") {
