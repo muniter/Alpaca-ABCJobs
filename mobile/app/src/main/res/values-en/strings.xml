@@ -12,11 +12,12 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="userRegisteredLabelButton">I already have an account</string>
+    <string name="userRegisteredLabelButton">I have an account</string>
     <string name="userUnRegisteredLabelButton">Register</string>
-    <string name="question_register_type_text">How do you prefer your register?</string>
-    <string name="candidato_text">Candidate</string>
-    <string name="empresa_text">Company</string>
+    <string name="question_register_type_text">Como quieres registrarte?:</string>
+    <string name="candidato_text">Candidato</string>
+    <string name="empresa_text">Empresa Contratante</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="candidatos_text_apptopbar">Candidate register</string>

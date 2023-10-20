@@ -43,21 +43,26 @@ class UsuarioRepository:
         self.session.refresh(data)
         return data
 
+    def get_config(self, id: int) -> dict:
+        usuario = self.get_by_id(id)
+        assert usuario is not None
+        return usuario.config
+
+    def set_config(self, id: int, config: dict) -> None:
+        usuario = self.get_by_id(id)
+        assert usuario is not None
+        usuario.config = config
+        self.session.commit()
+
 
 class UsuarioService:
     def __init__(self, repository: UsuarioRepository):
         self.repository = repository
 
-    def create_token(
-        self,
-        data: UsuarioDTO,
-    ) -> str:
+    def create_token(self, data: UsuarioDTO) -> str:
         return create_token(data.model_dump())
 
-    def get_usuario_from_token(
-        self,
-        token: str,
-    ) -> UsuarioDTO:
+    def get_usuario_from_token(self, token: str) -> UsuarioDTO:
         return get_usuario_from_token(token)
 
     def login(
@@ -83,7 +88,6 @@ class UsuarioService:
         error = ErrorBuilder(data)
         if self.repository.get_by_email(data.email):
             error.add("email", "Email ya registrado")
-
 
         if data.id_empresa:
             if not self.repository.check_empresa_exists(data.id_empresa):

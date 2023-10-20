@@ -32,8 +32,56 @@ class WelcomeActivity: AppCompatActivity(){
         viewModel.getToastMessage().observe(this, Observer { message ->
             showToast(message)
         })
+
+        val spinner: Spinner = findViewById(R.id.spinner)
+        val languageOptions = resources.getStringArray(R.array.language_options)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languageOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (view != null) {
+                    val selectedLanguage = languageOptions[position]
+                    var currentLanguage = Configuration(resources.configuration).locales.get(0).toString();
+                    when (selectedLanguage) {
+                        "Inglés" -> {
+                            if (currentLanguage != "en") {
+                                setLocale("en")
+                                recreate()
+                            }
+                        }
+                        "Español" -> {
+                            if (currentLanguage != "es") {
+                                setLocale("es")
+                                recreate()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
     }
 
+    override fun onLanguageSelected(newLanguage: String) {
+        setLocale(newLanguage)
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val resources = resources
+        val configuration = resources.configuration
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+
+    }
+
+    
 
 
     private fun showToast(message: String) {

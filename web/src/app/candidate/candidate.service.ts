@@ -8,7 +8,7 @@ import { CandidateFormRegister, CandidateServiceSchema } from './candidate';
   providedIn: 'root'
 })
 export class CandidateService {
-  private backCandidateUrl = environment.backCandidateUrl;
+  private backCandidateUrl = environment.baseUrl + 'candidatos';
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,7 @@ export class CandidateService {
       candidate.email,
       candidate.password
     );
-    return this.http.post<any>(`${this.backCandidateUrl}/crear`,candidateServiceSchema);
+    return this.http.post<any>(`${this.backCandidateUrl}/crear`, candidateServiceSchema);
   }
 
 }

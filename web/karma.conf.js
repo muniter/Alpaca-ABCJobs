@@ -14,6 +14,7 @@ module.exports = function (config) {
         ]
       }
     },
+    singleRun: true,
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [

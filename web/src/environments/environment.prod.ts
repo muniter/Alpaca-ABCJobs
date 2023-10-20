@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backCandidateUrl: "https://api.abc.muniter.link/candidatos"
+  baseUrl: "https://api.abc.muniter.link/"
 };

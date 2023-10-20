@@ -5,11 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginCompanyModule } from './login-company/login-company.module';
-import { LogonCompanyModule } from './logon-company/logon-company.module';
-import { LoginCompanyRoutingModule } from './login-company/login-company-routing.routing';
-import { LogonCompanyRoutingModule } from './logon-company/logon-company-routing.routing';
 import { CandidateModule } from './candidate/candidate.module';
+import { CommonModule } from '@angular/common';
+import { CompanyModule } from './company/company.module';
+import { CompanyRoutingModule } from './company/company-routing.routing';
+import { CandidateRoutingModule } from './candidate/candidate-routing.routing';
 
 @NgModule({
   declarations: [
@@ -17,14 +17,14 @@ import { CandidateModule } from './candidate/candidate.module';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LoginCompanyModule,
-    LoginCompanyRoutingModule,
-    LogonCompanyModule,
-    LogonCompanyRoutingModule,
-    CandidateModule
+    CompanyModule,
+    CompanyRoutingModule,
+    CandidateModule,
+    CandidateRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
