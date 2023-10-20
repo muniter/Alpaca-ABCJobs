@@ -21,7 +21,7 @@ jobs:
   # Github pages
   build:
     runs-on: ubuntu-latest
-    # concurrency: ci-${{ github.ref }}
+    concurrency: ci-${{ github.ref }}
 
     steps:
       - name: Checkout 🛎️
@@ -36,6 +36,10 @@ jobs:
       - name: Download reports from aws
         run: |
           aws s3 sync s3://abc-jobs-artifacts/test_reports _site
+
+      - name: Copy index.html
+        run: |
+          cp others/test_report.html _site/index.html
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
