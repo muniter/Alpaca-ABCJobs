@@ -41,8 +41,10 @@ jobs:
       - name: Copy index.html
         run: |
           cp others/test_report.html _site/index.html
+          ls -la _site
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
+          clean: true
