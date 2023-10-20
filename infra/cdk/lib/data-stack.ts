@@ -41,6 +41,12 @@ function site(scope: Construct, props: DataStackProps) {
     accessControl: s3.BucketAccessControl.PRIVATE,
   });
 
+  new s3.Bucket(scope, 'ArtifactsBucket', {
+    bucketName: 'abc-jobs-artifacts',
+    accessControl: s3.BucketAccessControl.PRIVATE,
+  });
+
+
   siteBucket.addToResourcePolicy(new iam.PolicyStatement({
     actions: ['s3:GetObject'],
     resources: [siteBucket.arnForObjects('*')],

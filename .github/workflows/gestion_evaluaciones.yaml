@@ -80,13 +80,15 @@ jobs:
       #     docker-compose up -d
       #     docker-compose exec -T gestion_evaluaciones pytest --cov --cov-report html:cov_report --cov-report term --cov-fail-under=80
       #
-      # - name: Archive code coverage results
-      #   if: github.ref == 'refs/heads/master'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: gestion_usuarios_cov_report
-      #     path: services/gestion_evaluaciones/cov_report
-      #     if-no-files-found: error
+      - name: Create artifact
+        run: |
+          mkdir -p services/gestion_evaluaciones/cov_report
+          touch services/gestion_evaluaciones/cov_report/index.html
+
+      - name: Upload artifact to S3
+        run:
+          aws s3 sync services/gestion_evaluaciones/cov_report s3://abc-jobs-artifacts/test_reports/gestion_evaluaciones/cov_report
+
       #
       # - name: Push the image
       #   if: github.ref == 'refs/heads/master'

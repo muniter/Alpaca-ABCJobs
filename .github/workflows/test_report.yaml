@@ -26,31 +26,9 @@ jobs:
       pages: write
 
     steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: gestion_usuarios_cov_report
-          path: _site/gestion_usuarios_cov_report
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: gestion_empresas_cov_report
-          path: _site/gestion_empresas_cov_report
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: gestion_evaluaciones_cov_report
-          path: _site/gestion_evaluaciones_cov_report
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: gestion_candidatos_cov_report
-          path: _site/gestion_candidatos_cov_report
-
-      - name: Fix permissions
+      - name: Download reports from aws
         run: |
-          chmod -c -R +rX "_site/" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
+          aws s3 sync s3://abc-jobs-artifacts/test_reports _site
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
