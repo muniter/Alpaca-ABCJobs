@@ -25,7 +25,7 @@ jobs:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
 
-      - name: Download reports from aws
+      - name: Upload artifacts index
         run: |
           # https://abc-jobs-artifacts.s3.amazonaws.com/index.html
           aws s3 cp others/artifacts_index.html s3://abc-jobs-artifacts/index.html
