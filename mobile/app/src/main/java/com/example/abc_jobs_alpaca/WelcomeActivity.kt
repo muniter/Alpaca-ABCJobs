@@ -19,16 +19,15 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import java.util.Locale
 
-class WelcomeActivity: AppCompatActivity(){
+class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeListener {
     private lateinit var viewModel: CandidateRegisterModel
     private val toastMessage = MutableLiveData<String>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
         viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
-        
+
         viewModel.getToastMessage().observe(this, Observer { message ->
             showToast(message)
         })
@@ -81,12 +80,20 @@ class WelcomeActivity: AppCompatActivity(){
 
     }
 
-    
+    // ...
 
+    override fun attachBaseContext(newBase: Context) {
+        // Obtiene la configuración del idioma almacenada en preferencias compartidas
+        val sharedPreferences = newBase.getSharedPreferences("LanguagePrefs", Context.MODE_PRIVATE)
+        val language = sharedPreferences.getString("language", "en") // "en" es el idioma predeterminado
+        val locale = Locale(language)
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.setLocale(locale)
+        super.attachBaseContext(newBase.createConfigurationContext(configuration))
+    }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }
-

@@ -54,13 +54,12 @@ class ABCJobsService constructor(context: Context){
             }
         }
     }
-    suspend fun postCandidate(newCandidate: JSONObject): Result<Candidate> {
+    suspend fun postCandidate(newCandidate: JSONObject): Result<UserRegisterResponse> {
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
                     postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
-                        var xx =cont.resume(JSONObject(response))
-                        Log.d("SUCCESS", xx.toString())
+                        cont.resume(JSONObject(response))
                     }, {
                         if (it.networkResponse != null) {
                             Log.d("NetErr", it.networkResponse.toString())
@@ -83,6 +82,7 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
+
 
 
     suspend fun postLoginCandidate(loginCandidateJson: JSONObject): Result<Boolean>{
@@ -110,9 +110,7 @@ class ABCJobsService constructor(context: Context){
                 Log.d("SUCCESS", "FFF")
                 Result.success(true)
 
-
             }
-
             else {
                 Log.d("ERROR", "FFF")
                 Result.success(false)

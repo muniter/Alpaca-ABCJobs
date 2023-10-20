@@ -5,8 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import com.example.abc_jobs_alpaca.R
+import com.example.abc_jobs_alpaca.LoginFragment
 import com.example.abc_jobs_alpaca.model.models.LoginCandidate
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +17,17 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
 
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
+
+    interface NavigationListener {
+        fun navigateToNextScreen()
+    }
+
+    private var navigationListener: NavigationListener? = null
+
+    fun setNavigationListener(listener: NavigationListener) {
+        navigationListener = listener
+    }
+
 
     fun login() {
         val userPassword = password.value
@@ -31,6 +41,12 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
             try {
                 loginCandidate?.let { abcJobsRepository.postLoginCandidate(it) }
                     ?.onSuccess {
+                            success ->
+                        if (success) {
+                            navigationListener?.navigateToNextScreen()
+                        } else {
+                            // Hacer algo en caso de que no haya éxito (puede mostrar un mensaje de error, etc.)
+                        }
 
                     }
             } catch (e: Exception) {

@@ -23,8 +23,7 @@
     <string name="candidatos_text_apptopbar">Candidate register</string>
 
     <string-array name="language_options">
-        <item>Spanish</item>
-        <item>English</item>
-
+        <item>Español</item>
+        <item>Inglés</item>
     </string-array>
 </resources>

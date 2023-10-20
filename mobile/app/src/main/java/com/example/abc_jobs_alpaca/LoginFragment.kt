@@ -14,13 +14,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
 import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import com.google.android.material.textfield.TextInputEditText
 import com.example.abc_jobs_alpaca.utils.Validators
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -29,9 +29,10 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment(){
+class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
     private var param1: String? = null
     private var param2: String? = null
+
     private var isValidEmail: Boolean = false
     private var isValidPassword: Boolean = false
     private lateinit var binding: FragmentLoginBinding
@@ -50,21 +51,22 @@ class LoginFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        // Infla el diseño utilizando Data Binding
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         viewModel = ViewModelProvider(this).get(LoginMoldel::class.java)
 
-        // Asigna el ViewModel a la vista
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-
         val view = binding.root;
 
-        // Email field
         val editTextEmail = view.findViewById<TextInputEditText>(R.id.editTextEmail)
         val labelEmailError = view.findViewById<TextView>(R.id.labelEmailError)
+        val editTextPassword = view.findViewById<TextInputEditText>(R.id.editTextPassword)
+        val labelPasswordError = view.findViewById<TextView>(R.id.labelPasswordError)
+        val showPasswordButton = view.findViewById<ImageButton>(R.id.togglePasswordVisibility)
+        val passwordInput = view.findViewById<TextInputEditText>(R.id.editTextPassword)
+
+        // Email field
         editTextEmail.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val email = editTextEmail.text.toString()
@@ -89,8 +91,6 @@ class LoginFragment : Fragment(){
         })
 
         //Password field
-        val editTextPassword = view.findViewById<TextInputEditText>(R.id.editTextPassword)
-        val labelPasswordError = view.findViewById<TextView>(R.id.labelPasswordError)
         editTextPassword.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val password = editTextPassword.text.toString().trim()
@@ -116,9 +116,6 @@ class LoginFragment : Fragment(){
         })
 
         //Show password
-        val showPasswordButton = view.findViewById<ImageButton>(R.id.togglePasswordVisibility)
-        val passwordInput = view.findViewById<TextInputEditText>(R.id.editTextPassword)
-
         showPasswordButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -132,10 +129,16 @@ class LoginFragment : Fragment(){
         }
 
         return view
-
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.setNavigationListener(this)
+    }
 
+    override fun navigateToNextScreen() {
+        view?.findNavController()?.navigate(R.id.candidatoRegisterFragment)
+    }
     private fun validateEmail(email: String, labelError: TextView) {
         if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
@@ -148,7 +151,6 @@ class LoginFragment : Fragment(){
             isValidEmail = true
         }
     }
-
     private fun validatePassword(password: String, labelError: TextView) {
         val isValid = Validators().isPasswordValid(password)
 
@@ -168,7 +170,6 @@ class LoginFragment : Fragment(){
     private fun disableButton(button: Button) {
         button?.isEnabled = false
     }
-
     private fun enableButton(button: Button) {
         if(
             isValidEmail &&
@@ -185,7 +186,6 @@ class LoginFragment : Fragment(){
          * @param param2 Parameter 2.
          * @return A new instance of fragment LoginFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             LoginFragment().apply {

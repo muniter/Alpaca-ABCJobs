@@ -10,7 +10,7 @@ import com.example.abc_jobs_alpaca.model.models.*
 class ABCJobsRepository(private val applicationContext: Application) {
 
     @SuppressLint("SuspiciousIndentation")
-    suspend fun postCandidate(newCandidate: Candidate): Result<Candidate> {
+    suspend fun postCandidate(newCandidate: UserRegisterRequest): Result<UserRegisterResponse> {
         val candidateJson = serializeCandidate(newCandidate)
         return ABCJobsService.getInstance(applicationContext).postCandidate(candidateJson)
     }
