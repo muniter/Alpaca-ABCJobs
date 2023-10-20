@@ -62,6 +62,7 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug
+        working-directory: mobile
         run: ./gradlew assembleDebug
 
       - name: Upload APK to S3
