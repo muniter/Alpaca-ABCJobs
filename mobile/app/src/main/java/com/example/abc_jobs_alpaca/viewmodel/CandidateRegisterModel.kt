@@ -10,7 +10,9 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
 import com.android.volley.NetworkError
+import com.example.abc_jobs_alpaca.R
 
 
 class CandidateRegisterModel(application: Application) : AndroidViewModel(application) {
@@ -27,8 +29,6 @@ class CandidateRegisterModel(application: Application) : AndroidViewModel(applic
                 result.onSuccess { candidate ->
                     // Request was successful. Handle it accordingly.
                     showToastMessage("Registration was successful")
-
-                    // Do other things with the candidate object if needed.
 
                 }
                 result.onFailure { error ->

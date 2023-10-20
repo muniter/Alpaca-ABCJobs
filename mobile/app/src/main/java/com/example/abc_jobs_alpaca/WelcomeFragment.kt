@@ -125,9 +125,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         val btn2: Button = view.findViewById(R.id.button_welcome_unregistered)
         btn2.setOnClickListener(this)
 
-
-
-
     }
 
     override fun onResume() {

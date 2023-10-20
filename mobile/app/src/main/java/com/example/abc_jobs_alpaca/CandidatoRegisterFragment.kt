@@ -21,6 +21,7 @@ import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import com.google.android.material.textfield.TextInputEditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.utils.Validators
 
 class CandidatoRegisterFragment : Fragment(), View.OnClickListener {

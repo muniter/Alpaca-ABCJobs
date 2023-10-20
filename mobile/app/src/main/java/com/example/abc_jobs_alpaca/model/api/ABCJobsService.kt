@@ -59,7 +59,8 @@ class ABCJobsService constructor(context: Context){
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
                     postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
-                        cont.resume(JSONObject(response))
+                        var xx =cont.resume(JSONObject(response))
+                        Log.d("SUCCESS", xx.toString())
                     }, {
                         if (it.networkResponse != null) {
                             Log.d("NetErr", it.networkResponse.toString())
@@ -84,12 +85,14 @@ class ABCJobsService constructor(context: Context){
     }
 
 
-    suspend fun postLoginCandidate(loginCandidateJson: JSONObject): Result<LoginCandidate> {
+    suspend fun postLoginCandidate(loginCandidateJson: JSONObject): Result<Boolean>{
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
                     postRequest(USERS_PATH, LOGIN_PATH, loginCandidateJson, { response ->
                         cont.resume(JSONObject(response))
+                        Log.d("SUCCESS", response.toString())
+
                     }, {
                         if (it.networkResponse != null) {
                             Log.d("NetErr", it.networkResponse.toString())
@@ -100,13 +103,22 @@ class ABCJobsService constructor(context: Context){
                     })
                 )
             }
+            Log.d("response", response.toString())
+            //{"success":true,"data":{"usuario":{"id":20,"email":"usertest@email.com","id_candidato":18},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAzMTE5NzAuNjIyMjc4LCJ1c3VhcmlvIjp7ImlkIjoyMCwiZW1haWwiOiJ1c2VydGVzdEBlbWFpbC5jb20iLCJpZF9jYW5kaWRhdG8iOjE4fX0.CiVPVUZdqXfS265mjNd-TEYGw9u__CZTCCrcI9LqYvc"}}
+            if(response.getBoolean("success") == true)
+            {
+                Log.d("SUCCESS", "FFF")
+                Result.success(true)
 
-            if (response.optBoolean("success", false)) {
-                val loginCandidate = deserializeLoginCandidate(response)
-                Result.success(loginCandidate)
-            } else {
-                Result.failure(Exception("Request failed"))
+
             }
+
+            else {
+                Log.d("ERROR", "FFF")
+                Result.success(false)
+            }
+
+
         } catch (e: Exception) {
             Log.d("NETWORK_ERROR", e.toString())
             Result.failure(e)

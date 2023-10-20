@@ -30,7 +30,11 @@
         android:id="@+id/candidatoRegisterFragment"
         android:name="com.example.abc_jobs_alpaca.CandidatoRegisterFragment"
         android:label="fragment_candidato_register"
-        tools:layout="@layout/fragment_candidato_register" />
+        tools:layout="@layout/fragment_candidato_register" >
+        <action
+            android:id="@+id/action_candidatoRegisterFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.abc_jobs_alpaca.LoginFragment"

@@ -16,7 +16,7 @@ class ABCJobsRepository(private val applicationContext: Application) {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    suspend fun postLoginCandidate(loginCandidate: LoginCandidate): Result<LoginCandidate>{
+    suspend fun postLoginCandidate(loginCandidate: LoginCandidate): Result<Boolean>{
         val loginCandidateJson = serializeLoginCandidate(loginCandidate)
         return ABCJobsService.getInstance(applicationContext).postLoginCandidate(loginCandidateJson)
     }

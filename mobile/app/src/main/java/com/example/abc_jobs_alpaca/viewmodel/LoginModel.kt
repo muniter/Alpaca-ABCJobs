@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.LoginCandidate
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
@@ -25,18 +27,15 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
             LoginCandidate(it, userPassword!!)
         }
 
-
-        viewModelScope.launch(Dispatchers.Default){
+        viewModelScope.launch(Dispatchers.Default) {
             try {
                 loginCandidate?.let { abcJobsRepository.postLoginCandidate(it) }
-                    ?.onSuccess { }
+                    ?.onSuccess {
 
+                    }
             } catch (e: Exception) {
                 Log.d("NETWORK_ERROR", e.toString())
             }
         }
-        
-
     }
-
 }
