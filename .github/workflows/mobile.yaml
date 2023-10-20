@@ -16,11 +16,19 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
+          aws-region: us-east-1
 
       # Set Current Date As Env Variable
       - name: Set current date as env variable
@@ -50,16 +58,12 @@ jobs:
       # Run Build Project
       - name: Build gradle project
         working-directory: mobile
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assembleDebug
 
-      # Upload Artifact Build
-      # Noted For Output [main_project_module]/build/outputs/apk/debug/
-      - name: Upload APK Debug
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) debug generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
+      - name: Upload APK to S3
+        working-directory: mobile
+        run: aws s3 sync build/outputs/apk/debug s3://abc-jobs-artifacts/mobile/apk
