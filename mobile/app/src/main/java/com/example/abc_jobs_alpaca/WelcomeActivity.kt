@@ -22,11 +22,14 @@ import java.util.Locale
 
 class WelcomeActivity: AppCompatActivity()
     , WelcomeFragment.OnLanguageChangeListener
-    , WelcomeFragment.OnElementHideListener{
+    , WelcomeFragment.OnElementHideListener {
     private lateinit var viewModel: CandidateRegisterModel
     private val toastMessage = MutableLiveData<String>()
+    private var elementHideListener: WelcomeFragment.OnElementHideListener? = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        elementHideListener = this
         setContentView(R.layout.activity_welcome)
 
         viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
@@ -41,6 +44,7 @@ class WelcomeActivity: AppCompatActivity()
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (view != null) {
@@ -51,6 +55,7 @@ class WelcomeActivity: AppCompatActivity()
                             if (currentLanguage != "en") {
                                 setLocale("en")
                                 recreate()
+
                             }
                         }
                         "Español" -> {
@@ -68,11 +73,6 @@ class WelcomeActivity: AppCompatActivity()
         }
 
     }
-    override fun hideElement(elementId: Int) {
-        val elementToHide = findViewById<View>(elementId)
-        elementToHide.visibility = View.GONE
-    }
-
 
     override fun onLanguageSelected(newLanguage: String) {
         setLocale(newLanguage)
@@ -101,4 +101,9 @@ class WelcomeActivity: AppCompatActivity()
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun hideElement(elementId: Int) {
+        // poner un log
+        val elementToHide = findViewById<View>(elementId)
+        elementToHide.visibility = View.INVISIBLE
+    }
 }

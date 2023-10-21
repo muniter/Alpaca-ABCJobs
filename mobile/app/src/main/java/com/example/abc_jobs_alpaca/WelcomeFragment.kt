@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,10 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    private var languageChangeListener: OnLanguageChangeListener? = null
+    private var elementHideListener: OnElementHideListener? = null
+
+
     interface OnElementHideListener{
         fun hideElement(elementId: Int)
     }
@@ -74,11 +79,10 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         fun onLanguageSelected(newLanguage: String)
     }
 
-    private var languageChangeListener: OnLanguageChangeListener? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         when (context) {
+            is OnElementHideListener -> elementHideListener = context as OnElementHideListener
             is OnLanguageChangeListener -> languageChangeListener = context as OnLanguageChangeListener
             else -> throw IllegalArgumentException("El contexto debe implementar las interfaces necesarias.")
         }
@@ -193,14 +197,29 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.button_welcome_unregistered ->{
+        when (v?.id) {
+            R.id.button_welcome_unregistered -> {
+                Log.d("MiTag", "Button1 clicked")
+                if (elementHideListener != null) {
+                    Log.d("MiTag", "elementHideListener is not null")
+                    elementHideListener?.hideElement(R.id.spinner)
+                } else {
+                    Log.d("MiTag", "elementHideListener is null")
+                }
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
-            R.id.button_user_registered ->{
+            R.id.button_user_registered -> {
+                Log.d("MiTag", "Button2 clicked")
+                if (elementHideListener != null) {
+                    Log.d("MiTag", "elementHideListener is not null")
+                    elementHideListener?.hideElement(R.id.spinner)
+                } else {
+                    Log.d("MiTag", "elementHideListener is null")
+                }
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
             }
         }
     }
+
 
 }
