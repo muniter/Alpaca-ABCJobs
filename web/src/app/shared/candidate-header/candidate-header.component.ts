@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppRoutesEnum } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-candidate-header',
@@ -8,6 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CandidateHeaderComponent implements OnInit {
 
   @Input() username: string = ""; 
+
+  appRoutes = AppRoutesEnum;
 
   constructor() { }
 

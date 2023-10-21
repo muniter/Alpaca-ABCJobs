@@ -4,11 +4,19 @@ mat-icon {
 }
 
 .example-spacer {
-    flex: 1 auto;
+    flex: 1 1 auto;
 }
 
-.center-vertical{
+.center-vertical {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.user-name-icon {
+    cursor: pointer;
+}
+
+.user-name-label {
+    margin-right: 0.5rem;
 }
