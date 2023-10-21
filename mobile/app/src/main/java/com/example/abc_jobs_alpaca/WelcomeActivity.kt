@@ -14,12 +14,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.media3.common.util.Log
 import androidx.navigation.Navigation.findNavController
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import java.util.Locale
 
-class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeListener {
+class WelcomeActivity: AppCompatActivity()
+    , WelcomeFragment.OnLanguageChangeListener
+    , WelcomeFragment.OnElementHideListener{
     private lateinit var viewModel: CandidateRegisterModel
     private val toastMessage = MutableLiveData<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +68,11 @@ class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeList
         }
 
     }
+    override fun hideElement(elementId: Int) {
+        val elementToHide = findViewById<View>(elementId)
+        elementToHide.visibility = View.GONE
+    }
+
 
     override fun onLanguageSelected(newLanguage: String) {
         setLocale(newLanguage)
@@ -80,10 +88,7 @@ class WelcomeActivity: AppCompatActivity(), WelcomeFragment.OnLanguageChangeList
 
     }
 
-    // ...
-
     override fun attachBaseContext(newBase: Context) {
-        // Obtiene la configuración del idioma almacenada en preferencias compartidas
         val sharedPreferences = newBase.getSharedPreferences("LanguagePrefs", Context.MODE_PRIVATE)
         val language = sharedPreferences.getString("language", "en") // "en" es el idioma predeterminado
         val locale = Locale(language)

@@ -71,7 +71,6 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentRegisterTypeBinding.inflate(inflater, container, false)
         return binding.root
 

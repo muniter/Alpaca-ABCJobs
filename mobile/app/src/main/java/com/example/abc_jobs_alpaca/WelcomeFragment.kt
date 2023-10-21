@@ -16,10 +16,6 @@ import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 
-/**
- * An example full-screen fragment that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class WelcomeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)
 
@@ -70,6 +66,10 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    interface OnElementHideListener{
+        fun hideElement(elementId: Int)
+    }
+
     interface OnLanguageChangeListener {
         fun onLanguageSelected(newLanguage: String)
     }
@@ -78,17 +78,12 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnLanguageChangeListener) {
-            languageChangeListener = context
-        } else {
-            throw ClassCastException("$context must implement OnLanguageChangeListener")
+        when (context) {
+            is OnLanguageChangeListener -> languageChangeListener = context as OnLanguageChangeListener
+            else -> throw IllegalArgumentException("El contexto debe implementar las interfaces necesarias.")
         }
     }
 
-    // Llamar a esta función cuando se seleccione un idioma en el fragmento
-    fun notifyLanguageSelected(selectedLanguage: String) {
-        languageChangeListener?.onLanguageSelected(selectedLanguage)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -200,15 +195,12 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_welcome_unregistered ->{
-
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
             R.id.button_user_registered ->{
-
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
             }
         }
-
-
     }
+
 }

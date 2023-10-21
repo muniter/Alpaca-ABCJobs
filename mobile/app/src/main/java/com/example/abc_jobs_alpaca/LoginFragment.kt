@@ -136,7 +136,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
     }
 
     override fun navigateToNextScreen() {
-        view?.findNavController()?.navigate(R.id.mobile_navigation)
+        view?.findNavController()?.navigate(R.id.mainActivity)
     }
     private fun validateEmail(email: String, labelError: TextView) {
         if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
