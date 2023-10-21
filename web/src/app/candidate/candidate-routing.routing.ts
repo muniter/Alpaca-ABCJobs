@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutesEnum } from '../core/enums';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,10 @@ const routes: Routes = [
       {
         path: AppRoutesEnum.candidateRegister,
         component: CandidateRegisterComponent, 
+      },
+      {
+        path: AppRoutesEnum.candidateHome,
+        component: CandidateHomeComponent, 
       }
     ]
   },
