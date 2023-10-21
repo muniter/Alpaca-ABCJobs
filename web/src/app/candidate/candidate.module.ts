@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
+import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { CandidateHomeComponent } from './candidate-home/candidate-home.componen
     MatInputModule, 
     MatCheckboxModule 
   ],
-  exports: [CandidateRegisterComponent, CandidateHomeComponent],
-  declarations: [CandidateRegisterComponent, CandidateHomeComponent]
+  exports: [CandidateRegisterComponent, CandidateHomeComponent, CandidateProfileComponent],
+  declarations: [CandidateRegisterComponent, CandidateHomeComponent, CandidateProfileComponent]
 })
 export class CandidateModule { }
