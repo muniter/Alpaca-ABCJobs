@@ -1,0 +1,22 @@
+mat-icon {
+    color: var(--lightColor);
+    transform: scale(2);
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.center-vertical {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-name-icon {
+    cursor: pointer;
+}
+
+.user-name-label {
+    margin-right: 0.5rem;
+}

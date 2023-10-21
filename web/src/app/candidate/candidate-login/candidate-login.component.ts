@@ -35,7 +35,7 @@ export class CandidateLoginComponent implements OnInit {
       case "email": {
         return (this.candidateLoginForm.get('email')!.hasError('required') || 
                 this.candidateLoginForm.get('email')!.hasError('isOnlyWhiteSpace'))
-               ? $localize`:@@@@nonemptyemail:La dirección de correo electrónico no puede ser vacía`
+               ? $localize`:@@nonemptyemail:La dirección de correo electrónico no puede ser vacía`
                : this.candidateLoginForm.get('email')!.hasError('email') 
                  ? $localize`:@@invalidemail:La dirección de correo electrónico ingresada es inválida`
                  : this.candidateLoginForm.get('email')!.hasError('responseMessageError')

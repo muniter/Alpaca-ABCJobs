@@ -8,6 +8,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 import { CandidateLoginComponent } from './candidate-login/candidate-login.component';
+import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
+import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 
 @NgModule({
   imports: [
@@ -22,11 +24,15 @@ import { CandidateLoginComponent } from './candidate-login/candidate-login.compo
   ],
   exports: [
     CandidateRegisterComponent,
-    CandidateLoginComponent
+    CandidateLoginComponent,
+    CandidateHomeComponent, 
+    CandidateProfileComponent
   ],
   declarations: [
     CandidateRegisterComponent,
-    CandidateLoginComponent
+    CandidateLoginComponent,
+    CandidateHomeComponent, 
+    CandidateProfileComponent
   ]
 })
 export class CandidateModule { }
