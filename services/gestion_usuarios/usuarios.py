@@ -71,11 +71,11 @@ class UsuarioService:
         usuario = self.repository.get_by_email(data.email)
         error = ErrorBuilder(data)
         if not usuario:
-            error.add("email", "Email no registrado")
+            error.add("email", "Dirección de correo o contraseña incorrectos")
             return error
 
         if usuario.password != data.password:
-            error.add("password", "Password incorrecto")
+            error.add("password", "Dirección de correo o contraseña incorrectos")
             return error
 
         usuario_dto = usuario.build_usuario_dto()

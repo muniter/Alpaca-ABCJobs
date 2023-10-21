@@ -58,3 +58,16 @@ export const mapKeys: { [index: string]: string } = {
   "email": "email",
   "password": "password"
 };
+
+export class CandidateLoginRequest {
+  email: string;
+  password: string;
+  
+  public constructor(
+    email: string, 
+    password: string
+  ) {
+    this.email = email;
+    this.password = password;
+  }
+}
