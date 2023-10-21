@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CandidateService } from '../candidate.service';
 import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
 import { CandidateLoginRequest, mapKeys } from '../candidate';
+import { Router } from '@angular/router';
+import { AppRoutesEnum } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-candidate-login',
@@ -15,7 +17,8 @@ export class CandidateLoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,7 +38,10 @@ export class CandidateLoginComponent implements OnInit {
                ? $localize`:@@@@nonemptyemail:La dirección de correo electrónico no puede ser vacía`
                : this.candidateLoginForm.get('email')!.hasError('email') 
                  ? $localize`:@@invalidemail:La dirección de correo electrónico ingresada es inválida`
-                 : "";
+                 : this.candidateLoginForm.get('email')!.hasError('responseMessageError')
+                   ? $localize`:@@responseerrorcandidatelogin: inicio de sesión fallido: 
+                                 ${this.candidateLoginForm.get('email')?.getError('responseMessageError')}`
+                   : "";
       }
       case "password": {
         return this.candidateLoginForm.get('password')!.hasError('required')
@@ -68,7 +74,7 @@ export class CandidateLoginComponent implements OnInit {
       .login(candidate)
       .subscribe({
         error: (exception) => this.setErrorBack(exception),
-        complete: () => console.log("login success")
+        complete: () => this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}`)
       })
   }
 }

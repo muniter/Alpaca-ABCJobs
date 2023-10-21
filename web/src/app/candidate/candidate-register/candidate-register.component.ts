@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import SharedCustomValidators from "../../shared/utils/shared-custom-validators"
 import { CandidateService } from '../candidate.service';
 import { CandidateFormRegister, mapKeys } from '../candidate';
+import { Router } from '@angular/router';
+import { AppRoutesEnum } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-candidate-register',
@@ -16,7 +18,8 @@ export class CandidateRegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, 
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -138,7 +141,12 @@ export class CandidateRegisterComponent implements OnInit {
       .userSignUp(candidate)
       .subscribe({
         error: (exception) => this.setErrorBack(exception),
-        complete: () => this.registerSucess = true
+        complete: () => { 
+          this.registerSucess = true
+          setTimeout(() => {
+            this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+          }, 2000);
+        }
       })
   }
 

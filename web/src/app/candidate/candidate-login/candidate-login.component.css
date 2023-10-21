@@ -9,15 +9,7 @@
 .full-width {
   width: 100%;
 }
-/* 
-.meddium-width {
-  width: 48%;
-} */
-/* 
-mat-form-field:nth-of-type(2) {
-  float: right;
-}
- */
+
 .mdc-label {
   opacity: 60%;
 }
@@ -48,16 +40,3 @@ mat-form-field:nth-of-type(2) {
   background-color: var(--contrastCandidateColor);
   margin-bottom: 1rem;
 }
-
-/* 
-.hidden {
-  display: none;
-} */
-/* 
-.success {
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 3px 3px 3px 3px;
-  color: #270;
-  background-color: #DFF2BF;
-} */

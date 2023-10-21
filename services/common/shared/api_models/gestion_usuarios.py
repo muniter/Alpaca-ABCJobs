@@ -30,10 +30,13 @@ class UsuarioLoginDTO(BaseModel):
     email: Annotated[
         str,
         StringConstraints(
-            max_length=255, min_length=5, strip_whitespace=True, pattern=r".*@.*"
+            min_length=1, strip_whitespace=True, pattern=r".*@.*"
         ),
     ]
-    password: Annotated[str, StringConstraints(max_length=20, min_length=8)]
+    password: Annotated[
+        str, 
+        StringConstraints(min_length=1, strip_whitespace=True)
+    ]
 
 
 class UsuarioRegisterDTO(BaseModel):

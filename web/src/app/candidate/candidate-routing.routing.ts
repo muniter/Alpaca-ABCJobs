@@ -17,15 +17,6 @@ const routes: Routes = [
         component: CandidateLoginComponent, 
       }
     ]
-  },
-  {
-    path: AppRoutesEnum.user,
-    children: [
-      {
-        path: AppRoutesEnum.login,
-        component: CandidateLoginComponent, 
-      }
-    ]
   }
 ];
 
