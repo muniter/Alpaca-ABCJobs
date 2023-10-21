@@ -22,12 +22,10 @@ export class CandidateLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.candidateLoginForm = this.formBuilder.group(
-      {
+    this.candidateLoginForm = this.formBuilder.group({
         email: ["", [Validators.required, Validators.email, SharedCustomValidators.spaceOnlyValidator]],
         password: ["", [Validators.required, SharedCustomValidators.spaceOnlyValidator]]
-      }
-    )
+    });
   }
 
   getErrorMessage(field: String) {
