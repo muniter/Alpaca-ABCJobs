@@ -22,13 +22,13 @@ import { CandidateProfileComponent } from './candidate-profile/candidate-profile
     MatCheckboxModule,
     MatDividerModule
   ],
-  exports: [
+  declarations: [
     CandidateRegisterComponent,
     CandidateLoginComponent,
     CandidateHomeComponent, 
     CandidateProfileComponent
   ],
-  declarations: [
+  exports: [
     CandidateRegisterComponent,
     CandidateLoginComponent,
     CandidateHomeComponent, 

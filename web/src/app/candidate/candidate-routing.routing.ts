@@ -12,19 +12,19 @@ const routes: Routes = [
     children: [
       {
         path: AppRoutesEnum.candidateRegister,
-        component: CandidateRegisterComponent, 
+        component: CandidateRegisterComponent
       },
       {
         path: AppRoutesEnum.candidateLogin,
-        component: CandidateLoginComponent,
+        component: CandidateLoginComponent
       },
       { 
         path: AppRoutesEnum.candidateHome,
-        component: CandidateHomeComponent, 
+        component: CandidateHomeComponent
       },
       {
         path: AppRoutesEnum.candidateProfile,
-        component: CandidateProfileComponent, 
+        component: CandidateProfileComponent
       }
     ]
   }

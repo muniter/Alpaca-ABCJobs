@@ -3,7 +3,7 @@
     <div class="logo-div" >
       <img class="logo-img" src="../../../assets/logo.png">
     </div>
-    <form [formGroup]="candidateLoginForm" (ngSubmit)="candidateLogin(candidateLoginForm.value)">
+    <form [formGroup]="candidateLoginForm" (ngSubmit)="candidateLogin(candidateLoginForm.value)" >
       <div class="form"> 
 
         <mat-form-field class="form-field full-width" id="candidateEmailFormField" appearance="outline" subscriptSizing="dynamic">
@@ -23,9 +23,9 @@
         </mat-form-field>
 
         <app-abc-button type="submit" [disabled]="!candidateLoginForm.valid" class="inline-button bottom-margin" color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
-        <app-abc-button class="inline-button bottom-margin" routerLink="/candidate/register" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
+        <app-abc-button type="button" class="inline-button bottom-margin" routerLink="/candidate/register" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
         <mat-divider></mat-divider>
-        <app-abc-button class="inline-button top-margin" routerLink="/company/login" color="basic" i18n="@@companyportal">PORTAL DE EMPRESAS</app-abc-button>
+        <app-abc-button type="button" class="inline-button top-margin" routerLink="/company/login" color="basic" i18n="@@companyportal">PORTAL DE EMPRESAS</app-abc-button>
       </div>
     </form>
   </app-login-logon-container>
