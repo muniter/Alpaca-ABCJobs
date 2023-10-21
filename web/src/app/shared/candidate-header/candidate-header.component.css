@@ -1,0 +1,14 @@
+mat-icon {
+    color: var(--lightColor);
+    transform: scale(2);
+}
+
+.example-spacer {
+    flex: 1 auto;
+}
+
+.center-vertical{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -6,8 +6,11 @@ import { LoginLogonContainerComponent } from './login-logon-container/login-logo
 import { FormHeaderComponent } from './form-header/form-header.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 import { UnloggedLangPickerComponent } from './unlogged-lang-picker/unlogged-lang-picker.component';
+import { CandidateHeaderComponent } from './candidate-header/candidate-header.component';
 
 @NgModule({
   imports: [
@@ -15,9 +18,11 @@ import { UnloggedLangPickerComponent } from './unlogged-lang-picker/unlogged-lan
     RouterModule,
     MatButtonModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatToolbarModule,
+    MatIconModule
   ],
-  declarations: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent],
-  exports: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent]
+  declarations: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent, CandidateHeaderComponent],
+  exports: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent, CandidateHeaderComponent]
 })
 export class SharedModule { }

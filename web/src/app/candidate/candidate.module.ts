@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { CandidateRegisterComponent } from './candidate-register/candidate-regis
     MatInputModule, 
     MatCheckboxModule 
   ],
-  exports: [CandidateRegisterComponent],
-  declarations: [CandidateRegisterComponent]
+  exports: [CandidateRegisterComponent, CandidateHomeComponent],
+  declarations: [CandidateRegisterComponent, CandidateHomeComponent]
 })
 export class CandidateModule { }
