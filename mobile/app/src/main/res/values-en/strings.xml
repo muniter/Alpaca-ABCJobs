@@ -15,7 +15,7 @@
     <string name="userRegisteredLabelButton">I have an account</string>
     <string name="userUnRegisteredLabelButton">Register</string>
     <string name="question_register_type_text">Como quieres registrarte?:</string>
-    <string name="candidato_text">Candidato</string>
+    <string name="candidato_text">Candidate</string>
     <string name="empresa_text">Empresa Contratante</string>
 
     <!-- TODO: Remove or change this placeholder text -->

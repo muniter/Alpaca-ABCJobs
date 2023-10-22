@@ -1,14 +1,16 @@
 package com.example.abc_jobs_alpaca.utils
 
 class Date {
+
+    // TODO: Hacer refactor con lo que esta en el Preferences Fragment
     fun formatTo24Hour(time: String): String {
         val parts = time.split(":")
         if (parts.size == 2) {
             val hour = parts[0]
             val minute = parts[1]
-            return "$hour:$minute" // El formato de 24 horas no cambia
+            return "$hour:$minute"
         }
-        return time // Devuelve sin cambios si el formato es incorrecto
+        return time
     }
 
     fun formatTo12Hour(time: String): String {
@@ -20,7 +22,7 @@ class Date {
             val hour12 = if (hour == 0) 12 else if (hour <= 12) hour else hour - 12
             return "$hour12:$minute $amPm"
         }
-        return time // Devuelve sin cambios si el formato es incorrecto
+        return time
     }
 
     object DateUtils {
@@ -32,7 +34,7 @@ class Date {
                 val year = parts[2]
                 return "$day/$month/$year"
             }
-            return date // Devuelve sin cambios si el formato es incorrecto
+            return date
         }
 
         fun formatToMMDDYYYY(date: String): String {
@@ -43,7 +45,7 @@ class Date {
                 val year = parts[2]
                 return "$month/$day/$year"
             }
-            return date // Devuelve sin cambios si el formato es incorrecto
+            return date
         }
     }
 

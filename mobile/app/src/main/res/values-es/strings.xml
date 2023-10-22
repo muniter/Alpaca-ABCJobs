@@ -15,7 +15,7 @@
     <string name="userRegisteredLabelButton">Ya tengo cuenta en ABC</string>
     <string name="userUnRegisteredLabelButton">Registrarse</string>
     <string name="question_register_type_text">Como quiere registrarse?</string>
-    <string name="candidato_text">Candidate</string>
+    <string name="candidato_text">Candidato</string>
     <string name="empresa_text">Empresa Contratante</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Fragment vacio</string>

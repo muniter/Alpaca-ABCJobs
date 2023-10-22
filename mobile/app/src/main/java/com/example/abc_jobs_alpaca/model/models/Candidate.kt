@@ -55,6 +55,24 @@ fun deserializeCandidate(json: JSONObject): UserRegisterResponse {
     }
 }
 
+fun deserializeCandidateError(response: JSONObject): Exception {
+    val success = response.optBoolean("success", false)
+
+    if (!success) {
+        val errorsObject = response.optJSONObject("errors")
+        if (errorsObject != null) {
+            val emailError = errorsObject.optString("email")
+            if (emailError.isNotBlank()) {
+                return Exception(emailError)
+            }
+        }
+    }
+
+    return Exception("Error en la solicitud")
+}
+
+
+
 
 fun serializeCandidate(candidate: UserRegisterRequest): JSONObject {
     var json: JSONObject = JSONObject()

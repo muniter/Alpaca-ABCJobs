@@ -60,22 +60,27 @@ class ABCJobsService constructor(context: Context){
                 requestQueue.add(
                     postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
                         cont.resume(JSONObject(response))
-                    }, {
-                        if (it.networkResponse != null) {
-                            Log.d("NetErr", it.networkResponse.toString())
+                    }, { volleyError ->
+                        if (volleyError.networkResponse != null) {
+                            val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                            val jsonError = JSONObject(errorData)
+
+                            if (!jsonError.optBoolean("success")){
+                                val candidateError = deserializeCandidateError(jsonError)
+                                cont.resumeWithException(candidateError)
+                            }
                         } else {
-                            Log.d("NetErr", "NetworkResponse is null")
+                            cont.resumeWithException(volleyError)
                         }
-                        cont.resumeWithException(it)
                     })
                 )
             }
-
-            if (response.optBoolean("success", false)) {
+            if (response.optBoolean("success")) {
                 val candidate = deserializeCandidate(response)
                 Result.success(candidate)
             } else {
-                Result.failure(Exception("Request failed"))
+                val candidateError = deserializeCandidateError(response)
+                Result.failure(candidateError)
             }
         } catch (e: Exception) {
             Log.d("NETWORK_ERROR", e.toString())

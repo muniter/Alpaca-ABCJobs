@@ -14,7 +14,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
 import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import com.google.android.material.textfield.TextInputEditText
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +43,17 @@ class CandidatoRegisterFragment : Fragment()
         val view = inflater.inflate(R.layout.fragment_candidato_register, container, false)
         val btn: Button = view.findViewById(R.id.button_register)
         btn.setOnClickListener(this)
+
+        val viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
+
+        viewModel.getToastMessage().observe(viewLifecycleOwner, Observer { message ->
+            showToast(message, R.drawable.toast_success_background)
+        })
+
+        viewModel.getToastError().observe(viewLifecycleOwner, Observer { message ->
+            showToast(message, R.drawable.toast_error_background)
+        })
+
 
         val editTextName = view.findViewById<TextInputEditText>(R.id.editTextName)
         val labelNameError = view.findViewById<TextView>(R.id.labelNameError)
@@ -126,6 +139,22 @@ class CandidatoRegisterFragment : Fragment()
         return view
     }
 
+
+    private fun showToast(message: String, backgroundDrawableRes: Int) {
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast.view?.setBackgroundResource(backgroundDrawableRes)
+        toast.show()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
+
+        viewModel.getEnabledElementsLiveData().observe(viewLifecycleOwner, Observer { state ->
+            toggleControl(state)
+        })
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[CandidateRegisterModel::class.java]
@@ -143,15 +172,7 @@ class CandidatoRegisterFragment : Fragment()
                 val lastName = view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.text.toString()
                 val email = view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.text.toString()
                 val password = view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.text.toString()
-
-                view?.findViewById<Button>(R.id.button_register)?.isEnabled = false
-                view?.findViewById<TextInputEditText>(R.id.editTextName)?.isEnabled = false
-                view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.isEnabled = false
-                view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = false
-                view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = false
-                view?.findViewById<TextInputEditText>(R.id.editTextRepeatPassword)?.isEnabled = false
-                view?.findViewById<CheckBox>(R.id.checkBoxTerms)?.isEnabled = false
-
+                toggleControl(false);
                 val candidate = UserRegisterRequest(
                     nombres = name,
                     apellidos = lastName,
@@ -167,7 +188,15 @@ class CandidatoRegisterFragment : Fragment()
         }
 
     }
-
+private fun toggleControl(estate: Boolean){
+    view?.findViewById<Button>(R.id.button_register)?.isEnabled = estate
+    view?.findViewById<TextInputEditText>(R.id.editTextName)?.isEnabled = estate
+    view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.isEnabled = estate
+    view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = estate
+    view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = estate
+    view?.findViewById<TextInputEditText>(R.id.editTextRepeatPassword)?.isEnabled = estate
+    view?.findViewById<CheckBox>(R.id.checkBoxTerms)?.isEnabled = estate
+}
 
     // Validation
     private fun setupFieldValidation(
