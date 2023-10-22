@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.volley.NetworkError
 import com.example.abc_jobs_alpaca.LoginFragment
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserLoginRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers

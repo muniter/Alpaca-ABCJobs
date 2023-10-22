@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/testLanguage" />
+        android:text="@string/languageCurrent" />
 
     <Spinner
         android:id="@+id/dateFormatSpinner"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Fecha actual: "
+        android:text="@string/now_date"
         android:textSize="16sp" />
 
     <Spinner
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Hora actual: "
+        android:text="@string/now_hour"
         android:textSize="16sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +59,7 @@
             android:id="@+id/preferencesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar preferencias"
+            android:text="@string/save_preferences_button"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

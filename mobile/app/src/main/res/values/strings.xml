@@ -20,6 +20,28 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="candidatos_text_apptopbar">Registro de candidatos</string>
-    <string name="testLanguage">Lenguaje seleccionado</string>
+    <string name="languageCurrent">Lenguaje seleccionado</string>
     <string name="home_fragment_text">Hola</string>
+    <string name="succesful_message_login">Inicio de sesión correcto</string>
+    <string name="email_address_header">Correo Electrónico</string>
+    <string name="email_address_placeholder">Ingrese su correo electrónico</string>
+    <string name="password_header">Contraseña</string>
+    <string name="password_placeholder">Ingrese la contraseña</string>
+    <string name="login_button_text">Iniciar sesión</string>
+    <string name="register_button_text">Registrarse</string>
+    <string name="names_label">Nombres</string>
+    <string name="names_placeholder">Ingrese su nombre</string>
+    <string name="latnames_label">Apellidos</string>
+    <string name="lastnames_placeholder">Ingrese su apellido</string>
+    <string name="repass_label">Repita la contraseña</string>
+    <string name="repas_placeholder">Repita la contraseña</string>
+    <string name="acept_terms">Acepto los</string>
+    <string name="terms_cond">términos y condiciones</string>
+    <string name="now_date">Fecha actual:</string>
+    <string name="now_hour">Hora actual:</string>
+    <string name="save_preferences_button">Guardar</string>
+    <string name="succesful_message">Operación exitosa</string>
+    <string name="lastnames_label">Apellidos</string>
+    <string name="repass_placeholder">Repita su contraseña</string>
+    <string name="accept_terms">Acepto los</string>
 </resources>

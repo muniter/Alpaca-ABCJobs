@@ -64,7 +64,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Correo Electrónico"
+                                android:text="@string/email_address_header"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -75,7 +75,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su correo electrónico"
+                                android:hint="@string/email_address_placeholder"
                                 android:inputType="textEmailAddress"
                                 android:text="@={viewModel.email}"
                                 android:textAlignment="viewStart"
@@ -110,7 +110,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Contraseña"
+                                android:text="@string/password_header"
                                 android:textColor="@color/black" />
 
                             <FrameLayout
@@ -125,7 +125,7 @@
                                     android:ems="10"
                                     android:focusable="auto"
                                     android:fontFamily="@font/roboto_regular"
-                                    android:hint="Ingrese la contraseña"
+                                    android:hint="@string/password_placeholder"
                                     android:inputType="textPassword"
                                     android:text="@={viewModel.password}"
                                     android:textAlignment="viewStart"
@@ -171,7 +171,7 @@
                         android:fontFamily="@font/font_roboto"
                         android:onClick="@{() -> viewModel.login()}"
                         android:saveEnabled="false"
-                        android:text="Iniciar sesión" />
+                        android:text="@string/login_button_text" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_register2"
@@ -182,7 +182,7 @@
                         android:background="@drawable/button_rounded"
                         android:enabled="true"
                         android:fontFamily="@font/font_roboto"
-                        android:text="Registrarse"
+                        android:text="@string/register_button_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

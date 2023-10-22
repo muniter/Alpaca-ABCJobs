@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        android:text="Operación exitosa" />
+        android:text="@string/succesful_message" />
 </LinearLayout>
 
 

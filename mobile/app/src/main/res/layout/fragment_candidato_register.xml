@@ -79,7 +79,7 @@
                         android:background="@drawable/button_rounded"
                         android:enabled="true"
                         android:fontFamily="@font/font_roboto"
-                        android:text="Registrarse"
+                        android:text="@string/register_button_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Nombre"
+                                android:text="@string/names_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -119,7 +119,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su nombre"
+                                android:hint="@string/names_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -159,7 +159,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Apellido"
+                                android:text="@string/latnames_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -170,7 +170,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su apellido"
+                                android:hint="@string/lastnames_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -207,7 +207,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Correo Electrónico"
+                                android:text="@string/email_address_header"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -218,7 +218,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su correo electrónico"
+                                android:hint="@string/email_address_placeholder"
                                 android:inputType="textEmailAddress"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -256,7 +256,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Contraseña"
+                                android:text="@string/password_header"
                                 android:textColor="@color/black" />
 
                             <FrameLayout
@@ -271,7 +271,7 @@
                                     android:ems="10"
                                     android:focusable="auto"
                                     android:fontFamily="@font/roboto_regular"
-                                    android:hint="Ingrese la contraseña"
+                                    android:hint="@string/password_placeholder"
                                     android:inputType="textPassword"
                                     android:textAlignment="viewStart"
                                     android:textColor="@color/black"
@@ -333,7 +333,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Repita la contraseña"
+                                android:text="@string/repass_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -344,7 +344,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Repita la contraseña"
+                                android:hint="@string/repas_placeholder"
 
                                 android:inputType="textPassword"
                                 android:textAlignment="viewStart"
@@ -387,7 +387,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Acepto los"
+                                android:text="@string/acept_terms"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -398,7 +398,7 @@
                                 android:autoLink="web"
                                 android:clickable="true"
                                 android:cursorVisible="true"
-                                android:text=" términos y condiciones"
+                                android:text="@string/terms_cond"
                                 android:textColor="#47528F" />
 
                         </LinearLayout>

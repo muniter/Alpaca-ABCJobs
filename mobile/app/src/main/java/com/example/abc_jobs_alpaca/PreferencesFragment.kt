@@ -64,7 +64,8 @@ class PreferencesFragment : Fragment() {
         timeFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeFormatSpinner.adapter = timeFormatAdapter
 
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val selectedLanguageCode = Locale.getDefault().language
         val selectedLanguage = mapSelectedLanguage(selectedLanguageCode);
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
@@ -78,7 +79,12 @@ class PreferencesFragment : Fragment() {
         timeFormatSpinner.setSelection(timeFormatPosition)
 
         languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedLanguage = languageSpinner.selectedItem.toString()
                 saveLanguagePreferences(selectedLanguage)
             }
@@ -88,7 +94,12 @@ class PreferencesFragment : Fragment() {
         }
 
         dateFormatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedDateFormat = dateFormatSpinner.selectedItem.toString()
                 saveDateFormatPreference(selectedDateFormat)
             }
@@ -98,7 +109,12 @@ class PreferencesFragment : Fragment() {
         }
 
         timeFormatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val selectedTimeFormat = timeFormatSpinner.selectedItem.toString()
                 saveTimeFormatPreference(selectedTimeFormat)
             }
@@ -112,100 +128,111 @@ class PreferencesFragment : Fragment() {
         }
 
 
-        //Solo para ejemplo
-        val textViewHora = view.findViewById<TextView>(R.id.textViewHora)
+        val textViewHour = view.findViewById<TextView>(R.id.textViewHora)
         val timeFormatPreference = sharedPreferences.getString("timeFormat", "24 horas")
 
-        val horaActual = timeFormatPreference?.let { obtenerHoraActual(it) }
-        textViewHora.text = "Fecha actual: $horaActual"
+        val nowHour = timeFormatPreference?.let {
+            getCurrentHour(it)}
+
+            textViewHour.text = "Fecha actual: $nowHour"
 
 
+            val textViewDate = view.findViewById<TextView>(R.id.textViewFecha)
+            val dateFormatPreference = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
 
-        val textViewFecha = view.findViewById<TextView>(R.id.textViewFecha)
-        val dateFormatPreference = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
-
-        val fechaActual = dateFormatPreference?.let { obtenerFechaActual(it) }
-        textViewFecha.text = "Hora actual: $fechaActual"
-        return view
-    }
-
-    private fun savePreferences() {
-        val selectedLanguage = languageSpinner.selectedItem.toString()
-        val selectedDateFormat = dateFormatSpinner.selectedItem.toString()
-        val selectedTimeFormat = timeFormatSpinner.selectedItem.toString()
-
-        if (activity is MainActivity) {
-            (activity as MainActivity).updatePreferences(selectedLanguage, selectedDateFormat, selectedTimeFormat)
-        }
-    }
-
-    fun mapSelectedLanguage(selectedLanguageValue: String): String {
-        return when (selectedLanguageValue) {
-            "en" -> "Inglés"
-            "es" -> "Español"
-            else -> "Español"
-        }
-    }
-    private fun saveLanguagePreferences(selectedLanguage: String) {
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("language", selectedLanguage)
-        editor.apply()
-    }
-
-    private fun saveDateFormatPreference(selectedDateFormat: String) {
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("dateFormat", selectedDateFormat)
-        editor.apply()
-    }
-
-    private fun saveTimeFormatPreference(selectedTimeFormat: String) {
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("timeFormat", selectedTimeFormat)
-        editor.apply()
-    }
-
-    private fun obtenerHoraActual(timeFormat: String): String {
-        val calendar = Calendar.getInstance()
-        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-
-        val formattedHour: String
-        if (timeFormat == "12 horas") {
-            val amPm = if (hourOfDay < 12) "AM" else "PM"
-            val hour12 = if (hourOfDay % 12 == 0) 12 else hourOfDay % 12
-            formattedHour = String.format(Locale.getDefault(), "%02d:%02d %s", hour12, minute, amPm)
-        } else {
-            formattedHour = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+            val currendDate = dateFormatPreference?.let { getCurrentDate(it) }
+            textViewDate.text = "Hora actual: $currendDate"
+            return view
         }
 
-        return formattedHour
-    }
+        private fun savePreferences() {
+            val selectedLanguage = languageSpinner.selectedItem.toString()
+            val selectedDateFormat = dateFormatSpinner.selectedItem.toString()
+            val selectedTimeFormat = timeFormatSpinner.selectedItem.toString()
 
-    private fun obtenerFechaActual(dateFormat: String): String {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH) + 1 // Los meses comienzan desde 0
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val formattedDate: String
-        if (dateFormat == "DD/MM/YYYY") {
-            formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year)
-        } else if (dateFormat == "MM/DD/YYYY") {
-            formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", month, day, year)
-        } else {
-            formattedDate = "" // Formato de fecha no compatible
+            if (activity is MainActivity) {
+                (activity as MainActivity).updatePreferences(
+                    selectedLanguage,
+                    selectedDateFormat,
+                    selectedTimeFormat
+                )
+            }
         }
 
-        return formattedDate
-    }
+        private fun mapSelectedLanguage(selectedLanguageValue: String): String {
+            return when (selectedLanguageValue) {
+                "en" -> "Inglés"
+                "es" -> "Español"
+                else -> "Español"
+            }
+        }
+
+        private fun saveLanguagePreferences(selectedLanguage: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("language", selectedLanguage)
+            editor.apply()
+        }
+
+        private fun saveDateFormatPreference(selectedDateFormat: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("dateFormat", selectedDateFormat)
+            editor.apply()
+        }
+
+        private fun saveTimeFormatPreference(selectedTimeFormat: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("timeFormat", selectedTimeFormat)
+            editor.apply()
+        }
+
+        private fun getCurrentHour(timeFormat: String): String {
+            val calendar = Calendar.getInstance()
+            val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+
+            val formattedHour: String
+            if (timeFormat == "12 horas") {
+                val amPm = if (hourOfDay < 12) "AM" else "PM"
+                val hour12 = if (hourOfDay % 12 == 0) 12 else hourOfDay % 12
+                formattedHour =
+                    String.format(Locale.getDefault(), "%02d:%02d %s", hour12, minute, amPm)
+            } else {
+                formattedHour = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+            }
+
+            return formattedHour
+        }
+
+        fun getCurrentDate(dateFormat: String): String {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val formattedDate: String
+            if (dateFormat == "DD/MM/YYYY") {
+                formattedDate =
+                    String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year)
+            } else if (dateFormat == "MM/DD/YYYY") {
+                formattedDate =
+                    String.format(Locale.getDefault(), "%02d/%02d/%04d", month, day, year)
+            } else {
+                formattedDate = ""
+            }
+
+            return formattedDate
+        }
 
 
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            viewModel = ViewModelProvider(this).get(PreferencesViewModel::class.java)
+        }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PreferencesViewModel::class.java)
-    }
 }
