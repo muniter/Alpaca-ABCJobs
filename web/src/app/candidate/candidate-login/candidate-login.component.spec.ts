@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { faker } from '@faker-js/faker';
 import { Router } from '@angular/router';
@@ -36,6 +37,7 @@ describe('CandidateLoginComponent', () => {
         MatInputModule,
         MatCheckboxModule,
         MatDividerModule,
+        RouterTestingModule,
         BrowserAnimationsModule
       ],
       declarations: [ CandidateLoginComponent ]

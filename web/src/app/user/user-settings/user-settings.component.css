@@ -1,0 +1,47 @@
+.user-settings-body {
+  padding: 1rem;
+}
+
+.user-settings-body .form {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: safe center;
+  align-items: stretch;
+  justify-content: space-between;
+  justify-items: stretch;
+}
+
+.label {
+  display:inline-flex;
+  width: 45%; 
+  padding-top: 25px;
+}
+
+.form-field {
+  display:inline-flex;  
+   width: 45%; 
+}
+
+.buttons {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: right;
+}
+
+.success {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
+}
+
+.error {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: rgb(119, 0, 0);
+  background-color: #f2bfc1;
+}

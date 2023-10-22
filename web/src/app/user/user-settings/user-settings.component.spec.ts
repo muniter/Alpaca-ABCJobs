@@ -3,30 +3,30 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { SharedModule } from 'src/app/shared/shared.module';
-import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from "@angular/router/testing";
+import { MatDialogRef, MAT_DIALOG_DATA,} from "@angular/material/dialog";
 
-import { CandidateProfileComponent } from './candidate-profile.component';
+import { UserSettingsComponent } from './user-settings.component';
 
-describe('CandidateProfileComponent', () => {
-  let component: CandidateProfileComponent;
-  let fixture: ComponentFixture<CandidateProfileComponent>;
+describe('UserSettingsComponent', () => {
+  let component: UserSettingsComponent;
+  let fixture: ComponentFixture<UserSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        SharedModule,
-        MatDialogModule,
+        HttpClientModule,
         RouterTestingModule
       ],
-      declarations: [ CandidateProfileComponent ]
+      providers: [{ provide: MatDialogRef, useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: {} }, ],
+      declarations: [ UserSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CandidateProfileComponent);
+    fixture = TestBed.createComponent(UserSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
