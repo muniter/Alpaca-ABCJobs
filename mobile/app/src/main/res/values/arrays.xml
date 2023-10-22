@@ -5,8 +5,8 @@
         <item>Inglés</item>
     </string-array>
     <string-array name="date_format_options">
-        <item>DD/MM/AAAA</item>
-        <item>MM/DD/AAAA</item>
+        <item>DD/MM/YYYY</item>
+        <item>MM/DD/YYYY</item>
     </string-array>
 
     <string-array name="time_format_options">

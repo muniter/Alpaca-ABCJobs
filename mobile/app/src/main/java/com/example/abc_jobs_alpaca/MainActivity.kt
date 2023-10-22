@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity()
         val editor = sharedPreferences.edit()
 
         editor.putString("timeFormat", selectedTimeFormat)
+        editor.putString("dateFormat", selectedDateFormat)
 
         val currentLanguage = sharedPreferences.getString("language", "en")
         when (selectedLanguage) {
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity()
     override fun attachBaseContext(newBase: Context) {
         val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val selectedLanguageValue = Locale.getDefault().language
-        val language = sharedPreferences.getString("language", "es") // "es" es el idioma predeterminado
+        val language = sharedPreferences.getString("language", "es")
         val locale = Locale(language)
         val configuration = Configuration(newBase.resources.configuration)
         configuration.setLocale(locale)

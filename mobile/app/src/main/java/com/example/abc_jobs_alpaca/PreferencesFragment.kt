@@ -1,24 +1,20 @@
 package com.example.abc_jobs_alpaca
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
-import androidx.preference.PreferenceFragmentCompat
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class PreferencesFragment : Fragment() {
@@ -32,6 +28,7 @@ class PreferencesFragment : Fragment() {
     private lateinit var viewModel: PreferencesViewModel
     private lateinit var savePreferencesButton: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,8 +65,8 @@ class PreferencesFragment : Fragment() {
         timeFormatSpinner.adapter = timeFormatAdapter
 
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-
-        val selectedLanguage = Locale.getDefault().language
+        val selectedLanguageCode = Locale.getDefault().language
+        val selectedLanguage = mapSelectedLanguage(selectedLanguageCode);
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
         val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
         val languagePosition = languageAdapter.getPosition(selectedLanguage)
@@ -114,12 +111,21 @@ class PreferencesFragment : Fragment() {
             savePreferences()
         }
 
-        // Obtén una referencia al TextView donde mostrar la hora
+
+        //Solo para ejemplo
         val textViewHora = view.findViewById<TextView>(R.id.textViewHora)
         val timeFormatPreference = sharedPreferences.getString("timeFormat", "24 horas")
 
         val horaActual = timeFormatPreference?.let { obtenerHoraActual(it) }
-        textViewHora.text = "Hora actual: $horaActual"
+        textViewHora.text = "Fecha actual: $horaActual"
+
+
+
+        val textViewFecha = view.findViewById<TextView>(R.id.textViewFecha)
+        val dateFormatPreference = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
+
+        val fechaActual = dateFormatPreference?.let { obtenerFechaActual(it) }
+        textViewFecha.text = "Hora actual: $fechaActual"
         return view
     }
 
@@ -133,6 +139,13 @@ class PreferencesFragment : Fragment() {
         }
     }
 
+    fun mapSelectedLanguage(selectedLanguageValue: String): String {
+        return when (selectedLanguageValue) {
+            "en" -> "Inglés"
+            "es" -> "Español"
+            else -> "Español"
+        }
+    }
     private fun saveLanguagePreferences(selectedLanguage: String) {
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -170,6 +183,25 @@ class PreferencesFragment : Fragment() {
 
         return formattedHour
     }
+
+    private fun obtenerFechaActual(dateFormat: String): String {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1 // Los meses comienzan desde 0
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val formattedDate: String
+        if (dateFormat == "DD/MM/YYYY") {
+            formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year)
+        } else if (dateFormat == "MM/DD/YYYY") {
+            formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", month, day, year)
+        } else {
+            formattedDate = "" // Formato de fecha no compatible
+        }
+
+        return formattedDate
+    }
+
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
