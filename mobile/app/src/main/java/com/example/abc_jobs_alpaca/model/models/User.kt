@@ -43,6 +43,22 @@ fun deserializeLoginCandidate(json: JSONObject): UserLoginResponse {
     return UserLoginResponse(success, userDataResponse)
 }
 
+fun deserializeLoginCandidateError(response: JSONObject):Exception {
+    val success = response.optBoolean("success", false)
+
+    if (!success) {
+        val errorsObject = response.optJSONObject("errors")
+        if (errorsObject != null) {
+            val emailError = errorsObject.optString("email")
+            if (emailError.isNotBlank()) {
+                return Exception(emailError)
+            }
+        }
+    }
+
+    return Exception("Error en la solicitud")
+}
+
 
 
 fun serializeLoginUser(candidate: UserLoginRequest): JSONObject {

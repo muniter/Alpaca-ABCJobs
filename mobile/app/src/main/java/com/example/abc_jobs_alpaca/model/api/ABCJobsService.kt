@@ -91,32 +91,37 @@ class ABCJobsService constructor(context: Context){
 
 
     suspend fun postLoginUser(loginUserJson: JSONObject): Result<UserLoginResponse> {
-        try {
+        return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
                     postRequest(USERS_PATH, LOGIN_PATH, loginUserJson, { response ->
                         cont.resume(JSONObject(response))
-                    }, { error ->
-                        if (error.networkResponse != null) {
-                            Log.d("NetErr", error.networkResponse.toString())
+                    }, { volleyError ->
+                        if (volleyError.networkResponse != null) {
+                            val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                            val jsonError = JSONObject(errorData)
+
+                            if (!jsonError.optBoolean("success")) {
+                                val userLoginResponseError = deserializeLoginCandidateError(jsonError)
+                                cont.resumeWithException(userLoginResponseError)
+                            }
                         } else {
-                            Log.d("NetErr", "NetworkResponse is null")
+                            cont.resumeWithException(volleyError)
                         }
-                        cont.resumeWithException(error)
                     })
                 )
             }
 
             if (response.getBoolean("success")) {
                 val userLoginResponse = deserializeLoginCandidate(response)
-                return Result.success(userLoginResponse)
+                Result.success(userLoginResponse)
             } else {
-                Log.d("ERROR", "Login failed")
-                return Result.failure(Exception("Login failed"))
+                var userLoginResponseError = deserializeLoginCandidateError(response)
+                Result.failure(userLoginResponseError);
             }
         } catch (e: Exception) {
             Log.d("NETWORK_ERROR", e.toString())
-            return Result.failure(e)
+            Result.failure(e)
         }
     }
 

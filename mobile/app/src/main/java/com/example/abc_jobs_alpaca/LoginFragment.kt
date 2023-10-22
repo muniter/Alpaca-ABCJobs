@@ -10,15 +10,19 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
 import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import com.google.android.material.textfield.TextInputEditText
 import com.example.abc_jobs_alpaca.utils.Validators
+import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 
 
 private const val ARG_PARAM1 = "param1"
@@ -57,6 +61,17 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         binding.lifecycleOwner = viewLifecycleOwner
 
         val view = binding.root;
+
+        val viewModel = ViewModelProvider(this).get(LoginMoldel::class.java)
+
+        viewModel.getToastMessage().observe(viewLifecycleOwner, Observer { message ->
+            showToast(message, R.drawable.toast_success_background)
+        })
+
+        viewModel.getToastError().observe(viewLifecycleOwner, Observer { message ->
+            showToast(message, R.drawable.toast_error_background)
+        })
+
 
         val editTextEmail = view.findViewById<TextInputEditText>(R.id.editTextEmail)
         val labelEmailError = view.findViewById<TextView>(R.id.labelEmailError)
@@ -136,6 +151,10 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setNavigationListener(this)
+
+        viewModel.getEnabledElementsLiveData().observe(viewLifecycleOwner, Observer { state ->
+            toggleControl(state)
+        })
     }
 
     override fun navigateToNextScreen() {
@@ -178,6 +197,18 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
             isValidPassword ) {
             button?.isEnabled = true
         }
+    }
+
+    private fun showToast(message: String, backgroundDrawableRes: Int) {
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast.view?.setBackgroundResource(backgroundDrawableRes)
+        toast.show()
+    }
+
+    private fun toggleControl(estate: Boolean){
+        view?.findViewById<Button>(R.id.button_login)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = estate
     }
     companion object {
         /**
