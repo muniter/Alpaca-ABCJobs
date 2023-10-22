@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { faker } from '@faker-js/faker';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -33,6 +34,7 @@ describe('CompanyRegisterComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
+        RouterTestingModule,
         BrowserAnimationsModule],
       declarations: [CompanyRegisterComponent]
     })
