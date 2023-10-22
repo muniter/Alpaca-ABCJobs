@@ -17,18 +17,22 @@ mat-divider {
     justify-content: center;
 }
 
-mat-icon {
+.mat-icon-user {
     font-size: 18rem;
     color: var(--darkColor);
     width: 30%;
     height: 100%;
 }
 
-textarea{
+fieldset {
+    border: none;
+}
+
+textarea {
     resize: none;
 }
 
-.form-row-label{
+.form-row-label {
     font-size: 1.5rem;
 }
 
@@ -36,56 +40,82 @@ textarea{
     padding: 0% 10%;
 }
 
-.candidate-profile{
+.candidate-profile {
     padding: 0rem 2rem;
 }
 
-.candidate-profile-section{
+.candidate-profile-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.candidate-profile-header{
+.candidate-profile-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.user-name{
+.user-name {
     display: flex;
     align-items: center;
     width: 70%;
 }
 
-.user-name-icon{
+.user-name-icon {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: right;
 }
 
-.left-label{
+.personal-info-title{
+display: flex;
+align-items: center;
+}
+
+.edit-icon{
+    
+    transform: scale(1.5);
+}
+
+.left-label {
     width: 40%;
 }
 
-.right-field{
+.right-field {
     width: 60%;
 }
 
-.half-right-field{
+.half-right-field {
     width: 49%;
 }
 
-.form-row{
+.form-row {
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
 }
 
-.space-between{
+.space-between {
     display: flex;
     justify-content: space-between;
 }
 
+.chips-field-disabled {
+    background-color: var(--lightColor);
+}
 
+.chip-disabled {
+    background-color: #FFF !important;
+    cursor: default !important;
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: safe end;
+}
+
+.buttons-div .inline-button {
+    width: 15%;
+}

@@ -12,3 +12,11 @@
     opacity: 44%;
     width: 100%;
 }
+
+::ng-deep .mat-form-field-disabled{
+    background-color: var(--lightColor);
+}
+
+::ng-deep .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input{
+    color: rgba(25,25,25,50) !important; 
+}

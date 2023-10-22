@@ -145,6 +145,126 @@
           <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="candidatebirthdate" datatype="html">
+        <source>Fecha de nacimiento</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidateresidencecity" datatype="html">
+        <source>Ciudad de residencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidateresidenceaddress" datatype="html">
+        <source>Dirección de residencia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatemobile" datatype="html">
+        <source>Celular</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatelanguages" datatype="html">
+        <source>Idiomas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatebio" datatype="html">
+        <source>Bio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cancel" datatype="html">
+        <source>Cancelar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="save" datatype="html">
+        <source>Guardar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="minagevalidation" datatype="html">
+        <source>Su edad no puede ser menor a 18 años.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invaliddatevalidation" datatype="html">
+        <source>La fecha ingresada es inválida.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthaddress" datatype="html">
+        <source>La dirección debe tener entre 5 y 255 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyaddress" datatype="html">
+        <source>La dirección no puede contener solo espacios</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidformatmobile" datatype="html">
+        <source>El número celular debe tener solamente números</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthmobile" datatype="html">
+        <source>El número celular debe tener entre 2 y 15 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptybio" datatype="html">
+        <source>El texto ingresado no puede contener solo espacios</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthbio" datatype="html">
+        <source>El texto ingresado debe tener entre 10 y 255 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="candidateregister" datatype="html">
         <source>Registro de <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>cantidato</source>
         <context-group purpose="location">
@@ -449,20 +569,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cancel" datatype="html">
-        <source>Cancelar</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="save" datatype="html">
-        <source>Guardar</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
-          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="usersetconfigsuccess" datatype="html">

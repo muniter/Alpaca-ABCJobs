@@ -1,3 +1,4 @@
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -9,150 +10,164 @@
 @include mat.core();
 
 $md-contrastcandidate: (
-  50 : #ebf0fb,
-  100 : #cddaf5,
-  200 : #acc2ee,
-  300 : #8aa9e7,
-  400 : #7196e2,
-  500 : #5884dd,
-  600 : #507cd9,
-  700 : #4771d4,
-  800 : #3d67cf,
-  900 : #2d54c7,
-  A100 : #ffffff,
-  A200 : #d5dfff,
-  A400 : #a2b8ff,
-  A700 : #89a5ff,
-  contrast: (50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
+    50 : #ebf0fb,
+    100 : #cddaf5,
+    200 : #acc2ee,
+    300 : #8aa9e7,
+    400 : #7196e2,
+    500 : #5884dd,
+    600 : #507cd9,
+    700 : #4771d4,
+    800 : #3d67cf,
+    900 : #2d54c7,
+    A100 : #ffffff,
+    A200 : #d5dfff,
+    A400 : #a2b8ff,
+    A700 : #89a5ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
 );
 
 $md-dark: (
-  50 : #e3e3e3,
-  100 : #bababa,
-  200 : #8c8c8c,
-  300 : #5e5e5e,
-  400 : #3c3c3c,
-  500 : #191919,
-  600 : #161616,
-  700 : #121212,
-  800 : #0e0e0e,
-  900 : #080808,
-  A100 : #ff5050,
-  A200 : #ff1d1d,
-  A400 : #e90000,
-  A700 : #cf0000,
-  contrast: (50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #ffffff,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #ffffff,
-    A400 : #ffffff,
-    A700 : #ffffff,
-  )
+    50 : #e3e3e3,
+    100 : #bababa,
+    200 : #8c8c8c,
+    300 : #5e5e5e,
+    400 : #3c3c3c,
+    500 : #191919,
+    600 : #161616,
+    700 : #121212,
+    800 : #0e0e0e,
+    900 : #080808,
+    A100 : #ff5050,
+    A200 : #ff1d1d,
+    A400 : #e90000,
+    A700 : #cf0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
 );
 
 $md-contrastclient: (
-  50 : #e8f3ee,
-  100 : #c5e1d5,
-  200 : #9fcdb9,
-  300 : #78b99d,
-  400 : #5baa88,
-  500 : #3e9b73,
-  600 : #38936b,
-  700 : #308960,
-  800 : #287f56,
-  900 : #1b6d43,
-  A100 : #a9ffd0,
-  A200 : #76ffb4,
-  A400 : #43ff99,
-  A700 : #2aff8b,
-  contrast: (50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
+    50 : #e8f3ee,
+    100 : #c5e1d5,
+    200 : #9fcdb9,
+    300 : #78b99d,
+    400 : #5baa88,
+    500 : #3e9b73,
+    600 : #38936b,
+    700 : #308960,
+    800 : #287f56,
+    900 : #1b6d43,
+    A100 : #a9ffd0,
+    A200 : #76ffb4,
+    A400 : #43ff99,
+    A700 : #2aff8b,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
 );
 
 $md-light: (
-  50 : #fcfcfc,
-  100 : #f7f7f7,
-  200 : #f2f2f2,
-  300 : #ececec,
-  400 : #e8e8e8,
-  500 : #e4e4e4,
-  600 : #e1e1e1,
-  700 : #dddddd,
-  800 : #d9d9d9,
-  900 : #d1d1d1,
-  A100 : #ffffff,
-  A200 : #ffffff,
-  A400 : #ffffff,
-  A700 : #ffffff,
-  contrast: (50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #000000,
-    700 : #000000,
-    800 : #000000,
-    900 : #000000,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
+    50 : #fcfcfc,
+    100 : #f7f7f7,
+    200 : #f2f2f2,
+    300 : #ececec,
+    400 : #e8e8e8,
+    500 : #e4e4e4,
+    600 : #e1e1e1,
+    700 : #dddddd,
+    800 : #d9d9d9,
+    900 : #d1d1d1,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
 );
 
-$kids-typography: mat.define-typography-config($font-family: 'Roboto',
+$roboto-typography: mat.define-typography-config(
+    $font-family: 'Roboto',
   );
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$candidate-theme: mat.define-light-theme((color: (primary: mat.define-palette($md-dark, 500),
-        accent: mat.define-palette($md-contrastcandidate, 500),
-      )));
+$candidate-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($md-dark, 500),
+    accent: mat.define-palette($md-contrastcandidate, 500),
+  ),
+  typography: $roboto-typography
+));
 
-$client-theme: mat.define-light-theme((color: (primary: mat.define-palette($md-dark, 500),
-        accent: mat.define-palette($md-contrastclient, 500),
-      )));
+$client-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($md-dark, 500),
+    accent: mat.define-palette($md-contrastclient, 500),
+  ),
+  typography: $roboto-typography
+));
 
-$typo-theme: mat.define-light-theme((typography: $kids-typography));
+$typo-theme: mat.define-light-theme(( 
+  typography: $roboto-typography));
 
-.client-theme {
+.client-theme{
   @include mat.all-component-colors($client-theme);
 }
 
-@include mat.all-component-themes($candidate-theme);
+  @include mat.all-component-themes($candidate-theme);
