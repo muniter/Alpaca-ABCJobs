@@ -70,9 +70,10 @@ export class CandidateLoginComponent implements OnInit {
   candidateLogin(candidate: CandidateLoginRequest) {
     this.candidateService
       .login(candidate)
-      .subscribe({
-        error: (exception) => this.setErrorBack(exception),
-        complete: () => this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}`)
+      .subscribe({ 
+        next: (response) => this.router.navigateByUrl(
+          `${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}/${response.data.token}`),
+        error: (exception) => this.setErrorBack(exception)
       })
   }
 }

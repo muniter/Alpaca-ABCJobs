@@ -22,6 +22,10 @@ const routes: Routes = [
         path: AppRoutesEnum.candidateHome,
         component: CandidateHomeComponent
       },
+      { 
+        path: `${AppRoutesEnum.candidateHome}/:userToken`,
+        component: CandidateHomeComponent
+      },
       {
         path: AppRoutesEnum.candidateProfile,
         component: CandidateProfileComponent

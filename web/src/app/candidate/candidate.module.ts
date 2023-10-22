@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 import { CandidateLoginComponent } from './candidate-login/candidate-login.component';
 import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
@@ -20,7 +21,8 @@ import { CandidateProfileComponent } from './candidate-profile/candidate-profile
     MatFormFieldModule,
     MatInputModule, 
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   declarations: [
     CandidateRegisterComponent,

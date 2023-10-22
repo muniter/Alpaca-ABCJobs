@@ -9,6 +9,8 @@ export class AbcButtonComponent implements OnInit {
 
   @Input() color: string = "primary"; //primary / accent / basic
   @Input() disabled: boolean = false;
+  @Input() type: string = "button"; //button, submit
+  @Input() routerLink!: string;
 
   constructor() { }
 
