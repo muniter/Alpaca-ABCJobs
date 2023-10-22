@@ -1,3 +1,135 @@
-<div class="candidate-theme candidate-home-body">
-  <app-candidate-header [username]="'pepe'"></app-candidate-header>
+<div class="candidate-profile-body candidate-theme">
+  <app-candidate-header [username]="userFullName"></app-candidate-header>
+  <div class="profile-container">
+    <app-login-logon-container>
+      <div class="candidate-profile">
+        <div class="candidate-profile-header">
+          <div class="user-name-icon">
+            <div class="user-name">
+
+              <H1>{{userFullName}}</H1>
+            </div>
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="candidate-profile-section">
+          <div class="personal-info-section">
+            <H2 class="section-title">Información Personal</H2>
+            <form [formGroup]="personalInformationForm">
+              <div class="form">
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidatebirthdate">Fecha de nacimiento</label>
+                  </div>
+                  <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic"
+                    color="accent">
+
+                    <input matInput (focus)="picker1.open()" [max]="maxDate" [matDatepicker]="picker1"
+                      formControlName="birthdate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+
+                    <mat-error *ngIf="personalInformationForm.get('birthdate')!.invalid">
+                      {{ getPersonalInfoErrorMessage('birthdate') }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidateresidencecity">Ciudad de residencia</label>
+                  </div>
+                  <div class="right-field space-between">
+                    <mat-form-field class="form-field half-right-field" appearance="outline" subscriptSizing="dynamic">
+                      <mat-select>
+                        <mat-option *ngFor="let country of countries" [value]="country">
+                          {{country}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="false">
+                        {{ 'a' }}
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="form-field half-right-field" appearance="outline" subscriptSizing="dynamic">
+                      <input matInput id="candidateCity" class="form-control" formControlName="candidateCity">
+                      <mat-error *ngIf="false">
+                        {{ 'a' }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidateresidenceaddress">Dirección de residencia</label>
+                  </div>
+                  <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput id="candidateAddress" class="form-control" formControlName="candidateAddress">
+
+                    <mat-error *ngIf="personalInformationForm.get('candidateAddress')!.invalid">
+                      {{ getPersonalInfoErrorMessage('candidateAddress') }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidatemobile">Celular</label>
+                  </div>
+                  <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <input matInput id="candidateMobile" class="form-control" formControlName="candidateMobile">
+
+                    <mat-error *ngIf="personalInformationForm.get('candidateMobile')!.invalid">
+                      {{ getPersonalInfoErrorMessage('candidateMobile') }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidatelanguages">Idiomas</label>
+                  </div>
+                  <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <mat-chip-grid #chipGrid>
+                      <mat-chip-row *ngFor="let language of selectedLanguages" (removed)="removeLanguage(language)">
+                        {{language}}
+                        <button matChipRemove [attr.aria-label]="'remove ' + language">
+                          <mat-icon>cancel</mat-icon>
+                        </button>
+                      </mat-chip-row>
+                    </mat-chip-grid>
+                    <input #languageInput formControlName="candidateLanguages" [matChipInputFor]="chipGrid"
+                      [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      (matChipInputTokenEnd)="addLanguage($event)" />
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                      <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
+                        {{language}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <div class="left-label">
+                    <label class="form-row-label" i18n="@@candidatebio">Bio</label>
+                  </div>
+                  <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <textarea matInput id="candidateBio" rows="5" class="form-control"
+                      formControlName="candidateBio"></textarea>
+                    
+                      <mat-error *ngIf="personalInformationForm.get('candidateBio')!.invalid">
+                        {{ getPersonalInfoErrorMessage('candidateBio') }}
+                      </mat-error>
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </app-login-logon-container>
+  </div>
 </div>
