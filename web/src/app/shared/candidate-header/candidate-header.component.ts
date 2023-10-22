@@ -34,7 +34,7 @@ export class CandidateHeaderComponent implements OnInit {
 
   openUserSettingsDialog() {
     this.dialog.open(UserSettingsComponent, {
-      data: { token: this.token, dialog: this.dialog },
+      data: { token: this.token, dialog: this.dialog, theme: 'candidate-theme' },
       width: '40%'
     });
   }

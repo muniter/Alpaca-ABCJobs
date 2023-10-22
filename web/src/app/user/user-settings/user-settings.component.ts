@@ -21,6 +21,7 @@ export class UserSettingsComponent implements OnInit {
   userSettings!: UserSettings;
   token: string;
   dialog!: MatDialog;
+  theme : string;
   setConfigSucess: boolean = false;
   setConfigError!: string;
 
@@ -43,10 +44,11 @@ export class UserSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: {token: string, dialog: MatDialog}
+    @Inject(MAT_DIALOG_DATA) public data: {token: string, dialog: MatDialog, theme: string}
   ) { 
     this.token = data.token;
     this.dialog = data.dialog;
+    this.theme = data.theme;
   }
 
   ngOnInit() {
