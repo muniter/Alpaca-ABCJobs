@@ -1,8 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { $enum } from "ts-enum-util";
-import { Languages } from 'src/app/core/enums/Languages.enum';
 import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
