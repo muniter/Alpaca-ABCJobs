@@ -17,7 +17,7 @@ export class CandidateRegisterComponent implements OnInit {
   registerSucess: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, 
     private candidateService: CandidateService,
     private router: Router
   ) { }
@@ -141,10 +141,11 @@ export class CandidateRegisterComponent implements OnInit {
       .userSignUp(candidate)
       .subscribe({
         error: (exception) => this.setErrorBack(exception),
-        complete: () => 
-        {
-          this.registerSucess = true;
-          this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}`)
+        complete: () => { 
+          this.registerSucess = true
+          setTimeout(() => {
+            this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+          }, 2000);
         }
       })
   }

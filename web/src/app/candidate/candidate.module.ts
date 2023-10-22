@@ -8,10 +8,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
+import { CandidateLoginComponent } from './candidate-login/candidate-login.component';
 import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -31,9 +33,23 @@ import { MatSelectModule } from '@angular/material/select';
     MatAutocompleteModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule, 
+    MatCheckboxModule,
+    MatDividerModule,
+    MatDialogModule
   ],
-  exports: [CandidateRegisterComponent, CandidateHomeComponent, CandidateProfileComponent],
-  declarations: [CandidateRegisterComponent, CandidateHomeComponent, CandidateProfileComponent]
+  declarations: [
+    CandidateRegisterComponent,
+    CandidateLoginComponent,
+    CandidateHomeComponent, 
+    CandidateProfileComponent
+  ],
+  exports: [
+    CandidateRegisterComponent,
+    CandidateLoginComponent,
+    CandidateHomeComponent, 
+    CandidateProfileComponent
+  ]
 })
 export class CandidateModule { }

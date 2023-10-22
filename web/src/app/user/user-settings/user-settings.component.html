@@ -1,0 +1,46 @@
+<div class="user-settings-body">
+  <form [formGroup]="userSettingsForm" (ngSubmit)="setSettings(userSettingsForm.value)" >
+    <div class="form"> 
+      <span class="label" i18n="@@languageApp">Idioma</span>
+      <mat-form-field class="form-field" id="languageAppFormField" 
+                      appearance="fill" subscriptSizing="dynamic">
+        <mat-select id="languageApp" class="form-control" formControlName="languageApp">
+          <mat-option i18n="@@default">Predeterminado</mat-option>
+          <mat-option *ngFor="let languageApp of languagesApp" [value]="languageApp">
+            {{languageApp}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <span class="label" i18n="@@timeFormat">Formato de hora</span>
+      <mat-form-field class="form-field" id="timeFormatFormField" 
+                      appearance="fill" subscriptSizing="dynamic">
+        <mat-select id="timeFormat" class="form-control" formControlName="timeFormat">
+          <mat-option i18n="@@default">Predeterminado</mat-option>
+          <mat-option *ngFor="let timeFormat of timeFormats" [value]="timeFormat">
+            {{timeFormat}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <span class="label" i18n="@@dateFormat">Formato de fecha</span>
+      <mat-form-field class="form-field" id="dateFormatFormField" 
+                      appearance="fill" subscriptSizing="dynamic">
+      <mat-select id="dateFormat" class="form-control" formControlName="dateFormat">
+        <mat-option i18n="@@default">Predeterminado</mat-option>
+          <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
+            {{dateFormat}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>      
+    </div>
+    <div class="buttons">
+      <app-abc-button type="button" color="basic" (click)="cancel()"
+                      i18n="@@cancel">Cancelar</app-abc-button>
+      <app-abc-button type="submit" color="primary" 
+                      i18n="@@save">Guardar</app-abc-button>
+    </div>
+    <p class="error" *ngIf="setConfigError" >{{setConfigError}}</p>
+    <p class="success" *ngIf="setConfigSucess" i18n="@@usersetconfigsuccess">Configuración guardada exitosamente</p>
+  </form>
+</div>

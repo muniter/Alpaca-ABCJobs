@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { faker } from '@faker-js/faker';
 
@@ -33,7 +34,8 @@ describe('CandidateRegisterComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        BrowserAnimationsModule
+        RouterTestingModule,
+        BrowserAnimationsModule        
       ],
       declarations: [CandidateRegisterComponent]
     })

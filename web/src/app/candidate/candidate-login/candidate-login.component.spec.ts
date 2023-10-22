@@ -3,46 +3,51 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CompanyLoginComponent } from './company-login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { faker } from '@faker-js/faker';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { CompanyService } from '../company.service';
 
-describe('CompanyLoginComponent', () => {
-  let component: CompanyLoginComponent;
-  let companyService: CompanyService;
+import { CandidateLoginComponent } from './candidate-login.component';
+import { CandidateService } from '../candidate.service';
+
+describe('CandidateLoginComponent', () => {
+  let component: CandidateLoginComponent;
+  let candidateService: CandidateService;
   let router: Router;
-  let fixture: ComponentFixture<CompanyLoginComponent>;
+  let fixture: ComponentFixture<CandidateLoginComponent>;
   let debug: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule,
+      imports: [
+        HttpClientModule,
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatDividerModule,
         MatInputModule,
+        MatCheckboxModule,
+        MatDividerModule,
         RouterTestingModule,
-        BrowserAnimationsModule],
-      declarations: [CompanyLoginComponent]
+        BrowserAnimationsModule
+      ],
+      declarations: [ CandidateLoginComponent ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompanyLoginComponent);
-    companyService = TestBed.inject(CompanyService)
+    fixture = TestBed.createComponent(CandidateLoginComponent);
+    candidateService = TestBed.inject(CandidateService)
     router = TestBed.inject(Router)
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -54,44 +59,44 @@ describe('CompanyLoginComponent', () => {
   });
 
   it('should validate companyEmail', () => {
-    const companyEmail = component.companyLoginForm.controls['companyEmail'];
-    companyEmail.markAsTouched();
+    const email = component.candidateLoginForm.controls['email'];
+    email.markAsTouched();
 
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
 
-    companyEmail.setValue('');
+    email.setValue('');
     fixture.detectChanges();
-    expect(companyEmail.hasError('required')).toBeTruthy();
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.hasError('required')).toBeTruthy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
-    expect(debug.query(By.css('#companyEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico no puede ser vacía');
+    expect(debug.query(By.css('#candidateEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico no puede ser vacía');
 
-    companyEmail.setValue('     ');
+    email.setValue('     ');
     fixture.detectChanges();
-    expect(companyEmail.hasError('isOnlyWhiteSpace')).toBeTruthy();
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.hasError('isOnlyWhiteSpace')).toBeTruthy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
-    expect(debug.query(By.css('#companyEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico no puede ser vacía');
+    expect(debug.query(By.css('#candidateEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico no puede ser vacía');
 
-    companyEmail.setValue(faker.lorem.word({ length: { min: 9, max: 99 } }));
+    email.setValue(faker.lorem.word({ length: { min: 9, max: 99 } }));
     fixture.detectChanges();
-    expect(companyEmail.hasError('email')).toBeTruthy();
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.hasError('email')).toBeTruthy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
-    expect(debug.query(By.css('#companyEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico ingresada es inválida');
+    expect(debug.query(By.css('#candidateEmailFormField mat-error')).nativeElement.innerHTML).toContain('La dirección de correo electrónico ingresada es inválida');
   });
 
   it('should validate password', () => {
-    const password = component.companyLoginForm.controls['password'];
+    const password = component.candidateLoginForm.controls['password'];
     password.markAsTouched();
 
     expect(password.valid).toBeFalsy();
@@ -127,102 +132,98 @@ describe('CompanyLoginComponent', () => {
   it('should enable button when valid', () => {
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
 
-    const companyEmail = component.companyLoginForm.controls['companyEmail'];
-    const passwordBase = component.companyLoginForm.controls['password'];
+    const email = component.candidateLoginForm.controls['email'];
+    const password = component.candidateLoginForm.controls['password'];
 
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
 
-    companyEmail.setValue(faker.internet.email());
-    passwordBase.setValue(pass);
+    email.setValue(faker.internet.email());
+    password.setValue(pass);
 
     fixture.detectChanges();
 
-    expect(companyEmail.valid).toBeTruthy();
-    expect(passwordBase.valid).toBeTruthy();
+    expect(email.valid).toBeTruthy();
+    expect(password.valid).toBeTruthy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "false"
     );
-
   });
 
   it('should navigate when service returns success', () => {
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
 
-    const companyEmail = component.companyLoginForm.controls['companyEmail'];
-    const passwordBase = component.companyLoginForm.controls['password'];
+    const email = component.candidateLoginForm.controls['email'];
+    const password = component.candidateLoginForm.controls['password'];
 
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
 
-    companyEmail.setValue(faker.internet.email());
-    passwordBase.setValue(pass);
+    email.setValue(faker.internet.email());
+    password.setValue(pass);
 
     fixture.detectChanges();
 
-    expect(companyEmail.valid).toBeTruthy();
-    expect(passwordBase.valid).toBeTruthy();
+    expect(email.valid).toBeTruthy();
+    expect(password.valid).toBeTruthy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "false"
     );
 
-    let companySignUpSpy = spyOn(companyService, 'companyLogin').and.returnValue(of({ success: true }));
+    let candidateSignUpSpy = spyOn(candidateService, 'login').and.returnValue(of({ success: true }));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
-    component.loginCompany();
+    component.candidateLogin(component.candidateLoginForm.value);
 
-    expect(companySignUpSpy).toHaveBeenCalledTimes(1);
+    expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should set errors on service exception', async () => {
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
 
-    const companyEmail = component.companyLoginForm.controls['companyEmail'];
-    companyEmail.markAsTouched();
-    const passwordBase = component.companyLoginForm.controls['password'];
-    passwordBase.markAsTouched();
+    const email = component.candidateLoginForm.controls['email'];
+    email.markAsTouched();
+    const password = component.candidateLoginForm.controls['password'];
+    password.markAsTouched();
 
-    expect(companyEmail.valid).toBeFalsy();
+    expect(email.valid).toBeFalsy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "true"
     );
 
-    companyEmail.setValue(faker.internet.email());
-    passwordBase.setValue(pass);
+    email.setValue(faker.internet.email());
+    password.setValue(pass);
 
     fixture.detectChanges();
 
-    expect(companyEmail.valid).toBeTruthy();
-    expect(passwordBase.valid).toBeTruthy();
+    expect(email.valid).toBeTruthy();
+    expect(password.valid).toBeTruthy();
     expect(debug.query(By.css('app-abc-button[type="submit"]')).attributes['ng-reflect-disabled']).toEqual(
       "false"
     );
 
-    let companySignUpSpy = spyOn(companyService, 'companyLogin').and.returnValue(throwError(() => ({
+    let candidateSignUpSpy = spyOn(candidateService, 'login').and.returnValue(throwError(() => ({
       error: {
         success: false,
         errors: {
-          email: "Email no registrado"
+          email: "Dirección de correo o contraseña incorrectos"
         }
       }
     })));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
-    component.loginCompany();
+    component.candidateLogin(component.candidateLoginForm.value);
     fixture.detectChanges();
 
-    expect(companySignUpSpy).toHaveBeenCalledTimes(1);
+    expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledTimes(0);
-    expect(passwordBase.valid).toBeFalsy();
+    expect(email.valid).toBeFalsy();
 
-    expect(debug.query(By.css('#passwordFormField mat-error')).nativeElement.innerHTML).toContain('Falló el inicio de sesión, inténtelo de nuevo.');
+    expect(debug.query(By.css('#candidateEmailFormField mat-error')).nativeElement.innerHTML).toContain('inicio de sesión fallido');
   });
-
 });
-
-
