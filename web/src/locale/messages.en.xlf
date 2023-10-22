@@ -75,7 +75,7 @@
         <target>E-mail address can not be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidemail" datatype="html">
@@ -83,7 +83,7 @@
         <target>E-mail address is invalid</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
@@ -101,11 +101,11 @@
                                  <x id="PH" equiv-text="this.candidateLoginForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">40,41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">52,53</context>
+          <context context-type="linenumber">50,51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptypassword" datatype="html">
@@ -113,7 +113,7 @@
         <target>Password field can not be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
@@ -133,7 +133,7 @@
         <target>Invalid password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
@@ -466,6 +466,98 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/unlogged-lang-picker/unlogged-lang-picker.component.html</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="languageApp" datatype="html">
+        <source>Idioma</source>
+        <target>Language: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="default" datatype="html">
+        <source>Predeterminado</source>
+        <target>Default</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="timeFormat" datatype="html">
+        <source>Formato de hora</source>
+        <target>Time format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dateFormat" datatype="html">
+        <source>Formato de fecha</source>
+        <target>Date format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cancel" datatype="html">
+        <source>Cancelar</source>
+        <target>Cancel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="save" datatype="html">
+        <source>Guardar</source>
+        <target>Save</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="usersetconfigsuccess" datatype="html">
+        <source>Configuración guardada exitosamente</source>
+        <target>Settings successfully saved</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errortoken" datatype="html">
+        <source>Token invalido, inicie sesion nuevamente</source>
+        <target>Invalid token, log in again</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responsemessageerrorgetuserconfig" datatype="html">
+        <source>Token invalido, inicie sesión nuevamente: 
+                      <x id="PH" equiv-text="exception.error.detail"/></source>
+        <target>Invalid token, log in again: 
+                      <x id="PH" equiv-text="exception.error.detail"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.ts</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responsemessageerrorsetuserconfig" datatype="html">
+        <source>Error al guardar la configuración: 
+                      <x id="PH" equiv-text="exception.error.detail"/></source>
+        <target>Error saving settings: 
+                      <x id="PH" equiv-text="exception.error.detail"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.ts</context>
+          <context context-type="linenumber">100,101</context>
         </context-group>
       </trans-unit>
     </body>
