@@ -7,7 +7,7 @@ from common.shared.api_models.gestion_candidatos import (
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
 from common.shared.database.models import Candidato
-from common.shared.tests.helpers import crear_usuario_candidato
+from common.shared.tests.helpers import crear_usuario_candidato, crear_usuario_empresa
 from gestion_candidatos.candidato import CandidatoService
 from gestion_candidatos.main import app
 from faker import Faker
@@ -99,6 +99,17 @@ def test_get_informacion_personal():
     assert data["data"]["names"] is not None
 
 
+def test_get_informacion_personal_si_soy_empresa():
+    _, token = crear_usuario_empresa()
+    response = client.get(
+        "/personal-info",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 400
+    data = response.json()
+    assert data["errors"]["id_candidato"] is not None
+
+
 def test_get_countries():
     response = client.get("/utils/countries")
     assert response.status_code == 200
@@ -113,7 +124,6 @@ def test_get_languages():
     assert len(data["data"]) > 0
     assert data["data"][0]["id"] is not None
     assert data["data"][0]["name"] is not None
-
 
 
 def test_crear_candidato_error():
