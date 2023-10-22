@@ -41,3 +41,4 @@ class SlideshowFragment : Fragment() {
         _binding = null
     }
 }
+

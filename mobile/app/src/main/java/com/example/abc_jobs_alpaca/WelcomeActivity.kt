@@ -50,12 +50,12 @@ class WelcomeActivity: AppCompatActivity()
                 if (view != null) {
                     val selectedLanguage = languageOptions[position]
                     var currentLanguage = Configuration(resources.configuration).locales.get(0).toString();
+
                     when (selectedLanguage) {
                         "Inglés" -> {
                             if (currentLanguage != "en") {
                                 setLocale("en")
                                 recreate()
-
                             }
                         }
                         "Español" -> {
@@ -68,10 +68,9 @@ class WelcomeActivity: AppCompatActivity()
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
-        }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
 
+        }
     }
 
     override fun onLanguageSelected(newLanguage: String) {
@@ -85,12 +84,16 @@ class WelcomeActivity: AppCompatActivity()
         val configuration = resources.configuration
         configuration.setLocale(locale)
         resources.updateConfiguration(configuration, resources.displayMetrics)
-
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences = newBase.getSharedPreferences("LanguagePrefs", Context.MODE_PRIVATE)
-        val language = sharedPreferences.getString("language", "en") // "en" es el idioma predeterminado
+        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val language = sharedPreferences.getString("language", "en")
+        val editor = sharedPreferences.edit()
+        editor.putString("dateFormat", "DD/MM/YYYY")
+        editor.putString("timeFormat", "24 horas")
+        editor.putString("language", language)
+        editor.apply()
         val locale = Locale(language)
         val configuration = Configuration(newBase.resources.configuration)
         configuration.setLocale(locale)
@@ -102,7 +105,6 @@ class WelcomeActivity: AppCompatActivity()
     }
 
     override fun hideElement(elementId: Int) {
-        // poner un log
         val elementToHide = findViewById<View>(elementId)
         elementToHide.visibility = View.INVISIBLE
     }

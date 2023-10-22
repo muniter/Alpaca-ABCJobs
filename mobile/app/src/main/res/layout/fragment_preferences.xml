@@ -1,0 +1,73 @@
+<!-- res/layout/fragment_preferences.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Spinner para selección de lenguaje -->
+    <Spinner
+        android:id="@+id/languageSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:entries="@array/language_options" />
+
+    <!-- TextView para mostrar el lenguaje seleccionado -->
+    <TextView
+        android:id="@+id/languagePreference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/testLanguage" />
+
+    <!-- Spinner para selección de formato de fecha -->
+    <Spinner
+        android:id="@+id/dateFormatSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:entries="@array/date_format_options" />
+
+    <!-- TextView para mostrar el formato de fecha seleccionado -->
+    <TextView
+        android:id="@+id/dateFormatPreference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Formato de fecha seleccionado: Default Date Format" />
+
+    <!-- Spinner para selección de formato de hora -->
+    <Spinner
+        android:id="@+id/timeFormatSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:entries="@array/time_format_options" />
+
+    <!-- TextView para mostrar el formato de hora seleccionado -->
+    <TextView
+        android:id="@+id/timeFormatPreference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Formato de hora seleccionado: Default Time Format" />
+
+    <TextView
+        android:id="@+id/textViewHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Hora actual: "
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/preferencesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <!-- Botón -->
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca.ui.home
+package com.example.abc_jobs_alpaca
 
 import android.os.Bundle
 import android.view.LayoutInflater

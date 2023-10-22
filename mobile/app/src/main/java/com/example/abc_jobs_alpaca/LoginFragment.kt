@@ -64,6 +64,9 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         val labelPasswordError = view.findViewById<TextView>(R.id.labelPasswordError)
         val showPasswordButton = view.findViewById<ImageButton>(R.id.togglePasswordVisibility)
         val passwordInput = view.findViewById<TextInputEditText>(R.id.editTextPassword)
+        val loginButton = view.findViewById<Button>(R.id.button_login)
+
+        loginButton.isEnabled = false
 
         // Email field
         editTextEmail.setOnFocusChangeListener { _, hasFocus ->

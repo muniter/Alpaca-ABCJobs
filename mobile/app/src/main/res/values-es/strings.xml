@@ -21,10 +21,6 @@
     <string name="hello_blank_fragment">Fragment vacio</string>
     <string name="candidatos_text_apptopbar">Registro de candidatos</string>
 
-    <string-array name="language_options">
-        <item>Español</item>
-        <item>Inglés</item>
-    </string-array>
-
-
+    <string name="testLanguage">Lenguaje seleccionado</string>
+    <string name="home_fragment_text">Hola</string>
 </resources>

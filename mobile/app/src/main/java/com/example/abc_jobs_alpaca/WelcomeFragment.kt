@@ -199,23 +199,14 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_welcome_unregistered -> {
-                Log.d("MiTag", "Button1 clicked")
-                if (elementHideListener != null) {
-                    Log.d("MiTag", "elementHideListener is not null")
+                if (elementHideListener != null)
                     elementHideListener?.hideElement(R.id.spinner)
-                } else {
-                    Log.d("MiTag", "elementHideListener is null")
-                }
+
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
             R.id.button_user_registered -> {
-                Log.d("MiTag", "Button2 clicked")
-                if (elementHideListener != null) {
-                    Log.d("MiTag", "elementHideListener is not null")
+                if (elementHideListener != null)
                     elementHideListener?.hideElement(R.id.spinner)
-                } else {
-                    Log.d("MiTag", "elementHideListener is null")
-                }
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
             }
         }

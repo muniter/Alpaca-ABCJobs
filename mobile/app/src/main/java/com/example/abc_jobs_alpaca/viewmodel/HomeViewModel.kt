@@ -1,13 +1,19 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.abc_jobs_alpaca.R
 
-class HomeViewModel : ViewModel() {
 
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+
+    // Accede al valor desde strings.xml
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = application.getString(R.string.home_fragment_text)
     }
+
     val text: LiveData<String> = _text
 }
