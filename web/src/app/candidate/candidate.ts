@@ -76,32 +76,32 @@ export class CandidateLoginRequest {
 }
 
 export class PersonalInfo {
-  names: string;
-  last_names: string;
-  full_name: string;
-  email: string;
-  birth_date: string;
-  country_code: Number;
-  country: string;
-  city: string;
-  address: string;
-  phone: string;
-  biography: string;
-  languages: Language[];
+  names: string | null;
+  last_names: string | null;
+  full_name: string | null;
+  email: string | null;
+  birth_date: string | null;
+  country_code: Number | null;
+  country: string | null;
+  city: string | null;
+  address: string | null;
+  phone: string | null;
+  biography: string | null;
+  languages: Language[] | null;
 
   public constructor(
-    names: string,
-    last_names: string,
-    full_name: string,
-    email: string,
-    birth_date: string,
-    country_code: Number,
-    country: string,
-    city: string,
-    address: string,
-    phone: string,
-    biography: string,
-    languages: Language[]
+    names: string | null,
+    last_names: string | null,
+    full_name: string | null,
+    email: string | null,
+    birth_date: string | null,
+    country_code: Number | null,
+    country: string | null,
+    city: string | null,
+    address: string | null,
+    phone: string | null,
+    biography: string | null,
+    languages: Language[] | null
   ) {
     this.names = names;
     this.last_names = last_names;
@@ -116,7 +116,7 @@ export class PersonalInfo {
     this.biography = biography;
     this.languages = languages;
   }
-  
+
 }
 
 export class PersonalInfoResponse {
@@ -133,29 +133,29 @@ export class PersonalInfoResponse {
 }
 
 export class SavePersonalInfoRequest {
-  birth_date: string;
-  country_code: Number;
-  city: string;
-  address: string;
-  phone: string;
-  biography: string;
-  languages: string[];
+  birth_date: string | null;
+  country_code: Number | null;
+  city: string | null;
+  address: string | null;
+  phone: string | null;
+  biography: string | null;
+  languages: string[] | null;
 
   public constructor(
-    birth_date: string,
-    country: Country,
-    city: string,
-    address: string,
-    phone: string,
-    biography: string,
-    languages: Language[]
+    birth_date: string | null,
+    country: Country | null,
+    city: string | null,
+    address: string | null,
+    phone: string | null,
+    biography: string | null,
+    languages: Language[] | null
   ) {
     this.birth_date = birth_date;
-    this.country_code = country.num_code;
+    this.country_code = country ? country.num_code : null;
     this.city = city;
     this.address = address;
     this.phone = phone;
     this.biography = biography;
-    this.languages = languages.map(lang => lang.id);
+    this.languages = languages ? languages.map(lang => lang.id) : null;
   }
 }

@@ -31,34 +31,32 @@ export class CandidateService {
   }
 
   getCountries(): Observable<CountryResponse> {
-    let response = this.http.get<CountryResponse>(`${this.backUtilsUrl}/countries`)
-    return response;
+    return this.http.get<CountryResponse>(`${this.backUtilsUrl}/countries`)
   }
 
   getLanguages(): Observable<LanguageResponse> {
-    let response = this.http.get<LanguageResponse>(`${this.backUtilsUrl}/languages`)
-    return response;
+    return this.http.get<LanguageResponse>(`${this.backUtilsUrl}/languages`)
   }
 
   getPersonalInfo(token: string): Observable<PersonalInfoResponse> {
-    
-    const headers = getHeader(token)
 
-    return this.http.get<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, { headers } )
+    const headers = this.getHeader(token)
+
+    return this.http.get<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, { headers })
   }
 
   updatePersonalInfo(request: SavePersonalInfoRequest, token: string): Observable<any> {
-     
-    const headers = getHeader(token)
 
-    return this.http.post<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, request, { headers } )
+    const headers = this.getHeader(token)
+
+    return this.http.post<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, request, { headers })
   }
 
+  getHeader(token: string) {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  }
 }
-function getHeader(token: string) {
-  return {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  };
-}
-
+  

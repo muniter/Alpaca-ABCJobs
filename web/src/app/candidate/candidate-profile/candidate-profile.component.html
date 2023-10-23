@@ -72,7 +72,7 @@
                     <div class="left-label">
                       <label class="form-row-label" i18n="@@candidateresidenceaddress">Dirección de residencia</label>
                     </div>
-                    <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <mat-form-field class="form-field right-field" id="addressFormField" appearance="outline" subscriptSizing="dynamic">
                       <input matInput id="candidateAddress" class="form-control" formControlName="candidateAddress">
 
                       <mat-error *ngIf="personalInformationForm.get('candidateAddress')!.invalid">
@@ -85,7 +85,7 @@
                     <div class="left-label">
                       <label class="form-row-label" i18n="@@candidatemobile">Celular</label>
                     </div>
-                    <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <mat-form-field class="form-field right-field" id="candidateMobileFormField" appearance="outline" subscriptSizing="dynamic">
                       <input matInput id="candidateMobile" class="form-control" formControlName="candidateMobile">
 
                       <mat-error *ngIf="personalInformationForm.get('candidateMobile')!.invalid">
@@ -124,7 +124,7 @@
                     <div class="left-label">
                       <label class="form-row-label" i18n="@@candidatebio">Bio</label>
                     </div>
-                    <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                    <mat-form-field class="form-field right-field" id="candidateBioFormField" appearance="outline" subscriptSizing="dynamic">
                       <textarea matInput id="candidateBio" rows="5" class="form-control"
                         formControlName="candidateBio"></textarea>
 
