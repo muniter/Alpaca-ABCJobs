@@ -1,34 +1,80 @@
 package com.example.abc_jobs_alpaca.model.models
 
 import org.json.JSONObject
-data class Candidate(
+
+data class LoginCandidateRequest(
+    val email: String,
+    val password: String
+)
+
+data class UserRegisterResponse(
+    val success: Boolean,
+    val data: UserDataResponse
+)
+
+data class UserDataResponse(
+    val candidato: CandidatoData,
+    val token: String
+)
+
+data class CandidatoData(
     val id: Int,
     val nombres: String,
     val apellidos: String,
-    val email: String,
-    val password: String,
-    )
+    val email: String
+)
 
-fun deserializeCandidate(json: JSONObject): Candidate {
+data class UserRegisterRequest(
+    val nombres: String,
+    val apellidos: String,
+    val email: String,
+    val password: String
+)
+
+
+
+fun deserializeCandidate(json: JSONObject): UserRegisterResponse {
+    val success = json.optBoolean("success", false)
     val dataObject = json.optJSONObject("data")
     val candidatoObject = dataObject?.optJSONObject("candidato")
 
-    return if (candidatoObject != null) {
-        Candidate(
-            id = candidatoObject.optInt("id"),
-            nombres = candidatoObject.optString("nombres"),
-            apellidos = candidatoObject.optString("apellidos"),
-            email = candidatoObject.optString("email"),
-            password = candidatoObject.optString("password"),
-        )
+    val token = dataObject?.optString("token") ?: ""
+
+    if (candidatoObject != null) {
+        val id = candidatoObject.optInt("id")
+        val nombres = candidatoObject.optString("nombres")
+        val apellidos = candidatoObject.optString("apellidos")
+        val email = candidatoObject.optString("email")
+
+        val candidato = CandidatoData(id, nombres, apellidos, email)
+        val userDataResponse = UserDataResponse(candidato, token)
+
+        return UserRegisterResponse(success, userDataResponse)
     } else {
-        // Manejar un caso en el que los datos no están disponibles o la estructura es diferente
-        Candidate(0, "", "", "", "")
+        return UserRegisterResponse(false, UserDataResponse(CandidatoData(0, "", "", ""), token))
     }
 }
 
+fun deserializeCandidateError(response: JSONObject): Exception {
+    val success = response.optBoolean("success", false)
 
-fun serializeCandidate(candidate: Candidate): JSONObject {
+    if (!success) {
+        val errorsObject = response.optJSONObject("errors")
+        if (errorsObject != null) {
+            val emailError = errorsObject.optString("email")
+            if (emailError.isNotBlank()) {
+                return Exception(emailError)
+            }
+        }
+    }
+
+    return Exception("Error en la solicitud")
+}
+
+
+
+
+fun serializeCandidate(candidate: UserRegisterRequest): JSONObject {
     var json: JSONObject = JSONObject()
 
     json.put("nombres", candidate.nombres)

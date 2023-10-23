@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="preferencesButton" type="id" />
+
+    <item name="button" type="id" />
+    <item name="textViewFecha" type="id" />
+    <item name="dateFormatSpinner" type="id" />
+    <item name="timeFormatSpinner" type="id" />
+    <item name="textViewHora" type="id" />
+    <item name="languagePreference" type="id" />
+    <item name="languageSpinner" type="id" />
+</resources>

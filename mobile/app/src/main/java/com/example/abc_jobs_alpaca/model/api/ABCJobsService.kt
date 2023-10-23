@@ -8,6 +8,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.abc_jobs_alpaca.model.models.*
+import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -17,7 +18,9 @@ class ABCJobsService constructor(context: Context){
     companion object{
         private var BASEURL = "https://api.abc.muniter.link/"
         private var CANDIDATES_PATH = "candidatos"
+        private var USERS_PATH = "usuarios"
         private var CREATE_PATH = "/crear"
+        private var LOGIN_PATH = "/login"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -30,37 +33,6 @@ class ABCJobsService constructor(context: Context){
     private val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(context.applicationContext)
     }
-
-
-    suspend fun postCandidate(newCandidate: JSONObject): Result<Candidate> {
-        return try {
-            val response = suspendCoroutine<JSONObject> { cont ->
-                requestQueue.add(
-                    postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
-                        cont.resume(JSONObject(response))
-                    }, {
-                        if (it.networkResponse != null) {
-                            Log.d("NetErr", it.networkResponse.toString())
-                        } else {
-                            Log.d("NetErr", "NetworkResponse is null")
-                        }
-                        cont.resumeWithException(it)
-                    })
-                )
-            }
-
-            if (response.optBoolean("success", false)) {
-                val candidate = deserializeCandidate(response)
-                Result.success(candidate)
-            } else {
-                Result.failure(Exception("Request failed"))
-            }
-        } catch (e: Exception) {
-            Log.d("NETWORK_ERROR", e.toString())
-            Result.failure(e)
-        }
-    }
-
 
     private fun postRequest(
         path: String,
@@ -82,6 +54,75 @@ class ABCJobsService constructor(context: Context){
             }
         }
     }
+    suspend fun postCandidate(newCandidate: JSONObject): Result<UserRegisterResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    postRequest(CANDIDATES_PATH, CREATE_PATH, newCandidate, { response ->
+                        cont.resume(JSONObject(response))
+                    }, { volleyError ->
+                        if (volleyError.networkResponse != null) {
+                            val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                            val jsonError = JSONObject(errorData)
+
+                            if (!jsonError.optBoolean("success")){
+                                val candidateError = deserializeCandidateError(jsonError)
+                                cont.resumeWithException(candidateError)
+                            }
+                        } else {
+                            cont.resumeWithException(volleyError)
+                        }
+                    })
+                )
+            }
+            if (response.optBoolean("success")) {
+                val candidate = deserializeCandidate(response)
+                Result.success(candidate)
+            } else {
+                val candidateError = deserializeCandidateError(response)
+                Result.failure(candidateError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postLoginUser(loginUserJson: JSONObject): Result<UserLoginResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    postRequest(USERS_PATH, LOGIN_PATH, loginUserJson, { response ->
+                        cont.resume(JSONObject(response))
+                    }, { volleyError ->
+                        if (volleyError.networkResponse != null) {
+                            val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                            val jsonError = JSONObject(errorData)
+
+                            if (!jsonError.optBoolean("success")) {
+                                val userLoginResponseError = deserializeLoginCandidateError(jsonError)
+                                cont.resumeWithException(userLoginResponseError)
+                            }
+                        } else {
+                            cont.resumeWithException(volleyError)
+                        }
+                    })
+                )
+            }
+
+            if (response.getBoolean("success")) {
+                val userLoginResponse = deserializeLoginCandidate(response)
+                Result.success(userLoginResponse)
+            } else {
+                var userLoginResponseError = deserializeLoginCandidateError(response)
+                Result.failure(userLoginResponseError);
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
 
 
 }

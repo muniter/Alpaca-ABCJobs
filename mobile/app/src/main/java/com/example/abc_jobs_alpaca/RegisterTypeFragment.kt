@@ -71,7 +71,6 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentRegisterTypeBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -99,7 +98,6 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls

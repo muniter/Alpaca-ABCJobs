@@ -5,61 +5,81 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.abc_jobs_alpaca.model.models.Candidate
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.navigation.findNavController
 import com.android.volley.NetworkError
+import com.example.abc_jobs_alpaca.R
+import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
+import com.example.abc_jobs_alpaca.utils.MessageEvent
+import com.example.abc_jobs_alpaca.utils.MessageType
 
 
 class CandidateRegisterModel(application: Application) : AndroidViewModel(application) {
     private val abcJobsRepository = ABCJobsRepository(application)
-    private val toastMessage = MutableLiveData<String>()
 
+    private val enabledElementsLiveData = MutableLiveData<Boolean>()
+    fun setEnabledElements(state: Boolean) {
+        viewModelScope.launch {
+            enabledElementsLiveData.value = state
+        }
+    }
+    
+    fun getEnabledElementsLiveData(): LiveData<Boolean> {
+        return enabledElementsLiveData
+    }
+    interface NavigationListener {
+        fun navigateToNextScreen()
+    }
 
-    fun postCandidate(newCandidate: Candidate) {
-        // Disable UI elements here
+    private var navigationListener: NavigationListener? = null
+
+    fun setNavigationListener(listener: NavigationListener) {
+        navigationListener = listener
+    }
+
+    private val messageLiveData = MutableLiveData<MessageEvent>()
+
+    fun getMessageLiveData(): LiveData<MessageEvent> {
+        return messageLiveData
+    }
+
+    fun postCandidate(newCandidate: UserRegisterRequest) {
 
         viewModelScope.launch(Dispatchers.Default) {
             try {
                 val result = abcJobsRepository.postCandidate(newCandidate)
-                result.onSuccess { candidate ->
-                    // Request was successful. Handle it accordingly.
-                    showToastMessage("Registration was successful")
-
-                    // Do other things with the candidate object if needed.
-
+                result.onSuccess { response ->
+                    if (response.success) {
+                        messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, response.data))
+                        navigationListener?.navigateToNextScreen()
+                    }
                 }
+
                 result.onFailure { error ->
-                    // Request was not successful. Handle it accordingly.
-                    when (error) {
-                        is NetworkError -> {
-                            showToastMessage("Network error: ${error.message}")
-                        }
-                        else -> {
-                            showToastMessage("Request failed: ${error.message}")
+                    if (error is NetworkError) {
+                        messageLiveData.postValue(MessageEvent(MessageType.ERROR, error.message.toString()))
+                    } else if (error is Exception) {
+                        val serverMessage = error.message
+                        if (!serverMessage.isNullOrBlank()) {
+                            messageLiveData.postValue(MessageEvent(MessageType.ERROR, serverMessage))
+                        } else {
+                            messageLiveData.postValue(MessageEvent(MessageType.ERROR, ""))
                         }
                     }
-
+                    setEnabledElements(true)
                 }
             } catch (e: Exception) {
-                Log.d("NETWORK_ERROR", e.toString())
-                showToastMessage("Network error: ${e.message}")
-
-
+                messageLiveData.postValue(MessageEvent(MessageType.ERROR, e.toString()))
             }
+            setEnabledElements(true)
         }
     }
 
-
-    fun showToastMessage(message: String) {
-        toastMessage.postValue(message)
-    }
-    fun getToastMessage(): LiveData<String> {
-        return toastMessage
-    }
-
+    
 }
 
 

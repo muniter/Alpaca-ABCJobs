@@ -13,10 +13,10 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="userRegisteredLabelButton">Ya tengo cuenta en ABC</string>
     <string name="userUnRegisteredLabelButton">Registrarse</string>
-    <string name="question_register_type_text">Como quieres registrarte?:</string>
+    <string name="question_register_type_text">Como quiere registrarse?</string>
     <string name="candidato_text">Candidato</string>
     <string name="empresa_text">Empresa Contratante</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Fragment vacio</string>
     <string name="candidatos_text_apptopbar">Registro de candidatos</string>
     <string name="languageCurrent">Lenguaje seleccionado</string>
     <string name="home_fragment_text">Hola</string>
@@ -31,8 +31,8 @@
     <string name="names_placeholder">Ingrese su nombre</string>
     <string name="latnames_label">Apellidos</string>
     <string name="lastnames_placeholder">Ingrese su apellido</string>
-    <string name="repass_label">Repita la contraseña</string>
     <string name="repas_placeholder">Repita la contraseña</string>
+    <string name="repass_label">Repita la contraseña</string>
     <string name="acept_terms">Acepto los</string>
     <string name="terms_cond">términos y condiciones</string>
     <string name="now_date">Fecha actual:</string>
@@ -44,19 +44,19 @@
     <string name="accept_terms">Acepto los</string>
     <string name="name_validation_error">Debe tener entre 2 y 100 caracteres y no puede estar vacío.</string>
     <string name="lastnames_validation_error">Debe tener entre 2 y 100 caracteres y no puede estar vacío.</string>
-    <string name="email_validation_error">El correo electrónico no es válido. (ej: nombre@dominio.com).</string>
     <string name="password_validation_error">La contraseña debe tener entre 8 y 255 caracteres.</string>
+    <string name="email_validation_error">El correo electrónico no es válido. (ej: nombre@dominio.com).</string>
     <string name="no_same_passwords">Las contraseñas no coinciden.</string>
     <string name="term_cond_validation_error">Debe aceptar los términos y condiciones.</string>
     <string name="succesful_toast_message">Cuenta creada exitosamente</string>
     <string name="toast_message_successful">Cuenta creada exitosamente</string>
-    <string name="toast_message_network_error">Error de red</string>
+    <string name="toast_message_network_error">Error de red: %s</string>
     <string name="toast_message_generic_error">Error en la solicitud</string>
-    <string name="toast_message_registration_failed">No se logró completar el registro, Email registrado</string>
+    <string name="toast_message_registration_failed">No se logró completar el registro %s</string>
     <string name="network_error">Error de red: %s</string>
     <string name="successful_toast_message">Cuenta creada exitosamente</string>
     <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
     <string name="toast_message_login_failed">Inicio de sesión fallido, Correo electrónico no registrado</string>
-    <string name="cancel_preferences_button">Cancel</string>
+    <string name="cancel_preferences_button">Cancelar</string>
 
 </resources>

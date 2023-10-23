@@ -1,26 +1,24 @@
 package com.example.abc_jobs_alpaca
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 
-/**
- * An example full-screen fragment that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class WelcomeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)
-
 
     @Suppress("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -29,19 +27,9 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        val flags =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        activity?.window?.decorView?.systemUiVisibility = flags
-        (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
     private val showPart2Runnable = Runnable {
         // Delayed display of UI elements
-        fullscreenContentControls?.visibility = View.VISIBLE
     }
     private var visible: Boolean = false
     private val hideRunnable = Runnable { hide() }
@@ -54,8 +42,8 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     private val delayHideTouchListener = View.OnTouchListener { _, _ ->
         if (AUTO_HIDE) {
             delayedHide(AUTO_HIDE_DELAY_MILLIS)
-       }
-           false
+        }
+        false
     }
 
     private var dummyButton: Button? = null
@@ -75,20 +63,34 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
-        return binding.root
 
+        return binding.root
     }
+
+    private var languageChangeListener: OnLanguageChangeListener? = null
+    private var elementHideListener: OnElementHideListener? = null
+
+
+    interface OnElementHideListener{
+        fun hideElement(elementId: Int)
+    }
+
+    interface OnLanguageChangeListener {
+        fun onLanguageSelected(newLanguage: String)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        when (context) {
+            is OnElementHideListener -> elementHideListener = context as OnElementHideListener
+            is OnLanguageChangeListener -> languageChangeListener = context as OnLanguageChangeListener
+            else -> throw IllegalArgumentException("El contexto debe implementar las interfaces necesarias.")
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        visible = true
-
-        //dummyButton = binding.dummyButton
-        //fullscreenContent = binding.fullscreenContent
-        fullscreenContentControls = binding.fullscreenContentControls
-        // Set up the user interaction to manually show or hide the system UI.
-        fullscreenContent?.setOnClickListener { toggle() }
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
@@ -106,7 +108,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
@@ -131,7 +132,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     }
 
 
-
     private fun toggle() {
         if (visible) {
             hide()
@@ -142,8 +142,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
     private fun hide() {
         // Hide UI first
-        fullscreenContentControls?.visibility = View.GONE
-        visible = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay
         hideHandler.removeCallbacks(showPart2Runnable)
@@ -193,21 +191,26 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         private const val UI_ANIMATION_DELAY = 300
     }
 
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.button_welcome_unregistered ->{
+        when (v?.id) {
+            R.id.button_welcome_unregistered -> {
+                if (elementHideListener != null)
+                    elementHideListener?.hideElement(R.id.spinner)
+
                 v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_registerTypeFragment)
             }
+            R.id.button_user_registered -> {
+                if (elementHideListener != null)
+                    elementHideListener?.hideElement(R.id.spinner)
+                v?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
+            }
         }
-
-
     }
+
+
 }

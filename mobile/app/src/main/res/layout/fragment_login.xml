@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    tools:context=".WelcomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="420dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                tools:ignore="NotSibling">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="120dp"
+                    android:orientation="vertical">
+
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="255dp"
+                        android:layout_height="255dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/logo_rounded_layout_background"
+                        android:foregroundGravity="center" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutEmail"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/email_address_header"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_layout_background"
+                                android:ems="10"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/email_address_placeholder"
+                                android:inputType="textEmailAddress"
+                                android:text="@={viewModel.email}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="@color/accent"
+                                android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelEmailError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutRepPass"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelPassword"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/password_header"
+                                android:textColor="@color/black" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_layout_background"
+                                    android:ems="10"
+                                    android:focusable="auto"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:hint="@string/password_placeholder"
+                                    android:inputType="textPassword"
+                                    android:text="@={viewModel.password}"
+                                    android:textAlignment="viewStart"
+                                    android:textColor="@color/black"
+                                    android:textColorHint="@color/accent"
+                                    android:typeface="normal"
+                                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                                <LinearLayout
+                                    android:layout_width="33dp"
+                                    android:layout_height="54dp"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="24dp"
+                                    android:orientation="horizontal">
+
+                                    <ImageButton
+                                        android:id="@+id/togglePasswordVisibility"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|center_vertical"
+                                        android:background="?android:selectableItemBackground"
+                                        android:labelFor="@id/editTextPassword"
+                                        android:src="@mipmap/ojo" />
+                                </LinearLayout>
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/labelPasswordError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/button_rounded"
+                        android:enabled="true"
+                        android:fontFamily="@font/font_roboto"
+                        android:onClick="@{() -> viewModel.login()}"
+                        android:saveEnabled="false"
+                        android:text="@string/login_button_text" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_register2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/button_rounded"
+                        android:enabled="true"
+                        android:fontFamily="@font/font_roboto"
+                        android:text="@string/register_button_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.abc_jobs_alpaca.viewmodel.LoginMoldel" />
+    </data>
+
+</layout>

@@ -1,0 +1,25 @@
+package com.example.abc_jobs_alpaca.utils
+
+import android.util.Patterns
+
+class Validators {
+
+    fun validateName(text: String): Boolean {
+        return text.isNotEmpty() && text.length in 2..100
+    }
+
+    fun validateLastName(text: String): Boolean {
+        return text.isNotEmpty() && text.length in 2..100
+    }
+    fun isValidEmail(email: String): Boolean {
+        val pattern = Patterns.EMAIL_ADDRESS
+        return pattern.matcher(email).matches()
+    }
+    fun isPasswordValid(password: String): Boolean {
+        return password.length in 8..255
+    }
+
+    fun areStringsEqual(str1: String, str2: String): Boolean {
+        return str1 == str2
+    }
+}
