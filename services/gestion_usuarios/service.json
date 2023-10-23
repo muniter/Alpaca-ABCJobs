@@ -22,5 +22,6 @@
       ],
       "assignPublicIp": "ENABLED"
     }
-  }
+  },
+  "enableExecuteCommand": true
 }

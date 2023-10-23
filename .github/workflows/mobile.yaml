@@ -1,0 +1,72 @@
+name: Mobile App
+
+env:
+  # The name of the main module repository
+  main_project_module: abc
+  playstore_name: ABC-Jobs
+
+on:
+
+  push:
+    branches:
+      - 'master'
+    files:
+      - 'mobile/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::428011609647:role/github-actions-alpaca-role
+          aws-region: us-east-1
+
+      # Set Current Date As Env Variable
+      - name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      # Set Repository Name As Env Variable
+      - name: Set repository name as env variable
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Change wrapper permissions
+        working-directory: mobile
+        run: chmod +x ./gradlew
+
+      # Run Tests Build
+      - name: Run gradle tests
+        working-directory: mobile
+        if: false
+        run: ./gradlew test
+
+      # Run Build Project
+      - name: Build gradle project
+        working-directory: mobile
+        run: ./gradlew build -x test
+
+      # Create APK Debug
+      - name: Build apk debug
+        working-directory: mobile
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK to S3
+        working-directory: mobile
+        run: aws s3 sync app/build/outputs/apk s3://abc-jobs-artifacts/mobile/apk

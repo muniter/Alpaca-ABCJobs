@@ -1,0 +1,38 @@
+.form-field {
+  margin-bottom: 0.5rem;
+}
+
+.checkbox-field {
+  margin-bottom: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mdc-label {
+  opacity: 60%;
+}
+
+.candidate-login-body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: safe center;
+  justify-content: safe center;
+}
+
+.logo-img {
+  width: 100%;
+  margin: 0.4rem;
+}
+
+.logo-div {
+  max-width: 30%;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--contrastCandidateColor);
+  margin-bottom: 1rem;
+}

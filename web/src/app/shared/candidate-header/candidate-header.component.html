@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <div class="center-vertical">
+
+  </div>
+  <span class="example-spacer"></span>
+  <span flex></span>
+  <div class="center-vertical user-name-icon" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateProfile">
+    <span class="user-name-label">{{username}}</span>
+    <button mat-icon-button class="user-icon-button">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+  <div class="center-vertical user-settings-icon" >
+    <button mat-icon-button class="user-icon-button" (click)="openUserSettingsDialog()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

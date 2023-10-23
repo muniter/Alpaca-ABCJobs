@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { faker } from '@faker-js/faker';
 import { Router } from '@angular/router';
@@ -32,6 +33,7 @@ describe('CompanyLoginComponent', () => {
         MatFormFieldModule,
         MatDividerModule,
         MatInputModule,
+        RouterTestingModule,
         BrowserAnimationsModule],
       declarations: [CompanyLoginComponent]
     })

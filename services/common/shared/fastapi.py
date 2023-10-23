@@ -15,6 +15,7 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
     ):
         error = ErrorBuilder()
         for pydantic_error in exc.errors():
+            print("Pydantic error", pydantic_error)
             loc, msg = pydantic_error["loc"], pydantic_error["msg"]
             filtered_loc = loc[1:] if loc[0] in ("body", "query", "path") else loc
             field_string = ".".join(filtered_loc)  # nested fields with dot-notation
@@ -22,15 +23,22 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
 
         return JSONResponse(
             status_code=400,
-            content=jsonable_encoder({"success": False, "errors": error.serialize()}),
+            content=jsonable_encoder(
+                {
+                    "success": False,
+                    "errors": error.serialize(),
+                }
+            ),
         )
 
     @router.get("/")
     @router.get("/ping")
+    @app.get("/ping")
     def ping():
         return {"ping": "pong"}
 
     @router.get("/health")
+    @app.get("/health")
     def health(source: str = "unknown"):
         data_status = "healthy"
 
@@ -55,7 +63,7 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["https://jobs.abc.muniter.link"],
-        allow_origin_regex='http://localhost:.*',
+        allow_origin_regex="http://localhost:.*",
         allow_headers=["*"],
         allow_methods=["*"],
     )
