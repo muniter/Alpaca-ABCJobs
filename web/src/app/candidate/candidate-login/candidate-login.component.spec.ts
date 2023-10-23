@@ -174,7 +174,7 @@ describe('CandidateLoginComponent', () => {
       "false"
     );
 
-    let candidateSignUpSpy = spyOn(candidateService, 'login').and.returnValue(of({ success: true, data: { token: 'fake-jwt-token' } }));
+    let candidateSignUpSpy = spyOn(candidateService, 'login').and.returnValue(of({ success: true, data: {token: "asd"} }));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     component.candidateLogin(component.candidateLoginForm.value);

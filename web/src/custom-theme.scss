@@ -141,7 +141,7 @@ $md-light: (
     )
 );
 
-$kids-typography: mat.define-typography-config(
+$roboto-typography: mat.define-typography-config(
     $font-family: 'Roboto',
   );
 
@@ -151,27 +151,23 @@ $candidate-theme: mat.define-light-theme((
   color: (
     primary: mat.define-palette($md-dark, 500),
     accent: mat.define-palette($md-contrastcandidate, 500),
-  )
+  ),
+  typography: $roboto-typography
 ));
 
 $client-theme: mat.define-light-theme((
   color: (
     primary: mat.define-palette($md-dark, 500),
     accent: mat.define-palette($md-contrastclient, 500),
-  )
+  ),
+  typography: $roboto-typography
 ));
 
 $typo-theme: mat.define-light-theme(( 
-  typography: $kids-typography));
-
-.mat-typography{
-  @include mat.all-component-themes($typo-theme);
-}
+  typography: $roboto-typography));
 
 .client-theme{
   @include mat.all-component-colors($client-theme);
 }
 
-.candidate-theme{
-  @include mat.all-component-colors($candidate-theme);
-}
+  @include mat.all-component-themes($candidate-theme);
