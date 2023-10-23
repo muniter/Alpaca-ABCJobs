@@ -6,7 +6,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuraciones</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -17,10 +16,8 @@
     <string name="question_register_type_text">Como quiere registrarse?</string>
     <string name="candidato_text">Candidato</string>
     <string name="empresa_text">Empresa Contratante</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Fragment vacio</string>
     <string name="candidatos_text_apptopbar">Registro de candidatos</string>
-
     <string name="languageCurrent">Lenguaje seleccionado</string>
     <string name="home_fragment_text">Hola</string>
     <string name="succesful_message_login">Inicio de sesión correcto</string>
@@ -60,5 +57,6 @@
     <string name="successful_toast_message">Cuenta creada exitosamente</string>
     <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
     <string name="toast_message_login_failed">Inicio de sesión fallido, Correo electrónico no registrado</string>
+    <string name="cancel_preferences_button">Cancelar</string>
 
 </resources>

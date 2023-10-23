@@ -28,12 +28,11 @@ class PreferencesFragment : Fragment() {
     private lateinit var viewModel: PreferencesViewModel
     private lateinit var savePreferencesButton: Button
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         val view = inflater.inflate(R.layout.fragment_preferences, container, false)
         languageSpinner = view.findViewById(R.id.languageSpinner)
@@ -127,21 +126,21 @@ class PreferencesFragment : Fragment() {
             savePreferences()
         }
 
+            val textViewHour = view.findViewById<TextView>(R.id.textViewHora)
+            val timeFormatPreference = sharedPreferences.getString("timeFormat", "24 horas")
 
-        val textViewHour = view.findViewById<TextView>(R.id.textViewHora)
-        val timeFormatPreference = sharedPreferences.getString("timeFormat", "24 horas")
+            val hourLabel = getString(R.string.now_hour)
+            val nowHour = timeFormatPreference?.let {
+                getCurrentHour(it)}
 
-        val nowHour = timeFormatPreference?.let {
-            getCurrentHour(it)}
-
-            textViewHour.text = "Fecha actual: $nowHour"
-
+            textViewHour.text = "$hourLabel $nowHour"
 
             val textViewDate = view.findViewById<TextView>(R.id.textViewFecha)
+            val dateLabel = getString(R.string.now_date)
             val dateFormatPreference = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
 
-            val currendDate = dateFormatPreference?.let { getCurrentDate(it) }
-            textViewDate.text = "Hora actual: $currendDate"
+            val currentDate = dateFormatPreference?.let { getCurrentDate(it) }
+            textViewDate.text = "$dateLabel $currentDate"
             return view
         }
 
@@ -209,7 +208,7 @@ class PreferencesFragment : Fragment() {
             return formattedHour
         }
 
-        fun getCurrentDate(dateFormat: String): String {
+        private fun getCurrentDate(dateFormat: String): String {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH) + 1
@@ -225,10 +224,8 @@ class PreferencesFragment : Fragment() {
             } else {
                 formattedDate = ""
             }
-
             return formattedDate
         }
-
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)

@@ -17,8 +17,6 @@
     <string name="question_register_type_text">How do you want to register?:</string>
     <string name="candidato_text">Candidate</string>
     <string name="empresa_text">Employer</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="candidatos_text_apptopbar">Candidate register</string>
     <string name="languageCurrent">Selected Language</string>
@@ -60,6 +58,7 @@
     <string name="successful_toast_message">Account created successfully</string>
     <string name="successful_login_toast_message">Login successful</string>
     <string name="toast_message_login_failed">Login failed, Email not registered</string>
+    <string name="cancel_preferences_button">Cancelar</string>
 
 
 </resources>
