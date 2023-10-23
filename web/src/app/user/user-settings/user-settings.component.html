@@ -1,4 +1,4 @@
-<div class="user-settings-body">
+<div class="user-settings-body" [class]="theme">
   <form [formGroup]="userSettingsForm" (ngSubmit)="setSettings(userSettingsForm.value)" >
     <div class="form"> 
       <span class="label" i18n="@@languageApp">Idioma</span>

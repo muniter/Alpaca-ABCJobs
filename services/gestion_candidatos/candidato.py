@@ -189,7 +189,9 @@ class CandidatoService:
         self, id: int, data: CandidatoPersonalInformationUpdateDTO
     ) -> Union[CandidatoPersonalInformationDTO, ErrorBuilder]:
         error = ErrorBuilder(data)
-        persona = self.persona_repository.get_by_id(id)
+        candidato = self.repository.get_by_id(id)
+        assert candidato is not None
+        persona = candidato.persona
         assert persona is not None
 
         persona.fecha_nacimiento = data.birth_date
@@ -229,9 +231,9 @@ class CandidatoService:
         return persona.build_informacion_personal_dto()
 
     def get_informacion_personal(self, id: int) -> CandidatoPersonalInformationDTO:
-        persona = self.persona_repository.get_by_id(id)
-        assert persona is not None
-        return persona.build_informacion_personal_dto()
+        candidato = self.repository.get_by_id(id)
+        assert candidato is not None
+        return candidato.persona.build_informacion_personal_dto()
 
 
 def get_persona_repository(

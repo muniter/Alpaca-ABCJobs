@@ -21,6 +21,7 @@ export class UserSettingsComponent implements OnInit {
   userSettings!: UserSettings;
   token: string;
   dialog!: MatDialog;
+  theme : string;
   setConfigSucess: boolean = false;
   setConfigError!: string;
 
@@ -43,23 +44,16 @@ export class UserSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: {token: string, dialog: MatDialog}
+    @Inject(MAT_DIALOG_DATA) public data: {token: string, dialog: MatDialog, theme: string}
   ) { 
     this.token = data.token;
     this.dialog = data.dialog;
+    this.theme = data.theme;
   }
 
   ngOnInit() {
 
-    if(!this.token) {
-      this.setConfigError = 
-        $localize`:@@errortoken:Token invalido, inicie sesion nuevamente`
-      setTimeout(() => {
-        this.setConfigError = "";
-        this.dialog.closeAll();
-        this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
-      }, 3000);
-    } else {
+    if(this.validateToken()) {
       this.getSettings();
       this.userSettingsForm = this.formBuilder.group({
         languageApp: [""],
@@ -67,7 +61,21 @@ export class UserSettingsComponent implements OnInit {
         dateFormat: [""]
       });
     }
+    
+  }
 
+  validateToken(): boolean {
+    if(!this.token || this.token == "") {
+      this.setConfigError = 
+        $localize`:@@errortoken:Token invalido, inicie sesion nuevamente`
+      setTimeout(() => {
+        this.setConfigError = "";
+        this.dialog?.closeAll();
+        this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+      }, 3000);
+      return false;
+    }
+    return true;
   }
 
   getSettings(): void {
@@ -84,7 +92,7 @@ export class UserSettingsComponent implements OnInit {
                       ${exception.error.detail}`
           setTimeout(() => {
             this.setConfigError = "";
-            this.dialog.closeAll();
+            this.dialog?.closeAll();
             this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
           }, 3000);
         }
@@ -114,7 +122,7 @@ export class UserSettingsComponent implements OnInit {
 
   cancel() {
     this.userSettingsForm.reset();    
-    this.dialog.closeAll();
+    this.dialog?.closeAll();
   }
 
 }

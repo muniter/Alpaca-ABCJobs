@@ -67,7 +67,16 @@ def personal_info(
     user: UsuarioDTO = Depends(get_request_user),
     service: CandidatoService = Depends(get_candidato_service),
 ):
-    result = service.update_informacion_personal(user.id, data)
+    id_candidato = getattr(user, "id_candidato", None)
+    if id_candidato is None:
+        error = ErrorBuilder()
+        error.add("id_candidato", "No es candidato")
+        response.status_code = 400
+        return ErrorResponse(
+            errors=error
+        )
+
+    result = service.update_informacion_personal(id_candidato, data)
     if isinstance(result, ErrorBuilder):
         response.status_code = 400
         return ErrorResponse(errors=result)
@@ -83,10 +92,20 @@ def personal_info(
     status_code=status.HTTP_200_OK,
 )
 def get_personal_info(
+    response: Response,
     user: UsuarioDTO = Depends(get_request_user),
     service: CandidatoService = Depends(get_candidato_service),
 ):
-    result = service.get_informacion_personal(user.id)
+    id_candidato = getattr(user, "id_candidato", None)
+    if id_candidato is None:
+        error = ErrorBuilder()
+        error.add("id_candidato", "No es candidato")
+        response.status_code = 400
+        return ErrorResponse(
+            errors=error
+        )
+
+    result = service.get_informacion_personal(id_candidato)
     return SuccessResponse(data=result)
 
 
