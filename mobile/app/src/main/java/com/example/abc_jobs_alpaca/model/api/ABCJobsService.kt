@@ -88,8 +88,6 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
-
-
     suspend fun postLoginUser(loginUserJson: JSONObject): Result<UserLoginResponse> {
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->

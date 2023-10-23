@@ -1,10 +1,11 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.viewmodel
 
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -21,7 +22,10 @@ import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 import com.google.android.material.textfield.TextInputEditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.abc_jobs_alpaca.R
+import com.example.abc_jobs_alpaca.model.models.UserDataResponse
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
+import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.utils.Validators
 
 class CandidatoRegisterFragment : Fragment()
@@ -46,14 +50,24 @@ class CandidatoRegisterFragment : Fragment()
 
         val viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
 
-        viewModel.getToastMessage().observe(viewLifecycleOwner, Observer { message ->
-            showToast(message, R.drawable.toast_success_background)
-        })
-
-        viewModel.getToastError().observe(viewLifecycleOwner, Observer { message ->
-            showToast(message, R.drawable.toast_error_background)
-        })
-
+        viewModel.getMessageLiveData().observe(viewLifecycleOwner) { messageEvent ->
+            when (messageEvent.type) {
+                MessageType.SUCCESS -> {
+                    val userData = messageEvent.content as UserDataResponse
+                    Log.d("TestTag", userData.candidato.email)
+                    showToast(getString(R.string.toast_message_successful),
+                        R.drawable.toast_success_background)
+                }
+                MessageType.ERROR -> {
+                    when(messageEvent.content.toString()){
+                        ""-> showToast(getString(R.string.toast_message_network_error),
+                                        R.drawable.toast_error_background);
+                        else -> showToast(getString(R.string.toast_message_registration_failed),
+                                            R.drawable.toast_error_background)
+                    }
+                }
+            }
+        }
 
         val editTextName = view.findViewById<TextInputEditText>(R.id.editTextName)
         val labelNameError = view.findViewById<TextView>(R.id.labelNameError)
@@ -233,7 +247,7 @@ private fun toggleControl(estate: Boolean){
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "Debe tener entre 2 y 100 caracteres y no puede estar vacío."
+            labelError.text = getString(R.string.name_validation_error)
             isValidName = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -248,7 +262,7 @@ private fun toggleControl(estate: Boolean){
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "Debe tener entre 2 y 100 caracteres y no puede estar vacío."
+            labelError.text = getString(R.string.lastnames_validation_error)
             isValidLastName = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -261,7 +275,7 @@ private fun toggleControl(estate: Boolean){
     private fun validateEmail(email: String, labelError: TextView) {
         if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "El correo electrónico no es válido. (ej: nombre@dominio.com)."
+            labelError.text = getString(R.string.email_validation_error)
             isValidEmail = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -275,7 +289,7 @@ private fun toggleControl(estate: Boolean){
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "La contraseña debe tener entre 8 y 255 caracteres."
+            labelError.text = getString(R.string.password_validation_error)
             isValidPassword = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -290,7 +304,7 @@ private fun toggleControl(estate: Boolean){
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "Las contraseñas no coinciden."
+            labelError.text = getString(R.string.no_same_passwords)
             isValidRePassword = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -302,7 +316,7 @@ private fun toggleControl(estate: Boolean){
     }
     private fun handleTermsCheckBox(isChecked: Boolean, labelError: TextView) {
         if (!isChecked) {
-            showValidationError(labelError, "Debe aceptar los términos y condiciones.")
+            showValidationError(labelError, getString(R.string.term_cond_validation_error))
             isValidTerms = false
             disableButton(view?.findViewById(R.id.button_register)!!)
         } else {
@@ -332,5 +346,6 @@ private fun toggleControl(estate: Boolean){
             button?.isEnabled = true
         }
     }
-
 }
+
+

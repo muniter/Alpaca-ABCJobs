@@ -45,4 +45,20 @@
     <string name="lastnames_label">Apellidos</string>
     <string name="repass_placeholder">Repita su contraseña</string>
     <string name="accept_terms">Acepto los</string>
+    <string name="name_validation_error">Debe tener entre 2 y 100 caracteres y no puede estar vacío.</string>
+    <string name="lastnames_validation_error">Debe tener entre 2 y 100 caracteres y no puede estar vacío.</string>
+    <string name="password_validation_error">La contraseña debe tener entre 8 y 255 caracteres.</string>
+    <string name="email_validation_error">El correo electrónico no es válido. (ej: nombre@dominio.com).</string>
+    <string name="no_same_passwords">Las contraseñas no coinciden.</string>
+    <string name="term_cond_validation_error">Debe aceptar los términos y condiciones.</string>
+    <string name="succesful_toast_message">Cuenta creada exitosamente</string>
+    <string name="toast_message_successful">Cuenta creada exitosamente</string>
+    <string name="toast_message_network_error">Error de red: %s</string>
+    <string name="toast_message_generic_error">Error en la solicitud</string>
+    <string name="toast_message_registration_failed">No se logró completar el registro %s</string>
+    <string name="network_error">Error de red: %s</string>
+    <string name="successful_toast_message">Cuenta creada exitosamente</string>
+    <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
+    <string name="toast_message_login_failed">Inicio de sesión fallido, Correo electrónico no registrado</string>
+
 </resources>

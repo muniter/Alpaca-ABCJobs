@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,6 +20,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
+import com.example.abc_jobs_alpaca.model.models.UserData
+import com.example.abc_jobs_alpaca.model.models.UserDataResponse
+import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import com.google.android.material.textfield.TextInputEditText
 import com.example.abc_jobs_alpaca.utils.Validators
@@ -62,16 +66,24 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
 
         val view = binding.root;
 
-        val viewModel = ViewModelProvider(this).get(LoginMoldel::class.java)
-
-        viewModel.getToastMessage().observe(viewLifecycleOwner, Observer { message ->
-            showToast(message, R.drawable.toast_success_background)
-        })
-
-        viewModel.getToastError().observe(viewLifecycleOwner, Observer { message ->
-            showToast(message, R.drawable.toast_error_background)
-        })
-
+        viewModel.getMessageLiveData().observe(viewLifecycleOwner) { messageEvent ->
+            when (messageEvent.type) {
+                MessageType.SUCCESS -> {
+                    val userData = messageEvent.content as UserData
+                    Log.d("TestTag", userData.usuario.email)
+                    showToast(getString(R.string.succesful_message_login),
+                        R.drawable.toast_success_background)
+                }
+                MessageType.ERROR -> {
+                    when(messageEvent.content.toString()){
+                        ""-> showToast(getString(R.string.toast_message_network_error),
+                            R.drawable.toast_error_background);
+                        else -> showToast(getString(R.string.toast_message_login_failed),
+                            R.drawable.toast_error_background)
+                    }
+                }
+            }
+        }
 
         val editTextEmail = view.findViewById<TextInputEditText>(R.id.editTextEmail)
         val labelEmailError = view.findViewById<TextView>(R.id.labelEmailError)
@@ -163,7 +175,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
     private fun validateEmail(email: String, labelError: TextView) {
         if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "El correo electrónico no es válido. (ej: nombre@dominio.com)."
+            labelError.text = getString(R.string.email_validation_error);
             isValidEmail = false
             disableButton(view?.findViewById(R.id.button_login)!!)
         } else {
@@ -177,7 +189,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "La contraseña debe tener entre 8 y 255 caracteres."
+            labelError.text = getString(R.string.password_validation_error)
             isValidPassword = false
             disableButton(view?.findViewById(R.id.button_login)!!)
         } else {
@@ -209,24 +221,6 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         view?.findViewById<Button>(R.id.button_login)?.isEnabled = estate
         view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = estate
         view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = estate
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
 }

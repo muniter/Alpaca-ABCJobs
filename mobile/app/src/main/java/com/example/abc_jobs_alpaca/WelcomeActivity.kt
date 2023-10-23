@@ -34,16 +34,11 @@ class WelcomeActivity: AppCompatActivity()
 
         viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
 
-        viewModel.getToastMessage().observe(this, Observer { message ->
-            showToast(message)
-        })
-
         val spinner: Spinner = findViewById(R.id.spinner)
         val languageOptions = resources.getStringArray(R.array.language_options)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languageOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -67,9 +62,7 @@ class WelcomeActivity: AppCompatActivity()
                     }
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
-
         }
     }
 

@@ -38,11 +38,28 @@
     <string name="repass_placeholder">Repeat the password</string>
     <string name="repas_placeholder">Repeat Password</string>
     <string name="repass_label">Repeat Password</string>
-    <string name="accept_terms">I accept the</string>
-    <string name="acept_terms">Accept</string>
+    <string name="accept_terms">I accept the </string>
+    <string name="acept_terms">Accept </string>
     <string name="terms_cond">terms and conditions</string>
     <string name="now_date">Current Date:</string>
     <string name="now_hour">Current Time:</string>
     <string name="save_preferences_button">Save</string>
     <string name="succesful_message">Operation successful</string>
+    <string name="name_validation_error">It must be between 2 and 100 characters and cannot be empty.</string>
+    <string name="lastnames_validation_error">Must be between 2 and 100 characters and cannot be empty.</string>
+    <string name="password_validation_error">Password must be between 8 and 255 characters.</string>
+    <string name="email_validation_error">The email is not valid. (e.g., name@example.com).</string>
+    <string name="no_same_passwords">Passwords do not match.</string>
+    <string name="term_cond_validation_error">You must accept the terms and conditions.</string>
+    <string name="succesful_toast_message">Account created successfully</string>
+    <string name="toast_message_successful">Account created successfully</string>
+    <string name="toast_message_network_error">Network error</string>
+    <string name="toast_message_generic_error">Request error</string>
+    <string name="toast_message_registration_failed">Registration failed, Email already registered</string>
+    <string name="network_error">Network error</string>
+    <string name="successful_toast_message">Account created successfully</string>
+    <string name="successful_login_toast_message">Login successful</string>
+    <string name="toast_message_login_failed">Login failed, Email not registered</string>
+
+
 </resources>

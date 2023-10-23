@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/candidatoRegisterFragment"
-        android:name="com.example.abc_jobs_alpaca.CandidatoRegisterFragment"
+        android:name="com.example.abc_jobs_alpaca.viewmodel.CandidatoRegisterFragment"
         android:label="fragment_candidato_register"
         tools:layout="@layout/fragment_candidato_register" />
     <fragment

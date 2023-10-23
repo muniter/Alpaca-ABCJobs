@@ -11,6 +11,8 @@ import com.example.abc_jobs_alpaca.LoginFragment
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserLoginRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.utils.MessageEvent
+import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -18,8 +20,6 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
     private val abcJobsRepository = ABCJobsRepository(application)
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
-    private val toastMessage = MutableLiveData<String>()
-    private val toastError = MutableLiveData<String>()
 
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
     fun setEnabledElements(state: Boolean) {
@@ -42,6 +42,11 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
         navigationListener = listener
     }
 
+    private val messageLiveData = MutableLiveData<MessageEvent>()
+
+    fun getMessageLiveData(): LiveData<MessageEvent> {
+        return messageLiveData
+    }
 
     fun login() {
         val userPassword = password.value
@@ -57,49 +62,32 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
                     ?.onSuccess {response ->
                         if(response.success)
                         {
-                            showToastMessage("Inicio de sesión correcto")
+                            messageLiveData.postValue(response.data?.let {
+                                MessageEvent(MessageType.SUCCESS,
+                                    it
+                                )
+                            })
                             navigationListener?.navigateToNextScreen()
                         }
                     }
                     ?.onFailure {
                             error ->
                         if (error is NetworkError) {
-                            showToastError("Error de red: ${error.message}")
+                            messageLiveData.postValue(MessageEvent(MessageType.ERROR, error.message.toString()))
                         } else if (error is Exception) {
-                            // Verificar si el error contiene un mensaje específico del servidor
                             val serverMessage = error.message
-                            if (serverMessage != null && serverMessage.isNotBlank()) {
-                                showToastError("No se logró completar el inicio de sesión " + serverMessage)
+                            if (!serverMessage.isNullOrBlank()) {
+                                messageLiveData.postValue(MessageEvent(MessageType.ERROR, serverMessage))
                             } else {
-                                showToastError("Error en la solicitud")
+                                messageLiveData.postValue(MessageEvent(MessageType.ERROR, ""))
                             }
-                        } else {
-                            showToastError("Error en la solicitud")
                         }
                         setEnabledElements(true)
                     }
-
             } catch (e: Exception) {
-                Log.d("NETWORK_ERROR", e.toString())
-                showToastError("Error de red: ${e.message}")
+                messageLiveData.postValue(MessageEvent(MessageType.ERROR, e.toString()))
             }
             setEnabledElements(true)
         }
-    }
-
-    fun showToastMessage(message: String) {
-        toastMessage.postValue(message)
-    }
-
-    fun showToastError(message: String) {
-        toastError.postValue(message)
-    }
-
-    fun getToastMessage(): LiveData<String> {
-        return toastMessage
-    }
-
-    fun getToastError(): LiveData<String> {
-        return toastError
     }
 }
