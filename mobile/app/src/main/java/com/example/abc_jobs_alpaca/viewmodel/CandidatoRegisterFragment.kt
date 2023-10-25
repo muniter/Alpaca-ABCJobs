@@ -243,7 +243,7 @@ private fun toggleControl(estate: Boolean){
         })
     }
     private fun validateAndShowNameError(text: String, labelError: TextView) {
-        val isValid = Validators().validateName(text)
+        val isValid = Validators.validateName(text)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -258,7 +258,7 @@ private fun toggleControl(estate: Boolean){
         }
     }
     private fun validateAndShowLastNameError(text: String, labelError: TextView) {
-        val isValid = Validators().validateLastName(text)
+        val isValid = Validators.validateLastName(text)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -273,7 +273,7 @@ private fun toggleControl(estate: Boolean){
         }
     }
     private fun validateEmail(email: String, labelError: TextView) {
-        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
+        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators.isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
             labelError.text = getString(R.string.email_validation_error)
             isValidEmail = false
@@ -285,7 +285,7 @@ private fun toggleControl(estate: Boolean){
         }
     }
     private fun validatePassword(password: String, labelError: TextView) {
-        val isValid = Validators().isPasswordValid(password)
+        val isValid = Validators.isPasswordValid(password)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
@@ -300,7 +300,7 @@ private fun toggleControl(estate: Boolean){
         }
     }
     private fun validateRePassword(password: String, rePassword: String, labelError: TextView) {
-        val isValid = Validators().areStringsEqual(password, rePassword)
+        val isValid = Validators.areStringsEqual(password, rePassword)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE

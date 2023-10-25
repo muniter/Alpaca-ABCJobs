@@ -173,7 +173,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         view?.findNavController()?.navigate(R.id.mainActivity)
     }
     private fun validateEmail(email: String, labelError: TextView) {
-        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators().isValidEmail(email)) {
+        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators.isValidEmail(email)) {
             labelError.visibility = View.VISIBLE
             labelError.text = getString(R.string.email_validation_error);
             isValidEmail = false
@@ -185,7 +185,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         }
     }
     private fun validatePassword(password: String, labelError: TextView) {
-        val isValid = Validators().isPasswordValid(password)
+        val isValid = Validators.isPasswordValid(password)
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
