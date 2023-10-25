@@ -89,6 +89,7 @@ class PreferencesFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
             }
         }
 
@@ -104,6 +105,7 @@ class PreferencesFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
             }
         }
 
@@ -119,6 +121,7 @@ class PreferencesFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
             }
         }
         savePreferencesButton = view?.findViewById(R.id.preferencesButton)!!
@@ -192,8 +195,8 @@ class PreferencesFragment : Fragment() {
 
         private fun getCurrentHour(timeFormat: String): String {
             val calendar = Calendar.getInstance()
-            val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
+            val hourOfDay = calendar[Calendar.HOUR_OF_DAY]
+            val minute = calendar[Calendar.MINUTE]
 
             val formattedHour: String
             if (timeFormat == "12 horas") {
@@ -210,9 +213,9 @@ class PreferencesFragment : Fragment() {
 
         private fun getCurrentDate(dateFormat: String): String {
             val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH) + 1
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH] + 1
+            val day = calendar[Calendar.DAY_OF_MONTH]
 
             val formattedDate: String
             if (dateFormat == "DD/MM/YYYY") {
@@ -229,7 +232,7 @@ class PreferencesFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
-            viewModel = ViewModelProvider(this).get(PreferencesViewModel::class.java)
+            viewModel = ViewModelProvider(this)[PreferencesViewModel::class.java]
         }
 
 }

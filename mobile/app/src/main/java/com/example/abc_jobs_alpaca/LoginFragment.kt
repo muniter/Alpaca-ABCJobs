@@ -11,7 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -21,12 +20,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
 import com.example.abc_jobs_alpaca.model.models.UserData
-import com.example.abc_jobs_alpaca.model.models.UserDataResponse
 import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import com.google.android.material.textfield.TextInputEditText
 import com.example.abc_jobs_alpaca.utils.Validators
-import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
 
 
 private const val ARG_PARAM1 = "param1"
@@ -59,8 +56,7 @@ class LoginFragment : Fragment(), LoginMoldel.NavigationListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        viewModel = ViewModelProvider(this).get(LoginMoldel::class.java)
-
+        viewModel = ViewModelProvider(this)[LoginMoldel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

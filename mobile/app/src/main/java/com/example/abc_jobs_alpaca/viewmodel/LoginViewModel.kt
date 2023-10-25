@@ -1,14 +1,11 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.volley.NetworkError
-import com.example.abc_jobs_alpaca.LoginFragment
-import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserLoginRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.MessageEvent

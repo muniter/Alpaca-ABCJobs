@@ -1,7 +1,6 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -9,16 +8,13 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.navigation.findNavController
 import com.android.volley.NetworkError
-import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
 import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
 
 
-class CandidateRegisterModel(application: Application) : AndroidViewModel(application) {
+class CandidateRegisterViewModel(application: Application) : AndroidViewModel(application) {
     private val abcJobsRepository = ABCJobsRepository(application)
 
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
