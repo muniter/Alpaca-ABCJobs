@@ -1,6 +1,5 @@
 package com.example.abc_jobs_alpaca
 
-
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,23 +7,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.media3.common.util.Log
-import androidx.navigation.Navigation.findNavController
-import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
+import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
 import java.util.Locale
 
 class WelcomeActivity: AppCompatActivity()
     , WelcomeFragment.OnLanguageChangeListener
     , WelcomeFragment.OnElementHideListener {
-    private lateinit var viewModel: CandidateRegisterModel
-    private val toastMessage = MutableLiveData<String>()
+    private lateinit var viewModel: CandidateRegisterViewModel
     private var elementHideListener: WelcomeFragment.OnElementHideListener? = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +23,7 @@ class WelcomeActivity: AppCompatActivity()
         elementHideListener = this
         setContentView(R.layout.activity_welcome)
 
-        viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
+        viewModel = ViewModelProvider(this)[CandidateRegisterViewModel::class.java]
 
         val spinner: Spinner = findViewById(R.id.spinner)
         val languageOptions = resources.getStringArray(R.array.language_options)
@@ -44,7 +35,7 @@ class WelcomeActivity: AppCompatActivity()
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (view != null) {
                     val selectedLanguage = languageOptions[position]
-                    var currentLanguage = Configuration(resources.configuration).locales.get(0).toString();
+                    var currentLanguage = Configuration(resources.configuration).locales[0].toString();
 
                     when (selectedLanguage) {
                         "Inglés" -> {
@@ -62,7 +53,10 @@ class WelcomeActivity: AppCompatActivity()
                     }
                 }
             }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                setLocale("en")
+                recreate()
+            }
         }
     }
 
@@ -91,10 +85,6 @@ class WelcomeActivity: AppCompatActivity()
         val configuration = Configuration(newBase.resources.configuration)
         configuration.setLocale(locale)
         super.attachBaseContext(newBase.createConfigurationContext(configuration))
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun hideElement(elementId: Int) {

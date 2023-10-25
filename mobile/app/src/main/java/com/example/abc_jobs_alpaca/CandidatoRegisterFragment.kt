@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca.viewmodel
+package com.example.abc_jobs_alpaca
 
 import android.os.Build
 import android.os.Bundle
@@ -18,11 +18,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
-import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterModel
+import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
 import com.google.android.material.textfield.TextInputEditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserDataResponse
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
 import com.example.abc_jobs_alpaca.utils.MessageType
@@ -30,7 +29,7 @@ import com.example.abc_jobs_alpaca.utils.Validators
 
 class CandidatoRegisterFragment : Fragment()
     , View.OnClickListener
-    , CandidateRegisterModel.NavigationListener {
+    , CandidateRegisterViewModel.NavigationListener {
 
     private var isValidName: Boolean = false
     private var isValidLastName: Boolean = false
@@ -38,7 +37,7 @@ class CandidatoRegisterFragment : Fragment()
     private var isValidPassword: Boolean = false
     private var isValidRePassword: Boolean = false
     private var isValidTerms: Boolean = false
-    private lateinit var viewModel:  CandidateRegisterModel
+    private lateinit var viewModel:  CandidateRegisterViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +47,7 @@ class CandidatoRegisterFragment : Fragment()
         val btn: Button = view.findViewById(R.id.button_register)
         btn.setOnClickListener(this)
 
-        val viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
+        val viewModel = ViewModelProvider(this).get(CandidateRegisterViewModel::class.java)
 
         viewModel.getMessageLiveData().observe(viewLifecycleOwner) { messageEvent ->
             when (messageEvent.type) {
@@ -162,7 +161,7 @@ class CandidatoRegisterFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CandidateRegisterModel::class.java)
+        viewModel = ViewModelProvider(this).get(CandidateRegisterViewModel::class.java)
 
         viewModel.getEnabledElementsLiveData().observe(viewLifecycleOwner, Observer { state ->
             toggleControl(state)
@@ -171,7 +170,7 @@ class CandidatoRegisterFragment : Fragment()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CandidateRegisterModel::class.java]
+        viewModel = ViewModelProvider(this)[CandidateRegisterViewModel::class.java]
         viewModel.setNavigationListener(this)
     }
 

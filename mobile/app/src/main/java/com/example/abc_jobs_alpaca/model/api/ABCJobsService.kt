@@ -8,7 +8,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.abc_jobs_alpaca.model.models.*
-import com.example.abc_jobs_alpaca.viewmodel.LoginMoldel
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -21,6 +20,7 @@ class ABCJobsService constructor(context: Context){
         private var USERS_PATH = "usuarios"
         private var CREATE_PATH = "/crear"
         private var LOGIN_PATH = "/login"
+        private var CONFIG_PATH = "/config"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -109,12 +109,11 @@ class ABCJobsService constructor(context: Context){
                     })
                 )
             }
-
             if (response.getBoolean("success")) {
                 val userLoginResponse = deserializeLoginCandidate(response)
                 Result.success(userLoginResponse)
             } else {
-                var userLoginResponseError = deserializeLoginCandidateError(response)
+                val userLoginResponseError = deserializeLoginCandidateError(response)
                 Result.failure(userLoginResponseError);
             }
         } catch (e: Exception) {
@@ -122,7 +121,5 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
-
-
 
 }

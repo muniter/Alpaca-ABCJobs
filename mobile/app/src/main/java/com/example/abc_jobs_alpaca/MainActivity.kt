@@ -14,16 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abc_jobs_alpaca.databinding.ActivityMainBinding
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import java.util.Locale
 import android.content.res.Configuration
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import com.example.abc_jobs_alpaca.utils.LocalHelper.setLocale
-import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity()
 {
@@ -44,19 +36,19 @@ class MainActivity : AppCompatActivity()
                 .setAction("Action", null).show()
         }
 
-        // En MainActivity, en el método onCreate o onResume
         val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
         val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
 
-        if (selectedLanguage != null) {
-            if (selectedDateFormat != null) {
-                if (selectedTimeFormat != null) {
+        if (selectedLanguage != null
+            && selectedDateFormat != null
+            && selectedTimeFormat != null)
+            {
                     updatePreferences(selectedLanguage, selectedDateFormat, selectedTimeFormat)
-                }
-            }
         }
+
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -67,7 +59,6 @@ class MainActivity : AppCompatActivity()
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
     }
 
     fun updatePreferences(selectedLanguage: String, selectedDateFormat: String, selectedTimeFormat: String) {
@@ -111,7 +102,6 @@ class MainActivity : AppCompatActivity()
 
     override fun attachBaseContext(newBase: Context) {
         val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val selectedLanguageValue = Locale.getDefault().language
         val language = sharedPreferences.getString("language", "es")
         val locale = Locale(language)
         val configuration = Configuration(newBase.resources.configuration)

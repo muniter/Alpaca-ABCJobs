@@ -1,4 +1,4 @@
-import com.example.abc_jobs_alpaca.viewmodel.CandidatoRegisterFragment
+import com.example.abc_jobs_alpaca.CandidatoRegisterFragment
 
 import org.junit.Test
 

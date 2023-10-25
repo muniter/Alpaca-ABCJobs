@@ -1,9 +1,7 @@
 package com.example.abc_jobs_alpaca.model.repository
 
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
 import com.example.abc_jobs_alpaca.model.models.*
 
