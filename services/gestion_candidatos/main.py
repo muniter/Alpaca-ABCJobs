@@ -182,7 +182,7 @@ def get_languages(repository: LenguajeRepository = Depends(get_lenguaje_reposito
 
 
 @utils_router.get(
-    "/utils/skils",
+    "/utils/skills",
     response_model=SuccessResponse[List[RolHabilidadDTO]],
     status_code=status.HTTP_200_OK,
 )
