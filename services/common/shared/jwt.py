@@ -3,7 +3,11 @@ from fastapi import Depends, HTTPException
 import jwt
 from jwt.exceptions import PyJWTError
 from .config import configuration
-from .api_models.gestion_usuarios import UsuarioDTO, build_usuario_dto
+from .api_models.gestion_usuarios import (
+    UsuarioCandidatoDTO,
+    UsuarioDTO,
+    build_usuario_dto,
+)
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from .logger import logger
 
@@ -40,6 +44,21 @@ def get_request_user(
 ) -> UsuarioDTO:
     try:
         return get_usuario_from_token(authorization.credentials)
+    except PyJWTError as e:
+        logger.error(f"Failed getting user from token: {e}")
+        raise HTTPException(status_code=401, detail="Invalid authorization code")
+
+
+def get_request_user_candidato(
+    authorization: HTTPAuthorizationCredentials = Depends(security),
+) -> UsuarioCandidatoDTO:
+    try:
+        usuario = get_usuario_from_token(authorization.credentials)
+        if isinstance(usuario, UsuarioCandidatoDTO):
+            return usuario
+        raise HTTPException(
+            status_code=401, detail="Endpoint only for candidates, not company users"
+        )
     except PyJWTError as e:
         logger.error(f"Failed getting user from token: {e}")
         raise HTTPException(status_code=401, detail="Invalid authorization code")

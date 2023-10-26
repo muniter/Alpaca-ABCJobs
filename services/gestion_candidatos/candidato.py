@@ -6,6 +6,8 @@ from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateResponseDTO,
     CandidatoCreateDTO,
+    CandidatoDatosLaboralesCreateDTO,
+    CandidatoDatosLaboralesDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
 )
@@ -14,7 +16,14 @@ from common.shared.api_models.gestion_usuarios import (
     UsuarioRegisterDTO,
 )
 from common.shared.clients.usuario import UsuarioClient
-from common.shared.database.models import Candidato, Country, Lenguaje, Persona
+from common.shared.database.models import (
+    Candidato,
+    Country,
+    DatosLaborales,
+    Lenguaje,
+    Persona,
+    RolesHabilidades,
+)
 from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
 from datetime import date
@@ -72,6 +81,55 @@ class LenguajeRepository:
         query = select(Lenguaje)
         result = self.session.execute(query).scalars().all()
         return list(result)
+
+
+class DatosLaboralesRepository:
+    session: Session
+
+    def __init__(self, session):
+        self.session = session
+
+    def get_by_id(self, id: int) -> Union[DatosLaborales, None]:
+        query = select(DatosLaborales).where(DatosLaborales.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_all_from_id_persona(self, id_persona: int) -> List[DatosLaborales]:
+        query = select(DatosLaborales).where(DatosLaborales.id_persona == id_persona)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
+    def crear(self, data: DatosLaborales) -> DatosLaborales:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def update(self, data: DatosLaborales) -> DatosLaborales:
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def eliminar(self, data: DatosLaborales) -> None:
+        self.session.delete(data)
+        self.session.commit()
+
+
+class RolesHabilidadesRepository:
+    session: Session
+
+    def __init__(self, session):
+        self.session = session
+
+    def get(self, limit: int = 0) -> List[RolesHabilidades]:
+        query = select(RolesHabilidades).limit(None if limit == 0 else limit)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
+    def get_by_id(self, id: int) -> Union[RolesHabilidades, None]:
+        query = select(RolesHabilidades).where(RolesHabilidades.id == id)
+        return self.session.execute(query).scalar_one_or_none()
 
 
 class CandidatoRepository:
@@ -236,6 +294,108 @@ class CandidatoService:
         return candidato.persona.build_informacion_personal_dto()
 
 
+class DatosLaboralesService:
+    session: Session
+    repository: DatosLaboralesRepository
+    roles_repository: RolesHabilidadesRepository
+    candidato_repository: CandidatoRepository
+
+    def __init__(
+        self,
+        session: Session = Depends(get_db_session_dependency),
+    ):
+        self.session = session
+        self.repository = DatosLaboralesRepository(session)
+        self.candidato_repository = CandidatoRepository(
+            session, PersonaRepository(session)
+        )
+        self.roles_repository = RolesHabilidadesRepository(session)
+
+    def crear(
+        self, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
+    ) -> Union[CandidatoDatosLaboralesDTO, ErrorBuilder]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid candiato id")
+            return error
+
+        result = self.load(DatosLaborales(id_persona=candidato.id_persona), data)
+
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.crear(result)
+        return result.build_datos_laborales_dto()
+
+    def update(
+        self, id: int, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
+    ):
+        datos_laborales = self.repository.get_by_id(id)
+        if not datos_laborales:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid id")
+            return error
+
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato or candidato.persona.id != datos_laborales.persona.id:
+            error = ErrorBuilder(data)
+            error.add("global", "You don't have permission to edit this data")
+            return error
+
+        result = self.load(datos_laborales, data)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.update(result)
+        return result.build_datos_laborales_dto()
+
+    def delete(self, id: int, id_candidato: int):
+        datos_laborales = self.repository.get_by_id(id)
+        if not datos_laborales:
+            error = ErrorBuilder()
+            error.add("global", "Invalid id")
+            return error
+
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato or candidato.persona.id != datos_laborales.persona.id:
+            error = ErrorBuilder()
+            error.add("global", "You don't have permission to edit this data")
+            return error
+
+        self.repository.eliminar(datos_laborales)
+
+    def load(
+        self, model: DatosLaborales, data: CandidatoDatosLaboralesCreateDTO
+    ) -> DatosLaborales | ErrorBuilder:
+        error = ErrorBuilder(data)
+        if not model:
+            error.add("id", "Invalid id")
+            return error
+
+        if data.end_date and data.end_date <= data.start_date:
+            error.add("end_date", "End date must be after start date")
+            return error
+
+        model.empresa = data.company
+        model.cargo = data.role
+        model.descripcion = data.description
+        model.fecha_inicio = data.start_date
+        model.fecha_fin = data.end_date
+
+        if data.skills:
+            model.roles_habilidades.clear()
+            for id_rol in data.skills:
+                rol = self.roles_repository.get_by_id(id_rol)
+                if rol is None:
+                    error.add("roles", f"Invalid role selected: {id_rol}")
+                    return error
+
+                model.roles_habilidades.append(rol)
+
+        return model
+
+
 def get_persona_repository(
     session: Session = Depends(get_db_session_dependency),
 ) -> PersonaRepository:
@@ -273,3 +433,15 @@ def get_candidato_service(
         country_repository=country_repository,
         lenguaje_repository=lenguaje_repository,
     )
+
+
+def get_roles_habilidades_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> RolesHabilidadesRepository:
+    return RolesHabilidadesRepository(session)
+
+
+def get_datos_laborales_service(
+    session: Session = Depends(get_db_session_dependency),
+) -> DatosLaboralesService:
+    return DatosLaboralesService(session=session)

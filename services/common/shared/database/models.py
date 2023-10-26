@@ -11,8 +11,10 @@ from datetime import date
 
 from ..api_models.gestion_candidatos import (
     CandidatoDTO,
+    CandidatoDatosLaboralesDTO,
     CandidatoPersonalInformationDTO,
     LenguajeDTO,
+    RolHabilidadDTO,
 )
 from ..api_models.gestion_empresas import EmpresaDTO
 
@@ -53,6 +55,7 @@ class Candidato(Base):
         ForeignKey("persona.id"), nullable=False, unique=True
     )
     persona: Mapped["Persona"] = relationship("Persona", backref="candidato")
+    usuario: Mapped["Usuario"] = relationship(back_populates="candidato")
 
     def build_candidato_dto(self) -> CandidatoDTO:
         return CandidatoDTO(
@@ -131,6 +134,58 @@ class Persona(Base):
         )
 
 
+datos_laborales_roles = Table(
+    "datos_laborales_roles",
+    Base.metadata,
+    Column("id_datos_laborales", ForeignKey("datos_laborales.id")),
+    Column("id_rol", ForeignKey("roles_habilidades.id")),
+    PrimaryKeyConstraint("id_datos_laborales", "id_rol"),
+)
+
+
+class RolesHabilidades(Base):
+    __tablename__ = "roles_habilidades"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def build_roles_habilidades_dto(self) -> RolHabilidadDTO:
+        return RolHabilidadDTO(
+            id=self.id,
+            name=self.nombre,
+        )
+
+
+class DatosLaborales(Base):
+    __tablename__ = "datos_laborales"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    id_persona: Mapped[int] = mapped_column(
+        ForeignKey("persona.id"), nullable=False, unique=True
+    )
+    persona: Mapped["Persona"] = relationship("Persona", backref="datos_laborales")
+    cargo: Mapped[str] = mapped_column(String(255), nullable=False)
+    empresa: Mapped[str] = mapped_column(String(255), nullable=False)
+    descripcion: Mapped[str] = mapped_column(String(500), nullable=False)
+    fecha_inicio: Mapped[date] = mapped_column(Date, nullable=False)
+    fecha_fin: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    roles_habilidades: Mapped[List[RolesHabilidades]] = relationship(
+        secondary=datos_laborales_roles
+    )
+
+    def build_datos_laborales_dto(self) -> CandidatoDatosLaboralesDTO:
+        return CandidatoDatosLaboralesDTO(
+            id=self.id,
+            id_persona=self.id_persona,
+            role=self.cargo,
+            company=self.empresa,
+            description=self.descripcion,
+            start_date=self.fecha_inicio,
+            end_date=self.fecha_fin,
+            skills=[r.build_roles_habilidades_dto() for r in self.roles_habilidades],
+        )
+
+
 class Usuario(Base):
     __tablename__ = "usuario"
 
@@ -143,15 +198,19 @@ class Usuario(Base):
     id_candidato: Mapped[Optional[int]] = mapped_column(
         ForeignKey("candidato.id"), nullable=True, unique=True
     )
+
+    candidato: Mapped[Optional[Candidato]] = relationship(back_populates="usuario")
     # JSON config column
     config: Mapped[dict] = mapped_column(JSON, nullable=False, default={})
 
     def build_usuario_dto(self) -> UsuarioDTO:
         if self.id_candidato:
+            assert self.candidato
             return UsuarioCandidatoDTO(
                 id=self.id,
                 email=self.email,
                 id_candidato=self.id_candidato,
+                id_persona=self.candidato.id_persona,
             )
         elif self.id_empresa:
             return UsuarioEmpresaDTO(

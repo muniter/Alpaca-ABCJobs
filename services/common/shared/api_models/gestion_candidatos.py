@@ -85,3 +85,45 @@ class CandidatoPersonalInformationUpdateDTO(BaseModel):
     ]
 
     languages: Optional[List[str]]
+
+
+class RolHabilidadDTO(BaseModel):
+    id: int
+    name: str
+
+
+class CandidatoDatosLaboralesDTOBase(BaseModel):
+    role: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    company: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    description: Annotated[
+        str,
+        StringConstraints(max_length=500, min_length=2, strip_whitespace=True),
+    ]
+
+    skills: Optional[List[RolHabilidadDTO]]
+
+    start_date: date
+    end_date: Optional[date]
+
+
+class CandidatoDatosLaboralesDTO(CandidatoDatosLaboralesDTOBase):
+    id: int
+    id_persona: int
+
+
+class CandidatoDatosLaboralesCreateDTO(CandidatoDatosLaboralesDTOBase):
+    skills: List[int]
+    pass
+
+
+class CandidatoDatosLaboralesUpdateDTO(CandidatoDatosLaboralesDTOBase):
+    roles: Optional[List[int]]
+    pass
