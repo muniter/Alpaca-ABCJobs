@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +11,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentRegisterTypeBinding
 
 /**
@@ -196,4 +197,3 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
         }
     }
 }
-

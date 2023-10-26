@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
 import android.os.Build
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,19 +16,24 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
-import com.google.android.material.textfield.TextInputEditText
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserDataResponse
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
+import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.utils.Validators
+import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
+import com.google.android.material.textfield.TextInputEditText
 
-class CandidatoRegisterFragment : Fragment()
-    , View.OnClickListener
-    , CandidateRegisterViewModel.NavigationListener {
+class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
+    CandidateRegisterViewModel.NavigationListener {
 
     private var isValidName: Boolean = false
     private var isValidLastName: Boolean = false
@@ -37,7 +41,7 @@ class CandidatoRegisterFragment : Fragment()
     private var isValidPassword: Boolean = false
     private var isValidRePassword: Boolean = false
     private var isValidTerms: Boolean = false
-    private lateinit var viewModel:  CandidateRegisterViewModel
+    private lateinit var viewModel: CandidateRegisterViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,22 +51,38 @@ class CandidatoRegisterFragment : Fragment()
         val btn: Button = view.findViewById(R.id.button_register)
         btn.setOnClickListener(this)
 
-        val viewModel = ViewModelProvider(this).get(CandidateRegisterViewModel::class.java)
+        val viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return CandidateRegisterViewModel(
+                    ABCJobsRepository(activity!!.application),
+                    MutableLiveData<MessageEvent>()
+                ) as T
+            }
+        })[CandidateRegisterViewModel::class.java]
 
         viewModel.getMessageLiveData().observe(viewLifecycleOwner) { messageEvent ->
             when (messageEvent.type) {
                 MessageType.SUCCESS -> {
                     val userData = messageEvent.content as UserDataResponse
                     Log.d("TestTag", userData.candidato.email)
-                    showToast(getString(R.string.toast_message_successful),
-                        R.drawable.toast_success_background)
+                    showToast(
+                        getString(R.string.toast_message_successful),
+                        R.drawable.toast_success_background
+                    )
                 }
+
                 MessageType.ERROR -> {
-                    when(messageEvent.content.toString()){
-                        ""-> showToast(getString(R.string.toast_message_network_error),
-                                        R.drawable.toast_error_background);
-                        else -> showToast(getString(R.string.toast_message_registration_failed),
-                                            R.drawable.toast_error_background)
+                    when (messageEvent.content.toString()) {
+                        "" -> showToast(
+                            getString(R.string.toast_message_network_error),
+                            R.drawable.toast_error_background
+                        )
+
+                        else -> showToast(
+                            getString(R.string.toast_message_registration_failed),
+                            R.drawable.toast_error_background
+                        )
                     }
                 }
             }
@@ -142,8 +162,10 @@ class CandidatoRegisterFragment : Fragment()
                 MotionEvent.ACTION_DOWN -> {
                     passwordInput.inputType = InputType.TYPE_CLASS_TEXT
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    passwordInput.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
+                    passwordInput.inputType =
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD or InputType.TYPE_CLASS_TEXT
                 }
             }
             true
@@ -161,7 +183,15 @@ class CandidatoRegisterFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CandidateRegisterViewModel::class.java)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return CandidateRegisterViewModel(
+                    ABCJobsRepository(activity!!.application),
+                    MutableLiveData<MessageEvent>()
+                ) as T
+            }
+        })[CandidateRegisterViewModel::class.java]
 
         viewModel.getEnabledElementsLiveData().observe(viewLifecycleOwner, Observer { state ->
             toggleControl(state)
@@ -170,22 +200,34 @@ class CandidatoRegisterFragment : Fragment()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CandidateRegisterViewModel::class.java]
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return CandidateRegisterViewModel(
+                    ABCJobsRepository(activity!!.application),
+                    MutableLiveData<MessageEvent>()
+                ) as T
+            }
+        })[CandidateRegisterViewModel::class.java]
         viewModel.setNavigationListener(this)
     }
 
     override fun navigateToNextScreen() {
         view?.findNavController()?.navigate(R.id.loginFragment)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_register -> {
                 val name = view?.findViewById<TextInputEditText>(R.id.editTextName)?.text.toString()
-                val lastName = view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.text.toString()
-                val email = view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.text.toString()
-                val password = view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.text.toString()
-                toggleControl(false);
+                val lastName =
+                    view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.text.toString()
+                val email =
+                    view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.text.toString()
+                val password =
+                    view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.text.toString()
+                toggleControl(false)
                 val candidate = UserRegisterRequest(
                     nombres = name,
                     apellidos = lastName,
@@ -196,20 +238,19 @@ class CandidatoRegisterFragment : Fragment()
                 viewModel.postCandidate(candidate)
 
                 requireActivity().supportFragmentManager.popBackStack()
-
             }
         }
-
     }
-private fun toggleControl(estate: Boolean){
-    view?.findViewById<Button>(R.id.button_register)?.isEnabled = estate
-    view?.findViewById<TextInputEditText>(R.id.editTextName)?.isEnabled = estate
-    view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.isEnabled = estate
-    view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = estate
-    view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = estate
-    view?.findViewById<TextInputEditText>(R.id.editTextRepeatPassword)?.isEnabled = estate
-    view?.findViewById<CheckBox>(R.id.checkBoxTerms)?.isEnabled = estate
-}
+
+    private fun toggleControl(estate: Boolean) {
+        view?.findViewById<Button>(R.id.button_register)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextName)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextLastName)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextEmail)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.isEnabled = estate
+        view?.findViewById<TextInputEditText>(R.id.editTextRepeatPassword)?.isEnabled = estate
+        view?.findViewById<CheckBox>(R.id.checkBoxTerms)?.isEnabled = estate
+    }
 
     // Validation
     private fun setupFieldValidation(
@@ -241,6 +282,7 @@ private fun toggleControl(estate: Boolean){
             }
         })
     }
+
     private fun validateAndShowNameError(text: String, labelError: TextView) {
         val isValid = Validators.validateName(text)
 
@@ -256,6 +298,7 @@ private fun toggleControl(estate: Boolean){
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
     private fun validateAndShowLastNameError(text: String, labelError: TextView) {
         val isValid = Validators.validateLastName(text)
 
@@ -271,8 +314,12 @@ private fun toggleControl(estate: Boolean){
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
     private fun validateEmail(email: String, labelError: TextView) {
-        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators.isValidEmail(email)) {
+        if (email.isEmpty() || email.length < 5 || email.length > 255 || !Validators.isValidEmail(
+                email
+            )
+        ) {
             labelError.visibility = View.VISIBLE
             labelError.text = getString(R.string.email_validation_error)
             isValidEmail = false
@@ -283,6 +330,7 @@ private fun toggleControl(estate: Boolean){
             isValidEmail = true
         }
     }
+
     private fun validatePassword(password: String, labelError: TextView) {
         val isValid = Validators.isPasswordValid(password)
 
@@ -298,6 +346,7 @@ private fun toggleControl(estate: Boolean){
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
     private fun validateRePassword(password: String, rePassword: String, labelError: TextView) {
         val isValid = Validators.areStringsEqual(password, rePassword)
 
@@ -313,6 +362,7 @@ private fun toggleControl(estate: Boolean){
             enableButton(view?.findViewById(R.id.button_register)!!)
         }
     }
+
     private fun handleTermsCheckBox(isChecked: Boolean, labelError: TextView) {
         if (!isChecked) {
             showValidationError(labelError, getString(R.string.term_cond_validation_error))
@@ -322,29 +372,32 @@ private fun toggleControl(estate: Boolean){
             hideValidationError(labelError)
         }
     }
+
     private fun showValidationError(labelError: TextView, errorMessage: String) {
         labelError.visibility = View.VISIBLE
         labelError.text = errorMessage
     }
+
     private fun hideValidationError(labelError: TextView) {
         labelError.visibility = View.GONE
         labelError.text = ""
         isValidTerms = true
         enableButton(view?.findViewById(R.id.button_register)!!)
     }
+
     private fun disableButton(button: Button) {
-        button?.isEnabled = false
+        button.isEnabled = false
     }
+
     private fun enableButton(button: Button) {
-        if(isValidName &&
+        if (isValidName &&
             isValidLastName &&
             isValidEmail &&
             isValidPassword &&
             isValidRePassword &&
-            isValidTerms) {
-            button?.isEnabled = true
+            isValidTerms
+        ) {
+            button.isEnabled = true
         }
     }
 }
-
-

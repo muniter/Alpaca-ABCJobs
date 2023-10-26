@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    tools:context=".WelcomeFragment">
+    tools:context=".view.WelcomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -169,7 +169,6 @@
                         android:background="@drawable/button_rounded"
                         android:enabled="true"
                         android:fontFamily="@font/font_roboto"
-                        android:onClick="@{() -> viewModel.login()}"
                         android:saveEnabled="false"
                         android:text="@string/login_button_text" />
 
@@ -196,7 +195,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.abc_jobs_alpaca.viewmodel.LoginMoldel" />
+            type="com.example.abc_jobs_alpaca.viewmodel.LoginViewModel" />
     </data>
 
 </layout>

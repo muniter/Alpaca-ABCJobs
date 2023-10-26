@@ -1,21 +1,19 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.example.abc_jobs_alpaca.R
+import com.example.abc_jobs_alpaca.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment(), View.OnClickListener {
     private val hideHandler = Handler(Looper.myLooper()!!)

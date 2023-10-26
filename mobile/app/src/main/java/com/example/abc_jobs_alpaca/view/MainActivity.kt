@@ -1,21 +1,22 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.ActivityMainBinding
-import android.content.Context
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
-import android.content.res.Configuration
 
 class MainActivity : AppCompatActivity()
 {
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity()
                 .setAction("Action", null).show()
         }
 
-        val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
         val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity()
     }
 
     fun updatePreferences(selectedLanguage: String, selectedDateFormat: String, selectedTimeFormat: String) {
-        val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         editor.putString("timeFormat", selectedTimeFormat)
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity()
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val language = sharedPreferences.getString("language", "es")
         val locale = Locale(language)
         val configuration = Configuration(newBase.resources.configuration)

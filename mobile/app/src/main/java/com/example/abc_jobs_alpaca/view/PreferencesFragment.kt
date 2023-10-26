@@ -1,10 +1,8 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import java.util.Calendar
 import java.util.Locale

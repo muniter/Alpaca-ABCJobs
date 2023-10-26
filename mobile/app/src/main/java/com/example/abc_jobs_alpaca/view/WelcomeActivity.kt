@@ -1,4 +1,4 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.content.res.Configuration
@@ -8,7 +8,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.abc_jobs_alpaca.R
+import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
 import java.util.Locale
 
@@ -23,7 +28,12 @@ class WelcomeActivity: AppCompatActivity()
         elementHideListener = this
         setContentView(R.layout.activity_welcome)
 
-        viewModel = ViewModelProvider(this)[CandidateRegisterViewModel::class.java]
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return CandidateRegisterViewModel(ABCJobsRepository(application), MutableLiveData<MessageEvent>()) as T
+            }
+        })[CandidateRegisterViewModel::class.java]
 
         val spinner: Spinner = findViewById(R.id.spinner)
         val languageOptions = resources.getStringArray(R.array.language_options)
@@ -74,7 +84,7 @@ class WelcomeActivity: AppCompatActivity()
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val language = sharedPreferences.getString("language", "en")
         val editor = sharedPreferences.edit()
         editor.putString("dateFormat", "DD/MM/YYYY")

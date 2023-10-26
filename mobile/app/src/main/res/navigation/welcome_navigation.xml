@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.abc_jobs_alpaca.WelcomeFragment"
+        android:name="com.example.abc_jobs_alpaca.view.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerTypeFragment"
-        android:name="com.example.abc_jobs_alpaca.RegisterTypeFragment"
+        android:name="com.example.abc_jobs_alpaca.view.RegisterTypeFragment"
         android:label="fragment_register_type"
         tools:layout="@layout/fragment_register_type" >
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/candidatoRegisterFragment"
-        android:name="com.example.abc_jobs_alpaca.CandidatoRegisterFragment"
+        android:name="com.example.abc_jobs_alpaca.view.CandidatoRegisterFragment"
         android:label="fragment_candidato_register"
         tools:layout="@layout/fragment_candidato_register" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.abc_jobs_alpaca.LoginFragment"
+        android:name="com.example.abc_jobs_alpaca.view.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_mainActivity"
@@ -41,7 +41,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.abc_jobs_alpaca.MainActivity"
+        android:name="com.example.abc_jobs_alpaca.view.MainActivity"
         android:label="app_bar_main"
         tools:layout="@layout/app_bar_main" />
 </navigation>
