@@ -1,0 +1,133 @@
+<form [formGroup]="academicInformationForm" (ngSubmit)="saveAcademicInfo()">
+  <fieldset>
+    <div class="form">
+      <div class="academic-information-title">
+        <H2 class="section-title" i18n="@@academicinfo">Información Académica
+          <mat-icon class="edit-icon" (click)="enableForm()" *ngIf="academicInfoDisabled">
+            edit
+          </mat-icon>
+        </H2>
+      </div>
+      <div formArrayName="careers" >
+        <div *ngFor="let career of careers.controls; let item=index" >
+          <div [formGroupName]="item">
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="collegeDegree-{{ item }}" i18n="@@collegedegree">
+                  Nivel Académico
+                </label>
+              </div>
+              <mat-form-field id="collegeDegreeFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="{'chips-field-disabled':academicInfoDisabled}" >
+                <mat-select id="collegeDegree-{{ item }}" formControlName="collegeDegree">
+                  <mat-option *ngFor="let degree of collegeDegrees" [value]="degree">
+                    {{degree.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="career.get('collegeDegree')?.invalid">
+                  {{ getErrorMessage('collegeDegree', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="careerTitle-{{ item }}" i18n="@@careerobtained">
+                  Título obtenido
+                </label>
+              </div>
+              <mat-form-field id="careerTitleFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="{'chips-field-disabled':academicInfoDisabled}" >
+                <input matInput id="careerTitle-{{ item }}" formControlName="careerTitle"  
+                class="form-control" >
+                <mat-error *ngIf="career.get('careerTitle')?.invalid">
+                  {{ getErrorMessage('careerTitle', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="school-{{ item }}" i18n="@@school">
+                  Institución educativa
+                </label>
+              </div>
+              <mat-form-field id="schoolFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
+                <input matInput id="school-{{ item }}" class="form-control" 
+                formControlName="school">
+                <mat-error *ngIf="career.get('school')?.invalid">
+                  {{ getErrorMessage('school', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" i18n="@@careerframe">
+                  Periodo de estudios
+                </label>
+              </div>
+              <div class="right-field space-between">
+                <mat-form-field id="careerStartFormField-{{ item }}" appearance="outline"
+                class="form-field half-right-field" subscriptSizing="dynamic" 
+                [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
+                  <mat-select id="careerStart-{{ item }}" formControlName="careerStart">
+                    <mat-option *ngFor="let year of careerStartSet" [value]="year">
+                      {{year}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="career.get('careerStart')?.invalid">
+                    {{ getErrorMessage('careerStart', item) }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field id="careerEndFormField-{{ item }}" appearance="outline"
+                class="form-field half-right-field" subscriptSizing="dynamic" 
+                [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
+                  <mat-select id="careerEnd-{{ item }}" formControlName="careerEnd">
+                    <mat-option *ngFor="let year of careerEndSet" [value]="year">
+                      {{year}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="career.get('careerEnd')?.invalid">
+                    {{ getErrorMessage('careerEnd', item) }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="achievement-{{ item }}" i18n="@@achievement">
+                  Logros obtenidos
+                </label>
+              </div>
+              <mat-form-field id="achievementFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
+                <textarea matInput id="achievement-{{ item }}" rows="5" class="form-control"
+                formControlName="achievement"></textarea>
+                <mat-error *ngIf="career.get('achievement')?.invalid">
+                  {{ getErrorMessage('achievement', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+        <div class="buttons">
+          <div class="buttons-left">
+            <app-abc-button class="inline-button" color="accent" (click)="addCareer()"
+                            i18n="@@careeradd">AÑADIR OTRO</app-abc-button>
+          </div>
+          <div class="buttons-right">
+            <app-abc-button *ngIf="!academicInfoDisabled" class="inline-button" color="basic"
+                            (click)="disableForm()" i18n="@@cancel">Cancelar</app-abc-button>
+            <app-abc-button type="submit" *ngIf="!academicInfoDisabled" color="primary"
+                        [disabled]="!academicInformationForm.valid" class="inline-button" 
+                        i18n="@@save">Guardar</app-abc-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>

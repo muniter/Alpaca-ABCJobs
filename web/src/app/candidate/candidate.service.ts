@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import { CandidateLoginRequest, CandidateFormRegister, CandidateServiceSchema, PersonalInfoResponse, SavePersonalInfoRequest } from './candidate';
 import { CountryResponse } from '../shared/Country';
 import { LanguageResponse } from '../shared/Language';
+import { CollegeDegree, CollegeDegreeResponse } from '../shared/CollegeDegree';
+import { X } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,10 @@ export class CandidateService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     };
+  }
+
+  getCollegeDegrees(): Observable<CollegeDegreeResponse> {
+    return this.http.get<CollegeDegreeResponse>(`${this.backUtilsUrl}/college-degrees`)
   }
 }
   

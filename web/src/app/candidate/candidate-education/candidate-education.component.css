@@ -1,0 +1,44 @@
+fieldset {
+  border: none;
+}
+
+.left-label {
+  width: 40%;
+}
+
+.right-field {
+  width: 60%;
+}
+
+.half-right-field {
+  width: 49%;
+}
+
+.form-row {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-left {
+  padding-top: 1rem;
+  float: left;
+}
+
+.buttons-right {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: right;
+}
+
+.chips-field-disabled {
+  background-color: var(--lightColor);
+}
+
