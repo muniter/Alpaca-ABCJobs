@@ -20,6 +20,11 @@ def seed():
             session.commit()
             logger.info("Seeding countries done")
 
+        with open(data_dir / "roles_habilidades.sql") as f:
+            session.execute(text(f.read()))
+            session.commit()
+            logger.info("Seeding roles_habilidades done")
+
         logger.info("Seeding languages")
         with open(data_dir / "languages.csv") as f:
             reader = csv.DictReader(f)
@@ -30,3 +35,9 @@ def seed():
                 )
             session.commit()
             logger.info("Seeding languages done")
+
+        logger.info("Seeding datos_academicos")
+        with open(data_dir / "datos_academicos.sql") as f:
+            session.execute(text(f.read()))
+            session.commit()
+            logger.info("Seeding datos_academicos done")
