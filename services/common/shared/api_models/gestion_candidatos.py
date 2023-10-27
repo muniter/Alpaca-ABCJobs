@@ -120,8 +120,7 @@ class CandidatoDatosLaboralesDTO(CandidatoDatosLaboralesDTOBase):
 
 
 class CandidatoDatosLaboralesCreateDTO(CandidatoDatosLaboralesDTOBase):
-    skills: List[int]
-    pass
+    skills: Optional[List[int]]
 
 
 class CandidatoDatosLaboralesTipoDTO(BaseModel):

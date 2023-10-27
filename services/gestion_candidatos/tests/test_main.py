@@ -215,15 +215,6 @@ def test_service_update_under_18():
     assert "birth_date" in result.serialize()
 
 
-def test_service_datos_laborales_create():
-    candidato = crear_candidato()
-    data = data_for_datos_laborales()
-    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
-    assert not isinstance(result, ErrorBuilder)
-    assert result.role == data.role
-    assert result.company == data.company
-
-
 def test_endpoint_datos_laborales_create():
     _, token = crear_usuario_candidato()
     data = data_for_datos_laborales()
@@ -236,6 +227,25 @@ def test_endpoint_datos_laborales_create():
     result = response.json()
     assert result["data"]["role"] == data.role
     assert result["data"]["company"] == data.company
+
+
+def test_service_datos_laborales_create():
+    candidato = crear_candidato()
+    data = data_for_datos_laborales()
+    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.role == data.role
+    assert result.company == data.company
+
+
+def test_service_datos_laborales_create_without_skills():
+    candidato = crear_candidato()
+    data = data_for_datos_laborales()
+    data.skills = None
+    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.role == data.role
+    assert result.company == data.company
 
 
 def test_endpoint_datos_laborales_update():
@@ -401,6 +411,7 @@ def test_service_datos_academicos_update():
     assert result.title == data.title
     new_title = faker.job()
     data.title = new_title
+    data.end_year = 2023
     result = datos_academicos_service.update(result.id, candidato.id, data)
     assert not isinstance(result, ErrorBuilder)
     assert result.title == new_title
