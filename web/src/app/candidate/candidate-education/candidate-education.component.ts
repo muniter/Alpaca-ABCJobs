@@ -90,7 +90,6 @@ export class CandidateEducationComponent implements OnInit {
 
   ngOnInit() {
     
-    //this.careerEndSet.push($localize`:@@careerendinprogress:En curso`);
     for(let year = this.maxDate.getFullYear(); year >= this.minDate.getFullYear(); year--) {
       this.careerStartSet.push(year);
       this.careerEndSet.push(year);
@@ -207,7 +206,6 @@ export class CandidateEducationComponent implements OnInit {
   }
 
   setErrorBack(index: number, exception: any) {
-    console.log(exception);
     if (exception.error?.errors !== undefined) {
       Object.entries(exception.error.errors).forEach(([key, value]) => {
         if(key != "global") {
