@@ -1,5 +1,6 @@
 import { AbstractControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
+import { min } from "rxjs";
 
 export default class SharedCustomValidators {
 
@@ -29,6 +30,25 @@ export default class SharedCustomValidators {
                 matchingControl.setErrors(null);
             }
         };
+    }
+
+    static greaterThanValidator(maxControlNameMax: string, minControlName: string, includeEqual: boolean = false) {
+      return (formGroup: FormGroup) => {
+          const maxControl = formGroup.controls[maxControlNameMax];
+          const minControl = formGroup.controls[minControlName];
+
+          if (maxControl.errors && !maxControl.errors['greaterThan']) {
+            return;
+          }
+
+          if(minControl.value && maxControl.value && maxControl.value != 0 && 
+             (maxControl.value < minControl.value || 
+              (!includeEqual && maxControl.value === minControl.value))) {
+            maxControl.setErrors({ greaterThan: true });
+          } else {
+            maxControl.setErrors(null);
+          }
+      };
     }
 
     /* static ConfirmedSaveValidator() {

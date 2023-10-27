@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CandidateRegisterComponent } from './candidate-register/candidate-register.component';
 import { CandidateLoginComponent } from './candidate-login/candidate-login.component';
 import { CandidateHomeComponent } from './candidate-home/candidate-home.component';
+import { CandidateEducationComponent } from './candidate-education/candidate-education.component';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -43,13 +44,15 @@ import { MatSelectModule } from '@angular/material/select';
     CandidateRegisterComponent,
     CandidateLoginComponent,
     CandidateHomeComponent, 
-    CandidateProfileComponent
+    CandidateProfileComponent,
+    CandidateEducationComponent
   ],
   exports: [
     CandidateRegisterComponent,
     CandidateLoginComponent,
     CandidateHomeComponent, 
-    CandidateProfileComponent
+    CandidateProfileComponent,
+    CandidateEducationComponent
   ]
 })
 export class CandidateModule { }
