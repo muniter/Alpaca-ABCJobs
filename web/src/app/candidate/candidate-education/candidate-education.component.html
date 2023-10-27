@@ -10,7 +10,12 @@
       </div>
       <div formArrayName="careers" >
         <div *ngFor="let career of careers.controls; let item=index" >
-          <div [formGroupName]="item">
+          <div [formGroupName]="item" >
+            <div class="career-delete">
+              <mat-icon class="delete-icon" (click)="deleteCareer(item)" *ngIf="!academicInfoDisabled">
+                delete
+              </mat-icon>
+            </div>
             <div class="form-row">
               <div class="left-label">
                 <label class="form-row-label" for="collegeDegree-{{ item }}" i18n="@@collegedegree">
@@ -37,10 +42,11 @@
                 </label>
               </div>
               <mat-form-field id="careerTitleFormField-{{ item }}" class="form-field right-field" 
-              appearance="outline" subscriptSizing="dynamic" 
-              [ngClass]="{'chips-field-disabled':academicInfoDisabled}" >
+              [ngClass]="{'chips-field-disabled':academicInfoDisabled}" appearance="outline"
+              subscriptSizing="dynamic" >
                 <input matInput id="careerTitle-{{ item }}" formControlName="careerTitle"  
-                class="form-control" >
+                class="form-control" placeholder="Título obtenido" 
+                i18n-placeholder="@@careerobtainedplaceholder">
                 <mat-error *ngIf="career.get('careerTitle')?.invalid">
                   {{ getErrorMessage('careerTitle', item) }}
                 </mat-error>
@@ -85,7 +91,10 @@
                 class="form-field half-right-field" subscriptSizing="dynamic" 
                 [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
                   <mat-select id="careerEnd-{{ item }}" formControlName="careerEnd">
-                    <mat-option *ngFor="let year of careerEndSet" [value]="year">
+                    <mat-option value="0" i18n="@@careerendinprogress">
+                      En curso
+                    </mat-option>
+                    <mat-option *ngFor="let year of careerEndSet" [value]="year" >
                       {{year}}
                     </mat-option>
                   </mat-select>
@@ -114,14 +123,18 @@
             <mat-divider></mat-divider>
           </div>
         </div>
+        <div class="messages">
+          <p class="error" *ngIf="globalError" >{{globalError}}</p>
+          <p class="success" *ngIf="globalMessage" >{{globalMessage}}</p>
+        </div>
         <div class="buttons">
           <div class="buttons-left">
-            <app-abc-button class="inline-button" color="accent" (click)="addCareer()"
+            <app-abc-button *ngIf="!academicInfoDisabled" class="inline-button" color="accent" (click)="addCareer()"
                             i18n="@@careeradd">AÑADIR OTRO</app-abc-button>
           </div>
           <div class="buttons-right">
             <app-abc-button *ngIf="!academicInfoDisabled" class="inline-button" color="basic"
-                            (click)="disableForm()" i18n="@@cancel">Cancelar</app-abc-button>
+                            (click)="cancel()" i18n="@@cancel">Cancelar</app-abc-button>
             <app-abc-button type="submit" *ngIf="!academicInfoDisabled" color="primary"
                         [disabled]="!academicInformationForm.valid" class="inline-button" 
                         i18n="@@save">Guardar</app-abc-button>

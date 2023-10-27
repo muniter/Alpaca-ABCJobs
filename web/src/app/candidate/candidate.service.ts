@@ -7,6 +7,7 @@ import { CountryResponse } from '../shared/Country';
 import { LanguageResponse } from '../shared/Language';
 import { CollegeDegree, CollegeDegreeResponse } from '../shared/CollegeDegree';
 import { X } from '@angular/cdk/keycodes';
+import { Career, CareerResponse, CareerServiceSchema } from './career';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,56 @@ export class CandidateService {
   }
 
   getCollegeDegrees(): Observable<CollegeDegreeResponse> {
-    return this.http.get<CollegeDegreeResponse>(`${this.backUtilsUrl}/college-degrees`)
+    return this.http.get<CollegeDegreeResponse>(`${this.backUtilsUrl}/title-types`)
   }
+
+  getCareersInfo(token: string): Observable<CareerResponse> {
+    const headers = this.getHeader(token);
+    return this.http.get<CareerResponse>(`${this.backCandidateUrl}/academic-info`, { headers })
+  }
+
+  addCareerInfo(career: Career, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    let request = new CareerServiceSchema(
+      career.id,
+      career.collegeDegree.id,
+      career.careerTitle,
+      career.school,
+      career.careerStart,
+      career.careerEnd,
+      career.achievement
+    );
+
+    return this.http.post<CareerResponse>(
+      `${this.backCandidateUrl}/academic-info`, request, { headers })
+  }
+
+  updateCareerInfo(career: Career, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    let request = new CareerServiceSchema(
+      career.id,
+      career.collegeDegree.id,
+      career.careerTitle,
+      career.school,
+      career.careerStart,
+      career.careerEnd,
+      career.achievement
+    );
+    return this.http.post<CareerResponse>(
+      `${this.backCandidateUrl}/academic-info/${request.id}`, request, { headers })
+  }
+
+  deleteCareerInfo(careerId: number, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    return this.http.delete<CareerResponse>(
+      `${this.backCandidateUrl}/academic-info/${careerId}`, { headers })
+  }
+
+ /*  updateCareersInfo(request: Career[], token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    return this.http.post<CareerResponse>(
+      `${this.backCandidateUrl}/academic-info`, request, { headers })
+  } */
+
 }
   

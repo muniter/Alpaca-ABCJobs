@@ -1,10 +1,13 @@
 export class CollegeDegree {
+  id: number;
   name: String;
 
   public constructor(
+    id: number,
     name: String
   ) {
-    this.name = name
+    this.id = id;
+    this.name = name;
   }
 }
 

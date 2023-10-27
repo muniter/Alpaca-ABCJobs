@@ -42,3 +42,22 @@ fieldset {
   background-color: var(--lightColor);
 }
 
+.career-delete {
+  text-align: right;
+}
+
+.success {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
+}
+
+.error {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: rgb(119, 0, 0);
+  background-color: #f2bfc1;
+}
