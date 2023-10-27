@@ -55,8 +55,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return CandidateRegisterViewModel(
-                    ABCJobsRepository(activity!!.application),
-                    MutableLiveData<MessageEvent>()
+                    ABCJobsRepository(activity!!.application)
                 ) as T
             }
         })[CandidateRegisterViewModel::class.java]
@@ -187,8 +186,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return CandidateRegisterViewModel(
-                    ABCJobsRepository(activity!!.application),
-                    MutableLiveData<MessageEvent>()
+                    ABCJobsRepository(activity!!.application)
                 ) as T
             }
         })[CandidateRegisterViewModel::class.java]
@@ -204,8 +202,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return CandidateRegisterViewModel(
-                    ABCJobsRepository(activity!!.application),
-                    MutableLiveData<MessageEvent>()
+                    ABCJobsRepository(activity!!.application)
                 ) as T
             }
         })[CandidateRegisterViewModel::class.java]

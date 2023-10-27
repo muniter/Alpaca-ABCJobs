@@ -31,7 +31,7 @@ class WelcomeActivity: AppCompatActivity()
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return CandidateRegisterViewModel(ABCJobsRepository(application), MutableLiveData<MessageEvent>()) as T
+                return CandidateRegisterViewModel(ABCJobsRepository(application)) as T
             }
         })[CandidateRegisterViewModel::class.java]
 

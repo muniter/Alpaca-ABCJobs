@@ -14,7 +14,7 @@ import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
 import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
 
-class CandidateRegisterViewModel(private val abcJobsRepository: ABCJobsRepository, private val messageLiveData: MutableLiveData<MessageEvent>) : ViewModel() {
+class CandidateRegisterViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
 
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
     fun setEnabledElements(state: Boolean) {
@@ -36,6 +36,7 @@ class CandidateRegisterViewModel(private val abcJobsRepository: ABCJobsRepositor
         navigationListener = listener
     }
 
+    private val messageLiveData = MutableLiveData<MessageEvent>()
     fun getMessageLiveData(): LiveData<MessageEvent> {
         return messageLiveData
     }

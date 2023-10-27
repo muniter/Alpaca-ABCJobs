@@ -14,7 +14,7 @@ import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val abcJobsRepository: ABCJobsRepository, private val messageLiveData: MutableLiveData<MessageEvent>) : ViewModel() {
+class LoginViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
@@ -39,6 +39,7 @@ class LoginViewModel(private val abcJobsRepository: ABCJobsRepository, private v
         navigationListener = listener
     }
 
+    private val messageLiveData = MutableLiveData<MessageEvent>()
     fun getMessageLiveData(): LiveData<MessageEvent> {
         return messageLiveData
     }

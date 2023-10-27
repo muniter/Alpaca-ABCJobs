@@ -86,7 +86,7 @@ class LoginFragment : Fragment(),View.OnClickListener, LoginViewModel.Navigation
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return LoginViewModel(ABCJobsRepository(activity!!.application), MutableLiveData<MessageEvent>()) as T
+                return LoginViewModel(ABCJobsRepository(activity!!.application)) as T
             }
         })[LoginViewModel::class.java]
         binding.viewModel = viewModel
