@@ -2,6 +2,322 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="es-ES" target-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="academicinfo" datatype="html">
+        <source>Información Académica <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;academicInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <target>Academic Information  <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;academicInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">5,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="collegedegree" datatype="html">
+        <source> Nivel Académico </source>
+        <target>Academic Level</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="collegedegreeplaceholder" datatype="html">
+        <source>Seleccione nivel académico</source>
+        <target>Choose academic level</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerobtained" datatype="html">
+        <source> Título obtenido </source>
+        <target>Degree earned</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">41,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerobtainedplaceholder" datatype="html">
+        <source>Nombre del título</source>
+        <target>Degree name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="school" datatype="html">
+        <source> Institución educativa </source>
+        <target>School</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">58,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="schoolplaceholder" datatype="html">
+        <source>Nombre de la institución</source>
+        <target>School name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerframe" datatype="html">
+        <source> Periodo de estudios </source>
+        <target>Study frame</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerstartplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <target>Choose year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerendplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <target>Choose year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careerendinprogress" datatype="html">
+        <source> En curso </source>
+        <target>In progress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">98,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="achievement" datatype="html">
+        <source> Logros obtenidos </source>
+        <target>Achievements</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">113,115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="achievementplaceholder" datatype="html">
+        <source>Aspectos adicionales a destacar</source>
+        <target>Additional highlights</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="careeradd" datatype="html">
+        <source>AÑADIR OTRO</source>
+        <target>ADD ANOTHER</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cancel" datatype="html">
+        <source>Cancelar</source>
+        <target>Cancel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="save" datatype="html">
+        <source>Guardar</source>
+        <target>Save</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
+          <context context-type="linenumber">145</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycollegedegree" datatype="html">
+        <source>Debe seleccionar un nivel académico</source>
+        <target>You must select an academic level</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcollegedegree" datatype="html">
+        <source>Revise el campo de nivel académico: 
+                              <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the academic level field: 
+                              <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycareer" datatype="html">
+        <source>El título obtenido no puede ser vacío</source>
+        <target>The obtained title cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcareer" datatype="html">
+        <source>El título obtenido debe tener entre 2 y 100 caracteres</source>
+        <target>The title obtained must be between 2 and 100 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">158</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcareer" datatype="html">
+        <source>Revise el campo título obtenido: 
+                                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the title obtained field: 
+                                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">160,161</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyschool" datatype="html">
+        <source>La institución educativa no puede ser vacía</source>
+        <target>Educational institution cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthschool" datatype="html">
+        <source>El nombre de la institución debe tener entre 2 y 255 caracteres</source>
+        <target>The institution name must be between 2 and 255 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorschool" datatype="html">
+        <source>Revise el campo institución educativa: 
+        <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the field educational institution: 
+        <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">172,173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycareerstart" datatype="html">
+        <source>Debe seleccionar un año</source>
+        <target>You must choose a year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">178</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcareerstart" datatype="html">
+        <source>Revise el campo año de inicio: 
+                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the start year field.: 
+                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">180,181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nongreaterthancareerend" datatype="html">
+        <source>El año final debe ser mayor o igual al inicial</source>
+        <target>The ending year must be greater than or equal to the initial year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcareerend" datatype="html">
+        <source>Revise el campo año de finalización: 
+                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the year of completion field: 
+                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">188,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyachievement" datatype="html">
+        <source>Los logros no puede ser solo espacios en blanco</source>
+        <target>Achievements can't just be blanks</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthachievement" datatype="html">
+        <source>Los logros puede ser vacio o deben tener entre 10 y 255 caracteres</source>
+        <target>Achievements can be blank or must be between 10 and 255 characters.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorachievement" datatype="html">
+        <source>Revise el campo logros: 
+                   <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the achievements field: 
+                   <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>           
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">199,200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="globalmessage" datatype="html">
+        <source>Error: <x id="PH" equiv-text="value"/></source>
+        <target>Error: <x id="PH" equiv-text="value"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">216</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errordeletecareer" datatype="html">
+        <source>Error al eliminar el registro</source>
+        <target>Error deleting record</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">229</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okdeletecareer" datatype="html">
+        <source>Registro eliminado (<x id="PH" equiv-text="id"/>)</source>
+        <target>Deleted record (<x id="PH" equiv-text="id"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">233</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okupdatecareer" datatype="html">
+        <source>Registro actualizado (<x id="PH" equiv-text="career.id"/>)</source>
+        <target>Updated row (<x id="PH" equiv-text="career.id"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okaddcareer" datatype="html">
+        <source>Registro ingresado</source>
+        <target>Row in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
+          <context context-type="linenumber">254</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="email" datatype="html">
         <source>Correo electrónico</source>
         <target>E-mail address</target>
@@ -153,7 +469,7 @@
         <target>Personal Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;personalInfoDisabled&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">19,22</context>
+          <context context-type="linenumber">19,23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebirthdate" datatype="html">
@@ -203,31 +519,7 @@
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
           <context context-type="linenumber">125</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="cancel" datatype="html">
-        <source>Cancelar</source>
-        <target>Cancel</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="save" datatype="html">
-        <source>Guardar</source>
-        <target>Save</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
+      </trans-unit>      
       <trans-unit id="minagevalidation" datatype="html">
         <source>Su edad no puede ser menor a 18 años.</source>
         <target>You must be at least 18 years old.</target>

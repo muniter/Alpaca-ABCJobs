@@ -10,7 +10,7 @@
       </div>
       <div formArrayName="careers" >
         <div *ngFor="let career of careers.controls; let item=index" >
-          <div [formGroupName]="item" >
+          <div [formGroupName]="item" class="career-item">
             <div class="career-delete">
               <mat-icon class="delete-icon" (click)="deleteCareer(item)" *ngIf="!academicInfoDisabled">
                 delete
@@ -25,7 +25,8 @@
               <mat-form-field id="collegeDegreeFormField-{{ item }}" class="form-field right-field" 
               appearance="outline" subscriptSizing="dynamic" 
               [ngClass]="{'chips-field-disabled':academicInfoDisabled}" >
-                <mat-select id="collegeDegree-{{ item }}" formControlName="collegeDegree">
+                <mat-select id="collegeDegree-{{ item }}" formControlName="collegeDegree" 
+                placeholder="Seleccione nivel académico" i18n-placeholder="@@collegedegreeplaceholder">
                   <mat-option *ngFor="let degree of collegeDegrees" [value]="degree">
                     {{degree.name}}
                   </mat-option>
@@ -45,7 +46,7 @@
               [ngClass]="{'chips-field-disabled':academicInfoDisabled}" appearance="outline"
               subscriptSizing="dynamic" >
                 <input matInput id="careerTitle-{{ item }}" formControlName="careerTitle"  
-                class="form-control" placeholder="Título obtenido" 
+                class="form-control" placeholder="Nombre del título" 
                 i18n-placeholder="@@careerobtainedplaceholder">
                 <mat-error *ngIf="career.get('careerTitle')?.invalid">
                   {{ getErrorMessage('careerTitle', item) }}
@@ -62,7 +63,8 @@
               appearance="outline" subscriptSizing="dynamic" 
               [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
                 <input matInput id="school-{{ item }}" class="form-control" 
-                formControlName="school">
+                formControlName="school" placeholder="Nombre de la institución" 
+                i18n-placeholder="@@schoolplaceholder">
                 <mat-error *ngIf="career.get('school')?.invalid">
                   {{ getErrorMessage('school', item) }}
                 </mat-error>
@@ -78,7 +80,8 @@
                 <mat-form-field id="careerStartFormField-{{ item }}" appearance="outline"
                 class="form-field half-right-field" subscriptSizing="dynamic" 
                 [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
-                  <mat-select id="careerStart-{{ item }}" formControlName="careerStart">
+                  <mat-select id="careerStart-{{ item }}" formControlName="careerStart"
+                  placeholder="Seleccione el año" i18n-placeholder="@@careerstartplaceholder">
                     <mat-option *ngFor="let year of careerStartSet" [value]="year">
                       {{year}}
                     </mat-option>
@@ -90,7 +93,8 @@
                 <mat-form-field id="careerEndFormField-{{ item }}" appearance="outline"
                 class="form-field half-right-field" subscriptSizing="dynamic" 
                 [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
-                  <mat-select id="careerEnd-{{ item }}" formControlName="careerEnd">
+                  <mat-select id="careerEnd-{{ item }}" formControlName="careerEnd"
+                  placeholder="Seleccione el año" i18n-placeholder="@@careerendplaceholder">
                     <mat-option value="0" i18n="@@careerendinprogress">
                       En curso
                     </mat-option>
@@ -114,7 +118,8 @@
               appearance="outline" subscriptSizing="dynamic" 
               [ngClass]="academicInfoDisabled?'chips-field-disabled':''">
                 <textarea matInput id="achievement-{{ item }}" rows="5" class="form-control"
-                formControlName="achievement"></textarea>
+                formControlName="achievement" placeholder="Aspectos adicionales a destacar" 
+                i18n-placeholder="@@achievementplaceholder"></textarea>
                 <mat-error *ngIf="career.get('achievement')?.invalid">
                   {{ getErrorMessage('achievement', item) }}
                 </mat-error>
