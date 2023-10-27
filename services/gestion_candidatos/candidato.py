@@ -1,11 +1,12 @@
-from typing import List, Union
-from sqlalchemy import select, func
+from typing import List, Optional, Union
+from sqlalchemy import select, delete, func
 from sqlalchemy.orm import Session
 
 from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateResponseDTO,
     CandidatoCreateDTO,
+    CandidatoDatosAcademicosCreateDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoDatosLaboralesDTO,
     CandidatoPersonalInformationDTO,
@@ -19,6 +20,8 @@ from common.shared.clients.usuario import UsuarioClient
 from common.shared.database.models import (
     Candidato,
     Country,
+    DatosAcademicos,
+    DatosAcademicosTipo,
     DatosLaborales,
     Lenguaje,
     Persona,
@@ -130,6 +133,53 @@ class RolesHabilidadesRepository:
     def get_by_id(self, id: int) -> Union[RolesHabilidades, None]:
         query = select(RolesHabilidades).where(RolesHabilidades.id == id)
         return self.session.execute(query).scalar_one_or_none()
+
+
+class DatosAcademicosRepository:
+    session: Session
+
+    def __init__(self, session):
+        self.session = session
+
+    def get_by_id(self, id: int) -> Union[DatosAcademicos, None]:
+        query = select(DatosAcademicos).where(DatosAcademicos.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_all_from_id_persona(self, id_persona: int) -> List[DatosAcademicos]:
+        query = select(DatosAcademicos).where(DatosAcademicos.id_persona == id_persona)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
+    def crear(self, data: DatosAcademicos) -> DatosAcademicos:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def update(self, data: DatosAcademicos) -> DatosAcademicos:
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def eliminar(self, data: DatosAcademicos) -> None:
+        self.session.delete(data)
+        self.session.commit()
+
+    def eliminar_by_id(self, id: int) -> None:
+        query = delete(DatosAcademicos).where(DatosAcademicos.id == id)
+        self.session.execute(query)
+        self.session.commit()
+
+    def get_tipo_by_id(self, id: int) -> Union[DatosAcademicosTipo, None]:
+        query = select(DatosAcademicosTipo).where(DatosAcademicosTipo.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_tipos(self) -> List[DatosAcademicosTipo]:
+        query = select(DatosAcademicosTipo)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
 
 
 class CandidatoRepository:
@@ -394,6 +444,121 @@ class DatosLaboralesService:
                 model.roles_habilidades.append(rol)
 
         return model
+
+
+class DatosAcademicosService:
+    repository: DatosAcademicosRepository
+    candidato_repository: CandidatoRepository
+
+    def __init__(
+        self,
+        session: Session = Depends(get_db_session_dependency),
+    ):
+        self.repository = DatosAcademicosRepository(session)
+        self.candidato_repository = CandidatoRepository(
+            session, PersonaRepository(session)
+        )
+
+    def crear(self, id_candidato: int, data: CandidatoDatosAcademicosCreateDTO):
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid candiato id")
+            return error
+
+        result = self.load(DatosAcademicos(id_persona=candidato.id_persona), data)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.crear(result)
+        return result.build_dto()
+
+    def update(
+        self, id: int, id_candidato: int, data: CandidatoDatosAcademicosCreateDTO
+    ):
+        result = self.validate_permissions(id_candidato, id)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        datos_academicos = self.repository.get_by_id(id)
+        assert datos_academicos is not None
+
+        result = self.load(datos_academicos, data)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.update(result)
+        return result.build_dto()
+
+    def delete(self, id: int, id_candidato: int):
+        result = self.validate_permissions(id_candidato, id)
+
+        if isinstance(result, ErrorBuilder):
+            return result
+        self.repository.eliminar_by_id(id)
+
+    def validate_permissions(
+        self, id_candidato: int, id_datos_academicos: int | None
+    ) -> Optional[ErrorBuilder]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        error = ErrorBuilder()
+        if not candidato:
+            error.add("global", "Invalid candiate id")
+            return error
+
+        if id_datos_academicos is None:
+            return
+
+        datos_academicos = self.repository.get_by_id(id_datos_academicos)
+        if not datos_academicos:
+            error.add("global", "Invalid academic data id")
+            return error
+
+        if candidato.persona.id != datos_academicos.persona.id:
+            error.add("global", "You don't have permission to edit this data")
+            return error
+
+    def load(self, model: DatosAcademicos, data: CandidatoDatosAcademicosCreateDTO):
+        error = ErrorBuilder(data)
+
+        if data.end_year and data.end_year < data.start_year:
+            error.add("end_year", "End year must be after or equal to start year")
+            return error
+
+        if data.start_year < 1900:
+            error.add("start_year", "Start year must be after 1900")
+            return error
+
+        if data.end_year and data.end_year < 1900:
+            error.add("end_year", "End year must be after 1900")
+            return error
+
+        model.institucion = data.institution
+        model.titulo = data.title
+        model.start_year = data.start_year
+        model.end_year = data.end_year
+        model.logro = data.achievement
+
+        tipo = self.repository.get_tipo_by_id(data.type)
+        if not tipo:
+            error.add("type", "Invalid type")
+            return error
+
+        model.tipo = tipo
+
+        return model
+
+
+def get_datos_academicos_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> DatosAcademicosRepository:
+    return DatosAcademicosRepository(session)
+
+
+def get_datos_academicos_service(
+    session: Session = Depends(get_db_session_dependency),
+) -> DatosAcademicosService:
+    return DatosAcademicosService(session=session)
 
 
 def get_persona_repository(

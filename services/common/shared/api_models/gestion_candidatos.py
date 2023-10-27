@@ -124,6 +124,39 @@ class CandidatoDatosLaboralesCreateDTO(CandidatoDatosLaboralesDTOBase):
     pass
 
 
+class CandidatoDatosLaboralesTipoDTO(BaseModel):
+    id: int
+    name: str
+
+
 class CandidatoDatosLaboralesUpdateDTO(CandidatoDatosLaboralesDTOBase):
     roles: Optional[List[int]]
-    pass
+
+
+class CandidatoDatosAcademicosDTOBase(BaseModel):
+    institution: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    title: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+    start_year: int
+    end_year: Optional[int]
+    achievement: Optional[str]
+
+
+class CandidatoDatosAcademicosDTO(CandidatoDatosAcademicosDTOBase):
+    id: int
+    id_persona: int
+    type: CandidatoDatosLaboralesTipoDTO
+
+
+class CandidatoDatosAcademicosCreateDTO(CandidatoDatosAcademicosDTOBase):
+    type: int
+
+
+class CandidatoDatosAcademicosUpdateDTO(CandidatoDatosAcademicosDTOBase):
+    type: Optional[int]

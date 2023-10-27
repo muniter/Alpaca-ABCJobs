@@ -3,8 +3,11 @@ from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateDTO,
     CandidatoCreateResponseDTO,
+    CandidatoDatosAcademicosCreateDTO,
+    CandidatoDatosAcademicosDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoDatosLaboralesDTO,
+    CandidatoDatosLaboralesTipoDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
     CountryDTO,
@@ -24,11 +27,15 @@ from common.shared.api_models.shared import (
 from .candidato import (
     CandidatoService,
     CountryRepository,
+    DatosAcademicosRepository,
+    DatosAcademicosService,
     DatosLaboralesService,
     LenguajeRepository,
     RolesHabilidadesRepository,
     get_candidato_service,
     get_country_repository,
+    get_datos_academicos_repository,
+    get_datos_academicos_service,
     get_datos_laborales_service,
     get_lenguaje_repository,
     get_roles_habilidades_repository,
@@ -108,7 +115,7 @@ def work_info(
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
     service: DatosLaboralesService = Depends(get_datos_laborales_service),
 ):
-    result = service.crear(user.id_persona, data)
+    result = service.crear(user.id_candidato, data)
     if isinstance(result, ErrorBuilder):
         response.status_code = 400
         return ErrorResponse(errors=result)
@@ -155,6 +162,64 @@ def delete_work_info(
     return SuccessResponse(data={})
 
 
+@router.post(
+    "/academic-info",
+    response_model=Union[SuccessResponse[CandidatoDatosAcademicosDTO], ErrorResponse],
+    status_code=status.HTTP_201_CREATED,
+)
+def academic_info(
+    data: CandidatoDatosAcademicosCreateDTO,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosAcademicosService = Depends(get_datos_academicos_service),
+):
+    result = service.crear(user.id_candidato, data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.post(
+    "/academic-info/{id}",
+    response_model=Union[SuccessResponse[CandidatoDatosAcademicosDTO], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def update_academic_info(
+    data: CandidatoDatosAcademicosCreateDTO,
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosAcademicosService = Depends(get_datos_academicos_service),
+):
+    result = service.update(id, user.id_candidato, data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.delete(
+    "/academic-info/{id}",
+    response_model=Union[SuccessResponse[dict], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def delete_academic_info(
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosAcademicosService = Depends(get_datos_academicos_service),
+):
+    result = service.delete(id, user.id_candidato)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data={})
+
+
 @utils_router.get(
     "/utils/countries",
     response_model=SuccessResponse[List[CountryDTO]],
@@ -191,6 +256,19 @@ def get_skills(
 ):
     skills = repository.get()
     result = [skill.build_roles_habilidades_dto() for skill in skills]
+    return SuccessResponse(data=result)
+
+
+@utils_router.get(
+    "/utils/title-types",
+    response_model=SuccessResponse[List[CandidatoDatosLaboralesTipoDTO]],
+    status_code=status.HTTP_200_OK,
+)
+def get_title_types(
+    repository: DatosAcademicosRepository = Depends(get_datos_academicos_repository),
+):
+    tipos = repository.get_tipos()
+    result = [tipo.build_dto() for tipo in tipos]
     return SuccessResponse(data=result)
 
 

@@ -2,6 +2,7 @@ import json
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateDTO,
+    CandidatoDatosAcademicosCreateDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoPersonalInformationUpdateDTO,
 )
@@ -11,6 +12,7 @@ from common.shared.database.models import Candidato
 from common.shared.tests.helpers import crear_usuario_candidato, crear_usuario_empresa
 from gestion_candidatos.candidato import (
     CandidatoService,
+    DatosAcademicosService,
     DatosLaboralesService,
     RolesHabilidadesRepository,
 )
@@ -24,6 +26,7 @@ session = get_db_session()
 candidate_service = CandidatoService(session)
 roles_habilidades_repository = RolesHabilidadesRepository(session)
 datos_laborales_service = DatosLaboralesService(session)
+datos_academicos_service = DatosAcademicosService(session)
 
 
 def crear_candidato() -> Candidato:
@@ -62,6 +65,17 @@ def data_for_datos_laborales() -> CandidatoDatosLaboralesCreateDTO:
         start_date=faker.date_between(start_date="-10y", end_date="-5y"),
         end_date=faker.date_between(start_date="-4y", end_date="-1y"),
         skills=[role.id for role in roles],
+    )
+
+
+def data_for_datos_academicos() -> CandidatoDatosAcademicosCreateDTO:
+    return CandidatoDatosAcademicosCreateDTO(
+        institution=faker.company(),
+        title=faker.job(),
+        start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
+        end_year=faker.date_between(start_date="-4y", end_date="-1y").year,
+        type=1,
+        achievement=None,
     )
 
 
@@ -145,6 +159,15 @@ def test_get_languages():
 
 def test_endpoint_skills():
     response = client.get("/utils/skills")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["data"]) > 0
+    assert data["data"][0]["id"] is not None
+    assert data["data"][0]["name"] is not None
+
+
+def test_datos_academicos_tipo_titulo():
+    response = client.get("/utils/title-types")
     assert response.status_code == 200
     data = response.json()
     assert len(data["data"]) > 0
@@ -299,6 +322,127 @@ def test_service_datos_laborales_invalid_end_date():
     result = datos_laborales_service.crear(candidato.id, data)
     assert isinstance(result, ErrorBuilder)
     assert "end_date" in result.serialize()
+
+
+def test_endpoint_datos_academicos_create():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_datos_academicos()
+    response = client.post(
+        "/academic-info",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    result = response.json()
+    assert result["data"]["institution"] == data.institution
+    assert result["data"]["title"] == data.title
+
+
+def test_endpoint_datos_academicos_update():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(id_candidato=candidato.id, data=data)
+
+    assert not isinstance(result, ErrorBuilder)
+
+    new_title = faker.job()
+    data.title = new_title
+    response = client.post(
+        f"/academic-info/{result.id}",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["data"]["title"] == new_title
+
+
+def test_endpoint_datos_academicos_delete():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(id_candidato=candidato.id, data=data)
+
+    assert not isinstance(result, ErrorBuilder)
+
+    response = client.delete(
+        f"/academic-info/{result.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()
+
+
+def test_service_datos_academicos_create():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.institution == data.institution
+    assert result.title == data.title
+
+
+def test_service_datos_academicos_update():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.institution == data.institution
+    assert result.title == data.title
+    new_title = faker.job()
+    data.title = new_title
+    result = datos_academicos_service.update(result.id, candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.title == new_title
+
+
+def test_service_datos_academicos_update_wrong_candidato():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.institution == data.institution
+    assert result.title == data.title
+    new_title = faker.job()
+    data.title = new_title
+    new_candidate = crear_candidato()
+    result = datos_academicos_service.update(result.id, new_candidate.id + 1, data)
+    assert isinstance(result, ErrorBuilder)
+    assert "global" in result.serialize()
+
+
+def test_service_datos_academicos_create_multiple():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.institution == data.institution
+    assert result.title == data.title
+    new_title = faker.job()
+    data.title = new_title
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.title == new_title
+
+
+def test_service_datos_academicos_delete():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    result = datos_academicos_service.delete(result.id, candidato.id)
+    assert not isinstance(result, ErrorBuilder)
+    assert result is None
 
 
 def test_invalid_language():

@@ -11,7 +11,9 @@ from datetime import date
 
 from ..api_models.gestion_candidatos import (
     CandidatoDTO,
+    CandidatoDatosAcademicosDTO,
     CandidatoDatosLaboralesDTO,
+    CandidatoDatosLaboralesTipoDTO,
     CandidatoPersonalInformationDTO,
     LenguajeDTO,
     RolHabilidadDTO,
@@ -183,6 +185,54 @@ class DatosLaborales(Base):
             start_date=self.fecha_inicio,
             end_date=self.fecha_fin,
             skills=[r.build_roles_habilidades_dto() for r in self.roles_habilidades],
+        )
+
+
+class DatosAcademicosTipo(Base):
+    __tablename__ = "datos_academicos_tipo"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def build_dto(self) -> CandidatoDatosLaboralesTipoDTO:
+        return CandidatoDatosLaboralesTipoDTO(
+            id=self.id,
+            name=self.nombre,
+        )
+
+
+class DatosAcademicos(Base):
+    __tablename__ = "datos_academicos"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    id_persona: Mapped[int] = mapped_column(
+        ForeignKey("persona.id"), nullable=False, unique=False
+    )
+    persona: Mapped["Persona"] = relationship("Persona", backref="datos_academicos")
+
+    id_tipo: Mapped[int] = mapped_column(
+        ForeignKey("datos_academicos_tipo.id"), nullable=False, unique=False
+    )
+    tipo: Mapped["DatosAcademicosTipo"] = relationship(
+        "DatosAcademicosTipo", backref="datos_academicos"
+    )
+
+    titulo: Mapped[str] = mapped_column(String(255), nullable=False)
+    institucion: Mapped[str] = mapped_column(String(255), nullable=False)
+    start_year: Mapped[int] = mapped_column(nullable=False)
+    end_year: Mapped[Optional[int]] = mapped_column(nullable=True)
+    logro: Mapped[str] = mapped_column(String(500), nullable=True)
+
+    def build_dto(self) -> CandidatoDatosAcademicosDTO:
+        return CandidatoDatosAcademicosDTO(
+            id=self.id,
+            id_persona=self.id_persona,
+            type=self.tipo.build_dto(),
+            title=self.titulo,
+            institution=self.institucion,
+            start_year=self.start_year,
+            end_year=self.end_year,
+            achievement=self.logro,
         )
 
 

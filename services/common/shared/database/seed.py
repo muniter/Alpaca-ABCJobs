@@ -35,3 +35,9 @@ def seed():
                 )
             session.commit()
             logger.info("Seeding languages done")
+
+        logger.info("Seeding datos_academicos")
+        with open(data_dir / "datos_academicos.sql") as f:
+            session.execute(text(f.read()))
+            session.commit()
+            logger.info("Seeding datos_academicos done")
