@@ -162,6 +162,38 @@ def delete_work_info(
     return SuccessResponse(data={})
 
 
+@router.get(
+    "/work-info",
+    response_model=Union[SuccessResponse[List[CandidatoDatosLaboralesDTO]], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_all_work_info(
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+):
+    result = service.get_all(user.id_candidato)
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/work-info/{id}",
+    response_model=Union[SuccessResponse[CandidatoDatosLaboralesDTO], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_work_info(
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+):
+    result = service.get_by_id(id, user.id_candidato)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
 @router.post(
     "/academic-info",
     response_model=Union[SuccessResponse[CandidatoDatosAcademicosDTO], ErrorResponse],

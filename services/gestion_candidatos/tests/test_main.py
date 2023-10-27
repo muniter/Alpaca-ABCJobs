@@ -215,6 +215,40 @@ def test_service_update_under_18():
     assert "birth_date" in result.serialize()
 
 
+def test_service_datos_laborales_create():
+    candidato = crear_candidato()
+    data = data_for_datos_laborales()
+    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.role == data.role
+    assert result.company == data.company
+
+
+def test_service_datos_laborales_get():
+    candidato = crear_candidato()
+    data = data_for_datos_laborales()
+    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    get = datos_laborales_service.get_by_id(result.id, candidato.id)
+    assert not isinstance(get, ErrorBuilder)
+    assert get.role == data.role
+    assert get.company == data.company
+    get = datos_laborales_service.get_by_id(result.id, candidato.id + 1)
+    assert isinstance(get, ErrorBuilder)
+    assert "global" in get.serialize()
+
+
+
+def test_service_datos_laborales_create_without_skills():
+    candidato = crear_candidato()
+    data = data_for_datos_laborales()
+    data.skills = None
+    result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.role == data.role
+    assert result.company == data.company
+
+
 def test_endpoint_datos_laborales_create():
     _, token = crear_usuario_candidato()
     data = data_for_datos_laborales()
@@ -229,23 +263,39 @@ def test_endpoint_datos_laborales_create():
     assert result["data"]["company"] == data.company
 
 
-def test_service_datos_laborales_create():
-    candidato = crear_candidato()
+def test_endpoint_datos_laborales_get():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
     data = data_for_datos_laborales()
     result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
     assert not isinstance(result, ErrorBuilder)
-    assert result.role == data.role
-    assert result.company == data.company
+    response = client.get(
+        f"/work-info/{result.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result["data"]["role"] == data.role
+    assert result["data"]["company"] == data.company
 
 
-def test_service_datos_laborales_create_without_skills():
-    candidato = crear_candidato()
+def test_endpoint_datos_laborales_get_all():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
     data = data_for_datos_laborales()
-    data.skills = None
     result = datos_laborales_service.crear(id_candidato=candidato.id, data=data)
     assert not isinstance(result, ErrorBuilder)
-    assert result.role == data.role
-    assert result.company == data.company
+    response = client.get(
+        f"/work-info",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result["data"]) > 0
 
 
 def test_endpoint_datos_laborales_update():

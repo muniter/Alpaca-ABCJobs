@@ -92,8 +92,15 @@ class DatosLaboralesRepository:
     def __init__(self, session):
         self.session = session
 
-    def get_by_id(self, id: int) -> Union[DatosLaborales, None]:
+    def get_by_id(
+        self, id: int, id_candidato: int | None = None
+    ) -> Union[DatosLaborales, None]:
         query = select(DatosLaborales).where(DatosLaborales.id == id)
+        if id_candidato:
+            query = query.join(
+                Candidato, Candidato.id_persona == DatosLaborales.id_persona
+            ).where(Candidato.id == id_candidato)
+
         return self.session.execute(query).scalar_one_or_none()
 
     def get_all_from_id_persona(self, id_persona: int) -> List[DatosLaborales]:
@@ -360,6 +367,25 @@ class DatosLaboralesService:
             session, PersonaRepository(session)
         )
         self.roles_repository = RolesHabilidadesRepository(session)
+
+    def get_by_id(
+        self, id: int, id_candidato: int
+    ) -> Union[CandidatoDatosLaboralesDTO, ErrorBuilder]:
+        result = self.repository.get_by_id(id, id_candidato)
+        if not result:
+            error = ErrorBuilder()
+            error.add("global", "Invalid id")
+            return error
+
+        return result.build_datos_laborales_dto()
+
+    def get_all(self, id_candidato: int) -> List[CandidatoDatosLaboralesDTO]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            return []
+
+        datos_laborales = self.repository.get_all_from_id_persona(candidato.id_persona)
+        return [datos.build_datos_laborales_dto() for datos in datos_laborales]
 
     def crear(
         self, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
