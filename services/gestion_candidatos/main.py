@@ -104,12 +104,46 @@ def get_personal_info(
     return SuccessResponse(data=result)
 
 
+@router.get(
+    "/work-info",
+    response_model=Union[
+        SuccessResponse[List[CandidatoDatosLaboralesDTO]], ErrorResponse
+    ],
+    status_code=status.HTTP_200_OK,
+)
+def get_all_work_info(
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+):
+    result = service.get_all(user.id_candidato)
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/work-info/{id}",
+    response_model=Union[SuccessResponse[CandidatoDatosLaboralesDTO], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_work_info(
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+):
+    result = service.get_by_id(id, user.id_candidato)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
 @router.post(
     "/work-info",
     response_model=Union[SuccessResponse[CandidatoDatosLaboralesDTO], ErrorResponse],
     status_code=status.HTTP_201_CREATED,
 )
-def work_info(
+def create_work_info(
     data: CandidatoDatosLaboralesCreateDTO,
     response: Response,
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
@@ -163,28 +197,30 @@ def delete_work_info(
 
 
 @router.get(
-    "/work-info",
-    response_model=Union[SuccessResponse[List[CandidatoDatosLaboralesDTO]], ErrorResponse],
+    "/academic-info",
+    response_model=Union[
+        SuccessResponse[List[CandidatoDatosAcademicosDTO]], ErrorResponse
+    ],
     status_code=status.HTTP_200_OK,
 )
-def get_all_work_info(
+def get_all_academic_info(
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
-    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+    service: DatosAcademicosService = Depends(get_datos_academicos_service),
 ):
     result = service.get_all(user.id_candidato)
     return SuccessResponse(data=result)
 
 
 @router.get(
-    "/work-info/{id}",
-    response_model=Union[SuccessResponse[CandidatoDatosLaboralesDTO], ErrorResponse],
+    "/academic-info/{id}",
+    response_model=Union[SuccessResponse[CandidatoDatosAcademicosDTO], ErrorResponse],
     status_code=status.HTTP_200_OK,
 )
-def get_work_info(
+def get_academic_info(
     id: int,
     response: Response,
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
-    service: DatosLaboralesService = Depends(get_datos_laborales_service),
+    service: DatosAcademicosService = Depends(get_datos_academicos_service),
 ):
     result = service.get_by_id(id, user.id_candidato)
     if isinstance(result, ErrorBuilder):
@@ -199,7 +235,7 @@ def get_work_info(
     response_model=Union[SuccessResponse[CandidatoDatosAcademicosDTO], ErrorResponse],
     status_code=status.HTTP_201_CREATED,
 )
-def academic_info(
+def crate_academic_info(
     data: CandidatoDatosAcademicosCreateDTO,
     response: Response,
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),

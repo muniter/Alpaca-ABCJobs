@@ -238,7 +238,6 @@ def test_service_datos_laborales_get():
     assert "global" in get.serialize()
 
 
-
 def test_service_datos_laborales_create_without_skills():
     candidato = crear_candidato()
     data = data_for_datos_laborales()
@@ -401,6 +400,41 @@ def test_endpoint_datos_academicos_create():
     assert result["data"]["title"] == data.title
 
 
+def test_endpoint_datos_academicos_get_all():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    response = client.get(
+        f"/academic-info",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result["data"]) > 0
+
+
+def test_endpoint_datos_academicos_get():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    response = client.get(
+        f"/academic-info/{result.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result["data"]["institution"] == data.institution
+    assert result["data"]["title"] == data.title
+
+
 def test_endpoint_datos_academicos_update():
     usuario, token = crear_usuario_candidato()
     candidato = usuario.candidato
@@ -450,6 +484,30 @@ def test_service_datos_academicos_create():
     assert not isinstance(result, ErrorBuilder)
     assert result.institution == data.institution
     assert result.title == data.title
+
+
+def test_service_datos_academicos_get():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    get = datos_academicos_service.get_by_id(result.id, candidato.id)
+    assert not isinstance(get, ErrorBuilder)
+    assert get.institution == data.institution
+    assert get.title == data.title
+    get = datos_academicos_service.get_by_id(result.id, candidato.id + 1)
+    assert isinstance(get, ErrorBuilder)
+    assert "global" in get.serialize()
+
+
+def test_service_datos_academicos_get_all():
+    candidato = crear_candidato()
+    data = data_for_datos_academicos()
+    result = datos_academicos_service.crear(candidato.id, data)
+    assert not isinstance(result, ErrorBuilder)
+    get = datos_academicos_service.get_all(candidato.id)
+    assert not isinstance(get, ErrorBuilder)
+    assert len(get) > 0
 
 
 def test_service_datos_academicos_update():

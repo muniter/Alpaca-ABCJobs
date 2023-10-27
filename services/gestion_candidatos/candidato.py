@@ -7,6 +7,7 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoCreateResponseDTO,
     CandidatoCreateDTO,
     CandidatoDatosAcademicosCreateDTO,
+    CandidatoDatosAcademicosDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoDatosLaboralesDTO,
     CandidatoPersonalInformationDTO,
@@ -484,6 +485,23 @@ class DatosAcademicosService:
         self.candidato_repository = CandidatoRepository(
             session, PersonaRepository(session)
         )
+
+    def get_all(self, id_candidato: int) -> List[CandidatoDatosAcademicosDTO]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            return []
+
+        datos_academicos = self.repository.get_all_from_id_persona(candidato.id_persona)
+        return [datos.build_dto() for datos in datos_academicos]
+
+    def get_by_id(self, id: int, id_candidato: int):
+        result = self.validate_permissions(id_candidato, id)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        datos_academicos = self.repository.get_by_id(id)
+        assert datos_academicos is not None
+        return datos_academicos.build_dto()
 
     def crear(self, id_candidato: int, data: CandidatoDatosAcademicosCreateDTO):
         candidato = self.candidato_repository.get_by_id(id_candidato)
