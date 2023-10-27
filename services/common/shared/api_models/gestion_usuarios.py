@@ -6,6 +6,7 @@ class UsuarioCandidatoDTO(BaseModel):
     id: int
     email: str
     id_candidato: int
+    id_persona: int
 
 
 class UsuarioEmpresaDTO(BaseModel):
