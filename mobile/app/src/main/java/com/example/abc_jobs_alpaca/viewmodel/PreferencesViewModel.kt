@@ -50,17 +50,11 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
         val dateFormat = UserDateFormat.values()[selectedDateFormatPosition.value ?: 0]
         val timeFormat = UserTimeFormat.values()[selectedTimeFormatPosition.value ?: 0]
 
-        Log.d("PreferencesViewModel", "language: $language")
-        Log.d("PreferencesViewModel", "dateFormat: ${dateFormat.formatString}")
-        Log.d("PreferencesViewModel", "timeFormat: ${timeFormat.formatString}")
-
         // get token
         val token = tokenLiveData.value
         if (token == null) {
-            Log.d("PreferencesViewModel", "token is null")
             return
         }
-        Log.d("PreferencesViewModel", "token: $token")
 
         val newConfigRequest = ConfigRequest(language, dateFormat, timeFormat)
         viewModelScope.launch { abcJobsRepository.postConfig(token,newConfigRequest) }

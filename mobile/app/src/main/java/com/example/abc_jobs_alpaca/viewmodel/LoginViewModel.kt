@@ -47,12 +47,11 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
         return messageLiveData
     }
 
-    fun login(userEmail: String, userPassword: String) {
+    suspend fun login(userEmail: String, userPassword: String) {
         val loginCandidate = userEmail?.takeIf { userPassword != null }?.let {
             UserLoginRequest(it, userPassword!!)
         }
 
-        viewModelScope.launch(Dispatchers.Main) {
             try {
                 loginCandidate?.let { doLogin(it) }
             } catch (e: Exception) {
@@ -60,7 +59,8 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
             } finally {
                 setEnabledElements(true)
             }
-        }
+
+
     }
 
     private fun setConfigToPreferences(config: ConfigData) {
@@ -72,14 +72,10 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
         editor.apply()
 
         // Log for test
-        Log.d("LoginViewModel", "Language: ${config.languageApp}")
         // from preferences
         val language = sharedPreferences.getString("language", "en")
-        Log.d("LoginViewModel", "Language from preferences: $language")
         val dateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
-        Log.d("LoginViewModel", "Date format from preferences: $dateFormat")
         val timeFormat = sharedPreferences.getString("timeFormat", "24 horas")
-        Log.d("LoginViewModel", "Time format from preferences: $timeFormat")
     }
 
     private suspend fun doLogin(loginRequest: UserLoginRequest) {
@@ -87,12 +83,10 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
         response.onSuccess { it ->
             handleSuccessResponse(it)
             val xx = abcJobsRepository.getConfig(it.data?.token!!)
-            Log.d("LoginViewModel", "Token: ${it.data?.token}")
             xx.onSuccess {
                 setConfigToPreferences(it!!)
             }
             xx.onFailure{
-                Log.d("LoginViewModel", "Error get config: ${it}")
             }
         }
             .onFailure { handleError(it) }

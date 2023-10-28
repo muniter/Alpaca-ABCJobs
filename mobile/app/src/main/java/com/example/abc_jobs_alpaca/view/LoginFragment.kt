@@ -21,6 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
@@ -32,6 +33,8 @@ import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.viewmodel.LoginViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.example.abc_jobs_alpaca.utils.Validators
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 private const val ARG_PARAM1 = "param1"
@@ -70,7 +73,9 @@ class LoginFragment : Fragment(),View.OnClickListener, LoginViewModel.Navigation
                     view?.findViewById<TextInputEditText>(R.id.editTextPassword)?.text.toString()
                 toggleControl(false)
 
-                viewModel.login(email, password)
+                lifecycleScope.launch(Dispatchers.Main){
+                    viewModel.login(email, password)
+                }
 
                 requireActivity().supportFragmentManager.popBackStack()
             }

@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.viewmodel_test
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import io.github.serpro69.kfaker.Faker
@@ -12,6 +13,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class PreferencesViewModelTest {
@@ -23,12 +25,15 @@ class PreferencesViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    @Mock
+    lateinit var applicationMock: Application
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
 
-        preferencesViewModel = PreferencesViewModel()
+        preferencesViewModel = PreferencesViewModel(applicationMock)
     }
 
     @Test
