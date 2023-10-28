@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
@@ -233,7 +234,12 @@ class PreferencesFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
-            viewModel = ViewModelProvider(this)[PreferencesViewModel::class.java]
+            viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return PreferencesViewModel() as T
+                }
+            })[PreferencesViewModel::class.java]
         }
 
 }

@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.abc_jobs_alpaca.databinding.FragmentHomeBinding
+import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.HomeViewModel
+import com.example.abc_jobs_alpaca.viewmodel.LoginViewModel
 
 class HomeFragment : Fragment() {
 
@@ -22,7 +25,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
+            ViewModelProvider(this, object : ViewModelProvider.Factory{
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return HomeViewModel(activity!!.application) as T
+                }
+            })[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root

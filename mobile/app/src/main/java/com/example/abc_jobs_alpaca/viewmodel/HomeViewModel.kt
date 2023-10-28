@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.abc_jobs_alpaca.R
 
 
-class HomeViewModel(application: Application) : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     // Accede al valor desde strings.xml
     private val _text = MutableLiveData<String>().apply {
