@@ -11,14 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.InverseBindingListener
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.example.abc_jobs_alpaca.databinding.FragmentPreferencesBinding
-import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
-
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import java.util.Calendar
 import java.util.Locale
@@ -27,54 +19,176 @@ class PreferencesFragment : Fragment() {
     private lateinit var languageSpinner: Spinner
     private lateinit var dateFormatSpinner: Spinner
     private lateinit var timeFormatSpinner: Spinner
-
-    private lateinit var binding: FragmentPreferencesBinding
-    private lateinit var viewModel: PreferencesViewModel
-    private val tokenLiveData = MutableLiveData<String?>()
     companion object {
         fun newInstance() = PreferencesFragment()
     }
 
+    private lateinit var viewModel: PreferencesViewModel
+    private lateinit var savePreferencesButton: Button
 
-
-    @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_preferences, container, false)
-        viewModel = ViewModelProvider(this)[PreferencesViewModel::class.java]
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        val view = inflater.inflate(R.layout.fragment_preferences, container, false)
+        languageSpinner = view.findViewById(R.id.languageSpinner)
+        dateFormatSpinner = view.findViewById(R.id.dateFormatSpinner)
+        timeFormatSpinner = view.findViewById(R.id.timeFormatSpinner)
 
-        languageSpinner = binding.languageSpinner
-        dateFormatSpinner = binding.dateFormatSpinner
-        timeFormatSpinner = binding.timeFormatSpinner
-
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("token", null)
-        tokenLiveData.value = token
-
-        tokenLiveData.observe(viewLifecycleOwner) { it ->
-            viewModel.onTokenUpdated(it)
-        }
-
-        val languageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel.languageSpinnerItems)
+        val languageAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.language_options,
+            android.R.layout.simple_spinner_item
+        )
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         languageSpinner.adapter = languageAdapter
 
-        val dateFormatAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel.dateFormatSpinnerItems)
+        val dateFormatAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.date_format_options,
+            android.R.layout.simple_spinner_item
+        )
         dateFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         dateFormatSpinner.adapter = dateFormatAdapter
 
-        val timeFormatAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel.timeFormatSpinnerItems)
+        val timeFormatAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.time_format_options,
+            android.R.layout.simple_spinner_item
+        )
         timeFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeFormatSpinner.adapter = timeFormatAdapter
 
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val selectedLanguageCode = Locale.getDefault().language
+        val selectedLanguage = mapSelectedLanguage(selectedLanguageCode);
+        val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
+        val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
+        val languagePosition = languageAdapter.getPosition(selectedLanguage)
+        val dateFormatPosition = dateFormatAdapter.getPosition(selectedDateFormat)
+        val timeFormatPosition = timeFormatAdapter.getPosition(selectedTimeFormat)
 
+        languageSpinner.setSelection(languagePosition)
+        dateFormatSpinner.setSelection(dateFormatPosition)
+        timeFormatSpinner.setSelection(timeFormatPosition)
 
-            return binding.root
+        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedLanguage = languageSpinner.selectedItem.toString()
+                saveLanguagePreferences(selectedLanguage)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
+            }
+        }
+
+        dateFormatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedDateFormat = dateFormatSpinner.selectedItem.toString()
+                saveDateFormatPreference(selectedDateFormat)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
+            }
+        }
+
+        timeFormatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedTimeFormat = timeFormatSpinner.selectedItem.toString()
+                saveTimeFormatPreference(selectedTimeFormat)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
+            }
+        }
+        savePreferencesButton = view?.findViewById(R.id.preferencesButton)!!
+        savePreferencesButton.setOnClickListener {
+            savePreferences()
+        }
+
+            val textViewHour = view.findViewById<TextView>(R.id.textViewHora)
+            val timeFormatPreference = sharedPreferences.getString("timeFormat", "24 horas")
+
+            val hourLabel = getString(R.string.now_hour)
+            val nowHour = timeFormatPreference?.let {
+                getCurrentHour(it)}
+
+            textViewHour.text = "$hourLabel $nowHour"
+
+            val textViewDate = view.findViewById<TextView>(R.id.textViewFecha)
+            val dateLabel = getString(R.string.now_date)
+            val dateFormatPreference = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
+
+            val currentDate = dateFormatPreference?.let { getCurrentDate(it) }
+            textViewDate.text = "$dateLabel $currentDate"
+            return view
+        }
+
+        private fun savePreferences() {
+            val selectedLanguage = languageSpinner.selectedItem.toString()
+            val selectedDateFormat = dateFormatSpinner.selectedItem.toString()
+            val selectedTimeFormat = timeFormatSpinner.selectedItem.toString()
+
+            if (activity is MainActivity) {
+                (activity as MainActivity).updatePreferences(
+                    selectedLanguage,
+                    selectedDateFormat,
+                    selectedTimeFormat
+                )
+            }
+        }
+
+        private fun mapSelectedLanguage(selectedLanguageValue: String): String {
+            return when (selectedLanguageValue) {
+                "en" -> "Inglés"
+                "es" -> "Español"
+                else -> "Español"
+            }
+        }
+
+        private fun saveLanguagePreferences(selectedLanguage: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("language", selectedLanguage)
+            editor.apply()
+        }
+
+        private fun saveDateFormatPreference(selectedDateFormat: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("dateFormat", selectedDateFormat)
+            editor.apply()
+        }
+
+        private fun saveTimeFormatPreference(selectedTimeFormat: String) {
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("timeFormat", selectedTimeFormat)
+            editor.apply()
         }
 
         private fun getCurrentHour(timeFormat: String): String {
@@ -116,6 +230,7 @@ class PreferencesFragment : Fragment() {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
+            viewModel = ViewModelProvider(this)[PreferencesViewModel::class.java]
         }
 
 }
