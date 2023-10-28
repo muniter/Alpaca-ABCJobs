@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity()
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
+        
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
@@ -133,6 +134,4 @@ class MainActivity : AppCompatActivity()
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 }

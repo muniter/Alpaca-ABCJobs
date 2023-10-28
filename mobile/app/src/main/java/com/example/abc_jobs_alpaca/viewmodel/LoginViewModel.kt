@@ -59,23 +59,19 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
             } finally {
                 setEnabledElements(true)
             }
-
-
     }
 
     private fun setConfigToPreferences(config: ConfigData) {
         val sharedPreferences = application.getSharedPreferences("AppPreferences", 0)
         val editor = sharedPreferences.edit()
-        editor.putString("language", config.languageApp.name)
+        when (config.languageApp.name) {
+            "ES" -> editor.putString("language", "es")
+            "EN" -> editor.putString("language", "en")
+        }
         editor.putString("dateFormat", config.dateFormat.formatString)
         editor.putString("timeFormat", config.timeFormat.formatString)
         editor.apply()
 
-        // Log for test
-        // from preferences
-        val language = sharedPreferences.getString("language", "en")
-        val dateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
-        val timeFormat = sharedPreferences.getString("timeFormat", "24 horas")
     }
 
     private suspend fun doLogin(loginRequest: UserLoginRequest) {
@@ -85,6 +81,7 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
             val xx = abcJobsRepository.getConfig(it.data?.token!!)
             xx.onSuccess {
                 setConfigToPreferences(it!!)
+                Log.d("LoginViewModel", "Logged")
             }
             xx.onFailure{
             }

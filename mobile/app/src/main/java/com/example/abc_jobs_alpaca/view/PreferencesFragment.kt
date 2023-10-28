@@ -22,8 +22,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.abc_jobs_alpaca.databinding.FragmentPreferencesBinding
 import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
-import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.viewmodel.LoginViewModel
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import java.util.Calendar
 import java.util.Locale
@@ -36,9 +34,14 @@ class PreferencesFragment : Fragment() {
     private lateinit var binding: FragmentPreferencesBinding
     private lateinit var viewModel: PreferencesViewModel
     private val tokenLiveData = MutableLiveData<String?>()
+    //private lateinit var activity: Activity
+
+
     companion object {
         fun newInstance() = PreferencesFragment()
     }
+
+
 
     @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
     override fun onCreateView(
@@ -68,6 +71,42 @@ class PreferencesFragment : Fragment() {
             viewModel.onTokenUpdated(it)
         }
 
+        viewModel.preferencesUpdatedLiveData.observe(viewLifecycleOwner) {
+            val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+            val currentLanguage = sharedPreferences.getString("language", "")
+            val currentDateFormat = sharedPreferences.getString("dateFormat", "")
+            val currentTimeFormat = sharedPreferences.getString("timeFormat", "")
+
+            val selectedLanguage = viewModel.languageSpinnerItems[viewModel.selectedLanguagePosition.value ?: 0]
+            val selectedDateFormat = viewModel.dateFormatSpinnerItems[viewModel.selectedDateFormatPosition.value ?: 0]
+            val selectedTimeFormat = viewModel.timeFormatSpinnerItems[viewModel.selectedTimeFormatPosition.value ?: 0]
+
+            var auxLanguage ="";
+            when(selectedLanguage){
+                UserLanguageApp.ES.formatString-> auxLanguage = "es"
+                UserLanguageApp.EN.formatString -> auxLanguage = "en"
+            }
+
+            if (
+                auxLanguage != currentLanguage
+                || selectedDateFormat != currentDateFormat
+                || selectedTimeFormat != currentTimeFormat
+            ) {
+                val editor = sharedPreferences.edit()
+                editor.putString("language", auxLanguage)
+                editor.putString("dateFormat", selectedDateFormat)
+                editor.putString("timeFormat", selectedTimeFormat)
+                editor.apply()
+
+                val activity = requireActivity()
+                activity.finish()
+                activity.startActivity(activity.intent)
+                activity.recreate()
+
+
+            }
+        }
+
         val languageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel.languageSpinnerItems)
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         languageSpinner.adapter = languageAdapter
@@ -79,8 +118,6 @@ class PreferencesFragment : Fragment() {
         val timeFormatAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel.timeFormatSpinnerItems)
         timeFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeFormatSpinner.adapter = timeFormatAdapter
-
-
 
             return binding.root
         }
