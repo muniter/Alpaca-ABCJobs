@@ -52,7 +52,7 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
             UserLoginRequest(it, userPassword!!)
         }
 
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 loginCandidate?.let { doLogin(it) }
             } catch (e: Exception) {
