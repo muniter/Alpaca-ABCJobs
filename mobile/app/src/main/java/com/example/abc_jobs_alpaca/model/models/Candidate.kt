@@ -61,9 +61,6 @@ fun deserializeCandidateError(response: JSONObject): Exception {
     return Exception("Error en la solicitud")
 }
 
-
-
-
 fun serializeCandidate(candidate: UserRegisterRequest): JSONObject {
     val json = JSONObject()
 
