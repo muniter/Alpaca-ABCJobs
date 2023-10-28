@@ -17,7 +17,7 @@ import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
+class LoginViewModel(private val application: Application, private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
@@ -64,8 +64,7 @@ class LoginViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewMod
     }
 
     private fun setConfigToPreferences(config: ConfigData) {
-        val sharedPreferences = getApplication<Application>()
-            .getSharedPreferences("AppPreferences", 0)
+        val sharedPreferences = application.getSharedPreferences("AppPreferences", 0)
         val editor = sharedPreferences.edit()
         editor.putString("language", config.languageApp.name)
         editor.putString("dateFormat", config.dateFormat.formatString)
@@ -123,8 +122,7 @@ class LoginViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewMod
     }
 
     private fun saveTokenInSharedPreferences(token: String) {
-        val sharedPreferences = getApplication<Application>()
-                                .getSharedPreferences("AppPreferences", 0)
+        val sharedPreferences = application.getSharedPreferences("AppPreferences", 0)
         val editor = sharedPreferences.edit()
         editor.putString("token", token)
         editor.apply()

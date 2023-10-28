@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.volley.NetworkError
 import com.example.abc_jobs_alpaca.model.models.ConfigRequest
@@ -19,7 +20,7 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
 
 
-class PreferencesViewModel (application: Application) : AndroidViewModel(application) {
+class PreferencesViewModel (private val application: Application) : ViewModel() {
 
     private val abcJobsRepository = ABCJobsRepository(application)
 
