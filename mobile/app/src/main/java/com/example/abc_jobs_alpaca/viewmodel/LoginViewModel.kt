@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.volley.NetworkError
 import com.example.abc_jobs_alpaca.model.models.ConfigData
@@ -16,8 +17,7 @@ import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginMoldel(application: Application) : AndroidViewModel(application) {
-    private val abcJobsRepository = ABCJobsRepository(application)
+class LoginViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
@@ -43,15 +43,11 @@ class LoginMoldel(application: Application) : AndroidViewModel(application) {
     }
 
     private val messageLiveData = MutableLiveData<MessageEvent>()
-
     fun getMessageLiveData(): LiveData<MessageEvent> {
         return messageLiveData
     }
 
-    fun login() {
-        val userPassword = password.value
-        val userEmail = email.value
-
+    fun login(userEmail: String, userPassword: String) {
         val loginCandidate = userEmail?.takeIf { userPassword != null }?.let {
             UserLoginRequest(it, userPassword!!)
         }

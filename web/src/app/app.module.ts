@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CompanyModule } from './company/company.module';
 import { CompanyRoutingModule } from './company/company-routing.routing';
 import { CandidateModule } from './candidate/candidate.module';
@@ -30,7 +30,7 @@ import { UserRoutingModule } from './user/user-routing.routing';
     UserModule,
     UserRoutingModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
