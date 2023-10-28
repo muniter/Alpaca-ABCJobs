@@ -22,6 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.abc_jobs_alpaca.databinding.FragmentPreferencesBinding
 import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
+import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.viewmodel.LoginViewModel
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import java.util.Calendar
 import java.util.Locale
@@ -45,7 +47,12 @@ class PreferencesFragment : Fragment() {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_preferences, container, false)
-        viewModel = ViewModelProvider(this)[PreferencesViewModel::class.java]
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return PreferencesViewModel(activity!!.application) as T
+            }
+        })[PreferencesViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
