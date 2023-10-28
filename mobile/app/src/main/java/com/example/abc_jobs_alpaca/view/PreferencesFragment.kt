@@ -38,8 +38,6 @@ class PreferencesFragment : Fragment() {
         fun newInstance() = PreferencesFragment()
     }
 
-
-
     @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,7 +120,7 @@ class PreferencesFragment : Fragment() {
             viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     @Suppress("UNCHECKED_CAST")
-                    return PreferencesViewModel() as T
+                    return PreferencesViewModel(activity!!.application) as T
                 }
             })[PreferencesViewModel::class.java]
         }
