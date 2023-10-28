@@ -62,8 +62,8 @@ def data_for_datos_laborales() -> CandidatoDatosLaboralesCreateDTO:
         role=faker.job(),
         company=faker.company(),
         description=faker.text(max_nb_chars=200),
-        start_date=faker.date_between(start_date="-10y", end_date="-5y"),
-        end_date=faker.date_between(start_date="-4y", end_date="-1y"),
+        start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
+        end_year=faker.date_between(start_date="-4y", end_date="-1y").year,
         skills=[role.id for role in roles],
     )
 
@@ -377,10 +377,10 @@ def test_service_datos_laborales_delete_invalid_id_candidato():
 def test_service_datos_laborales_invalid_end_date():
     candidato = crear_candidato()
     data = data_for_datos_laborales()
-    data.end_date = data.start_date
+    data.end_year = data.start_year - 1
     result = datos_laborales_service.crear(candidato.id, data)
     assert isinstance(result, ErrorBuilder)
-    assert "end_date" in result.serialize()
+    assert "end_year" in result.serialize()
 
 
 def test_endpoint_datos_academicos_create():

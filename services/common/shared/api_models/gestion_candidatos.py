@@ -110,8 +110,8 @@ class CandidatoDatosLaboralesDTOBase(BaseModel):
 
     skills: Optional[List[RolHabilidadDTO]]
 
-    start_date: date
-    end_date: Optional[date]
+    start_year: int
+    end_year: Optional[int]
 
 
 class CandidatoDatosLaboralesDTO(CandidatoDatosLaboralesDTOBase):

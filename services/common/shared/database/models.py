@@ -169,8 +169,8 @@ class DatosLaborales(Base):
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
     empresa: Mapped[str] = mapped_column(String(255), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(500), nullable=False)
-    fecha_inicio: Mapped[date] = mapped_column(Date, nullable=False)
-    fecha_fin: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
+    start_year: Mapped[int] = mapped_column(nullable=False)
+    end_year: Mapped[Optional[int]] = mapped_column(nullable=True)
     roles_habilidades: Mapped[List[RolesHabilidades]] = relationship(
         secondary=datos_laborales_roles
     )
@@ -182,8 +182,8 @@ class DatosLaborales(Base):
             role=self.cargo,
             company=self.empresa,
             description=self.descripcion,
-            start_date=self.fecha_inicio,
-            end_date=self.fecha_fin,
+            start_year=self.start_year,
+            end_year=self.end_year,
             skills=[r.build_roles_habilidades_dto() for r in self.roles_habilidades],
         )
 

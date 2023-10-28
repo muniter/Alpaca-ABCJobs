@@ -450,15 +450,15 @@ class DatosLaboralesService:
             error.add("id", "Invalid id")
             return error
 
-        if data.end_date and data.end_date <= data.start_date:
-            error.add("end_date", "End date must be after start date")
+        if data.end_year and data.end_year < data.start_year:
+            error.add("end_year", "End year must be equal or after start year")
             return error
 
         model.empresa = data.company
         model.cargo = data.role
         model.descripcion = data.description
-        model.fecha_inicio = data.start_date
-        model.fecha_fin = data.end_date
+        model.start_year = data.start_year
+        model.end_year = data.end_year
 
         if data.skills:
             model.roles_habilidades.clear()
