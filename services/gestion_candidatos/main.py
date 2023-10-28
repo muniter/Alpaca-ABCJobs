@@ -1,6 +1,9 @@
 from typing import List, Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoCreateDTO,
+    CandidatoConocimientoTecnicoDTO,
+    CandidatoConocimientoTecnicoTipoDTO,
     CandidatoCreateDTO,
     CandidatoCreateResponseDTO,
     CandidatoDatosAcademicosCreateDTO,
@@ -26,6 +29,8 @@ from common.shared.api_models.shared import (
 )
 from .candidato import (
     CandidatoService,
+    ConocimientoTecnicosRepository,
+    ConocimientoTecnicosService,
     CountryRepository,
     DatosAcademicosRepository,
     DatosAcademicosService,
@@ -33,6 +38,8 @@ from .candidato import (
     LenguajeRepository,
     RolesHabilidadesRepository,
     get_candidato_service,
+    get_conocimientos_tecnicos_repository,
+    get_conocimientos_tecnicos_service,
     get_country_repository,
     get_datos_academicos_repository,
     get_datos_academicos_service,
@@ -197,6 +204,100 @@ def delete_work_info(
 
 
 @router.get(
+    "/technical-info",
+    response_model=Union[
+        SuccessResponse[List[CandidatoConocimientoTecnicoDTO]], ErrorResponse
+    ],
+    status_code=status.HTTP_200_OK,
+)
+def get_all_technical_info(
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.get_all(user.id_candidato)
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/technical-info/{id}",
+    response_model=Union[
+        SuccessResponse[CandidatoConocimientoTecnicoDTO], ErrorResponse
+    ],
+    status_code=status.HTTP_200_OK,
+)
+def get_technical_info(
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.get_by_id(id, user.id_candidato)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+    return SuccessResponse(data=result)
+
+
+@router.post(
+    "/technical-info",
+    response_model=Union[
+        SuccessResponse[CandidatoConocimientoTecnicoDTO], ErrorResponse
+    ],
+    status_code=status.HTTP_201_CREATED,
+)
+def create_technical_info(
+    data: CandidatoConocimientoTecnicoCreateDTO,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.crear(user.id_candidato, data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+    return SuccessResponse(data=result)
+
+
+@router.post(
+    "/technical-info/{id}",
+    response_model=Union[
+        SuccessResponse[CandidatoConocimientoTecnicoDTO], ErrorResponse
+    ],
+    status_code=status.HTTP_200_OK,
+)
+def update_technical_info(
+    id: int,
+    data: CandidatoConocimientoTecnicoCreateDTO,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.update(id, user.id_candidato, data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+    return SuccessResponse(data=result)
+
+
+@router.delete(
+    "/technical-info/{id}",
+    response_model=Union[SuccessResponse[dict], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def delete_technical_info(
+    id: int,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.delete(id, user.id_candidato)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+    return SuccessResponse(data={})
+
+
+@router.get(
     "/academic-info",
     response_model=Union[
         SuccessResponse[List[CandidatoDatosAcademicosDTO]], ErrorResponse
@@ -334,6 +435,21 @@ def get_skills(
 )
 def get_title_types(
     repository: DatosAcademicosRepository = Depends(get_datos_academicos_repository),
+):
+    tipos = repository.get_tipos()
+    result = [tipo.build_dto() for tipo in tipos]
+    return SuccessResponse(data=result)
+
+
+@utils_router.get(
+    "/utils/technical-info-types",
+    response_model=SuccessResponse[List[CandidatoConocimientoTecnicoTipoDTO]],
+    status_code=status.HTTP_200_OK,
+)
+def get_technical_types(
+    repository: ConocimientoTecnicosRepository = Depends(
+        get_conocimientos_tecnicos_repository
+    ),
 ):
     tipos = repository.get_tipos()
     result = [tipo.build_dto() for tipo in tipos]
