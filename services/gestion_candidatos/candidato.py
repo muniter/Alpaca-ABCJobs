@@ -483,7 +483,7 @@ class ConocimientoTecnicosService:
 
         conocimiento = self.repository.get_by_id(id_tecnico)
         if not conocimiento:
-            error.add("global", "Invalid academic data id")
+            error.add("global", "Invalid technical data id")
             return error
 
         if candidato.persona.id != conocimiento.persona.id:
