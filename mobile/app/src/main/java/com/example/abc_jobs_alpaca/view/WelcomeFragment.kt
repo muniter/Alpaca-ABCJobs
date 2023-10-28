@@ -20,11 +20,7 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
     @Suppress("InlinedApi")
     private val hidePart2Runnable = Runnable {
-        // Delayed removal of status and navigation bar
 
-        // Note that some of these constants are new as of API 16 (Jelly Bean)
-        // and API 19 (KitKat). It is safe to use them, as they are inlined
-        // at compile-time and do nothing on earlier devices.
     }
     private val showPart2Runnable = Runnable {
         // Delayed display of UI elements
@@ -32,11 +28,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     private var visible: Boolean = false
     private val hideRunnable = Runnable { hide() }
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
     private val delayHideTouchListener = View.OnTouchListener { _, _ ->
         if (AUTO_HIDE) {
             delayedHide(AUTO_HIDE_DELAY_MILLIS)
@@ -50,8 +41,6 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentWelcomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -69,38 +58,31 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     private var elementHideListener: OnElementHideListener? = null
 
 
-    interface OnElementHideListener{
+    fun interface OnElementHideListener{
         fun hideElement(elementId: Int)
     }
 
-    interface OnLanguageChangeListener {
+    fun interface OnLanguageChangeListener {
         fun onLanguageSelected(newLanguage: String)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         when (context) {
-            is OnElementHideListener -> elementHideListener = context as OnElementHideListener
-            is OnLanguageChangeListener -> languageChangeListener = context as OnLanguageChangeListener
+            is OnElementHideListener -> elementHideListener = context
+            is OnLanguageChangeListener -> languageChangeListener = context
             else -> throw IllegalArgumentException("El contexto debe implementar las interfaces necesarias.")
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        //dummyButton?.setOnTouchListener(delayHideTouchListener)
 
         val btn: Button = view.findViewById(R.id.button_user_registered)
         btn.setOnClickListener(this)
 
         val btn2: Button = view.findViewById(R.id.button_welcome_unregistered)
         btn2.setOnClickListener(this)
-
 
     }
 
@@ -129,19 +111,8 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         fullscreenContentControls = null
     }
 
-
-    private fun toggle() {
-        if (visible) {
-            hide()
-        } else {
-            show()
-        }
-    }
-
     private fun hide() {
-        // Hide UI first
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
         hideHandler.removeCallbacks(showPart2Runnable)
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }

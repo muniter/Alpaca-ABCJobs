@@ -122,4 +122,104 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
+    suspend fun getConfig(token: String): Result<ConfigData> {
+
+        if (token.isEmpty()) {
+            // Manejar el caso en el que el token esté vacío
+            Log.d("NETWORK_ERROR", "El token está vacío")
+            return Result.failure(Exception("El token está vacío"))
+        }
+
+        return try {
+            val response = fetchConfig(token)
+            Log.d("MiTag getConfig", response.toString())
+            Result.success(handleConfigResponse(response).getOrThrow())
+        } catch (e: Exception) {
+            // Manejar excepciones aquí
+            Result.failure(e)
+        }
+    }
+
+    suspend fun fetchConfig(token: String): JSONObject {
+        return suspendCoroutine { cont ->
+            requestQueue.add(
+                object : StringRequest(
+                    Method.GET, BASEURL + USERS_PATH + CONFIG_PATH,
+                    { response -> cont.resume(JSONObject(response)) },
+                    { volleyError -> cont.resumeWithException(volleyError) }
+                ) {
+                    override fun getBodyContentType(): String {
+                        return "application/json; charset=utf-8"
+                    }
+
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Authorization"] = "Bearer $token"
+                        return headers
+                    }
+                }
+            )
+        }
+    }
+
+    suspend fun postConfig(token: String, configJson: JSONObject): Result<ConfigData> {
+        return try {
+            val response = suspendCoroutine { cont ->
+                requestQueue.add(
+                    object : StringRequest(
+                        Method.POST, BASEURL + USERS_PATH + CONFIG_PATH,
+                        { response -> cont.resume(JSONObject(response)) },
+                        { volleyError -> cont.resumeWithException(volleyError) }
+                    ) {
+                        override fun getBodyContentType(): String {
+                            return "application/json; charset=utf-8"
+                        }
+
+                        override fun getBody(): ByteArray {
+                            Log.d("Sending body", configJson.toString())
+                            return configJson.toString().toByteArray()
+                        }
+
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = "Bearer $token"
+                            return headers
+                        }
+                    }
+                )
+            }
+            Result.success(handleConfigResponse(response).getOrThrow())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    private fun handleConfigResponse(response: JSONObject): Result<ConfigData> {
+        try {
+            val success = response.getBoolean("success")
+            if (success) {
+                val dataObject = response.optJSONObject("data")
+                val configObject = dataObject?.optJSONObject("config")
+
+                if (configObject != null) {
+                    val languageAppString = configObject.optString("languageApp")
+                    val timeFormatString = configObject.optString("timeFormat")
+                    val dateFormatString = configObject.optString("dateFormat")
+
+                    val languageAppStringMap = UserLanguageApp.values().find { it.name == languageAppString }
+                    val timeFormatStringMap = UserTimeFormat.values().find { it.formatString == timeFormatString }
+                    val dateFormatStringMap = UserDateFormat.values().find { it.formatString == dateFormatString }
+
+                    val configData = ConfigData(languageAppStringMap!!, timeFormatStringMap!!, dateFormatStringMap!!)
+
+                    return Result.success(configData)
+                }
+            }
+            return Result.failure(Exception("Error en la respuesta del servidor"))
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+    }
+
+
 }
