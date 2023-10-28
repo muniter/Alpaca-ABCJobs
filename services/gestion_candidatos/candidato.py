@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 
 from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoCreateDTO,
+    CandidatoConocimientoTecnicoDTO,
     CandidatoCreateResponseDTO,
     CandidatoCreateDTO,
     CandidatoDatosAcademicosCreateDTO,
@@ -20,6 +22,8 @@ from common.shared.api_models.gestion_usuarios import (
 from common.shared.clients.usuario import UsuarioClient
 from common.shared.database.models import (
     Candidato,
+    ConocimientoTecnicoTipo,
+    ConocimientoTecnicos,
     Country,
     DatosAcademicos,
     DatosAcademicosTipo,
@@ -352,6 +356,155 @@ class CandidatoService:
         return candidato.persona.build_informacion_personal_dto()
 
 
+class ConocimientoTecnicosRepository:
+    session: Session
+
+    def __init__(self, session):
+        self.session = session
+
+    def get_all_from_id_persona(self, id_persona: int) -> List[ConocimientoTecnicos]:
+        query = select(ConocimientoTecnicos).where(
+            ConocimientoTecnicos.id_persona == id_persona
+        )
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
+    def get_by_id(self, id: int) -> Union[ConocimientoTecnicos, None]:
+        query = select(ConocimientoTecnicos).where(ConocimientoTecnicos.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def create(self, data: ConocimientoTecnicos) -> ConocimientoTecnicos:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def update(self, data: ConocimientoTecnicos) -> ConocimientoTecnicos:
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def delete_by_id(self, id: int) -> None:
+        query = delete(ConocimientoTecnicos).where(ConocimientoTecnicos.id == id)
+        self.session.execute(query)
+        self.session.commit()
+
+    def get_tipos(self) -> List[ConocimientoTecnicoTipo]:
+        query = select(ConocimientoTecnicoTipo)
+        result = self.session.execute(query).scalars().all()
+        return list(result)
+
+    def get_tipo_by_id(self, id: int) -> Union[ConocimientoTecnicoTipo, None]:
+        query = select(ConocimientoTecnicoTipo).where(ConocimientoTecnicoTipo.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+
+class ConocimientoTecnicosService:
+    repository: ConocimientoTecnicosRepository
+    candidato_repository: CandidatoRepository
+
+    def __init__(
+        self,
+        session: Session = Depends(get_db_session_dependency),
+    ):
+        self.repository = ConocimientoTecnicosRepository(session)
+        self.candidato_repository = CandidatoRepository(
+            session, PersonaRepository(session)
+        )
+
+    def get_all(self, id_candidato: int) -> List[CandidatoConocimientoTecnicoDTO]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            return []
+
+        conocimientos = self.repository.get_all_from_id_persona(candidato.id_persona)
+        return [conocimientos.build_dto() for conocimientos in conocimientos]
+
+    def get_by_id(self, id: int, id_candidato: int):
+        result = self.validate_permissions(id_candidato, id)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        datos_academicos = self.repository.get_by_id(id)
+        assert datos_academicos is not None
+        return datos_academicos.build_dto()
+
+    def crear(self, id_candidato: int, data: CandidatoConocimientoTecnicoCreateDTO):
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid candiato id")
+            return error
+
+        result = self.load(ConocimientoTecnicos(id_persona=candidato.id_persona), data)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.create(result)
+        return result.build_dto()
+
+    def update(
+        self, id: int, id_candidato: int, data: CandidatoConocimientoTecnicoCreateDTO
+    ):
+        result = self.validate_permissions(id_candidato, id)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        conocimiento = self.repository.get_by_id(id)
+        assert conocimiento is not None
+
+        result = self.load(conocimiento, data)
+        if isinstance(result, ErrorBuilder):
+            return result
+
+        result = self.repository.update(result)
+        return result.build_dto()
+
+    def delete(self, id: int, id_candidato: int):
+        result = self.validate_permissions(id_candidato, id)
+
+        if isinstance(result, ErrorBuilder):
+            return result
+        self.repository.delete_by_id(id)
+
+    def validate_permissions(
+        self, id_candidato: int, id_tecnico: int | None
+    ) -> Optional[ErrorBuilder]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        error = ErrorBuilder()
+        if not candidato:
+            error.add("global", "Invalid candiate id")
+            return error
+
+        if id_tecnico is None:
+            return
+
+        conocimiento = self.repository.get_by_id(id_tecnico)
+        if not conocimiento:
+            error.add("global", "Invalid academic data id")
+            return error
+
+        if candidato.persona.id != conocimiento.persona.id:
+            error.add("global", "You don't have permission to edit this data")
+            return error
+
+    def load(
+        self, model: ConocimientoTecnicos, data: CandidatoConocimientoTecnicoCreateDTO
+    ):
+        error = ErrorBuilder(data)
+        tipo = self.repository.get_tipo_by_id(data.type)
+        if not tipo:
+            error.add("type", "Invalid type")
+            return error
+
+        model.tipo = tipo
+        model.calificacion = data.raiting
+        model.descripcion = data.description
+        return model
+
+
 class DatosLaboralesService:
     session: Session
     repository: DatosLaboralesRepository
@@ -654,3 +807,15 @@ def get_datos_laborales_service(
     session: Session = Depends(get_db_session_dependency),
 ) -> DatosLaboralesService:
     return DatosLaboralesService(session=session)
+
+
+def get_conocimientos_tecnicos_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> ConocimientoTecnicosRepository:
+    return ConocimientoTecnicosRepository(session)
+
+
+def get_conocimientos_tecnicos_service(
+    session: Session = Depends(get_db_session_dependency),
+) -> ConocimientoTecnicosService:
+    return ConocimientoTecnicosService(session=session)

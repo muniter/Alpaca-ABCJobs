@@ -41,3 +41,9 @@ def seed():
             session.execute(text(f.read()))
             session.commit()
             logger.info("Seeding datos_academicos done")
+
+        logger.info("Seeding conocimientos_tecnicos")
+        with open(data_dir / "conocimientos_tecnicos.sql") as f:
+            session.execute(text(f.read()))
+            session.commit()
+            logger.info("Seeding conocimientos_tecnicos done")

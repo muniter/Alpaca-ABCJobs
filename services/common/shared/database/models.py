@@ -10,6 +10,8 @@ from sqlalchemy.orm import DeclarativeBase
 from datetime import date
 
 from ..api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoDTO,
+    CandidatoConocimientoTecnicoTipoDTO,
     CandidatoDTO,
     CandidatoDatosAcademicosDTO,
     CandidatoDatosLaboralesDTO,
@@ -233,6 +235,49 @@ class DatosAcademicos(Base):
             start_year=self.start_year,
             end_year=self.end_year,
             achievement=self.logro,
+        )
+
+
+class ConocimientoTecnicoTipo(Base):
+    __tablename__ = "conocimiento_tecnico_tipo"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def build_dto(self) -> CandidatoConocimientoTecnicoTipoDTO:
+        return CandidatoConocimientoTecnicoTipoDTO(
+            id=self.id,
+            name=self.nombre,
+        )
+
+
+class ConocimientoTecnicos(Base):
+    __tablename__ = "conocimiento_tecnicos"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    id_persona: Mapped[int] = mapped_column(
+        ForeignKey("persona.id"), nullable=False, unique=False
+    )
+    persona: Mapped["Persona"] = relationship(
+        "Persona", backref="conocimiento_tecnicos"
+    )
+
+    id_tipo: Mapped[int] = mapped_column(
+        ForeignKey("conocimiento_tecnico_tipo.id"), nullable=False, unique=False
+    )
+    tipo: Mapped["ConocimientoTecnicoTipo"] = relationship(
+        "ConocimientoTecnicoTipo", backref="conocimiento_tecnicos"
+    )
+    descripcion: Mapped[str] = mapped_column(String(500), nullable=True)
+    calificacion: Mapped[int] = mapped_column(nullable=False)
+
+    def build_dto(self) -> CandidatoConocimientoTecnicoDTO:
+        return CandidatoConocimientoTecnicoDTO(
+            id=self.id,
+            id_persona=self.id_persona,
+            type=self.tipo.build_dto(),
+            description=self.descripcion,
+            raiting=self.calificacion,
         )
 
 
