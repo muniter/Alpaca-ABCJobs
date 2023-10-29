@@ -1,3 +1,5 @@
+package com.example.abc_jobs_alpaca.view
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

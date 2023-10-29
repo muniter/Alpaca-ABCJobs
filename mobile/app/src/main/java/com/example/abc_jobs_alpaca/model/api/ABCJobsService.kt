@@ -21,6 +21,9 @@ class ABCJobsService constructor(context: Context){
         private var CREATE_PATH = "/crear"
         private var LOGIN_PATH = "/login"
         private var CONFIG_PATH = "/config"
+        private var ACADEMIC_INFO_PATH = "/academic-info"
+        private var UTILS_PATH = "/utils"
+        private var TITLE_TYPES_PATH = "/title-types"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -218,6 +221,108 @@ class ABCJobsService constructor(context: Context){
             return Result.failure(Exception("Error en la respuesta del servidor"))
         } catch (e: Exception) {
             return Result.failure(e)
+        }
+    }
+
+    suspend fun postAcademicInfo(token: String, academicInfoItem: JSONObject): Result<AcademicInfoResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    postRequest(CANDIDATES_PATH, CREATE_PATH, academicInfoItem, { response ->
+                        cont.resume(JSONObject(response))
+                    }, { volleyError ->
+                        if (volleyError.networkResponse != null) {
+                            val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                            val jsonError = JSONObject(errorData)
+
+                            if (!jsonError.optBoolean("success")) {
+                                val academicInfoError = deserializeAcademicInfoError(jsonError)
+                                cont.resumeWithException(academicInfoError)
+                            }
+                        } else {
+                            cont.resumeWithException(volleyError)
+                        }
+                    })
+                )
+            }
+            if (response.getBoolean("success")) {
+                val academicInfo = deserializeAcademicInfo(response)
+                Result.success(academicInfo)
+            } else {
+                val academicInfoError = deserializeAcademicInfoError(response)
+                Result.failure(academicInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAcademicInfo(token: String): Result<AcademicInfoResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    object : StringRequest(
+                        Method.GET, BASEURL + CANDIDATES_PATH + ACADEMIC_INFO_PATH,
+                        { response -> cont.resume(JSONObject(response)) },
+                        { volleyError -> cont.resumeWithException(volleyError) }
+                    ) {
+                        override fun getBodyContentType(): String {
+                            return "application/json; charset=utf-8"
+                        }
+
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = "Bearer $token"
+                            return headers
+                        }
+                    }
+                )
+            }
+            if (response.getBoolean("success")) {
+                val academicInfo = deserializeAcademicInfo(response)
+                Result.success(academicInfo)
+            } else {
+                val academicInfoError = deserializeAcademicInfoError(response)
+                Result.failure(academicInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getTypesTitle(token: String): Result<AcademicInfoTypeResponse>{
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    object : StringRequest(
+                        Method.GET, BASEURL + CANDIDATES_PATH + UTILS_PATH + TITLE_TYPES_PATH,
+                        { response -> cont.resume(JSONObject(response)) },
+                        { volleyError -> cont.resumeWithException(volleyError) }
+                    ) {
+                        override fun getBodyContentType(): String {
+                            return "application/json; charset=utf-8"
+                        }
+
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = "Bearer $token"
+                            return headers
+                        }
+                    }
+                )
+            }
+            if (response.getBoolean("success")) {
+                val typesTitle = deserializeTypesTitles(response)
+                Result.success(typesTitle)
+            } else {
+                val typesTitleError = deserializeTypesTitlesError(response)
+                Result.failure(typesTitleError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
         }
     }
 

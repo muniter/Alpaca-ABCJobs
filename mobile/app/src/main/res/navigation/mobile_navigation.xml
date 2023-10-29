@@ -12,18 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.abc_jobs_alpaca.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_academic_info"
+        android:name="com.example.abc_jobs_alpaca.view.AcademicInfoFragment"
+        android:label="@string/menu_academic_info"
+        tools:layout="@layout/fragment_academic_info" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.abc_jobs_alpaca.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="com.example.abc_jobs_alpaca.view.PreferencesFragment"
-        android:label="PreferencesFragment" />
+        android:label="@string/preferencias_del_sistema"
+        tools:layout="@layout/fragment_preferences"/>
 </navigation>

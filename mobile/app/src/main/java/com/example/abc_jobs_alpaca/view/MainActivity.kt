@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_academic_info, R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -122,16 +122,19 @@ class MainActivity : AppCompatActivity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.preferencesFragment)
-                true
+                return true
             }
-            R.id.nav_gallery -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate((R.id.nav_gallery))
-                true
+
+            else -> {
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
             }
-            else -> super.onOptionsItemSelected(item)
         }
+
     }
+
+
 }

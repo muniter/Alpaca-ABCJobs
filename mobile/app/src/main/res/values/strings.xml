@@ -58,5 +58,7 @@
     <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
     <string name="toast_message_login_failed">Inicio de sesión fallido, Correo electrónico no registrado</string>
     <string name="cancel_preferences_button">Cancel</string>
+    <string name="menu_academic_info">Información académica</string>
+    <string name="preferencias_del_sistema">Preferencias del sistema</string>
 
 </resources>
