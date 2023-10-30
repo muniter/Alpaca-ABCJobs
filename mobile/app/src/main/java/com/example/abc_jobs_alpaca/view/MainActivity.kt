@@ -128,6 +128,11 @@ class MainActivity : AppCompatActivity()
                 return true
             }
 
+            R.id.fab -> {
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                return true
+            }
+
             else -> {
                 val navController = findNavController(R.id.nav_host_fragment_content_main)
                 return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
