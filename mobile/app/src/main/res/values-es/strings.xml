@@ -52,7 +52,7 @@
     <string name="toast_message_successful">Cuenta creada exitosamente</string>
     <string name="toast_message_network_error">Error de red: %s</string>
     <string name="toast_message_generic_error">Error en la solicitud</string>
-    <string name="toast_message_registration_failed">No se logró completar el registro %s</string>
+    <string name="toast_message_registration_failed">No se logró completar el registro. Email registrado</string>
     <string name="network_error">Error de red: %s</string>
     <string name="successful_toast_message">Cuenta creada exitosamente</string>
     <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
