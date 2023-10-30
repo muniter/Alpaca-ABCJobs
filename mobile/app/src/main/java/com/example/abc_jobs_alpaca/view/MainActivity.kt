@@ -1,35 +1,29 @@
-package com.example.abc_jobs_alpaca
+package com.example.abc_jobs_alpaca.view
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.ActivityMainBinding
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
-import android.content.res.Configuration
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import com.example.abc_jobs_alpaca.utils.LocalHelper.setLocale
-import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity()
 {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,35 +37,34 @@ class MainActivity : AppCompatActivity()
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
-        // En MainActivity, en el método onCreate o onResume
-        val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
         val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
 
-        if (selectedLanguage != null) {
-            if (selectedDateFormat != null) {
-                if (selectedTimeFormat != null) {
+        if (selectedLanguage != null
+            && selectedDateFormat != null
+            && selectedTimeFormat != null)
+            {
                     updatePreferences(selectedLanguage, selectedDateFormat, selectedTimeFormat)
-                }
-            }
         }
+
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_academic_info, R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
     }
 
     fun updatePreferences(selectedLanguage: String, selectedDateFormat: String, selectedTimeFormat: String) {
-        val sharedPreferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         editor.putString("timeFormat", selectedTimeFormat)
@@ -110,8 +103,7 @@ class MainActivity : AppCompatActivity()
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val selectedLanguageValue = Locale.getDefault().language
+        val sharedPreferences = newBase.getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val language = sharedPreferences.getString("language", "es")
         val locale = Locale(language)
         val configuration = Configuration(newBase.resources.configuration)
@@ -130,17 +122,23 @@ class MainActivity : AppCompatActivity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.preferencesFragment)
-                true
+                return true
             }
-            R.id.nav_gallery -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate((R.id.nav_gallery))
-                true
+
+            R.id.fab -> {
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                return true
             }
-            else -> super.onOptionsItemSelected(item)
+
+            else -> {
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+            }
         }
+
     }
 
 

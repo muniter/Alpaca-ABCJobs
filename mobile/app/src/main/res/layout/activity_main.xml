@@ -23,8 +23,4 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </androidx.drawerlayout.widget.DrawerLayout>

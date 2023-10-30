@@ -2,11 +2,6 @@ package com.example.abc_jobs_alpaca.model.models
 
 import org.json.JSONObject
 
-data class LoginCandidateRequest(
-    val email: String,
-    val password: String
-)
-
 data class UserRegisterResponse(
     val success: Boolean,
     val data: UserDataResponse
@@ -31,8 +26,6 @@ data class UserRegisterRequest(
     val password: String
 )
 
-
-
 fun deserializeCandidate(json: JSONObject): UserRegisterResponse {
     val success = json.optBoolean("success", false)
     val dataObject = json.optJSONObject("data")
@@ -40,19 +33,16 @@ fun deserializeCandidate(json: JSONObject): UserRegisterResponse {
 
     val token = dataObject?.optString("token") ?: ""
 
-    if (candidatoObject != null) {
-        val id = candidatoObject.optInt("id")
-        val nombres = candidatoObject.optString("nombres")
-        val apellidos = candidatoObject.optString("apellidos")
-        val email = candidatoObject.optString("email")
+    val candidato = candidatoObject?.let {
+        val id = it.optInt("id")
+        val nombres = it.optString("nombres")
+        val apellidos = it.optString("apellidos")
+        val email = it.optString("email")
+        CandidatoData(id, nombres, apellidos, email)
+    } ?: CandidatoData(0, "", "", "")
 
-        val candidato = CandidatoData(id, nombres, apellidos, email)
-        val userDataResponse = UserDataResponse(candidato, token)
-
-        return UserRegisterResponse(success, userDataResponse)
-    } else {
-        return UserRegisterResponse(false, UserDataResponse(CandidatoData(0, "", "", ""), token))
-    }
+    val userDataResponse = UserDataResponse(candidato, token)
+    return UserRegisterResponse(success, userDataResponse)
 }
 
 fun deserializeCandidateError(response: JSONObject): Exception {
@@ -71,11 +61,8 @@ fun deserializeCandidateError(response: JSONObject): Exception {
     return Exception("Error en la solicitud")
 }
 
-
-
-
 fun serializeCandidate(candidate: UserRegisterRequest): JSONObject {
-    var json: JSONObject = JSONObject()
+    val json = JSONObject()
 
     json.put("nombres", candidate.nombres)
     json.put("apellidos", candidate.apellidos)
