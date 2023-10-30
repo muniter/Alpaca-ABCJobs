@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.view
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -26,6 +27,7 @@ import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentLoginBinding
 import com.example.abc_jobs_alpaca.model.models.UserData
+import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.MessageEvent
@@ -120,7 +122,7 @@ class LoginFragment : Fragment(),View.OnClickListener, LoginViewModel.Navigation
                 }
             }
         }
-
+        
         val editTextEmail = view.findViewById<TextInputEditText>(R.id.editTextEmail)
         val labelEmailError = view.findViewById<TextView>(R.id.labelEmailError)
         val editTextPassword = view.findViewById<TextInputEditText>(R.id.editTextPassword)

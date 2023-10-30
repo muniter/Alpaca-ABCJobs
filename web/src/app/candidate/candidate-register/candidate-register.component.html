@@ -29,7 +29,7 @@
         </mat-form-field>
 
         <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
-          <mat-label i18n="@@password">Contrasena</mat-label>
+          <mat-label i18n="@@password">Contraseña</mat-label>
           <input matInput id="password" type="password" class="form-control" formControlName="password">
           <mat-error *ngIf="candidateRegisterForm.get('password')!.invalid">
             {{ getErrorMessage('password') }}

@@ -1,21 +1,16 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
 import android.app.Application
-import android.os.DropBoxManager
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.volley.NetworkError
 import com.example.abc_jobs_alpaca.model.models.ConfigRequest
 import com.example.abc_jobs_alpaca.model.models.UserDateFormat
 import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
 import com.example.abc_jobs_alpaca.model.models.UserTimeFormat
-import com.example.abc_jobs_alpaca.model.models.serializeConfig
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
 
@@ -28,6 +23,7 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
     var selectedLanguagePosition = MutableLiveData<Int>()
     val selectedDateFormatPosition = MutableLiveData<Int>()
     val selectedTimeFormatPosition = MutableLiveData<Int>()
+    val preferencesUpdatedLiveData = MutableLiveData<Unit>()
     private val tokenLiveData = MutableLiveData<String?>()
 
     // Listas de opciones para los Spinners
@@ -45,6 +41,10 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
         tokenLiveData.observe(owner, observer)
     }
 
+    fun observePreferencesUpdated(owner: LifecycleOwner, observer: Observer<Unit>) {
+        preferencesUpdatedLiveData.observe(owner, observer)
+    }
+
     fun save(){
         val language = UserLanguageApp.values()[selectedLanguagePosition.value ?: 0]
         val dateFormat = UserDateFormat.values()[selectedDateFormatPosition.value ?: 0]
@@ -57,7 +57,15 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
         }
 
         val newConfigRequest = ConfigRequest(language, dateFormat, timeFormat)
-        viewModelScope.launch { abcJobsRepository.postConfig(token,newConfigRequest) }
+        viewModelScope.launch {
+            abcJobsRepository.postConfig(token,newConfigRequest)
+                .onSuccess {
+                    preferencesUpdatedLiveData.value = Unit
+                }
+                .onFailure { Log.d("PreferencesViewModel", "Error al guardar la configuración") }
+
+        }
+
     }
 
 

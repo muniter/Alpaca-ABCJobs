@@ -6,11 +6,10 @@ env:
   playstore_name: ABC-Jobs
 
 on:
-
   push:
     branches:
       - 'master'
-    files:
+    paths:
       - 'mobile/**'
 
   # Allows you to run this workflow manually from the Actions tab

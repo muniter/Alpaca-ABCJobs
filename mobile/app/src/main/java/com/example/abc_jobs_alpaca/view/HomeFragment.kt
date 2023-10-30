@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.abc_jobs_alpaca.databinding.FragmentHomeBinding
-import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.HomeViewModel
-import com.example.abc_jobs_alpaca.viewmodel.LoginViewModel
 
 class HomeFragment : Fragment() {
 

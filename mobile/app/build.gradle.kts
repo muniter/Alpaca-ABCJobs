@@ -62,6 +62,7 @@ dependencies {
     implementation ("com.android.volley:volley:1.2.1")
     implementation("org.jacoco:org.jacoco.core:0.8.5")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.github.serpro69:kotlin-faker:1.15.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")

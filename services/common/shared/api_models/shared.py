@@ -35,8 +35,9 @@ class ErrorBuilder:
         self._errors = defaultdict(list)
 
     def add(self, field: str, message: str):
-        if self._model and field not in self._model.model_fields:
-            raise ValueError(f"{field} is not an attribute of the provided BaseModel")
+        if self._model and field != "global":
+            if not hasattr(self._model, field):
+                raise ValueError(f"{field} is not an attribute of the provided BaseModel")
         self.has_error = True
         self._errors[field].append(message)
 

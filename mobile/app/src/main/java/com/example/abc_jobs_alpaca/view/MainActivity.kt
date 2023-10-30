@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity()
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
+        
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_academic_info, R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -121,17 +122,23 @@ class MainActivity : AppCompatActivity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.preferencesFragment)
-                true
+                return true
             }
-            R.id.nav_gallery -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate((R.id.nav_gallery))
-                true
+
+            R.id.fab -> {
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                return true
             }
-            else -> super.onOptionsItemSelected(item)
+
+            else -> {
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+            }
         }
+
     }
 
 

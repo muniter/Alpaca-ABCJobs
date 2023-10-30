@@ -29,4 +29,8 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).postConfig(token, configJson)
     }
 
+    suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
+        return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
+    }
+
 }

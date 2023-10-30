@@ -85,3 +85,100 @@ class CandidatoPersonalInformationUpdateDTO(BaseModel):
     ]
 
     languages: Optional[List[str]]
+
+
+class RolHabilidadDTO(BaseModel):
+    id: int
+    name: str
+
+
+class CandidatoDatosLaboralesDTOBase(BaseModel):
+    role: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    company: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    description: Annotated[
+        str,
+        StringConstraints(max_length=500, min_length=2, strip_whitespace=True),
+    ]
+
+    skills: Optional[List[RolHabilidadDTO]]
+
+    start_year: int
+    end_year: Optional[int]
+
+
+class CandidatoDatosLaboralesDTO(CandidatoDatosLaboralesDTOBase):
+    id: int
+    id_persona: int
+
+
+class CandidatoDatosLaboralesCreateDTO(CandidatoDatosLaboralesDTOBase):
+    skills: Optional[List[int]]
+
+
+class CandidatoDatosLaboralesTipoDTO(BaseModel):
+    id: int
+    name: str
+
+
+class CandidatoDatosLaboralesUpdateDTO(CandidatoDatosLaboralesDTOBase):
+    roles: Optional[List[int]]
+
+
+class CandidatoDatosAcademicosDTOBase(BaseModel):
+    institution: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+
+    title: Annotated[
+        str,
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
+    ]
+    start_year: int
+    end_year: Optional[int]
+    achievement: Optional[str]
+
+
+class CandidatoDatosAcademicosDTO(CandidatoDatosAcademicosDTOBase):
+    id: int
+    id_persona: int
+    type: CandidatoDatosLaboralesTipoDTO
+
+
+class CandidatoDatosAcademicosCreateDTO(CandidatoDatosAcademicosDTOBase):
+    type: int
+
+
+class CandidatoDatosAcademicosUpdateDTO(CandidatoDatosAcademicosDTOBase):
+    type: Optional[int]
+
+
+class CandidatoConocimientoTecnicoTipoDTO(BaseModel):
+    id: int
+    name: str
+
+
+class CandidatoConocimientoTecnicoDTOBase(BaseModel):
+    description: Annotated[
+        Optional[str],
+        StringConstraints(max_length=500, min_length=2, strip_whitespace=True),
+    ]
+    raiting: int
+
+
+class CandidatoConocimientoTecnicoDTO(CandidatoConocimientoTecnicoDTOBase):
+    id: int
+    id_persona: int
+    type: CandidatoConocimientoTecnicoTipoDTO
+
+
+class CandidatoConocimientoTecnicoCreateDTO(CandidatoConocimientoTecnicoDTOBase):
+    type: int
