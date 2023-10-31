@@ -34,8 +34,17 @@ class MainActivity : AppCompatActivity()
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+
+            when(navHostFragment?.childFragmentManager?.fragments?.firstOrNull()) {
+                is AcademicInfoFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                }
+                else -> {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
         }
         
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
