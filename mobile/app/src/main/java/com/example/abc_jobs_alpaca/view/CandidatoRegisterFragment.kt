@@ -169,7 +169,6 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
             }
             true
         }
-
         return view
     }
 
