@@ -110,8 +110,8 @@
                             android:text="Nivel de Estudios"
                             android:textColor="@color/black" />
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/autoCompleteTextViewEducationLevel"
+                        <Spinner
+                            android:id="@+id/spinnerEducationLevel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nivel de Estudios" />
@@ -240,7 +240,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAdditionalInfo">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/academicCancelButton"
+                        android:id="@+id/academicInfoCancelButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -249,7 +249,7 @@
                         android:textColor="@color/accent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.58"
-                        app:layout_constraintStart_toEndOf="@+id/academicInfoCancelButton" />
+                        app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/academicInfoSaveButton"

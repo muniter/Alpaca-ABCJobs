@@ -28,7 +28,7 @@
         tools:layout="@layout/fragment_preferences"/>
     <fragment
         android:id="@+id/academicInfoCreateFragment"
-        android:name="com.example.abc_jobs_alpaca.AcademicInfoCreateFragment"
+        android:name="com.example.abc_jobs_alpaca.view.AcademicInfoCreateFragment"
         android:label="fragment_academic_info_create"
         tools:layout="@layout/fragment_academic_info_create" />
     <fragment
