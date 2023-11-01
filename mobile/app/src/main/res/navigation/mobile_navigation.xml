@@ -31,4 +31,9 @@
         android:name="com.example.abc_jobs_alpaca.AcademicInfoCreateFragment"
         android:label="fragment_academic_info_create"
         tools:layout="@layout/fragment_academic_info_create" />
+    <fragment
+        android:id="@+id/personalInfoFragment"
+        android:name="com.example.abc_jobs_alpaca.view.PersonalInfoFragment"
+        android:label="fragment_personal_info"
+        tools:layout="@layout/fragment_personal_info" />
 </navigation>
