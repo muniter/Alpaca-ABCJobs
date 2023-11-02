@@ -233,7 +233,7 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
-    suspend fun postAcademicInfo(token: String, academicInfoItem: JSONObject): Result<AcademicInfoResponse> {
+    suspend fun postAcademicInfo(token: String, academicInfoItem: JSONObject): Result<AcademicInfoItemResponse> {
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
@@ -253,7 +253,7 @@ class ABCJobsService constructor(context: Context){
                 )
             }
             if (response.getBoolean("success")) {
-                val academicInfo = deserializeAcademicInfo(response)
+                val academicInfo = deserializeAcademicInfoItem(response)
                 Result.success(academicInfo)
             } else {
                 val academicInfoError = deserializeAcademicInfoError(response)
@@ -267,34 +267,9 @@ class ABCJobsService constructor(context: Context){
 
     suspend fun getAcademicInfo(token: String): Result<AcademicInfoResponse> {
         return try {
-            val response = suspendCoroutine<JSONObject> { cont ->
-                requestQueue.add(
-                    object : StringRequest(
-                        Method.GET, BASEURL + CANDIDATES_PATH + ACADEMIC_INFO_PATH,
-                        { response -> cont.resume(JSONObject(response)) },
-                        { volleyError -> cont.resumeWithException(volleyError) }
-                    ) {
-                        override fun getBodyContentType(): String {
-                            return "application/json; charset=utf-8"
-                        }
-
-                        override fun getHeaders(): MutableMap<String, String> {
-                            val headers = HashMap<String, String>()
-                            headers["Authorization"] = "Bearer $token"
-                            return headers
-                        }
-                    }
-                )
-            }
-            if (response.getBoolean("success")) {
-                val academicInfo = deserializeAcademicInfo(response)
-                Result.success(academicInfo)
-            } else {
-                val academicInfoError = deserializeAcademicInfoError(response)
-                Result.failure(academicInfoError)
-            }
+            val response = fetchInfo(token, CANDIDATES_PATH, ACADEMIC_INFO_PATH)
+            Result.success(deserializeAcademicInfo(response))
         } catch (e: Exception) {
-            Log.d("NETWORK_ERROR", e.toString())
             Result.failure(e)
         }
     }

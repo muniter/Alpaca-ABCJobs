@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.abc_jobs_alpaca.databinding.FragmentItemBinding
+import com.example.abc_jobs_alpaca.model.models.AcademicInfoItem
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class AcademicinfoitemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<AcademicInfoItem>
 ) : RecyclerView.Adapter<AcademicinfoitemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,13 +21,12 @@ class AcademicinfoitemRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.id.toString()
+        holder.contentView.text = item.institution
     }
 
     override fun getItemCount(): Int = values.size

@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -8,16 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.AcademicinfoitemRecyclerViewAdapter
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent
+import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 
-/**
- * A fragment representing a list of Items.
- */
 class AcademicInfoFragment : Fragment() {
 
     private var columnCount = 1
+    private val tokenLiveData = MutableLiveData<String?>()
+    private lateinit var viewModel: AcademicInfoViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,24 @@ class AcademicInfoFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_academiclist, container, false)
 
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return AcademicInfoViewModel(
+                    ABCJobsRepository(activity!!.application)
+                ) as T
+            }
+        })[AcademicInfoViewModel::class.java]
+
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", null)
+        tokenLiveData.value = token
+
+        tokenLiveData.observe(viewLifecycleOwner) { token ->
+            viewModel.onTokenUpdated(token)
+            viewModel.loadAcademicItemsInfo()
+        }
+
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -40,7 +63,10 @@ class AcademicInfoFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = AcademicinfoitemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                // TODO: change the placeholder content to the list of academic info
+                viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
+                    adapter = academicInfoList?.let { AcademicinfoitemRecyclerViewAdapter(it) }
+                }
             }
         }
         return view

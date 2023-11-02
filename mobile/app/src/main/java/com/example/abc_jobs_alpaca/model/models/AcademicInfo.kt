@@ -16,6 +16,11 @@ data class AcademicInfoResponse(
     val data: List<AcademicInfoItem>?
 )
 
+data class AcademicInfoItemResponse(
+    val success: Boolean,
+    val data: AcademicInfoItem?
+)
+
 data class AcademicInfoItem(
     val institution: String,
     val title: String,
@@ -52,6 +57,31 @@ data class AcademicInfoTypeResponse(
      return Exception("Error en la solicitud")
  }
 
+
+fun deserializeAcademicInfoItem(reponse: JSONObject): AcademicInfoItemResponse{
+    val success = reponse.optBoolean("success", false)
+    val dataObject = reponse.optJSONObject("data")
+
+    val academicInfoItem = dataObject?.let {
+        val institution = it.optString("institution")
+        val title = it.optString("title")
+        val startYear = it.optInt("start_year")
+        val endYear = it.optInt("end_year")
+        val achievement = it.optString("achievement")
+        val id = it.optInt("id")
+        val idPersona = it.optInt("id_persona")
+        val typeObject = it.optJSONObject("type")
+        val type = if (typeObject != null) {
+            val id = typeObject.optInt("id")
+            val name = typeObject.optString("name")
+            AcademicInfoType(id, name)
+        } else {
+            AcademicInfoType(0, "")
+        }
+        AcademicInfoItem(institution, title, startYear, endYear, achievement, id, idPersona, type)
+    } ?: AcademicInfoItem("", "", 0, 0, "", 0, 0, AcademicInfoType(0, ""))
+    return AcademicInfoItemResponse(success, academicInfoItem)
+}
 
 fun deserializeAcademicInfo(response: JSONObject): AcademicInfoResponse {
     val success = response.optBoolean("success", false)
