@@ -118,3 +118,15 @@ fun deserializeTypesTitlesError(response: JSONObject): Exception {
     }
     return Exception("Error en la solicitud")
 }
+
+
+fun serializeAcademicInfo(request:  AcademicInfoRequest): JSONObject {
+    val json = JSONObject()
+    json.put("institution", request.institution)
+    json.put("title", request.title)
+    json.put("start_year", request.start_year)
+    json.put("end_year", request.end_year)
+    json.put("achievement", request.achievement)
+    json.put("type", request.type)
+    return json
+}

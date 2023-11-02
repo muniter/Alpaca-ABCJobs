@@ -82,15 +82,8 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
 
         visible = true
 
-        //dummyButton = binding.dummyButton
-        //fullscreenContent = binding.fullscreenContent
-        //fullscreenContentControls = binding.fullscreenContentControls
-        // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent?.setOnClickListener { toggle() }
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
         dummyButton?.setOnTouchListener(delayHideTouchListener)
 
         val btn3: Button = view.findViewById((R.id.button_user_register_candidate))
@@ -99,19 +92,12 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
         delayedHide(100)
     }
 
     override fun onPause() {
         super.onPause()
         activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
-        // Clear the systemUiVisibility flag
-        //activity?.window?.decorView?.systemUiVisibility = 0
         show()
     }
 
@@ -142,10 +128,6 @@ class RegisterTypeFragment : Fragment(), View.OnClickListener {
 
     @Suppress("InlinedApi")
     private fun show() {
-        // Show the system bar
-        //fullscreenContent?.systemUiVisibility =
-        //    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-        //           View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         visible = true
 
         // Schedule a runnable to display UI elements after a delay

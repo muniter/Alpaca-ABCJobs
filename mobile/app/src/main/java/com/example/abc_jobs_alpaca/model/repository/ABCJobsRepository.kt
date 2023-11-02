@@ -13,7 +13,6 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).postCandidate(candidateJson)
     }
 
-
     suspend fun postLoginUser(loginCandidate: UserLoginRequest): Result<UserLoginResponse>{
         val loginUserJson = serializeLoginUser(loginCandidate)
         return ABCJobsService.getInstance(applicationContext).postLoginUser(loginUserJson)
@@ -25,12 +24,16 @@ class ABCJobsRepository(private val applicationContext: Application) {
 
     suspend fun postConfig(token: String, configRequest: ConfigRequest): Result<ConfigData> {
         val configJson = serializeConfig(configRequest)
-        Log.d("ABCJobsRepository", "configJson: $configJson")
         return ABCJobsService.getInstance(applicationContext).postConfig(token, configJson)
     }
 
     suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
         return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
+    }
+
+    suspend fun postAcademicInfo(token: String, newAcademicInfo: AcademicInfoRequest): Result<AcademicInfoResponse>{
+        val academicInfoJson = serializeAcademicInfo(newAcademicInfo)
+        return ABCJobsService.getInstance(applicationContext).postAcademicInfo(token, academicInfoJson)
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.abc_jobs_alpaca.model.api
 
-
 import android.content.Context
 import android.util.Log
 import com.android.volley.RequestQueue
@@ -32,12 +31,58 @@ class ABCJobsService constructor(context: Context){
             }
         }
     }
-
     private val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(context.applicationContext)
     }
 
     private fun postRequest(
+        path: String,
+        action: String,
+        body: JSONObject,
+        responseListener: Response.Listener<String>,
+        errorListener: Response.ErrorListener,
+    ): StringRequest {
+        return object : StringRequest(
+            Method.POST, BASEURL + path + action, responseListener, errorListener
+        ) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=utf-8"
+            }
+            override fun getBody(): ByteArray {
+                Log.d("Sending body", body.toString())
+                return body.toString().toByteArray()
+            }
+        }
+    }
+
+    private suspend fun fetchInfo(
+        token: String,
+        path: String,
+        action: String
+    ): JSONObject {
+        return suspendCoroutine { cont ->
+            requestQueue.add(
+                object : StringRequest(
+                    Method.GET, BASEURL + path + action,
+                    { response -> cont.resume(JSONObject(response)) },
+                    { volleyError -> cont.resumeWithException(volleyError) }
+                ) {
+                    override fun getBodyContentType(): String {
+                        return "application/json; charset=utf-8"
+                    }
+
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Authorization"] = "Bearer $token"
+                        return headers
+                    }
+                }
+            )
+        }
+    }
+
+    private fun postRequestWithToken(
+        token: String,
         path: String,
         action: String,
         body: JSONObject,
@@ -55,8 +100,15 @@ class ABCJobsService constructor(context: Context){
                 Log.d("Sending body", body.toString())
                 return body.toString().toByteArray()
             }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
         }
     }
+
     suspend fun postCandidate(newCandidate: JSONObject): Result<UserRegisterResponse> {
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
@@ -126,42 +178,14 @@ class ABCJobsService constructor(context: Context){
     }
 
     suspend fun getConfig(token: String): Result<ConfigData> {
-
         if (token.isEmpty()) {
-            // Manejar el caso en el que el token esté vacío
-            Log.d("NETWORK_ERROR", "El token está vacío")
             return Result.failure(Exception("El token está vacío"))
         }
-
         return try {
-            val response = fetchConfig(token)
-            Log.d("MiTag getConfig", response.toString())
+            val response = fetchInfo(token, USERS_PATH, CONFIG_PATH)
             Result.success(handleConfigResponse(response).getOrThrow())
         } catch (e: Exception) {
-            // Manejar excepciones aquí
             Result.failure(e)
-        }
-    }
-
-    suspend fun fetchConfig(token: String): JSONObject {
-        return suspendCoroutine { cont ->
-            requestQueue.add(
-                object : StringRequest(
-                    Method.GET, BASEURL + USERS_PATH + CONFIG_PATH,
-                    { response -> cont.resume(JSONObject(response)) },
-                    { volleyError -> cont.resumeWithException(volleyError) }
-                ) {
-                    override fun getBodyContentType(): String {
-                        return "application/json; charset=utf-8"
-                    }
-
-                    override fun getHeaders(): MutableMap<String, String> {
-                        val headers = HashMap<String, String>()
-                        headers["Authorization"] = "Bearer $token"
-                        return headers
-                    }
-                }
-            )
         }
     }
 
@@ -169,26 +193,11 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine { cont ->
                 requestQueue.add(
-                    object : StringRequest(
-                        Method.POST, BASEURL + USERS_PATH + CONFIG_PATH,
+                    postRequestWithToken(
+                        token, USERS_PATH, CONFIG_PATH, configJson,
                         { response -> cont.resume(JSONObject(response)) },
                         { volleyError -> cont.resumeWithException(volleyError) }
-                    ) {
-                        override fun getBodyContentType(): String {
-                            return "application/json; charset=utf-8"
-                        }
-
-                        override fun getBody(): ByteArray {
-                            Log.d("Sending body", configJson.toString())
-                            return configJson.toString().toByteArray()
-                        }
-
-                        override fun getHeaders(): MutableMap<String, String> {
-                            val headers = HashMap<String, String>()
-                            headers["Authorization"] = "Bearer $token"
-                            return headers
-                        }
-                    }
+                    )
                 )
             }
             Result.success(handleConfigResponse(response).getOrThrow())
@@ -228,9 +237,9 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
-                    postRequest(CANDIDATES_PATH, CREATE_PATH, academicInfoItem, { response ->
-                        cont.resume(JSONObject(response))
-                    }, { volleyError ->
+                    postRequestWithToken(token,CANDIDATES_PATH, ACADEMIC_INFO_PATH, academicInfoItem,
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
                         if (volleyError.networkResponse != null) {
                             val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
                             val jsonError = JSONObject(errorData)
@@ -240,9 +249,7 @@ class ABCJobsService constructor(context: Context){
                                 cont.resumeWithException(academicInfoError)
                             }
                         } else {
-                            cont.resumeWithException(volleyError)
-                        }
-                    })
+                            cont.resumeWithException(volleyError)}})
                 )
             }
             if (response.getBoolean("success")) {

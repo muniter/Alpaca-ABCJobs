@@ -11,8 +11,8 @@
 
     <data>
         <variable
-            name="album"
-            type="com.example.abc_jobs_alpaca.model.models.AcademicInfoItem" />
+            name="viewModel"
+            type="com.example.abc_jobs_alpaca.viewmodel.AcademicInfoCreateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,6 +126,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutInstitution"
                     style="@style/TransparentBoxStroke"
@@ -173,6 +174,51 @@
                     </LinearLayout>
                 </com.google.android.material.textfield.TextInputLayout>
 
+
+                ----
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutStartDate"
+                    style="@style/TransparentBoxStroke"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/labelStartDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fecha de inicio"
+                            android:textColor="@color/black" />
+
+                        <Spinner
+                            android:id="@+id/spinnerStartDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Año de inicio" />
+
+                        <TextView
+                            android:id="@+id/labelStartDateError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/error_message" />
+                    </LinearLayout>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                --
+
                 <CheckBox
                     android:id="@+id/checkBoxCompletedStudies"
                     android:layout_width="0dp"
@@ -180,7 +226,7 @@
                     android:text="¿Culminó los estudios?"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution" />
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAdditionalInfo"
