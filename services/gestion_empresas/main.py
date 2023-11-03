@@ -1,5 +1,7 @@
 from typing import Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
+from common.shared.api_models.gestion_usuarios import UsuarioEmpresaDTO
+from common.shared.jwt import get_request_user_empresa
 from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
 from common.shared.config import configuration
@@ -38,6 +40,25 @@ def crear(
     data: EmpresaCreateDTO,
     response: Response,
     service: EmpresaService = Depends(get_empresa_service),
+):
+    result = service.crear(data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.post(
+    "/employee/create",
+    response_model=Union[SuccessResponse[EmpresaCreateResponseDTO], ErrorResponse],
+    status_code=status.HTTP_201_CREATED,
+)
+def crear_employee(
+    data: EmpresaCreateDTO,
+    response: Response,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.crear(data)
     if isinstance(result, ErrorBuilder):

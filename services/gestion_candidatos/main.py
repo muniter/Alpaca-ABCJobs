@@ -445,7 +445,7 @@ def get_skills(
     repository: RolesHabilidadesRepository = Depends(get_roles_habilidades_repository),
 ):
     skills = repository.get()
-    result = [skill.build_roles_habilidades_dto() for skill in skills]
+    result = [skill.build_dto() for skill in skills]
     return SuccessResponse(data=result)
 
 

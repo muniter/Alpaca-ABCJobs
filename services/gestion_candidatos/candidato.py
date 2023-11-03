@@ -302,7 +302,7 @@ class CandidatoService:
         candidato = self.repository.crear(data)
         usuario = self.__crear_usuario(candidato, data.password)
         return CandidatoCreateResponseDTO(
-            candidato=candidato.build_candidato_dto(),
+            candidato=candidato.build_dto(),
             token=usuario.token,
         )
 
@@ -349,12 +349,12 @@ class CandidatoService:
                 persona.lenguajes.append(lang)
 
         persona = self.persona_repository.crear(persona)
-        return persona.build_informacion_personal_dto()
+        return persona.build_dto()
 
     def get_informacion_personal(self, id: int) -> CandidatoPersonalInformationDTO:
         candidato = self.repository.get_by_id(id)
         assert candidato is not None
-        return candidato.persona.build_informacion_personal_dto()
+        return candidato.persona.build_dto()
 
 
 class ConocimientoTecnicosRepository:
@@ -558,7 +558,7 @@ class DatosLaboralesService:
             error.add("global", "Invalid id")
             return error
 
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def get_all(self, id_candidato: int) -> List[CandidatoDatosLaboralesDTO]:
         candidato = self.candidato_repository.get_by_id(id_candidato)
@@ -566,7 +566,7 @@ class DatosLaboralesService:
             return []
 
         datos_laborales = self.repository.get_all_from_id_persona(candidato.id_persona)
-        return [datos.build_datos_laborales_dto() for datos in datos_laborales]
+        return [datos.build_dto() for datos in datos_laborales]
 
     def crear(
         self, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
@@ -583,7 +583,7 @@ class DatosLaboralesService:
             return result
 
         result = self.repository.crear(result)
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def update(
         self, id: int, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
@@ -605,7 +605,7 @@ class DatosLaboralesService:
             return result
 
         result = self.repository.update(result)
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def delete(self, id: int, id_candidato: int):
         datos_laborales = self.repository.get_by_id(id)

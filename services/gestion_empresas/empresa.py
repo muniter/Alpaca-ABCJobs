@@ -1,9 +1,11 @@
-from typing import Union
+from typing import List, Union
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 
 from fastapi import Depends
+from common.shared.api_models.gestion_candidatos import RolHabilidadDTO
 from common.shared.api_models.gestion_empresas import (
+    EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
 )
@@ -12,7 +14,7 @@ from common.shared.api_models.gestion_usuarios import (
     UsuarioRegisterDTO,
 )
 from common.shared.clients.usuario import UsuarioClient
-from common.shared.database.models import Empresa
+from common.shared.database.models import Empresa, Personalidad, RolesHabilidades
 from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
 
@@ -41,6 +43,34 @@ class EmpresaRepository:
         # Refresh
         self.session.refresh(data)
         return data
+
+
+class UtilsRepository:
+    session: Session
+
+    def __init__(
+        self,
+        session: Session = Depends(get_db_session_dependency),
+    ):
+        self.session = session
+
+    def get_personalidades(self) -> list[Personalidad]:
+        query = select(Personalidad)
+        return list(self.session.execute(query).scalars().all())
+
+    def get_personalidades_dto(self) -> List[EmpleadoPersonalityDTO]:
+        return [p.build_dto() for p in self.get_personalidades()]
+
+    def get_personalidad_by_id(self, id: int) -> Union[Personalidad, None]:
+        query = select(Personalidad).where(Personalidad.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_roles_habilidades(self) -> list[RolesHabilidades]:
+        query = select(RolesHabilidades)
+        return list(self.session.execute(query).scalars().all())
+
+    def get_roles_habilidades_dto(self) -> List[RolHabilidadDTO]:
+        return [p.build_dto() for p in self.get_roles_habilidades()]
 
 
 class EmpresaService:
@@ -90,7 +120,7 @@ class EmpresaService:
         empresa = self.repository.crear(empresa)
         usuario = self.__crear_usuario(empresa, data.password)
         return EmpresaCreateResponseDTO(
-            empresa=empresa.build_empresa_dto(),
+            empresa=empresa.build_dto(),
             token=usuario.token,
         )
 
