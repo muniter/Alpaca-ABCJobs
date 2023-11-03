@@ -1,7 +1,6 @@
 package com.example.abc_jobs_alpaca.model.repository
 
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
@@ -19,4 +18,19 @@ class ABCJobsRepository(private val applicationContext: Application) {
         val loginUserJson = serializeLoginUser(loginCandidate)
         return ABCJobsService.getInstance(applicationContext).postLoginUser(loginUserJson)
     }
+
+    suspend fun getConfig(token: String): Result<ConfigData> {
+        return ABCJobsService.getInstance(applicationContext).getConfig(token)
+    }
+
+    suspend fun postConfig(token: String, configRequest: ConfigRequest): Result<ConfigData> {
+        val configJson = serializeConfig(configRequest)
+        Log.d("ABCJobsRepository", "configJson: $configJson")
+        return ABCJobsService.getInstance(applicationContext).postConfig(token, configJson)
+    }
+
+    suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
+        return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
+    }
+
 }

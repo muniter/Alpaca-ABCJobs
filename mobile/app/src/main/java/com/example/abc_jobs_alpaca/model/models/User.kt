@@ -20,7 +20,7 @@ data class UserData(
 data class User(
     val id: Int,
     val email: String,
-    val id_candidato: Int
+    val idCandidato: Int
 )
 
 fun deserializeLoginCandidate(json: JSONObject): UserLoginResponse {

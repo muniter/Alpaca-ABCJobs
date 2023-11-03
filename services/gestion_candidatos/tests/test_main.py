@@ -1,6 +1,7 @@
 import json
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoCreateDTO,
     CandidatoCreateDTO,
     CandidatoDatosAcademicosCreateDTO,
     CandidatoDatosLaboralesCreateDTO,
@@ -12,6 +13,7 @@ from common.shared.database.models import Candidato
 from common.shared.tests.helpers import crear_usuario_candidato, crear_usuario_empresa
 from gestion_candidatos.candidato import (
     CandidatoService,
+    ConocimientoTecnicosService,
     DatosAcademicosService,
     DatosLaboralesService,
     RolesHabilidadesRepository,
@@ -27,6 +29,7 @@ candidate_service = CandidatoService(session)
 roles_habilidades_repository = RolesHabilidadesRepository(session)
 datos_laborales_service = DatosLaboralesService(session)
 datos_academicos_service = DatosAcademicosService(session)
+conocimientos_tecnico_service = ConocimientoTecnicosService(session)
 
 
 def crear_candidato() -> Candidato:
@@ -62,8 +65,8 @@ def data_for_datos_laborales() -> CandidatoDatosLaboralesCreateDTO:
         role=faker.job(),
         company=faker.company(),
         description=faker.text(max_nb_chars=200),
-        start_date=faker.date_between(start_date="-10y", end_date="-5y"),
-        end_date=faker.date_between(start_date="-4y", end_date="-1y"),
+        start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
+        end_year=faker.date_between(start_date="-4y", end_date="-1y").year,
         skills=[role.id for role in roles],
     )
 
@@ -76,6 +79,14 @@ def data_for_datos_academicos() -> CandidatoDatosAcademicosCreateDTO:
         end_year=faker.date_between(start_date="-4y", end_date="-1y").year,
         type=1,
         achievement=None,
+    )
+
+
+def data_for_conocimientos_tecnicos() -> CandidatoConocimientoTecnicoCreateDTO:
+    return CandidatoConocimientoTecnicoCreateDTO(
+        type=1,
+        description=faker.text(max_nb_chars=200),
+        raiting=faker.random_int(min=1, max=3, step=1),
     )
 
 
@@ -377,10 +388,10 @@ def test_service_datos_laborales_delete_invalid_id_candidato():
 def test_service_datos_laborales_invalid_end_date():
     candidato = crear_candidato()
     data = data_for_datos_laborales()
-    data.end_date = data.start_date
+    data.end_year = data.start_year - 1
     result = datos_laborales_service.crear(candidato.id, data)
     assert isinstance(result, ErrorBuilder)
-    assert "end_date" in result.serialize()
+    assert "end_year" in result.serialize()
 
 
 def test_endpoint_datos_academicos_create():
@@ -475,6 +486,169 @@ def test_endpoint_datos_academicos_delete():
 
     assert response.status_code == 200
     result = response.json()
+
+
+def test_service_conocimientos_tecnicos_create():
+    candidato = crear_candidato()
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.description == data.description
+    assert result.raiting == data.raiting
+    assert result.type.name is not None
+
+
+def test_service_conocimientos_tecnicos_get():
+    candidato = crear_candidato()
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    get = conocimientos_tecnico_service.get_by_id(result.id, candidato.id)
+    assert not isinstance(get, ErrorBuilder)
+    assert get.description == data.description
+    assert get.raiting == data.raiting
+
+
+def test_service_conocimientos_tecnicos_get_all():
+    candidato = crear_candidato()
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    get = conocimientos_tecnico_service.get_all(candidato.id)
+    assert not isinstance(get, ErrorBuilder)
+    assert len(get) > 0
+
+
+def test_service_conocimientos_tecnicos_update():
+    candidato = crear_candidato()
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    assert result.description == data.description
+    assert result.raiting == data.raiting
+    new_description = faker.text(max_nb_chars=200)
+    data.description = new_description
+    result = conocimientos_tecnico_service.update(
+        id=result.id, id_candidato=candidato.id, data=data
+    )
+    assert not isinstance(result, ErrorBuilder)
+    assert result.description == new_description
+
+
+def test_service_conocimientos_tecnicos_delete():
+    candidato = crear_candidato()
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    result = conocimientos_tecnico_service.delete(
+        id=result.id, id_candidato=candidato.id
+    )
+    assert not isinstance(result, ErrorBuilder)
+    assert result is None
+
+
+def test_endpoint_conocimientos_tecnicos_create():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_conocimientos_tecnicos()
+    response = client.post(
+        "/technical-info",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    result = response.json()
+    assert result["data"]["description"] == data.description
+    assert result["data"]["raiting"] == data.raiting
+
+
+def test_endpoint_conocimientos_tecnicos_get_all():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    response = client.get(
+        f"/technical-info",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result["data"]) > 0
+
+
+def test_endpoint_conocimientos_tecnicos_get():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+    assert not isinstance(result, ErrorBuilder)
+    response = client.get(
+        f"/technical-info/{result.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result["data"]["description"] == data.description
+    assert result["data"]["raiting"] == data.raiting
+
+
+def test_endpoint_conocimientos_tecnicos_update():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+
+    assert not isinstance(result, ErrorBuilder)
+
+    new_description = faker.text(max_nb_chars=200)
+    data.description = new_description
+    response = client.post(
+        f"/technical-info/{result.id}",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["data"]["description"] == new_description
+
+
+def test_endpoint_conocimientos_tecnicos_delete():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    data = data_for_conocimientos_tecnicos()
+    result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
+
+    assert not isinstance(result, ErrorBuilder)
+
+    response = client.delete(
+        f"/technical-info/{result.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()
+
+
+def test_endpoint_conocimientos_tecnicos_types_util():
+    response = client.get("/utils/technical-info-types")
+    assert response.status_code == 200
+    result = response.json()
+    assert len(result["data"]) > 0
+    assert result["data"][0]["id"] is not None
+    assert result["data"][0]["name"] is not None
+
 
 
 def test_service_datos_academicos_create():
