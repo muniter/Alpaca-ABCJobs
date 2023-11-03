@@ -24,6 +24,7 @@ class ABCJobsService constructor(context: Context){
         private var ACADEMIC_INFO_PATH = "/academic-info"
         private var PERSONAL_INFO_PATH = "/personal-info"
         private var UTILS_PATH = "/utils"
+        private var COUNTRIES_PATH = "/countries"
         private var TITLE_TYPES_PATH = "/title-types"
         private var instance: ABCJobsService? = null
 
@@ -399,4 +400,29 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
+
+    suspend fun getCountries(): Result<CountriesResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    object : StringRequest(
+                        Method.GET, BASEURL + CANDIDATES_PATH + UTILS_PATH + COUNTRIES_PATH,
+                        { response -> cont.resume(JSONObject(response)) },
+                        { volleyError -> cont.resumeWithException(volleyError) }
+                    ){}
+                )
+            }
+            if (response.getBoolean("success")) {
+                val personalInfo = deserializeCountries(response)
+                Result.success(personalInfo)
+            } else {
+                val personalInfoError = deserializeCountriesError(response)
+                Result.failure(personalInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
 }

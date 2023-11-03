@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.PersonalInfoFragment">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addOrEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="@{viewModel.enableForm ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <TextView
             android:id="@+id/textView2"
@@ -22,307 +34,449 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_layout_background"
-            android:visibility="@{viewModel.showForm ? View.VISIBLE : View.GONE}"
-            android:clipToPadding="true"
-            android:orientation="vertical"
-            android:padding="10dp"
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutFullName"
-                style="@style/TransparentBoxStroke"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_layout_background"
+                    android:clipToPadding="true"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="@{viewModel.showForm ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/labelFullName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutFullName"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
                         android:layout_weight="1"
-                        android:text="@string/full_name_header"
-                        android:textColor="@color/black" />
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelFullName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/full_name_header"
+                                android:textColor="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextFullName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="false"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/full_name_placeholder"
+                                android:inputType="text"
+                                android:text="@={viewModel.personalInfo.full_name}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="#805885DD"
+                                android:typeface="normal" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutBirthday"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelBirthday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/birthday_header"
+                                android:textColor="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_weight="1" />
+
+                            <EditText
+                                android:id="@+id/editTextDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/birthday_placeholder"
+                                android:inputType="date"
+                                android:text="@={viewModel.parsedDate}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="#805885DD" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCountry"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelCountry"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/country_header"
+                                android:textColor="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_weight="1" />
+
+                            <Spinner
+                                android:id="@+id/countrySpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:entries="@{viewModel.countrys}"
+                                android:spinnerMode="dropdown" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCity"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelCity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/city_header"
+                                android:textColor="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextCity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/city_placeholder"
+                                android:inputType="text"
+                                android:text="@={viewModel.personalInfo.city}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="#805885DD"
+                                android:typeface="normal" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAddress"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelResidenceAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/address_header"
+                                android:textColor="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/address_placeholder"
+                                android:inputType="text"
+                                android:text="@={viewModel.personalInfo.address}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="#805885DD"
+                                android:typeface="normal" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutPhone"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelPhone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/phone_header"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextPhone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="@string/phone_placeholder"
+                                android:inputType="text"
+                                android:text="@={viewModel.personalInfo.phone}"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="#805885DD"
+                                android:typeface="normal" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!--com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutLanguages"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelLanguages"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/languages_header"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:background="@drawable/black_rounded_layout_background">
+
+                            </com.google.android.material.chip.ChipGroup>
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout-->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutBio"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        app:hintEnabled="false"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelBio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/bio_header"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextBio"
+                                android:layout_width="match_parent"
+                                android:layout_height="145dp"
+                                android:background="@drawable/black_rounded_layout_background"
+                                android:ems="10"
+                                android:enabled="@{viewModel.enableForm}"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="start|top"
+                                android:hint="@string/bio_placeholder"
+                                android:inputType="text"
+                                android:text="@={viewModel.personalInfo.biography}"
+                                android:textAlignment="textStart"
+                                android:textColorHint="#805885DD"
+                                android:typeface="normal" />
+
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:visibility="@{viewModel.enableForm ? View.VISIBLE : View.GONE}">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/button_save_personal_info"
+                                android:layout_width="124dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/button_rounded_black"
+                                android:enabled="true"
+                                android:fontFamily="@font/font_roboto"
+                                android:saveEnabled="false"
+                                android:text="@string/save_personal_info"
+                                app:backgroundTint="@color/black" />
+
+                            <android.widget.Space
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/button_cancel_personal_info"
+                                android:layout_width="124dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/custom_text_input_background"
+                                android:enabled="true"
+                                android:fontFamily="@font/font_roboto"
+                                android:saveEnabled="false"
+                                android:text="@string/cancel_preferences_button"
+                                android:textColor="@color/accent"
+                                android:textColorLink="@color/accent"
+                                app:backgroundTint="@color/accent" />
+
+                        </TableRow>
+                    </TableLayout>
 
                     <android.widget.Space
+                        android:id="@+id/space"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_weight="1" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextFullName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/black_rounded_layout_background"
-                        android:ems="10"
-                        android:enabled="false"
-                        android:focusable="auto"
-                        android:fontFamily="@font/roboto_regular"
-                        android:hint="@string/full_name_placeholder"
-                        android:inputType="text"
-                        android:text="@={viewModel.personalInfo.full_name}"
-                        android:textAlignment="viewStart"
-                        android:textColorHint="#805885DD"
-                        android:typeface="normal" />
-
                 </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutCity"
-                style="@style/TransparentBoxStroke"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelCity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/city_header"
-                        android:textColor="@color/black" />
-
-                    <android.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_weight="1" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/black_rounded_layout_background"
-                        android:ems="10"
-                        android:focusable="auto"
-                        android:fontFamily="@font/roboto_regular"
-                        android:hint="@string/city_placeholder"
-                        android:enabled="@{viewModel.enableForm}"
-                        android:inputType="text"
-                        android:text="@={viewModel.personalInfo.city}"
-                        android:textAlignment="viewStart"
-                        android:textColorHint="#805885DD"
-                        android:typeface="normal" />
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutAddress"
-                style="@style/TransparentBoxStroke"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelResidenceAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/address_header"
-                        android:textColor="@color/black" />
-
-                    <android.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_weight="1" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/black_rounded_layout_background"
-                        android:ems="10"
-                        android:focusable="auto"
-                        android:fontFamily="@font/roboto_regular"
-                        android:hint="@string/address_placeholder"
-                        android:enabled="@{viewModel.enableForm}"
-                        android:inputType="text"
-                        android:text="@={viewModel.personalInfo.address}"
-                        android:textAlignment="viewStart"
-                        android:textColorHint="#805885DD"
-                        android:typeface="normal" />
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutPhone"
-                style="@style/TransparentBoxStroke"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/phone_header"
-                        android:textColor="@color/black" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextPhone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/black_rounded_layout_background"
-                        android:ems="10"
-                        android:focusable="auto"
-                        android:fontFamily="@font/roboto_regular"
-                        android:hint="@string/phone_placeholder"
-                        android:enabled="@{viewModel.enableForm}"
-                        android:inputType="text"
-                        android:text="@={viewModel.personalInfo.phone}"
-                        android:textAlignment="viewStart"
-                        android:textColorHint="#805885DD"
-                        android:typeface="normal" />
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutBio"
-                style="@style/TransparentBoxStroke"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelBio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/bio_header"
-                        android:textColor="@color/black" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextBio"
-                        android:layout_width="match_parent"
-                        android:layout_height="145dp"
-                        android:background="@drawable/black_rounded_layout_background"
-                        android:ems="10"
-                        android:focusable="auto"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="start|top"
-                        android:hint="@string/bio_placeholder"
-                        android:enabled="@{viewModel.enableForm}"
-                        android:inputType="text"
-                        android:text="@={viewModel.personalInfo.biography}"
-                        android:textAlignment="textStart"
-                        android:textColorHint="#805885DD"
-                        android:typeface="normal" />
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="@{viewModel.enableForm ? View.VISIBLE : View.GONE}">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_save_personal_info"
-                        android:layout_width="124dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button_rounded_black"
-                        android:enabled="true"
-                        android:fontFamily="@font/font_roboto"
-                        android:saveEnabled="false"
-                        android:text="@string/save_personal_info"
-                        app:backgroundTint="@color/black" />
-
-                    <android.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_cancel_personal_info"
-                        android:layout_width="124dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/custom_text_input_background"
-                        android:enabled="true"
-                        android:fontFamily="@font/font_roboto"
-                        android:saveEnabled="false"
-                        android:text="@string/cancel_preferences_button"
-                        android:textColor="@color/accent"
-                        android:textColorLink="@color/accent"
-                        app:backgroundTint="@color/accent" />
-
-                </TableRow>
-            </TableLayout>
-
-            <android.widget.Space
-                android:id="@+id/space"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
-        <import type="android.view.View"/>
-        <import type="android.text.InputType"/>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
         <variable
             name="viewModel"
             type="com.example.abc_jobs_alpaca.viewmodel.PersonalInfoViewModel" />

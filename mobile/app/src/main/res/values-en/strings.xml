@@ -74,4 +74,7 @@
     <string name="bio_header">Bio</string>
     <string name="bio_placeholder">Write bio</string>
     <string name="save_personal_info">Save</string>
+    <string name="birthday_header">Birth date</string>
+    <string name="birthday_placeholder">01/01/1990</string>
+    <string name="country_header">Country of residence</string>
 </resources>

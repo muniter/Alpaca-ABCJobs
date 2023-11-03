@@ -71,7 +71,11 @@
     <string name="phone_header">Teléfono</string>
     <string name="phone_placeholder">Ingresar teléfono</string>
     <string name="bio_header">Biografía</string>
-    <string name="bio_placeholder">Ingresar biogragía</string>
+    <string name="bio_placeholder">Ingresar biografía</string>
     <string name="save_personal_info">Aceptar</string>
+    <string name="birthday_header">Fecha de nacimiento</string>
+    <string name="birthday_placeholder">01/01/1990</string>
+    <string name="country_header">País de Residencia</string>
+    <string name="languages_header">Idiomas</string>
 
 </resources>

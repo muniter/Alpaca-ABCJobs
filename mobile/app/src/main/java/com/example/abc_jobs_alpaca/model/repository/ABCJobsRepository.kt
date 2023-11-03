@@ -43,4 +43,8 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
     }
 
+    suspend fun getCountries(): Result<CountriesResponse> {
+        return ABCJobsService.getInstance(applicationContext).getCountries()
+    }
+
 }

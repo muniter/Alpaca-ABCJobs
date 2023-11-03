@@ -10,7 +10,7 @@ data class PersonalInfoResponse(
 )
 
 data class PersonalInfoRequest(
-    var birth_date: Date?,
+    var birth_date: String?,
     var country_code: Int?,
     var city: String?,
     var address: String?,
@@ -45,11 +45,13 @@ fun deserializePersonalInfo(response: JSONObject): PersonalInfoResponse? {
 
     if (dataObject != null) {
         val stringDate = Utils.optNullableString(dataObject, "birth_date")
+        val splitDate = stringDate?.split("-")
+
         val names = Utils.optNullableString(dataObject, "names")
         val last_names = Utils.optNullableString(dataObject, "last_names")
         val full_name = Utils.optNullableString(dataObject, "full_name")
         val email = Utils.optNullableString(dataObject, "email")
-        val birth_date = if (stringDate == null) null else Date(stringDate)
+        val birth_date = if (stringDate == null || splitDate?.size != 3) null else Date(splitDate[0].toInt() - 1900, splitDate[1].toInt() - 1, splitDate[2].toInt())
         val country_code = Utils.optNullableInt(dataObject,"country_code")
         val country = Utils.optNullableString(dataObject, "country")
         val city = Utils.optNullableString(dataObject, "city")

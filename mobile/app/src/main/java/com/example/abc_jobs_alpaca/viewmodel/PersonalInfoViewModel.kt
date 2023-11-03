@@ -5,21 +5,41 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.abc_jobs_alpaca.model.models.Country
 import com.example.abc_jobs_alpaca.model.models.PersonalInfo
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.ArrayList
+import java.util.Locale
 
 class PersonalInfoViewModel(
     private val token: String,
+    private val dateFormat: String,
     private val abcJobsRepository: ABCJobsRepository
 ) : ViewModel() {
+    val parsedDate: MutableLiveData<String?> = MutableLiveData(null)
+    val countrys: LiveData<ArrayList<Country?>> = liveData {
+
+        var countries = ArrayList<Country?>()
+        countries.add(Country(null,"","","-Seleccionar-",""))
+
+        abcJobsRepository.getCountries()
+            .onSuccess {
+                countries.addAll(it.data!!)
+                emit(countries)
+            }
+            .onFailure {
+                emit(countries)
+            }
+    }
 
     val personalInfo: LiveData<PersonalInfo?> = liveData {
 
-        showForm.postValue(true)
+        showForm.postValue(false)
         enableForm.postValue(false)
 
         abcJobsRepository.getPersonalInfo(token)
@@ -36,10 +56,29 @@ class PersonalInfoViewModel(
                 ) {
                     showForm.postValue(true)
                 }
+
+                if (it?.data?.birth_date != null) {
+                    updateDateString()
+                }
+
+                if (it?.data?.country_code != null) {
+
+                }
             }
             .onFailure {
                 emit(null)
             }
+    }
+
+    fun updateDateString() {
+        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        // Format the selected date into a string
+
+        if (personalInfo.value?.birth_date != null) {
+            val formattedDate = dateFormat.format(personalInfo.value?.birth_date)
+
+            parsedDate.postValue(formattedDate)
+        }
     }
 
     val showForm = MutableLiveData<Boolean>()
