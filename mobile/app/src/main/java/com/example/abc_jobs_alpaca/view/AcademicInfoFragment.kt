@@ -2,6 +2,7 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,16 +13,20 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.AcademicinfoitemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
+import kotlinx.coroutines.launch
 
 class AcademicInfoFragment : Fragment() {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
     private lateinit var viewModel: AcademicInfoViewModel
+    private lateinit var repository: ABCJobsRepository
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +42,7 @@ class AcademicInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_academiclist, container, false)
+        repository = ABCJobsRepository(requireActivity().application)
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -56,20 +62,40 @@ class AcademicInfoFragment : Fragment() {
             viewModel.loadAcademicItemsInfo()
         }
 
-        // Set the adapter
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                // TODO: change the placeholder content to the list of academic info
                 viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
-                    adapter = academicInfoList?.let { AcademicinfoitemRecyclerViewAdapter(it) }
+                    adapter = academicInfoList?.let {
+                        AcademicinfoitemRecyclerViewAdapter(it) { clickedItem ->
+                            ConfirmDialogFragment(clickedItem.id).show(childFragmentManager, "ConfirmDialogFragment")
+                        }
+                    }
+                    view.adapter = adapter
                 }
             }
         }
         return view
+    }
+
+    fun deleteAcademicItem(id: Int) {
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", null)
+        if (token != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val result = repository.deleteAcademicInfo(token, id)
+                if (result.isSuccess) {
+                    //TODO: message and navigate
+                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.getOrNull()}")
+                }
+                else {
+                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.exceptionOrNull()}")
+                }
+            }
+        }
     }
 
     companion object {

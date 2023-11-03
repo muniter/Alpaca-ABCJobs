@@ -40,4 +40,8 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getAcademicInfo(token)
     }
 
+    suspend fun deleteAcademicInfo(token: String, idAcademicInfo: Int): Result<AcademicInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteAcademicInfoItem(token, idAcademicInfo)
+    }
+
 }

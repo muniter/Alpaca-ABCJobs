@@ -42,6 +42,11 @@ data class AcademicInfoTypeResponse(
     val data: List<AcademicInfoType>
 )
 
+data class AcademicInfoItemDeleteResponse(
+    val success: Boolean,
+    val data: AcademicInfoItem?
+)
+
  fun deserializeAcademicInfoError(response: JSONObject): Exception {
      val success = response.optBoolean("success", false)
 
@@ -159,4 +164,44 @@ fun serializeAcademicInfo(request:  AcademicInfoRequest): JSONObject {
     json.put("achievement", request.achievement)
     json.put("type", request.type)
     return json
+}
+
+fun deserializeAcademicInfoItemDelete(response: JSONObject): AcademicInfoItemDeleteResponse {
+    val success = response.optBoolean("success", false)
+    val dataObject = response.optJSONObject("data")
+
+    val academicInfoItem = dataObject?.let {
+        val institution = it.optString("institution")
+        val title = it.optString("title")
+        val startYear = it.optInt("start_year")
+        val endYear = it.optInt("end_year")
+        val achievement = it.optString("achievement")
+        val id = it.optInt("id")
+        val idPersona = it.optInt("id_persona")
+        val typeObject = it.optJSONObject("type")
+        val type = if (typeObject != null) {
+            val id = typeObject.optInt("id")
+            val name = typeObject.optString("name")
+            AcademicInfoType(id, name)
+        } else {
+            AcademicInfoType(0, "")
+        }
+        AcademicInfoItem(institution, title, startYear, endYear, achievement, id, idPersona, type)
+    } ?: AcademicInfoItem("", "", 0, 0, "", 0, 0, AcademicInfoType(0, ""))
+    return AcademicInfoItemDeleteResponse(success, academicInfoItem)
+}
+
+fun deserializeAcademicInfoItemDeleteError(response: JSONObject): Exception {
+    val success = response.optBoolean("success", false)
+
+    if (!success) {
+        val errorsObject = response.optJSONObject("errors")
+        if (errorsObject != null) {
+            val emailError = errorsObject.optString("")
+            if (emailError.isNotBlank()) {
+                return Exception(emailError)
+            }
+        }
+    }
+    return Exception("Error en la solicitud")
 }

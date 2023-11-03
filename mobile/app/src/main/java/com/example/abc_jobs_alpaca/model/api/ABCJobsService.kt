@@ -308,5 +308,38 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
+    suspend fun deleteAcademicInfoItem(token: String, id: Int): Result<AcademicInfoItemDeleteResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    object : StringRequest(
+                        Method.DELETE, "$BASEURL$CANDIDATES_PATH$ACADEMIC_INFO_PATH/$id",
+                        { response -> cont.resume(JSONObject(response)) },
+                        { volleyError -> cont.resumeWithException(volleyError) }
+                    ) {
+                        override fun getBodyContentType(): String {
+                            return "application/json; charset=utf-8"
+                        }
+
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = "Bearer $token"
+                            return headers
+                        }
+                    }
+                )
+            }
+            if (response.getBoolean("success")) {
+                val academicInfo = deserializeAcademicInfoItemDelete(response)
+                Result.success(academicInfo)
+            } else {
+                val academicInfoError = deserializeAcademicInfoItemDeleteError(response)
+                Result.failure(academicInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
 
 }
