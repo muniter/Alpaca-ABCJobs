@@ -49,5 +49,5 @@ class EmpleadoCreateDTO(BaseModel):
     title: Annotated[
         str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
     ]
-    skills: List[RolHabilidadDTO]
+    skills: List[int]
     personality_id: int

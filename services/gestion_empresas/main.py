@@ -1,4 +1,4 @@
-from typing import Union
+from typing import List, Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.api_models.gestion_usuarios import UsuarioEmpresaDTO
 from common.shared.jwt import get_request_user_empresa
@@ -6,6 +6,8 @@ from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
 from common.shared.config import configuration
 from common.shared.api_models.gestion_empresas import (
+    EmpleadoCreateDTO,
+    EmpleadoDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
 )
@@ -50,19 +52,56 @@ def crear(
 
 
 @router.post(
-    "/employee/create",
-    response_model=Union[SuccessResponse[EmpresaCreateResponseDTO], ErrorResponse],
+    "/employee",
+    response_model=Union[SuccessResponse[EmpleadoDTO], ErrorResponse],
     status_code=status.HTTP_201_CREATED,
 )
 def crear_employee(
-    data: EmpresaCreateDTO,
+    data: EmpleadoCreateDTO,
     response: Response,
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.crear(data)
+    result = service.crear_empleado(id_empresa=user.id_empresa, data=data)
     if isinstance(result, ErrorBuilder):
-        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/employee",
+    response_model=Union[SuccessResponse[List[EmpleadoDTO]], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_all_empleados(
+    response: Response,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_all_empleados(id_empresa=user.id_empresa)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return ErrorResponse(errors=result)
+
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/employee/{id}",
+    response_model=Union[SuccessResponse[EmpleadoDTO], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_empleado(
+    id: int,
+    response: Response,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_empleado_by_id(id_empresa=user.id_empresa, id_empleado=id)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = status.HTTP_400_BAD_REQUEST
         return ErrorResponse(errors=result)
 
     return SuccessResponse(data=result)
