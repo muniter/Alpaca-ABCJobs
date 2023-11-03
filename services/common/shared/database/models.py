@@ -24,6 +24,7 @@ from ..api_models.gestion_empresas import (
     EmpleadoDTO,
     EmpleadoPersonalityDTO,
     EmpresaDTO,
+    EquipoDTO,
 )
 
 from ..api_models.gestion_usuarios import (
@@ -372,4 +373,31 @@ class Empleado(Base):
             company=self.empresa.build_dto(),
             personality=self.personalidad.build_dto(),
             skills=[r.build_dto() for r in self.roles_habilidades],
+        )
+
+
+empleado_equipo = Table(
+    "empleado_equipo",
+    Base.metadata,
+    Column("id_empleado", ForeignKey("empleado.id")),
+    Column("id_equipo", ForeignKey("equipo.id")),
+    PrimaryKeyConstraint("id_empleado", "id_equipo"),
+)
+
+
+class Equipo(Base):
+    __tablename__ = "equipo"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
+    empresa: Mapped["Empresa"] = relationship("Empresa", backref="equipos")
+    nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+    empleados: Mapped[List[Empleado]] = relationship(secondary=empleado_equipo)
+
+    def build_dto(self) -> EquipoDTO:
+        return EquipoDTO(
+            id=self.id,
+            name=self.nombre,
+            company=self.empresa.build_dto(),
+            employees=[e.build_dto() for e in self.empleados],
         )

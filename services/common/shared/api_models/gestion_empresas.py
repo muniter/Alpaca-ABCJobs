@@ -51,3 +51,17 @@ class EmpleadoCreateDTO(BaseModel):
     ]
     skills: List[int]
     personality_id: int
+
+
+class EquipoDTO(BaseModel):
+    id: int
+    name: str
+    company: EmpresaDTO
+    employees: List[EmpleadoDTO]
+
+
+class EquipoCreateDTO(BaseModel):
+    name: Annotated[
+        str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+    ]
+    employees: List[int]

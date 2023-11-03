@@ -10,6 +10,8 @@ from common.shared.api_models.gestion_empresas import (
     EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
+    EquipoCreateDTO,
+    EquipoDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -19,6 +21,7 @@ from common.shared.clients.usuario import UsuarioClient
 from common.shared.database.models import (
     Empleado,
     Empresa,
+    Equipo,
     Persona,
     Personalidad,
     RolesHabilidades,
@@ -94,8 +97,12 @@ class EmpleadoRepository:
     ):
         self.session = session
 
-    def get_by_id(self, id: int) -> Union[Empleado, None]:
-        query = select(Empleado).where(Empleado.id == id)
+    def get_by_id(self, id: int, id_empresa: int) -> Union[Empleado, None]:
+        query = (
+            select(Empleado)
+            .where(Empleado.id == id)
+            .where(Empleado.id_empresa == id_empresa)
+        )
         return self.session.execute(query).scalar_one_or_none()
 
     def get_all(self, id_empresa: int) -> List[Empleado]:
@@ -121,24 +128,53 @@ class EmpleadoRepository:
         self.session.commit()
 
 
+class EquipoRepository:
+    session: Session
+
+    def __init__(
+        self,
+        session: Session,
+    ):
+        self.session = session
+
+    def get_by_id(self, id: int, id_empresa: int) -> Union[Equipo, None]:
+        query = (
+            select(Equipo).where(Equipo.id == id).where(Equipo.id_empresa == id_empresa)
+        )
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_all(self, id_empresa: int) -> List[Equipo]:
+        query = select(Equipo).where(Equipo.id_empresa == id_empresa)
+        return list(self.session.execute(query).scalars().all())
+
+    def crear(self, data: Equipo) -> Equipo:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+
 class EmpresaService:
     repository: EmpresaRepository
     usuario_client: UsuarioClient
     utils_repository: UtilsRepository
     empleado_repository: EmpleadoRepository
+    equipo_repository: EquipoRepository
 
     def __init__(
         self,
         repository: EmpresaRepository,
         utils_repository: UtilsRepository,
         empleado_repository: EmpleadoRepository,
+        equipo_repository: EquipoRepository,
         usuario_client: UsuarioClient = UsuarioClient(),
     ):
         self.repository = repository
         self.usuario_client = usuario_client
         self.utils_repository = utils_repository
-        assert isinstance(utils_repository.session, Session)
         self.empleado_repository = empleado_repository
+        self.equipo_repository = equipo_repository
 
     def __crear_usuario(
         self, empresa: Empresa, password: str
@@ -243,19 +279,76 @@ class EmpresaService:
     def get_empleado_by_id(
         self, id_empresa: int, id_empleado: int
     ) -> Union[EmpleadoDTO, ErrorBuilder]:
-        empresa = self.repository.get_by_id(id_empresa)
-        if not empresa:
-            error = ErrorBuilder()
-            error.add("global", "Empresa no encontrada")
-            return error
-
-        empleado = self.empleado_repository.get_by_id(id_empleado)
+        empleado = self.empleado_repository.get_by_id(
+            id=id_empleado, id_empresa=id_empresa
+        )
         if not empleado:
             error = ErrorBuilder()
             error.add("global", "Empleado no encontrado")
             return error
 
         return empleado.build_dto()
+
+    def get_equipo_by_id(
+        self, id_empresa: int, id_equipo: int
+    ) -> Union[EquipoDTO, ErrorBuilder]:
+        equipo = self.equipo_repository.get_by_id(id=id_equipo, id_empresa=id_empresa)
+        if not equipo:
+            error = ErrorBuilder()
+            error.add("global", "Equipo no encontrado")
+            return error
+
+        return equipo.build_dto()
+
+    def get_all_equipos(self, id_empresa: int) -> Union[List[EquipoDTO], ErrorBuilder]:
+        empresa = self.repository.get_by_id(id_empresa)
+        if not empresa:
+            error = ErrorBuilder()
+            error.add("global", "Empresa no encontrada")
+            return error
+
+        equipos = self.equipo_repository.get_all(id_empresa=id_empresa)
+        return [e.build_dto() for e in equipos]
+
+    def crear_equipo(
+        self, id_empresa: int, data: EquipoCreateDTO
+    ) -> Union[EquipoDTO, ErrorBuilder]:
+        empresa = self.repository.get_by_id(id_empresa)
+        if not empresa:
+            error = ErrorBuilder()
+            error.add("global", "Empresa no encontrada")
+            return error
+
+        equipo = Equipo(id_empresa=id_empresa)
+        equipo = self.load_equipo(equipo, data)
+        if isinstance(equipo, ErrorBuilder):
+            return equipo
+
+        equipo = self.equipo_repository.crear(equipo)
+        return equipo.build_dto()
+
+    def load_equipo(
+        self, equipo: Equipo, data: EquipoCreateDTO
+    ) -> Union[Equipo, ErrorBuilder]:
+        error = ErrorBuilder(data)
+        equipo.nombre = data.name
+        seen = set()
+        for empleado_id in data.employees:
+            if empleado_id in seen:
+                error.add("employees", "Empleado duplicado")
+                return error
+            seen.add(empleado_id)
+
+            empleado = self.empleado_repository.get_by_id(
+                id=empleado_id, id_empresa=equipo.id_empresa
+            )
+            if not empleado:
+                error.add("employees", "Empleado no encontrado")
+                return error
+
+            equipo.empleados.append(empleado)
+
+        return equipo
 
 
 def get_empresa_repository(
@@ -276,13 +369,21 @@ def get_empleado_repository(
     return EmpleadoRepository(session=session)
 
 
+def get_equipo_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> EquipoRepository:
+    return EquipoRepository(session=session)
+
+
 def get_empresa_service(
     repository: EmpresaRepository = Depends(get_empresa_repository),
     utils_service: UtilsRepository = Depends(get_utils_repository),
     empleado_repository: EmpleadoRepository = Depends(get_empleado_repository),
+    equipo_repository: EquipoRepository = Depends(get_equipo_repository),
 ) -> EmpresaService:
     return EmpresaService(
         repository=repository,
         utils_repository=utils_service,
         empleado_repository=empleado_repository,
+        equipo_repository=equipo_repository,
     )
