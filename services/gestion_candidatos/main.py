@@ -1,6 +1,7 @@
 from typing import List, Union
 from fastapi import APIRouter, FastAPI, Response, status, Depends
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoConocimientoTecnicoDTO,
     CandidatoConocimientoTecnicoTipoDTO,
@@ -252,6 +253,23 @@ def create_technical_info(
     service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
 ):
     result = service.crear(user.id_candidato, data)
+    if isinstance(result, ErrorBuilder):
+        response.status_code = 400
+        return ErrorResponse(errors=result)
+    return SuccessResponse(data=result)
+
+
+@router.post("/technical-info/batch-set", 
+             response_model=Union[SuccessResponse[List[CandidatoConocimientoTecnicoDTO]], ErrorResponse],
+             status_code=status.HTTP_201_CREATED,
+)
+def create_technical_info_batch(
+        data: CandidatoConocimientoTecnicoBatchSetDTO,
+        response: Response,
+        user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+        service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+):
+    result = service.batch_set(user.id_candidato, data)
     if isinstance(result, ErrorBuilder):
         response.status_code = 400
         return ErrorResponse(errors=result)

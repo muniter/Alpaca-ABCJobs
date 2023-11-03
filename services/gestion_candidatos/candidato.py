@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoConocimientoTecnicoDTO,
     CandidatoCreateResponseDTO,
@@ -445,6 +446,33 @@ class ConocimientoTecnicosService:
         result = self.repository.create(result)
         return result.build_dto()
 
+    def batch_set(
+        self, id_candidato: int, data: CandidatoConocimientoTecnicoBatchSetDTO
+    ) -> Union[ErrorBuilder, List[CandidatoConocimientoTecnicoDTO]]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid candiato id")
+            return error
+
+        conocimientos = self.repository.get_all_from_id_persona(candidato.id_persona)
+
+        # delete all
+        for conocimiento in conocimientos:
+            self.repository.delete_by_id(conocimiento.id)
+
+        for conocimiento in data.list:
+            conocimiento = self.load(
+                ConocimientoTecnicos(id_persona=candidato.id_persona), conocimiento
+            )
+            if isinstance(conocimiento, ErrorBuilder):
+                return conocimiento
+
+            self.repository.create(conocimiento)
+
+        all = self.get_all(id_candidato)
+        return all
+
     def update(
         self, id: int, id_candidato: int, data: CandidatoConocimientoTecnicoCreateDTO
     ):
@@ -500,7 +528,6 @@ class ConocimientoTecnicosService:
             return error
 
         model.tipo = tipo
-        model.calificacion = data.raiting
         model.descripcion = data.description
         return model
 
