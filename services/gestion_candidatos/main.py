@@ -259,15 +259,18 @@ def create_technical_info(
     return SuccessResponse(data=result)
 
 
-@router.post("/technical-info/batch-set", 
-             response_model=Union[SuccessResponse[List[CandidatoConocimientoTecnicoDTO]], ErrorResponse],
-             status_code=status.HTTP_201_CREATED,
+@router.post(
+    "/technical-info/batch-set",
+    response_model=Union[
+        SuccessResponse[List[CandidatoConocimientoTecnicoDTO]], ErrorResponse
+    ],
+    status_code=status.HTTP_201_CREATED,
 )
 def create_technical_info_batch(
-        data: CandidatoConocimientoTecnicoBatchSetDTO,
-        response: Response,
-        user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
-        service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
+    data: CandidatoConocimientoTecnicoBatchSetDTO,
+    response: Response,
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    service: ConocimientoTecnicosService = Depends(get_conocimientos_tecnicos_service),
 ):
     result = service.batch_set(user.id_candidato, data)
     if isinstance(result, ErrorBuilder):
