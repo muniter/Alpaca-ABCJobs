@@ -76,5 +76,6 @@
     <string name="birthday_header">Fecha de nacimiento</string>
     <string name="birthday_placeholder">01/01/1990</string>
     <string name="country_header">País de Residencia</string>
+    <string name="languages_header">Idiomas</string>
 
 </resources>
