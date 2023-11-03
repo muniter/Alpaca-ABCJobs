@@ -1,6 +1,7 @@
 import json
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoCreateDTO,
     CandidatoDatosAcademicosCreateDTO,
@@ -86,7 +87,6 @@ def data_for_conocimientos_tecnicos() -> CandidatoConocimientoTecnicoCreateDTO:
     return CandidatoConocimientoTecnicoCreateDTO(
         type=1,
         description=faker.text(max_nb_chars=200),
-        raiting=faker.random_int(min=1, max=3, step=1),
     )
 
 
@@ -494,7 +494,6 @@ def test_service_conocimientos_tecnicos_create():
     result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
     assert not isinstance(result, ErrorBuilder)
     assert result.description == data.description
-    assert result.raiting == data.raiting
     assert result.type.name is not None
 
 
@@ -506,7 +505,6 @@ def test_service_conocimientos_tecnicos_get():
     get = conocimientos_tecnico_service.get_by_id(result.id, candidato.id)
     assert not isinstance(get, ErrorBuilder)
     assert get.description == data.description
-    assert get.raiting == data.raiting
 
 
 def test_service_conocimientos_tecnicos_get_all():
@@ -525,7 +523,6 @@ def test_service_conocimientos_tecnicos_update():
     result = conocimientos_tecnico_service.crear(id_candidato=candidato.id, data=data)
     assert not isinstance(result, ErrorBuilder)
     assert result.description == data.description
-    assert result.raiting == data.raiting
     new_description = faker.text(max_nb_chars=200)
     data.description = new_description
     result = conocimientos_tecnico_service.update(
@@ -561,7 +558,6 @@ def test_endpoint_conocimientos_tecnicos_create():
     assert response.status_code == 201
     result = response.json()
     assert result["data"]["description"] == data.description
-    assert result["data"]["raiting"] == data.raiting
 
 
 def test_endpoint_conocimientos_tecnicos_get_all():
@@ -596,7 +592,6 @@ def test_endpoint_conocimientos_tecnicos_get():
     assert response.status_code == 200
     result = response.json()
     assert result["data"]["description"] == data.description
-    assert result["data"]["raiting"] == data.raiting
 
 
 def test_endpoint_conocimientos_tecnicos_update():
@@ -620,6 +615,45 @@ def test_endpoint_conocimientos_tecnicos_update():
     assert response.status_code == 200
     result = response.json()
     assert result["data"]["description"] == new_description
+
+
+def test_endpoint_conocimientos_tecnicos_batch_update():
+    usuario, token = crear_usuario_candidato()
+    candidato = usuario.candidato
+    assert candidato
+
+    first = data_for_conocimientos_tecnicos()
+    batch = CandidatoConocimientoTecnicoBatchSetDTO(
+        list=[data_for_conocimientos_tecnicos() for _ in range(5)]
+    )
+    counter = 2
+    for item in batch.list:
+        item.type = counter
+        counter += 1
+
+    response = client.post(
+        f"/technical-info",
+        json=first.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    result = response.json()
+    assert result["data"]["description"] == first.description
+    id = result["data"]["id"]
+
+    # Set batch
+    response = client.post(
+        f"/technical-info/batch-set",
+        json=batch.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    result = response.json()
+    print(result)
+    assert len(result["data"]) == len(batch.list)
+    # Id shouldn't be in the response
+    for item in result["data"]:
+        assert item["id"] != id
 
 
 def test_endpoint_conocimientos_tecnicos_delete():
@@ -648,7 +682,6 @@ def test_endpoint_conocimientos_tecnicos_types_util():
     assert len(result["data"]) > 0
     assert result["data"][0]["id"] is not None
     assert result["data"][0]["name"] is not None
-
 
 
 def test_service_datos_academicos_create():

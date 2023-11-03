@@ -228,7 +228,7 @@ def test_repository_get_by_email():
 
 def test_service_get_usuario_from_token():
     usuario_empresa = crear_usuario_empresa()
-    token = service.create_token(usuario_empresa.build_usuario_dto())
+    token = service.create_token(usuario_empresa.build_dto())
     usuario_dto = service.get_usuario_from_token(token)
     assert usuario_dto.email == usuario_empresa.email
     assert usuario_dto.id == usuario_empresa.id

@@ -171,7 +171,6 @@ class CandidatoConocimientoTecnicoDTOBase(BaseModel):
         Optional[str],
         StringConstraints(max_length=500, min_length=2, strip_whitespace=True),
     ]
-    raiting: int
 
 
 class CandidatoConocimientoTecnicoDTO(CandidatoConocimientoTecnicoDTOBase):
@@ -182,3 +181,7 @@ class CandidatoConocimientoTecnicoDTO(CandidatoConocimientoTecnicoDTOBase):
 
 class CandidatoConocimientoTecnicoCreateDTO(CandidatoConocimientoTecnicoDTOBase):
     type: int
+
+
+class CandidatoConocimientoTecnicoBatchSetDTO(BaseModel):
+    list: List[CandidatoConocimientoTecnicoCreateDTO]
