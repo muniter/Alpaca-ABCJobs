@@ -59,17 +59,17 @@ def get_exam(
 
 
 @router.post(
-    "/exam/{id}/start",
+    "/exam-result/{id_examen}/start",
     response_model=Union[SuccessResponse[ExamenStepResponseDTO], ErrorResponse],
     status_code=status.HTTP_200_OK,
 )
 def start_exam(
     response: Response,
-    id: int,
+    id_examen: int,
     service: ExamenService = Depends(get_examen_service),
     user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
 ):
-    result = service.start_examen(id=id, id_candidato=user.id_candidato)
+    result = service.start_examen(id=id_examen, id_candidato=user.id_candidato)
     if isinstance(result, ErrorBuilder):
         response.status_code = status.HTTP_400_BAD_REQUEST
         return ErrorResponse(errors=result)

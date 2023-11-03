@@ -100,7 +100,7 @@ def test_service_start_examen():
 def test_endpoint_start_examen():
     _, token = crear_usuario_candidato()
     response = client.post(
-        "/exam/1/start", headers={"Authorization": f"Bearer {token}"}
+        "/exam-result/1/start", headers={"Authorization": f"Bearer {token}"}
     )
     assert response.status_code == 200
     assert response.json()["data"]["id_exam"] == 1
@@ -160,7 +160,7 @@ def test_service_examen_complete_exam():
 def test_endpoint_complete_exam():
     _, token = crear_usuario_candidato()
     response = client.post(
-        "/exam/1/start", headers={"Authorization": f"Bearer {token}"}
+        "/exam-result/1/start", headers={"Authorization": f"Bearer {token}"}
     )
     assert response.status_code == 200
     initial_data = response.json()["data"]
