@@ -10,14 +10,17 @@
     android:layout_centerVertical="false">
 
     <data>
+
         <variable
             name="album"
             type="com.example.abc_jobs_alpaca.model.models.AcademicInfoItem" />
     </data>
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="534dp">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -110,8 +113,8 @@
                             android:text="Nivel de Estudios"
                             android:textColor="@color/black" />
 
-                        <Spinner
-                            android:id="@+id/spinnerEducationLevel"
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/autoCompleteTextViewEducationLevel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nivel de Estudios" />
@@ -230,40 +233,8 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAdditionalInfo">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/academicInfoCancelButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/rounded_layout_background"
-                        android:text="@string/cancel_preferences_button"
-                        android:textColor="@color/accent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.58"
-                        app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/academicInfoSaveButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/button_rounded_black"
-                        android:text="@string/save_preferences_button"
-                        android:textColor="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </LinearLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </LinearLayout>
 

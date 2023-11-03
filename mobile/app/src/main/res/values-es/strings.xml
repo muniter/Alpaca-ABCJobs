@@ -59,22 +59,6 @@
     <string name="toast_message_login_failed">Inicio de sesión fallido, Correo electrónico no registrado</string>
     <string name="cancel_preferences_button">Cancelar</string>
     <string name="menu_academic_info">Información académica</string>
-    <string name="menu_personal_info">Información personal</string>
     <string name="preferencias_del_sistema">Preferencias del sistema</string>
-    <string name="no_personal_info">El usuario no cuenta con datos de Información personal, los puede agregar usando el botón de la esquina inferior derecha</string>
-    <string name="full_name_header">Nombre Completo</string>
-    <string name="full_name_placeholder">Nombres y Apellidos</string>
-    <string name="city_header">Ciudad de residencia</string>
-    <string name="city_placeholder">Ingresar ciudad</string>
-    <string name="address_header">Dirección de residencia</string>
-    <string name="address_placeholder">Ingresar dirección</string>
-    <string name="phone_header">Teléfono</string>
-    <string name="phone_placeholder">Ingresar teléfono</string>
-    <string name="bio_header">Biografía</string>
-    <string name="bio_placeholder">Ingresar biografía</string>
-    <string name="save_personal_info">Aceptar</string>
-    <string name="birthday_header">Fecha de nacimiento</string>
-    <string name="birthday_placeholder">01/01/1990</string>
-    <string name="country_header">País de Residencia</string>
 
 </resources>
