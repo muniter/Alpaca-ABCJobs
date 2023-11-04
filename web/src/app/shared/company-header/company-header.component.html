@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <div class="center-vertical">
+    <div class="logo-div">
+      <img class="logo-img" src="../../../assets/logo.png">
+    </div>
+
+    <span class="tab-label">Home</span>
+    <span class="tab-label">Personal</span>
+    <span class="tab-label">Equipos y Proyectos</span>
+    <span class="tab-label">Vacantes</span>
+    <span class="tab-label">Candidatos</span>
+    <span class="tab-label">Contrataciones</span>
+  </div>
+  <span class="example-spacer"></span>
+  <span flex></span>
+  <div class="center-vertical user-name-icon"
+    [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateProfile+'/'+token">
+    <span class="tab-label">{{username}}</span>
+    <button mat-icon-button class="user-icon-button">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+  <div class="center-vertical user-settings-icon">
+    <button mat-icon-button class="user-icon-button">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

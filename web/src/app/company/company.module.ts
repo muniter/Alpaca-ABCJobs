@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyLoginComponent } from './company-login/company-login.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { CompanyRegisterComponent } from './company-register/company-register.component';
+import { CompanyHomeComponent } from './company-home/company-home.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { CompanyRegisterComponent } from './company-register/company-register.co
     FormsModule,
     SharedModule
   ],
-  declarations: [CompanyLoginComponent, CompanyRegisterComponent],
-  exports: [CompanyLoginComponent, CompanyRegisterComponent]
+  declarations: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent],
+  exports: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent]
 })
 export class CompanyModule { }
