@@ -630,8 +630,13 @@ class DatosLaboralesService:
             error.add("id", "Invalid id")
             return error
 
+        data.end_year = None if data.end_year is 0 else data.end_year
         if data.end_year and data.end_year < data.start_year:
             error.add("end_year", "End year must be equal or after start year")
+            return error
+
+        if data.start_year < 1900:
+            error.add("start_year", "Start year must be after 1900")
             return error
 
         model.empresa = data.company
