@@ -178,7 +178,7 @@ export class CandidateWorkComponent implements OnInit {
                   this.jobs.at(index).get('company')!.hasError('maxlength'))
                   ? $localize`:@@invalidlengthcompany:La compañia debe tener entre 2 y 255 caracteres`
                   : this.jobs.at(index).get('company')!.hasError('responseMessageError')
-                  ? $localize`:@@responseerrorjob:Revise el campo compañia: 
+                  ? $localize`:@@responseerrorcompany:Revise el campo compañia: 
                     ${this.jobs.at(index).get('company')?.getError('responseMessageError')}`
                     : "";
       }
