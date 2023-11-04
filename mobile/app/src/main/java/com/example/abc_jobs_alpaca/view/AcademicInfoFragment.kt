@@ -20,7 +20,8 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 import kotlinx.coroutines.launch
 
-class AcademicInfoFragment : Fragment() {
+class AcademicInfoFragment : Fragment(),
+    ConfirmDialogFragment.ConfirmDialogListener {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
@@ -69,7 +70,8 @@ class AcademicInfoFragment : Fragment() {
                 viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
                     adapter = academicInfoList?.let {
                         AcademicInfoItemRecyclerViewAdapter(it) { clickedItem ->
-                            ConfirmDialogFragment(clickedItem.id).show(childFragmentManager, "ConfirmDialogFragment")
+                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@AcademicInfoFragment)
+                            confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
                         }
                     }
                     view.adapter = adapter
@@ -88,7 +90,7 @@ class AcademicInfoFragment : Fragment() {
     }
 
 
-    fun deleteItem(id: Int) {
+    override fun onConfirmDelete(id: Int){
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         if (token != null) {
