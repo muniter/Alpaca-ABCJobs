@@ -111,6 +111,10 @@
           <context context-type="linenumber">138</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -124,6 +128,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
           <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -245,7 +253,11 @@
         <source>Error: <x id="PH" equiv-text="value"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">228</context>
         </context-group>
       </trans-unit>
       <trans-unit id="errordeletecareer" datatype="html">
@@ -266,14 +278,14 @@
         <source>Registro actualizado (<x id="PH" equiv-text="career.id"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">249</context>
         </context-group>
       </trans-unit>
       <trans-unit id="okaddcareer" datatype="html">
         <source>Registro ingresado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">254</context>
+          <context context-type="linenumber">259</context>
         </context-group>
       </trans-unit>
       <trans-unit id="email" datatype="html">
@@ -715,6 +727,217 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
           <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workinfo" datatype="html">
+        <source>Información Laboral <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">5,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="role" datatype="html">
+        <source> Cargo </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="roleplaceholder" datatype="html">
+        <source>Cargo ocupado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="company" datatype="html">
+        <source> Compañia </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="companyplaceholder" datatype="html">
+        <source>Nombre de la compañia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobframe" datatype="html">
+        <source> Periodo </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobsstartplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobendplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobendinprogress" datatype="html">
+        <source> En curso </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">78,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source> Descripción de labores </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">93,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="descriptionplaceholder" datatype="html">
+        <source>Breve descripción de las labores realizadas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobskills" datatype="html">
+        <source>Roles y habilidades</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobadd" datatype="html">
+        <source>AÑADIR OTRO</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyjob" datatype="html">
+        <source>El cargo no puede ser vacío</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthjob" datatype="html">
+        <source>El cargo debe tener entre 2 y 255 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjob" datatype="html">
+        <source>Revise el campo cargo: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">169,170</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">181,182</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycompany" datatype="html">
+        <source>La compañia no puede ser vacío</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcompany" datatype="html">
+        <source>La compañia debe tener entre 2 y 255 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyjobstart" datatype="html">
+        <source>Debe seleccionar un año</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjobstart" datatype="html">
+        <source>Revise el campo año de inicio: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">189,190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nongreaterthanjobend" datatype="html">
+        <source>El año final debe ser mayor o igual al inicial</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjobend" datatype="html">
+        <source>Revise el campo año de finalización: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">197,198</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptdescription" datatype="html">
+        <source>La descripción no puede ser solo espacios en blanco</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">204</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthdescription" datatype="html">
+        <source>La descripción debe tener entre 2 y 500 caracteres</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrordescription" datatype="html">
+        <source>Revise el campo logros: 
+                   <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">209,210</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errordeletejob" datatype="html">
+        <source>Error al eliminar el registro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okdeletejob" datatype="html">
+        <source>Registro eliminado (<x id="PH" equiv-text="id"/>)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">247</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okupdatejob" datatype="html">
+        <source>Registro actualizado (<x id="PH" equiv-text="job.id"/>)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">274</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okaddjob" datatype="html">
+        <source>Registro ingresado</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">

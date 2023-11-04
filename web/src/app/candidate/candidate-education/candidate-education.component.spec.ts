@@ -259,7 +259,11 @@ describe('CandidateEducationComponent', () => {
         
     let candidateAddCareerInfo = spyOn(candidateService, 'addCareerInfo').and.returnValue(of(
       { success: true }));
+
+    let candidateCancelOrReload = spyOn(component, 'cancelOrReload');
     
+    component.careers.clear();
+
     component.addCareer();
     let careerId = component.careers.at(-1).get("id");
     let collegeDegree = component.careers.at(-1).get("collegeDegree");
@@ -308,35 +312,19 @@ describe('CandidateEducationComponent', () => {
     careerStart?.setValue(faker.number.int({ min: 2000, max: 2005 }))
     careerEnd?.setValue(faker.number.int({ min: 2005, max: 2010 }))
     achievement?.setValue(faker.lorem.words({ min: 2, max: 4 }))
-
-    component.addCareer();
-    collegeDegree = component.careers.at(-1).get("collegeDegree");
-    careerTitle = component.careers.at(-1).get("careerTitle");
-    school = component.careers.at(-1).get("school");
-    careerStart = component.careers.at(-1).get("careerStart");
-    careerEnd = component.careers.at(-1).get("careerEnd");
-    achievement = component.careers.at(-1).get("achievement");
     
-    collegeDegree?.setValue(collegeDegrees[0]);
-    careerTitle?.setValue(faker.lorem.word({ length: { min: 5, max: 20 } }))
-    school?.setValue(faker.lorem.word({ length: { min: 5, max: 20 } }))
-    careerStart?.setValue(faker.number.int({ min: 2000, max: 2005 }))
-    careerEnd?.setValue(faker.number.int({ min: 2005, max: 2010 }))
-    achievement?.setValue(faker.lorem.words({ min: 2, max: 4 }))
-    
-    component.deleteCareer(1);
-    component.deleteCareer(3);
+    component.deleteCareer(0);
 
     component.saveAcademicInfo();
     
     expect(candidateDeleteCareerInfo).toHaveBeenCalledTimes(1);
-    expect(candidateUpdateCareerInfo).toHaveBeenCalled();
+    expect(candidateUpdateCareerInfo).toHaveBeenCalledTimes(1);
     expect(candidateAddCareerInfo).toHaveBeenCalledTimes(1);
 
   })));
   
   it('should validate cancel operation', async () => {
-    component.cancel();
+    component.cancelOrReload();
     expect(component.deleteCareers).toHaveSize(0);
   })
 });

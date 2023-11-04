@@ -1,0 +1,156 @@
+<form [formGroup]="workInformationForm" (ngSubmit)="saveWorkInfo()">
+  <fieldset>
+    <div class="form">
+      <div class="work-information-title">
+        <H2 class="section-title" i18n="@@workinfo">Información Laboral
+          <mat-icon class="edit-icon" (click)="enableForm()" *ngIf="workInfoDisabled">
+            edit
+          </mat-icon>
+        </H2>
+      </div>
+      <div formArrayName="jobs" >
+        <div *ngFor="let job of jobs.controls; let item=index" >
+          <div [formGroupName]="item" class="job-item">
+            <div class="job-delete">
+              <mat-icon class="delete-icon" (click)="deleteJob(item)" *ngIf="!workInfoDisabled">
+                delete
+              </mat-icon>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="role-{{ item }}" i18n="@@role">
+                  Cargo
+                </label>
+              </div>
+              <mat-form-field id="roleFormField-{{ item }}" class="form-field right-field" 
+              [ngClass]="{'chips-field-disabled':workInfoDisabled}" appearance="outline"
+              subscriptSizing="dynamic" >
+                <input matInput id="role-{{ item }}" formControlName="role"  
+                class="form-control" placeholder="Cargo ocupado" 
+                i18n-placeholder="@@roleplaceholder">
+                <mat-error *ngIf="job.get('role')?.invalid">
+                  {{ getErrorMessage('role', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="company-{{ item }}" i18n="@@company">
+                  Compañia
+                </label>
+              </div>
+              <mat-form-field id="companyFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="workInfoDisabled?'chips-field-disabled':''">
+                <input matInput id="company-{{ item }}" class="form-control" 
+                formControlName="company" placeholder="Nombre de la compañia" 
+                i18n-placeholder="@@companyplaceholder">
+                <mat-error *ngIf="job.get('company')?.invalid">
+                  {{ getErrorMessage('company', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" i18n="@@jobframe">
+                  Periodo
+                </label>
+              </div>
+              <div class="right-field space-between">
+                <mat-form-field id="jobStartFormField-{{ item }}" appearance="outline"
+                class="form-field half-right-field" subscriptSizing="dynamic" 
+                [ngClass]="workInfoDisabled?'chips-field-disabled':''">
+                  <mat-select id="jobStart-{{ item }}" formControlName="jobStart"
+                  placeholder="Seleccione el año" i18n-placeholder="@@jobsstartplaceholder">
+                    <mat-option *ngFor="let year of jobStartSet" [value]="year">
+                      {{year}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="job.get('jobStart')?.invalid">
+                    {{ getErrorMessage('jobStart', item) }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field id="jobEndFormField-{{ item }}" appearance="outline"
+                class="form-field half-right-field" subscriptSizing="dynamic" 
+                [ngClass]="workInfoDisabled?'chips-field-disabled':''">
+                  <mat-select id="jobEnd-{{ item }}" formControlName="jobEnd"
+                  placeholder="Seleccione el año" i18n-placeholder="@@jobendplaceholder">
+                    <mat-option value="0" i18n="@@jobendinprogress">
+                      En curso
+                    </mat-option>
+                    <mat-option *ngFor="let year of jobEndSet" [value]="year" >
+                      {{year}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="job.get('jobEnd')?.invalid">
+                    {{ getErrorMessage('jobEnd', item) }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="description-{{ item }}" i18n="@@description">
+                  Descripción de labores
+                </label>
+              </div>
+              <mat-form-field id="descriptionFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="workInfoDisabled?'chips-field-disabled':''">
+                <textarea matInput id="description-{{ item }}" rows="5" class="form-control"
+                formControlName="description" placeholder="Breve descripción de las labores realizadas" 
+                i18n-placeholder="@@descriptionplaceholder"></textarea>
+                <mat-error *ngIf="job.get('description')?.invalid">
+                  {{ getErrorMessage('description', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" i18n="@@jobskills">Roles y habilidades</label>
+              </div>
+              <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic"
+                [ngClass]="workInfoDisabled?'chips-field-disabled':''">
+                <mat-chip-grid #chipGrid>
+                  <mat-chip-row *ngFor="let skill of selectedSkills.at(item)" (removed)="removeSkill(skill, item)"
+                    [ngClass]="workInfoDisabled?'chip-disabled':''">
+                    {{skill}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + skill">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+                <input #skillInput formControlName="skills" [matChipInputFor]="chipGrid"
+                  [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="addSkill($event, item)" />
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, item)">
+                  <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+                    {{skill}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+        <div class="messages">
+          <p class="error" *ngIf="globalError" >{{globalError}}</p>
+          <p class="success" *ngIf="globalMessage" >{{globalMessage}}</p>
+        </div>
+        <div class="buttons">
+          <div class="buttons-left">
+            <app-abc-button *ngIf="!workInfoDisabled" class="inline-button" color="accent" (click)="addJob()"
+                            i18n="@@jobadd">AÑADIR OTRO</app-abc-button>
+          </div>
+          <div class="buttons-right">
+            <app-abc-button *ngIf="!workInfoDisabled" class="inline-button" color="basic"
+                            (click)="cancelOrReload()" i18n="@@cancel">Cancelar</app-abc-button>
+            <app-abc-button type="submit" *ngIf="!workInfoDisabled" color="primary"
+                        [disabled]="!workInformationForm.valid" class="inline-button" 
+                        i18n="@@save">Guardar</app-abc-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
