@@ -286,3 +286,10 @@ def test_endpoint_get_all_equipo():
     result = response.json()["data"]
     assert len(result) == 1
     assert result[0]["name"] == data.name
+
+
+def test_endpoint_utils_personalities():
+    response = client.get("/utils/personalities")
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert len(result) > 0
