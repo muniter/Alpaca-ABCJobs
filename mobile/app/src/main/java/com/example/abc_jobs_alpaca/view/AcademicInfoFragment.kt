@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
-import com.example.abc_jobs_alpaca.adapter.AcademicinfoitemRecyclerViewAdapter
+import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 import kotlinx.coroutines.launch
@@ -39,7 +39,7 @@ class AcademicInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_academiclist, container, false)
+        val view = inflater.inflate(R.layout.fragment_item_academic_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -68,7 +68,7 @@ class AcademicInfoFragment : Fragment() {
                 }
                 viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
                     adapter = academicInfoList?.let {
-                        AcademicinfoitemRecyclerViewAdapter(it) { clickedItem ->
+                        AcademicInfoItemRecyclerViewAdapter(it) { clickedItem ->
                             ConfirmDialogFragment(clickedItem.id).show(childFragmentManager, "ConfirmDialogFragment")
                         }
                     }

@@ -15,7 +15,7 @@
         android:id="@+id/nav_academic_info"
         android:name="com.example.abc_jobs_alpaca.view.AcademicInfoFragment"
         android:label="@string/menu_academic_info"
-        tools:layout="@layout/fragment_item_academiclist" >
+        tools:layout="@layout/fragment_item_academic_list" >
         <action
             android:id="@+id/action_nav_academic_info_to_academicInfoCreateFragment"
             app:destination="@id/academicInfoCreateFragment" />

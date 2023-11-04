@@ -5,22 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.TextView
 
-import com.example.abc_jobs_alpaca.databinding.FragmentItemBinding
+import com.example.abc_jobs_alpaca.databinding.FragmentAcademicItemBinding
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoItem
-import com.google.android.material.textfield.TextInputEditText
 
-class AcademicinfoitemRecyclerViewAdapter(
+class AcademicInfoItemRecyclerViewAdapter(
     private val values: List<AcademicInfoItem>,
     private val onItemClick : (AcademicInfoItem) -> Unit
-) : RecyclerView.Adapter<AcademicinfoitemRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<AcademicInfoItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentItemBinding.inflate(
+            FragmentAcademicItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -50,7 +48,7 @@ class AcademicinfoitemRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: FragmentAcademicItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val btnDelete: ImageButton = binding.deleteAcademicInfoItem
         val nameDegree: TextView = binding.editTextDegree
