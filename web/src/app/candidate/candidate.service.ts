@@ -125,38 +125,16 @@ export class CandidateService {
     return this.http.get<JobResponse>(`${this.backCandidateUrl}/work-info`, { headers })
   }
 
-  addJobInfo(job: Job, token: string): Observable<any> {
+  addJobInfo(request: JobServiceSchema, token: string): Observable<any> {
     const headers = this.getHeader(token);
-    let request = new JobServiceSchema(
-      job.id,
-      job.role,
-      job.company,
-      job.description,
-      job.skills,
-      /* job.jobStart, */
-      `${job.jobStart}-01-01`, /* TODO: eliminar cuando el api reciba años */
-      /* job.jobEnd */
-      `${job.jobEnd}-12-31` /* TODO: eliminar cuando el api reciba años */
-    );
-    console.log(request);
 
     return this.http.post<JobResponse>(
       `${this.backCandidateUrl}/work-info`, request, { headers })
   }
 
-  updateJobInfo(job: Job, token: string): Observable<any> {
+  updateJobInfo(request: JobServiceSchema, token: string): Observable<any> {
     const headers = this.getHeader(token);
-    let request = new JobServiceSchema(
-      job.id,
-      job.role,
-      job.company,
-      job.description,
-      job.skills,
-      /* job.jobStart, */
-      `${job.jobStart}-01-01`, /* TODO: eliminar cuando el api reciba años */
-      /* job.jobEnd */
-      `${job.jobEnd}-12-31` /* TODO: eliminar cuando el api reciba años */
-    );
+
     return this.http.post<JobResponse>(
       `${this.backCandidateUrl}/work-info/${request.id}`, request, { headers })
   }

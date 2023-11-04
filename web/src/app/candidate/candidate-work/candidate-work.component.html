@@ -112,7 +112,7 @@
               <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic"
                 [ngClass]="workInfoDisabled?'chips-field-disabled':''">
                 <mat-chip-grid #chipGrid>
-                  <mat-chip-row *ngFor="let skill of selectedSkills" (removed)="removeSkill(skill)"
+                  <mat-chip-row *ngFor="let skill of selectedSkills.at(item)" (removed)="removeSkill(skill, item)"
                     [ngClass]="workInfoDisabled?'chip-disabled':''">
                     {{skill}}
                     <button matChipRemove [attr.aria-label]="'remove ' + skill">
@@ -144,7 +144,7 @@
           </div>
           <div class="buttons-right">
             <app-abc-button *ngIf="!workInfoDisabled" class="inline-button" color="basic"
-                            (click)="cancel()" i18n="@@cancel">Cancelar</app-abc-button>
+                            (click)="cancelOrReload()" i18n="@@cancel">Cancelar</app-abc-button>
             <app-abc-button type="submit" *ngIf="!workInfoDisabled" color="primary"
                         [disabled]="!workInformationForm.valid" class="inline-button" 
                         i18n="@@save">Guardar</app-abc-button>

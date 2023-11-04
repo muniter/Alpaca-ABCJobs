@@ -6,7 +6,7 @@ import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validator
 import { Observable, map, startWith } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums/AppRoutes.enum';
-import { Job, mapKeysJob } from '../job';
+import { Job, JobServiceSchema, mapKeysJob } from '../job';
 import { Skill } from 'src/app/shared/skill';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -22,8 +22,7 @@ export class CandidateWorkComponent implements OnInit {
   objectSkills!: Skill[];
   skills!: string[];
   filteredSkills!: Observable<string[]>;
-  /* selectedSkills: string[] = [] */
-  selectedSkills: [number,string][] = []
+  selectedSkills: [string[]] = [[]];
   jobStartSet: number[] = [];
   jobEndSet: number[] = [];
   minDate: Date;
@@ -35,6 +34,7 @@ export class CandidateWorkComponent implements OnInit {
   globalError!: string;
   globalMessage!: string;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  taskCount: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,27 +72,22 @@ export class CandidateWorkComponent implements OnInit {
     this.jobsInfo = [];
     this.candidateService.getJobsInfo(this.token).subscribe({
       next: (response) => {
-        response.data.forEach(jobService => {
-          /* let collegeDegreeIndex = this.collegeDegrees.findIndex(
-            item => { 
-              return item.id == (typeof careerService.type === 'number' 
-                                ? careerService.type : careerService.type.id) 
-            }
-          ); */
+        response.data.forEach(jobService => {          
           let jobRow = new Job(
             jobService.id,
             jobService.role,
             jobService.company,
             jobService.description,
             jobService.skills,
-            /* jobService.start_date,
-            jobService.end_date */
-            Number(jobService.start_date.substring(0,4)),
-            Number(jobService.end_date?.substring(0,4))
+            jobService.start_year,
+            jobService.end_year
           );
           this.jobsInfo.push(jobRow);
         });
-        this.jobsInfo.forEach(job => this.addJob());
+
+        this.jobsInfo.forEach((job, index) => { 
+          this.addJob(job.skills, index);
+        });
         this.jobs.setValue(this.jobsInfo);
         this.disableForm();
       }
@@ -120,7 +115,7 @@ export class CandidateWorkComponent implements OnInit {
     return this.workInformationForm.get('jobs') as FormArray;
   }
 
-  addJob() {
+  addJob(skills: Skill[] = [], index: number | null = null) {
     this.jobs.push(
       this.formBuilder.group(
         {
@@ -141,9 +136,14 @@ export class CandidateWorkComponent implements OnInit {
       )
     ); 
 
+    this.selectedSkills.push(skills.map((skill) => skill.name));
+    if(index == 0) {
+      this.selectedSkills.splice(0,1);
+    }
+
     this.filteredSkills = this.jobs.at(-1).get('skills')!.valueChanges.pipe(
       startWith(null),
-      map((skill: string | null) => (skill ? this._filter(skill) : this.skills.slice())),
+      map((skill: Skill) => (skill ? this._filter(skill.name) : this.skills.slice())),
     );
 
   }
@@ -153,6 +153,7 @@ export class CandidateWorkComponent implements OnInit {
       this.deleteJobs.push(this.jobs.at(item).get('id')?.value);
     }
     this.jobs.removeAt(item);
+    this.selectedSkills.splice(item,1);
   }
 
   getErrorMessage(field: String, index: number) {
@@ -224,7 +225,7 @@ export class CandidateWorkComponent implements OnInit {
         if(key != "global") {
           this.jobs.at(index).get(mapKeysJob[key])!.setErrors({ "responseMessageError": value });
         } else {
-          this.globalError = $localize`:@@globalmessage:Error: ${value}`
+          this.globalError += ", " + $localize`:@@globalmessage:Error: ${value}`
         }
       });
     } else {
@@ -234,15 +235,19 @@ export class CandidateWorkComponent implements OnInit {
   
   saveWorkInfo() {
 
+    this.taskCount = 0;    
     this.deleteJobs.forEach(id => {
+      this.taskCount++;
       this.candidateService.deleteJobInfo(id, this.token).subscribe({
         error: (exception) => { 
-          this.globalError = $localize`:@@errordeletejob:Error al eliminar el registro`;
+          this.globalError += ", " + $localize`:@@errordeletejob:Error al eliminar el registro`;
           setTimeout(() => { this.globalError = "" }, 3000);
         },
         complete: () => { 
-          this.globalMessage = $localize`:@@okdeletejob:Registro eliminado (${id})`;
+          this.globalMessage += ", " + $localize`:@@okdeletejob:Registro eliminado (${id})`;
           setTimeout(() => { this.globalMessage = "" }, 3000);
+          this.taskCount--;
+          this.cancelOrReload();
         }
       });
     });
@@ -250,73 +255,70 @@ export class CandidateWorkComponent implements OnInit {
     this.deleteJobs = [];
 
     this.workInformationForm.value.jobs.forEach((job: Job, index: number) => {
+      this.taskCount++;
+      let jobRequest = new JobServiceSchema(
+        job.id,
+        job.role,
+        job.company,
+        job.description,
+        this.objectSkills.filter(x => this.selectedSkills.at(index)?.includes(x?.name))
+                         .map((skill) => skill.id ),
+        job.jobStart,
+        job.jobEnd
+      );
+
       if(job.id) {
-        this.candidateService.updateJobInfo(job, this.token).subscribe({
+        this.candidateService.updateJobInfo(jobRequest, this.token).subscribe({
           error: (exception) => this.setErrorBack(index, exception),
           complete: () => { 
-            this.globalMessage = $localize`:@@okupdatejob:Registro actualizado (${job.id})` 
+            this.globalMessage += ", " + $localize`:@@okupdatejob:Registro actualizado (${job.id})` 
             setTimeout(() => { this.globalMessage = "" }, 3000);
+            this.taskCount--;
+            this.cancelOrReload();
           }
         });
       } else {
-        this.candidateService.addJobInfo(job, this.token).subscribe({
+        this.candidateService.addJobInfo(jobRequest, this.token).subscribe({
           error: (exception) => this.setErrorBack(index, exception),
           complete: () => { 
-            this.globalMessage = $localize`:@@okaddjob:Registro ingresado`;
+            this.globalMessage += ", " + $localize`:@@okaddjob:Registro ingresado`;
             setTimeout(() => { this.globalMessage = "" }, 3000);
+            this.taskCount--;
+            this.cancelOrReload();
           }
         });
       }
     });
 
-    this.disableForm();
-
-    setTimeout(() => { 
-      this.jobs.clear();
-      this.getJobsInfo();
-    }, 3000);
-
-    /* this.candidateService
-      .updateCareersInfo(
-        this.academicInformationForm.value, 
-        this.token
-      ).subscribe({
-        error: (exception) => this.setErrorBack(exception),
-        complete: () => { 
-          this.disableForm();
-        }
-      }); */
-    
+    if (this.taskCount == 0) {
+      this.cancelOrReload();
+    }
   }
 
-  removeSkill(skill: [number, string]): void {
-    const index = this.selectedSkills.indexOf(skill);
+  removeSkill(skill: string, item: number): void {
+    const index = this.selectedSkills.at(item)!.indexOf(skill);
 
-    if (index >= 0) {
-      this.selectedSkills.splice(index, 1);
+    if (index! >= 0) {
+      this.selectedSkills.at(item)!.splice(index, 1);
     }
   }
 
   addSkill(event: MatChipInputEvent, item: number): void {
-    const value: [number, string] = [item, (event.value || '').trim()];
+    const value = (event.value || '').trim();
 
-    // Add our fruit
     if (value) {
-      this.selectedSkills.push(value);
+      this.selectedSkills.at(item)!.push(value);
     }
 
-    // Clear the input value
     event.chipInput!.clear();
-
   }
 
   selected(event: MatAutocompleteSelectedEvent, item: number): void {
-    const index = this.selectedSkills.indexOf([item, event.option.viewValue]);
+    const index = this.selectedSkills.at(item)!.indexOf(event.option.viewValue);
 
     if (index < 0) {
-      this.selectedSkills.push([item, event.option.viewValue]);
+      this.selectedSkills.at(item)!.push(event.option.viewValue);
       this.jobs.at(item).get('skills')!.setValue(null);
-      /* this.workInformationForm.get('skills')!.setValue(null); */
     }
 
   }
@@ -332,15 +334,18 @@ export class CandidateWorkComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = value ? value.toLowerCase() : '';
 
     return this.skills.filter(skill => skill.toLowerCase().includes(filterValue));
   }
 
-  cancel() {
-    this.deleteJobs = [];
-    this.disableForm();
-    this.jobs.clear();
-    this.getJobsInfo();
+  cancelOrReload() {
+    if(this.taskCount == 0) {
+      this.deleteJobs = [];
+      this.disableForm();
+      this.jobs.clear();
+      this.selectedSkills = [[]];
+      this.getJobsInfo();
+    }
   }
 }

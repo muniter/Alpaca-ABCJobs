@@ -31,6 +31,7 @@ import { C } from '@angular/cdk/keycodes';
 import { Country, CountryResponse } from 'src/app/shared/Country';
 import { Language, LanguageResponse } from 'src/app/shared/Language';
 import { CandidateEducationComponent } from '../candidate-education/candidate-education.component';
+import { CandidateWorkComponent } from '../candidate-work/candidate-work.component';
 
 describe('CandidateProfileComponent', () => {
   let component: CandidateProfileComponent;
@@ -60,7 +61,8 @@ describe('CandidateProfileComponent', () => {
       ],
       declarations: [
         CandidateProfileComponent,
-        CandidateEducationComponent
+        CandidateEducationComponent,
+        CandidateWorkComponent
       ],
       providers: [DatePipe, {
         provide: ActivatedRoute,

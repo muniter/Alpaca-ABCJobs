@@ -26,6 +26,7 @@ export class CandidateEducationComponent implements OnInit {
   deleteCareers: number[] = [];
   globalError!: string;
   globalMessage!: string;
+  taskCount: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -211,7 +212,7 @@ export class CandidateEducationComponent implements OnInit {
         if(key != "global") {
           this.careers.at(index).get(mapKeysCareer[key])!.setErrors({ "responseMessageError": value });
         } else {
-          this.globalError = $localize`:@@globalmessage:Error: ${value}`
+          this.globalError += ", " + $localize`:@@globalmessage:Error: ${value}`
         }
       });
     } else {
@@ -220,16 +221,19 @@ export class CandidateEducationComponent implements OnInit {
   }
   
   saveAcademicInfo() {
-
+    this.taskCount = 0;
     this.deleteCareers.forEach(id => {
+      this.taskCount++;
       this.candidateService.deleteCareerInfo(id, this.token).subscribe({
         error: (exception) => { 
-          this.globalError = $localize`:@@errordeletecareer:Error al eliminar el registro`;
+          this.globalError += ", " + $localize`:@@errordeletecareer:Error al eliminar el registro`;
           setTimeout(() => { this.globalError = "" }, 3000);
         },
         complete: () => { 
-          this.globalMessage = $localize`:@@okdeletecareer:Registro eliminado (${id})`;
+          this.globalMessage += ", " + $localize`:@@okdeletecareer:Registro eliminado (${id})`;
           setTimeout(() => { this.globalMessage = "" }, 3000);
+          this.taskCount--;
+          this.cancelOrReload();
         }
       });
     });
@@ -237,43 +241,33 @@ export class CandidateEducationComponent implements OnInit {
     this.deleteCareers = [];
 
     this.academicInformationForm.value.careers.forEach((career: Career, index: number) => {
+      this.taskCount++;
       if(career.id) {
         this.candidateService.updateCareerInfo(career, this.token).subscribe({
           error: (exception) => this.setErrorBack(index, exception),
           complete: () => { 
-            this.globalMessage = $localize`:@@okupdatecareer:Registro actualizado (${career.id})` 
+            this.globalMessage += ", " + $localize`:@@okupdatecareer:Registro actualizado (${career.id})` 
             setTimeout(() => { this.globalMessage = "" }, 3000);
+            this.taskCount--;
+            this.cancelOrReload();
           }
         });
       } else {
         this.candidateService.addCareerInfo(career, this.token).subscribe({
           error: (exception) => this.setErrorBack(index, exception),
           complete: () => { 
-            this.globalMessage = $localize`:@@okaddcareer:Registro ingresado`;
+            this.globalMessage += ", " + $localize`:@@okaddcareer:Registro ingresado`;
             setTimeout(() => { this.globalMessage = "" }, 3000);
+            this.taskCount--;
+            this.cancelOrReload();
           }
         });
       }
     });
-
-    this.disableForm();
-
-    setTimeout(() => { 
-      this.careers.clear();
-      this.getCareersInfo();
-    }, 3000);
-
-    /* this.candidateService
-      .updateCareersInfo(
-        this.academicInformationForm.value, 
-        this.token
-      ).subscribe({
-        error: (exception) => this.setErrorBack(exception),
-        complete: () => { 
-          this.disableForm();
-        }
-      }); */
     
+    if (this.taskCount == 0) {
+      this.cancelOrReload();
+    }
   }
 
   enableForm() {
@@ -286,10 +280,12 @@ export class CandidateEducationComponent implements OnInit {
     this.academicInformationForm.disable()
   }
 
-  cancel() {
-    this.deleteCareers = [];
-    this.disableForm();
-    this.careers.clear();
-    this.getCareersInfo();
+  cancelOrReload() {
+    if(this.taskCount == 0) {
+      this.deleteCareers = [];
+      this.disableForm();
+      this.careers.clear();
+      this.getCareersInfo();
+    }
   }
 }
