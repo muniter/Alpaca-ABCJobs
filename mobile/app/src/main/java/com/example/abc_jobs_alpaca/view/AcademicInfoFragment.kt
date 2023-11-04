@@ -79,6 +79,15 @@ class AcademicInfoFragment : Fragment() {
         return view
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            viewModel.loadAcademicItemsInfo()
+        }
+    }
+
+
     fun deleteItem(id: Int) {
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
@@ -86,8 +95,6 @@ class AcademicInfoFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 val result = repository.deleteAcademicInfo(token, id)
                 if (result.isSuccess) {
-                    //TODO: Check if there is refreshing
-                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.getOrNull()}")
                     viewModel.loadAcademicItemsInfo()
                 }
                 else {

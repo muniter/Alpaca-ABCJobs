@@ -215,7 +215,6 @@ class AcademicInfoCreateFragment : Fragment(),
         viewModel.setNavigationListener(this)
     }
 
-
      private fun convertStringToTextInputEditText(text: String): TextInputEditText {
          val editText = TextInputEditText(requireContext())
          editText.setText(text)
@@ -225,7 +224,6 @@ class AcademicInfoCreateFragment : Fragment(),
     override fun navigateToNextScreen() {
         view?.findNavController()?.navigate(R.id.action_academicInfoCreateFragment_to_nav_academic_info)
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -243,14 +241,10 @@ class AcademicInfoCreateFragment : Fragment(),
                     view?.findViewById<Spinner>(R.id.spinnerEducationLevel)?.selectedItem.toString()
                 val typeDegree = viewModel.getIdTypeDegree(degreeTypeSelected)
 
-                val endYear: Int
-                if(isFinished) {
-                    endYear =
-                        view?.findViewById<Spinner>(R.id.spinnerEndDate)?.selectedItem.toString()
-                            .toInt()
-                }else{
-                    endYear = 0
-                }
+                val endYear: Int = if(isFinished) {
+                    view?.findViewById<Spinner>(R.id.spinnerEndDate)?.selectedItem.toString()
+                        .toInt()
+                }else 0
 
                 toggleControl(false)
                 viewModel.saveAcademicInfoItem(

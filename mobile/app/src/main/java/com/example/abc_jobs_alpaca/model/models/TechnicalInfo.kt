@@ -5,10 +5,10 @@ import org.json.JSONObject
 
 data class TechnicalInfoItemResponse(
     val success: Boolean,
-    val data: Data
+    val data: TechnicalInfoItem
 )
 
-data class Data(
+data class TechnicalInfoItem(
     val description: String,
     val id: Int,
     val id_persona: Int,
@@ -18,7 +18,7 @@ data class Data(
 
 data class TechnicalInfoResponse(
     val success: Boolean,
-    val data: List<Data>?
+    val data: List<TechnicalInfoItem>?
 )
 
 fun deserializeTechnicalInfoItem(response: JSONObject): TechnicalInfoItemResponse {
@@ -38,10 +38,10 @@ fun deserializeTechnicalInfoItem(response: JSONObject): TechnicalInfoItemRespons
             TechnicalInfoType(0, "")
         }
 
-        return TechnicalInfoItemResponse(success, Data(description, id, id_persona, type))
+        return TechnicalInfoItemResponse(success, TechnicalInfoItem(description, id, id_persona, type))
     }
 
-    return TechnicalInfoItemResponse(success, Data("", 0, 0, TechnicalInfoType(0, "")))
+    return TechnicalInfoItemResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, "")))
 }
 
 
@@ -64,7 +64,7 @@ fun TechnicalInfoResponse(response: JSONObject): TechnicalInfoResponse {
     val success = response.optBoolean("success", false)
     val dataObject = response.optJSONArray("data")
 
-    val types = mutableListOf<Data>()
+    val types = mutableListOf<TechnicalInfoItem>()
     if (dataObject != null) {
         for (i in 0 until dataObject.length()) {
             val typeObject = dataObject.optJSONObject(i)
@@ -80,7 +80,7 @@ fun TechnicalInfoResponse(response: JSONObject): TechnicalInfoResponse {
                 } else {
                     TechnicalInfoType(0, "")
                 }
-                types.add(Data(description, id, id_persona, type))
+                types.add(TechnicalInfoItem(description, id, id_persona, type))
             }
         }
     }
@@ -93,7 +93,7 @@ fun deserializeTechnicalInfo(response: JSONObject): TechnicalInfoResponse {
     val success = response.optBoolean("success", false)
     val dataObject = response.optJSONArray("data")
 
-    val types = mutableListOf<Data>()
+    val types = mutableListOf<TechnicalInfoItem>()
     if (dataObject != null) {
         for (i in 0 until dataObject.length()) {
             val typeObject = dataObject.optJSONObject(i)
@@ -109,7 +109,7 @@ fun deserializeTechnicalInfo(response: JSONObject): TechnicalInfoResponse {
                 } else {
                     TechnicalInfoType(0, "")
                 }
-                types.add(Data(description, id, id_persona, type))
+                types.add(TechnicalInfoItem(description, id, id_persona, type))
             }
         }
     }
@@ -135,7 +135,7 @@ fun deserializeTechnicalInfoError(response: JSONObject): Exception {
 
 data class TechnicalInfoItemDeleteResponse(
     val success: Boolean,
-    val data: Data
+    val data: TechnicalInfoItem
 )
 
 fun deserializeTechnicalInfoItemDelete(response: JSONObject): TechnicalInfoItemDeleteResponse {
@@ -155,10 +155,10 @@ fun deserializeTechnicalInfoItemDelete(response: JSONObject): TechnicalInfoItemD
             TechnicalInfoType(0, "")
         }
 
-        return TechnicalInfoItemDeleteResponse(success, Data(description, id, id_persona, type))
+        return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem(description, id, id_persona, type))
     }
 
-    return TechnicalInfoItemDeleteResponse(success, Data("", 0, 0, TechnicalInfoType(0, "")))
+    return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, "")))
 }
 
 fun deserializeTechnicalInfoItemDeleteError(response: JSONObject): Exception {

@@ -11,7 +11,6 @@ class ConfirmDialogFragment(id: Int) : DialogFragment(){
 
     private val id = id
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setTitle("Confirmación")

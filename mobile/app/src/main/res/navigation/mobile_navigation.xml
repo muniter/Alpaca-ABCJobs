@@ -35,4 +35,22 @@
             android:id="@+id/action_academicInfoCreateFragment_to_nav_academic_info"
             app:destination="@id/nav_academic_info" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_technical_info"
+        android:name="com.example.abc_jobs_alpaca.view.TechnicalInfoFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_item_technical_list" >
+        <action
+            android:id="@+id/action_nav_technical_info_to_technicalInfoCreateFragment"
+            app:destination="@id/technicalInfoCreateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/technicalInfoCreateFragment"
+        android:name="com.example.abc_jobs_alpaca.view.TechnicalInfoCreateFragment"
+        android:label="TechnicalInfoCreateFragment" >
+        <action
+            android:id="@+id/action_technicalInfoCreateFragment_to_nav_technical_info"
+            app:destination="@id/nav_technical_info" />
+    </fragment>
 </navigation>
