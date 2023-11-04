@@ -45,7 +45,6 @@ describe('CandidateEducationComponent', () => {
         MatInputModule,
         MatIconModule,
         MatDividerModule,
-        RouterTestingModule,
         BrowserAnimationsModule        
       ],
       declarations: [ 
