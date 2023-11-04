@@ -27,8 +27,6 @@ class AcademicInfoFragment : Fragment() {
     private lateinit var viewModel: AcademicInfoViewModel
     private lateinit var repository: ABCJobsRepository
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -81,15 +79,16 @@ class AcademicInfoFragment : Fragment() {
         return view
     }
 
-    fun deleteAcademicItem(id: Int) {
+    fun deleteItem(id: Int) {
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         if (token != null) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val result = repository.deleteAcademicInfo(token, id)
                 if (result.isSuccess) {
-                    //TODO: message and navigate
+                    //TODO: Check if there is refreshing
                     Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.getOrNull()}")
+                    viewModel.loadAcademicItemsInfo()
                 }
                 else {
                     Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.exceptionOrNull()}")
@@ -99,11 +98,8 @@ class AcademicInfoFragment : Fragment() {
     }
 
     companion object {
-
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             AcademicInfoFragment().apply {

@@ -3,7 +3,9 @@ package com.example.abc_jobs_alpaca.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
 
 import com.example.abc_jobs_alpaca.databinding.FragmentItemBinding
@@ -31,7 +33,12 @@ class AcademicinfoitemRecyclerViewAdapter(
         holder.idView.text = item.id.toString()
         holder.nameInstitution.text = item.institution
         holder.nameDegree.text = item.title
-
+        holder.typeDegree.text = item.type.name
+        holder.startDate.text = item.start_year.toString()
+        holder.endDate.text = item.end_year.toString()
+        val state = item.end_year > 0
+        holder.checkBox.isChecked = state
+        holder.info.text = item.achievement
 
 
         holder.btnDelete.setOnClickListener {
@@ -43,10 +50,14 @@ class AcademicinfoitemRecyclerViewAdapter(
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
-        //val contentView: TextView = binding.content
         val btnDelete: ImageButton = binding.deleteAcademicInfoItem
         val nameDegree: TextView = binding.editTextDegree
         val nameInstitution: TextView = binding.editTextInstitution
+        val typeDegree: TextView = binding.spinnerEducationLevel
+        val startDate: TextView = binding.spinnerStartDate
+        val checkBox: CheckBox = binding.checkBoxCompletedStudies
+        val endDate: TextView = binding.spinnerEndDate
+        val info: TextView = binding.editTextAdditionalInfo
 
 
         override fun toString(): String {

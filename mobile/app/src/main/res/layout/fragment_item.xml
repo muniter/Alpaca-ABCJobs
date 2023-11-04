@@ -18,7 +18,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="515dp"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/content"
@@ -88,8 +89,7 @@
                     android:id="@+id/editTextDegree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_layout_background"
-                    android:ems="10"
+                    android:ems="14"
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Ingrese su grado académico"
@@ -131,8 +131,8 @@
                     android:text="Nivel de Estudios"
                     android:textColor="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/autoCompleteTextViewEducationLevel"
+                <TextView
+                    android:id="@+id/spinnerEducationLevel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nivel de Estudios" />
@@ -171,11 +171,10 @@
                     android:text="Institución Educativa"
                     android:textColor="@color/black" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/editTextInstitution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_layout_background"
                     android:ems="10"
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"
@@ -194,6 +193,46 @@
             </LinearLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutStartDate"
+            style="@style/TransparentBoxStroke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fecha de inicio"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/spinnerStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Año de inicio" />
+
+                <TextView
+                    android:id="@+id/labelStartDateError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/error_message" />
+            </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <CheckBox
             android:id="@+id/checkBoxCompletedStudies"
             android:layout_width="0dp"
@@ -201,7 +240,46 @@
             android:text="¿Culminó los estudios?"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEndDate"
+            style="@style/TransparentBoxStroke"
+            android:layout_width="0dp"
+            android:layout_height="63dp"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxCompletedStudies">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fecha fin de estudio"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/spinnerEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Año de fin de estudios" />
+
+                <TextView
+                    android:id="@+id/labelEndDateError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/error_message" />
+            </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutAdditionalInfo"
@@ -211,7 +289,7 @@
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxCompletedStudies">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDate">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -227,12 +305,11 @@
                     android:text="Información Adicional"
                     android:textColor="@color/black" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/editTextAdditionalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:background="@drawable/rounded_layout_background"
                     android:ems="10"
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"

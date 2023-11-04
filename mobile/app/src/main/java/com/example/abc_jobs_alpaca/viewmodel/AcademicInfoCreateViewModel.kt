@@ -1,6 +1,7 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,13 +11,24 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AcademicInfoCreateViewModel( private val abcJobsRepository: ABCJobsRepository): ViewModel() {
+class AcademicInfoCreateViewModel(
+    private val abcJobsRepository: ABCJobsRepository): ViewModel() {
 
     private val tokenLiveData = MutableLiveData<String?>()
     val typesTitles = MutableLiveData<List<AcademicInfoType>>()
     val token = tokenLiveData
     private val years = List<Int>(25) { 2021 - it }
 
+    private val enabledElementsLiveData = MutableLiveData<Boolean>()
+    fun setEnabledElements(state: Boolean) {
+        viewModelScope.launch {
+            enabledElementsLiveData.value = state
+        }
+    }
+
+    fun getEnabledElementsLiveData(): LiveData<Boolean> {
+        return enabledElementsLiveData
+    }
     fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
 
     fun getYears(): List<Int>{return years}
@@ -62,12 +74,24 @@ class AcademicInfoCreateViewModel( private val abcJobsRepository: ABCJobsReposit
         viewModelScope.launch(Dispatchers.Default) {
             abcJobsRepository.postAcademicInfo(token.value!!, newAcademicInfo)
                 .onSuccess {
-                    //TODO: message and navigation
+                    //TODO: message
+                    navigationListener?.navigateToNextScreen()
                 }
                 .onFailure {
                     //TODO: message
                 }
         }
 
+    }
+
+
+    interface NavigationListener {
+        fun navigateToNextScreen()
+    }
+
+    private var navigationListener: NavigationListener? = null
+
+    fun setNavigationListener(listener: NavigationListener) {
+        navigationListener = listener
     }
 }

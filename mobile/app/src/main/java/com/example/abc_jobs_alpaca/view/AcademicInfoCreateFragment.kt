@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.text.Editable
+import android.text.Layout.Directions
 import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,8 +21,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentAcademicInfoCreateBinding
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoRequest
@@ -31,8 +34,9 @@ import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoCreateViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-
-class AcademicInfoCreateFragment : Fragment(), View.OnClickListener {
+class AcademicInfoCreateFragment : Fragment(),
+    View.OnClickListener,
+    AcademicInfoCreateViewModel.NavigationListener{
 
     private val tokenLiveData = MutableLiveData<String?>()
     private var isValidNameInstitution: Boolean = false
@@ -83,7 +87,7 @@ class AcademicInfoCreateFragment : Fragment(), View.OnClickListener {
         val labelTypeDegreeError = view.findViewById<TextView>(R.id.labelEducationLevelError)
         val labelStartDateError = view.findViewById<TextView>(R.id.labelStartDateError)
         val labelEndDateError = view.findViewById<TextView>(R.id.labelEndDateError)
-        endDateLayout.visibility = View.INVISIBLE
+        endDateLayout.visibility = View.GONE
 
         btnSave.setOnClickListener(this)
         btnCancel.setOnClickListener(this)
@@ -129,7 +133,7 @@ class AcademicInfoCreateFragment : Fragment(), View.OnClickListener {
                 endDateLayout.visibility = View.VISIBLE
                 isFinished = true
             }else{
-                endDateLayout.visibility = View.INVISIBLE
+                endDateLayout.visibility = View.GONE
                 isFinished = false
             }
         }
@@ -176,18 +180,52 @@ class AcademicInfoCreateFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejo para cuando no se selecciona nada.
+                //TODO: Manejo para cuando no se selecciona nada. Aunque viene un valor por defecto.
             }
         }
 
         return view
     }
 
+    override  fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return AcademicInfoCreateViewModel(
+                    ABCJobsRepository(activity!!.application)
+                ) as T
+            }
+        })[AcademicInfoCreateViewModel::class.java]
+        viewModel.getEnabledElementsLiveData().observe(viewLifecycleOwner, Observer { state ->
+            toggleControl(state)
+        })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return AcademicInfoCreateViewModel(
+                    ABCJobsRepository(activity!!.application)
+                ) as T
+            }
+        })[AcademicInfoCreateViewModel::class.java]
+        viewModel.setNavigationListener(this)
+    }
+
+
      private fun convertStringToTextInputEditText(text: String): TextInputEditText {
          val editText = TextInputEditText(requireContext())
          editText.setText(text)
          return editText
      }
+
+    override fun navigateToNextScreen() {
+        view?.findNavController()?.navigate(R.id.action_academicInfoCreateFragment_to_nav_academic_info)
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -332,7 +370,6 @@ class AcademicInfoCreateFragment : Fragment(), View.OnClickListener {
             button.isEnabled = true
         }
     }
-
 
     private fun toggleControl(estate: Boolean) {
         view?.findViewById<Button>(R.id.academicInfoSaveButton)?.isEnabled = estate
