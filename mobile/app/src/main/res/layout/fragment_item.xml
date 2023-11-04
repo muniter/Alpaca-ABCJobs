@@ -84,7 +84,7 @@
                     android:text="Título Obtenido"
                     android:textColor="@color/black" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
                     android:id="@+id/editTextDegree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

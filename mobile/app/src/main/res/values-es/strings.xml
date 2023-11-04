@@ -60,5 +60,6 @@
     <string name="cancel_preferences_button">Cancelar</string>
     <string name="menu_academic_info">Información académica</string>
     <string name="preferencias_del_sistema">Preferencias del sistema</string>
+    <string name="create_academic_info_title">Crear formación académica</string>
 
 </resources>

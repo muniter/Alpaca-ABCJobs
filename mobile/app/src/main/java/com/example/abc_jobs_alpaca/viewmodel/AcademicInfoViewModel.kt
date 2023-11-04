@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoItem
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class AcademicInfoViewModel (private val abcJobsRepository: ABCJobsRepository) :
                             if (response.success) {
                                 Log.d("AcademicInfoViewModel", "loadAcademicItemsInfo: ${response.data}")
                                 _academicInfoList.postValue(response.data)
+
                             }
                         }
                         .onFailure {

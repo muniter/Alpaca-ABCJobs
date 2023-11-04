@@ -12,16 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.model.models.UserDataResponse
 import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
@@ -49,7 +50,9 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
 
         val view = inflater.inflate(R.layout.fragment_candidato_register, container, false)
         val btn: Button = view.findViewById(R.id.button_register)
+        val btnBack: ImageView = view.findViewById(R.id.action_button)
         btn.setOnClickListener(this)
+        btnBack.setOnClickListener (this)
 
         val viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -234,6 +237,9 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
                 viewModel.postCandidate(candidate)
 
                 requireActivity().supportFragmentManager.popBackStack()
+            }
+            R.id.action_button -> {
+                findNavController().navigate(R.id.welcomeFragment)
             }
         }
     }

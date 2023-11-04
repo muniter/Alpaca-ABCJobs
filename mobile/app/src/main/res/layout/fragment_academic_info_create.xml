@@ -17,301 +17,333 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="534dp">
+        android:layout_height="match_parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:context=".MainActivity">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutDegree"
-                    style="@style/TransparentBoxStroke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/labelDegree"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Título Obtenido"
-                            android:textColor="@color/black" />
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextDegree"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_layout_background"
-                            android:ems="10"
-                            android:focusable="auto"
-                            android:fontFamily="@font/roboto_regular"
-                            android:hint="Ingrese su grado académico"
-                            android:inputType="textPersonName"
-                            android:textAlignment="viewStart"
-                            android:textColorHint="@color/accent"
-                            android:typeface="normal" />
-
-                        <TextView
-                            android:id="@+id/labelDegreeError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/error_message" />
-                    </LinearLayout>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutEducationLevel"
-                    style="@style/TransparentBoxStroke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDegree">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/labelEducationLevel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Nivel de Estudios"
-                            android:textColor="@color/black" />
-
-                        <Spinner
-                            android:id="@+id/spinnerEducationLevel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nivel de Estudios" />
-
-                        <TextView
-                            android:id="@+id/labelEducationLevelError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/error_message" />
-                    </LinearLayout>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutInstitution"
-                    style="@style/TransparentBoxStroke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEducationLevel">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/labelInstitution"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Institución Educativa"
-                            android:textColor="@color/black" />
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextInstitution"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_layout_background"
-                            android:ems="10"
-                            android:focusable="auto"
-                            android:fontFamily="@font/roboto_regular"
-                            android:hint="Ingrese la institución educativa"
-                            android:inputType="textPersonName"
-                            android:textAlignment="viewStart"
-                            android:textColorHint="@color/accent"
-                            android:typeface="normal" />
-
-                        <TextView
-                            android:id="@+id/labelInstitutionError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/error_message" />
-                    </LinearLayout>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                ----
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutStartDate"
-                    style="@style/TransparentBoxStroke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/labelStartDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Fecha de inicio"
-                            android:textColor="@color/black" />
-
-                        <Spinner
-                            android:id="@+id/spinnerStartDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Año de inicio" />
-
-                        <TextView
-                            android:id="@+id/labelStartDateError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/error_message" />
-                    </LinearLayout>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                --
-
-                <CheckBox
-                    android:id="@+id/checkBoxCompletedStudies"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="¿Culminó los estudios?"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutAdditionalInfo"
-                    style="@style/TransparentBoxStroke"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/checkBoxCompletedStudies">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/labelAdditionalInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Información Adicional"
-                            android:textColor="@color/black" />
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextAdditionalInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:background="@drawable/rounded_layout_background"
-                            android:ems="10"
-                            android:focusable="auto"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="top"
-                            android:hint="Información Adicional"
-                            android:inputType="textMultiLine"
-                            android:minLines="3" />
-
-                        <TextView
-                            android:id="@+id/labelAdditionalInfoError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/error_message" />
-                    </LinearLayout>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAdditionalInfo">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:context=".MainActivity">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/academicInfoCancelButton"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutDegree"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/rounded_layout_background"
-                        android:text="@string/cancel_preferences_button"
-                        android:textColor="@color/accent"
+                        app:hintEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.58"
-                        app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/academicInfoSaveButton"
-                        android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelDegree"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Título Obtenido"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextDegree"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_layout_background"
+                                android:ems="10"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="Ingrese su grado académico"
+                                android:inputType="textPersonName"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="@color/accent"
+                                android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelDegreeError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutEducationLevel"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/button_rounded_black"
-                        android:text="@string/save_preferences_button"
-                        android:textColor="@color/white"
+                        android:layout_marginTop="5dp"
+                        app:hintEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </LinearLayout>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDegree">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-        </LinearLayout>
+                            <TextView
+                                android:id="@+id/labelEducationLevel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Nivel de Estudios"
+                                android:textColor="@color/black" />
 
+                            <Spinner
+                                android:id="@+id/spinnerEducationLevel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Nivel de Estudios" />
+
+                            <TextView
+                                android:id="@+id/labelEducationLevelError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutInstitution"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEducationLevel">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelInstitution"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Institución Educativa"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextInstitution"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_layout_background"
+                                android:ems="10"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:hint="Ingrese la institución educativa"
+                                android:inputType="textPersonName"
+                                android:textAlignment="viewStart"
+                                android:textColorHint="@color/accent"
+                                android:typeface="normal" />
+
+                            <TextView
+                                android:id="@+id/labelInstitutionError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutStartDate"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:hintEnabled="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInstitution">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelStartDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Fecha de inicio"
+                                android:textColor="@color/black" />
+
+                            <Spinner
+                                android:id="@+id/spinnerStartDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Año de inicio" />
+
+                            <TextView
+                                android:id="@+id/labelStartDateError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxCompletedStudies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="¿Culminó los estudios?"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutEndDate"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
+                        android:layout_height="63dp"
+                        app:hintEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutAdditionalInfo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkBoxCompletedStudies">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelEndDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Fecha fin de estudio"
+                                android:textColor="@color/black" />
+
+                            <Spinner
+                                android:id="@+id/spinnerEndDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Año de fin de estudios" />
+
+                            <TextView
+                                android:id="@+id/labelEndDateError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutAdditionalInfo"
+                        style="@style/TransparentBoxStroke"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDate">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/labelAdditionalInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Información Adicional"
+                                android:textColor="@color/black" />
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextAdditionalInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:background="@drawable/rounded_layout_background"
+                                android:ems="10"
+                                android:focusable="auto"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="top"
+                                android:hint="Información Adicional"
+                                android:inputType="textMultiLine"
+                                android:minLines="3" />
+
+                            <TextView
+                                android:id="@+id/labelAdditionalInfoError"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/error_message" />
+                        </LinearLayout>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAdditionalInfo">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/academicInfoCancelButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_layout_background"
+                            android:text="@string/cancel_preferences_button"
+                            android:textColor="@color/accent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.58"
+                            app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/academicInfoSaveButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/button_rounded_black"
+                            android:text="@string/save_preferences_button"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

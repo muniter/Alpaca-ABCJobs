@@ -14,13 +14,12 @@ class ConfirmDialogFragment(id: Int) : DialogFragment(){
         AlertDialog.Builder(requireContext())
             .setTitle("Confirmación")
             .setMessage("¿Está seguro que desea eliminar este elemento?")
-            .setPositiveButton("Guardar") { dialog, which ->
-                Log.d("ConfirmDialogFragment", "Positive button clicked$id")
-                // how to call a method of parentFragment
+            .setPositiveButton("Aceptar") { dialog, _ ->
                 (parentFragment as AcademicInfoFragment).deleteAcademicItem(id)
+                //TODO: Refresh list
             }
-            .setNegativeButton("Cancelar") { dialog, which ->
-                Log.d("ConfirmDialogFragment", "Negative button clicked")
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                //TODO: close dialog
             }
             .create()
 

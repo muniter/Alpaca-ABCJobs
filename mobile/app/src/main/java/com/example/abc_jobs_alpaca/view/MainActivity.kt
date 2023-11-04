@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity()
             when(navHostFragment?.childFragmentManager?.fragments?.firstOrNull()) {
                 is AcademicInfoFragment -> {
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                    supportActionBar?.title = getString(R.string.create_academic_info_title)
                 }
                 else -> {
                     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -119,7 +120,6 @@ class MainActivity : AppCompatActivity()
         configuration.setLocale(locale)
         super.attachBaseContext(newBase.createConfigurationContext(configuration))
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -141,8 +141,5 @@ class MainActivity : AppCompatActivity()
                 return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
             }
         }
-
     }
-
-
 }

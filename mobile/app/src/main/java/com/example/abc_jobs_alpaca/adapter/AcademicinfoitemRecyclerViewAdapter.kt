@@ -8,6 +8,7 @@ import android.widget.TextView
 
 import com.example.abc_jobs_alpaca.databinding.FragmentItemBinding
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoItem
+import com.google.android.material.textfield.TextInputEditText
 
 class AcademicinfoitemRecyclerViewAdapter(
     private val values: List<AcademicInfoItem>,
@@ -28,7 +29,10 @@ class AcademicinfoitemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id.toString()
-        holder.contentView.text = item.institution
+        holder.nameInstitution.text = item.institution
+        holder.nameDegree.text = item.title
+
+
 
         holder.btnDelete.setOnClickListener {
             onItemClick(item)
@@ -39,11 +43,14 @@ class AcademicinfoitemRecyclerViewAdapter(
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        //val contentView: TextView = binding.content
         val btnDelete: ImageButton = binding.deleteAcademicInfoItem
+        val nameDegree: TextView = binding.editTextDegree
+        val nameInstitution: TextView = binding.editTextInstitution
+
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + nameDegree.text + "'"
         }
     }
 
