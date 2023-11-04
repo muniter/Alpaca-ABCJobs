@@ -32,15 +32,6 @@ data class AcademicInfoItem(
     val type: AcademicInfoType
 )
 
-data class AcademicInfoType(
-    val id: Int,
-    val name: String
-)
-
-data class AcademicInfoTypeResponse(
-    val success: Boolean,
-    val data: List<AcademicInfoType>
-)
 
 data class AcademicInfoItemDeleteResponse(
     val success: Boolean,
@@ -120,39 +111,6 @@ fun deserializeAcademicInfo(response: JSONObject): AcademicInfoResponse {
     return AcademicInfoResponse(success, academicInfo)
 }
 
-fun deserializeTypesTitles(response: JSONObject): AcademicInfoTypeResponse {
-    val success = response.optBoolean("success", false)
-    val dataObject = response.optJSONArray("data")
-
-    val types = mutableListOf<AcademicInfoType>()
-    if (dataObject != null) {
-        for (i in 0 until dataObject.length()) {
-            val typeObject = dataObject.optJSONObject(i)
-            if (typeObject != null) {
-                val id = typeObject.optInt("id")
-                val name = typeObject.optString("name")
-                types.add(AcademicInfoType(id, name))
-            }
-        }
-    }
-
-    return AcademicInfoTypeResponse(success, types)
-}
-
-fun deserializeTypesTitlesError(response: JSONObject): Exception {
-    val success = response.optBoolean("success", false)
-
-    if (!success) {
-        val errorsObject = response.optJSONObject("errors")
-        if (errorsObject != null) {
-            val emailError = errorsObject.optString("")
-            if (emailError.isNotBlank()) {
-                return Exception(emailError)
-            }
-        }
-    }
-    return Exception("Error en la solicitud")
-}
 
 
 fun serializeAcademicInfo(request:  AcademicInfoRequest): JSONObject {

@@ -258,6 +258,9 @@ class AcademicInfoCreateFragment : Fragment(),
                 )
 
             }
+            R.id.academicInfoCancelButton -> {
+                view?.findNavController()?.navigate(R.id.action_academicInfoCreateFragment_to_nav_academic_info)
+            }
         }
     }
 

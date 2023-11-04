@@ -4,6 +4,7 @@ package com.example.abc_jobs_alpaca.model.repository
 import android.app.Application
 import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
+import com.example.abc_jobs_alpaca.model.api.ABCJobsServiceUtils
 import com.example.abc_jobs_alpaca.model.models.*
 
 class ABCJobsRepository(private val applicationContext: Application) {
@@ -28,7 +29,7 @@ class ABCJobsRepository(private val applicationContext: Application) {
     }
 
     suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
-        return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
+        return ABCJobsServiceUtils.getInstance(applicationContext).getTypesTitle(token)
     }
 
     suspend fun postAcademicInfo(token: String, newAcademicInfo: AcademicInfoRequest): Result<AcademicInfoItemResponse>{
