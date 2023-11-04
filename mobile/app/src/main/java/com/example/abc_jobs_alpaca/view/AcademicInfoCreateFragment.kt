@@ -256,6 +256,7 @@ class AcademicInfoCreateFragment : Fragment(),
                 viewModel.saveAcademicInfoItem(
                     AcademicInfoRequest(institution, title, startYear, endYear, achievement, typeDegree)
                 )
+                view?.findNavController()?.navigate(R.id.action_academicInfoCreateFragment_to_nav_academic_info)
 
             }
             R.id.academicInfoCancelButton -> {

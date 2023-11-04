@@ -75,7 +75,6 @@ class AcademicInfoCreateViewModel(
             abcJobsRepository.postAcademicInfo(token.value!!, newAcademicInfo)
                 .onSuccess {
                     //TODO: message
-                    navigationListener?.navigateToNextScreen()
                 }
                 .onFailure {
                     //TODO: message

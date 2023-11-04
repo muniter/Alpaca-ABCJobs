@@ -38,8 +38,10 @@ class AcademicinfoitemRecyclerViewAdapter(
         holder.endDate.text = item.end_year.toString()
         val state = item.end_year > 0
         holder.checkBox.isChecked = state
+        holder.checkBox.isEnabled = false
         holder.info.text = item.achievement
-
+        holder.endDate.visibility = if (state) TextView.VISIBLE else TextView.GONE
+        holder.labelEndDate.visibility = if (state) TextView.VISIBLE else TextView.GONE
 
         holder.btnDelete.setOnClickListener {
             onItemClick(item)
@@ -57,6 +59,7 @@ class AcademicinfoitemRecyclerViewAdapter(
         val startDate: TextView = binding.spinnerStartDate
         val checkBox: CheckBox = binding.checkBoxCompletedStudies
         val endDate: TextView = binding.spinnerEndDate
+        val labelEndDate : TextView = binding.labelEndDate
         val info: TextView = binding.editTextAdditionalInfo
 
 

@@ -2,6 +2,7 @@ package com.example.abc_jobs_alpaca.model.api
 
 import android.content.Context
 import android.util.Log
+import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -81,8 +82,9 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
-    private fun postRequestWithToken(
+    private fun requestWithToken(
         token: String,
+        method: Int,
         path: String,
         action: String,
         body: JSONObject,
@@ -90,7 +92,7 @@ class ABCJobsService constructor(context: Context){
         errorListener: Response.ErrorListener,
     ): StringRequest {
         return object : StringRequest(
-            Method.POST, BASEURL+path+action, responseListener, errorListener
+            method, BASEURL+path+action, responseListener, errorListener
         ) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
@@ -194,8 +196,8 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine { cont ->
                 requestQueue.add(
-                    postRequestWithToken(
-                        token, USERS_PATH, CONFIG_PATH, configJson,
+                    requestWithToken(
+                        token, Request.Method.POST, USERS_PATH, CONFIG_PATH, configJson,
                         { response -> cont.resume(JSONObject(response)) },
                         { volleyError -> cont.resumeWithException(volleyError) }
                     )
@@ -238,7 +240,8 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
-                    postRequestWithToken(token,CANDIDATES_PATH, ACADEMIC_INFO_PATH, academicInfoItem,
+                    requestWithToken(token,
+                        Request.Method.POST,CANDIDATES_PATH, ACADEMIC_INFO_PATH, academicInfoItem,
                         { response -> cont.resume(JSONObject(response))},
                         { volleyError ->
                         if (volleyError.networkResponse != null) {
@@ -279,21 +282,23 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
-                    object : StringRequest(
-                        Method.DELETE, "$BASEURL$CANDIDATES_PATH$ACADEMIC_INFO_PATH/$id",
-                        { response -> cont.resume(JSONObject(response)) },
-                        { volleyError -> cont.resumeWithException(volleyError) }
-                    ) {
-                        override fun getBodyContentType(): String {
-                            return "application/json; charset=utf-8"
-                        }
+                    requestWithToken(token,
+                        Request.Method.DELETE,
+                        CANDIDATES_PATH,
+                        "$ACADEMIC_INFO_PATH/$id",
+                        JSONObject(),
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
 
-                        override fun getHeaders(): MutableMap<String, String> {
-                            val headers = HashMap<String, String>()
-                            headers["Authorization"] = "Bearer $token"
-                            return headers
-                        }
-                    }
+                                if (!jsonError.optBoolean("success")) {
+                                    val academicInfoError = deserializeAcademicInfoItemDeleteError(jsonError)
+                                    cont.resumeWithException(academicInfoError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
                 )
             }
             if (response.getBoolean("success")) {
@@ -313,7 +318,11 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = suspendCoroutine<JSONObject> { cont ->
                 requestQueue.add(
-                    postRequestWithToken(token,CANDIDATES_PATH, TECHNICAL_INFO_PATH, technicalInfoItem,
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        CANDIDATES_PATH,
+                        TECHNICAL_INFO_PATH,
+                        technicalInfoItem,
                         { response -> cont.resume(JSONObject(response))},
                         { volleyError ->
                             if (volleyError.networkResponse != null) {
@@ -342,6 +351,51 @@ class ABCJobsService constructor(context: Context){
     }
 
 
+    suspend fun getTechnicalInfo(token: String): Result<TechnicalInfoResponse> {
+        return try {
+            val response = fetchInfo(token, CANDIDATES_PATH, TECHNICAL_INFO_PATH)
+            Result.success(deserializeTechnicalInfo(response))
+            Result.failure(deserializeAcademicInfoError(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
+
+    suspend fun deleteTechnicalInfo(token: String, id: Int): Result<TechnicalInfoItemDeleteResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.DELETE,
+                        CANDIDATES_PATH,
+                        "$TECHNICAL_INFO_PATH/$id",
+                        JSONObject(),
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val technicalInfoError = deserializeTechnicalInfoItemDeleteError(jsonError)
+                                    cont.resumeWithException(technicalInfoError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+                if (response.getBoolean("success")) {
+                    val technicalInfo = deserializeTechnicalInfoItemDelete(response)
+                    Result.success(technicalInfo)
+                } else {
+                    val technicalInfoError = deserializeTechnicalInfoItemDeleteError(response)
+                    Result.failure(technicalInfoError)
+                }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
 
 }

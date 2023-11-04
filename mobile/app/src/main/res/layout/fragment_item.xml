@@ -18,14 +18,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="536dp"
+        android:background="@drawable/custom_text_input_background"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/idLinearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +67,8 @@
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +95,6 @@
                     android:ems="14"
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Ingrese su grado académico"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
                     android:textColorHint="@color/accent"
@@ -112,7 +114,9 @@
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +138,7 @@
                 <TextView
                     android:id="@+id/spinnerEducationLevel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nivel de Estudios" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/labelEducationLevelError"
@@ -152,6 +155,8 @@
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +183,6 @@
                     android:ems="10"
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Ingrese la institución educativa"
                     android:inputType="textPersonName"
                     android:textAlignment="viewStart"
                     android:textColorHint="@color/accent"
@@ -198,7 +202,9 @@
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -220,8 +226,7 @@
                 <TextView
                     android:id="@+id/spinnerStartDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Año de inicio" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/labelStartDateError"
@@ -237,16 +242,22 @@
             android:id="@+id/checkBoxCompletedStudies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:editable="false"
             android:text="¿Culminó los estudios?"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate"
+            tools:ignore="Deprecated" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutEndDate"
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="63dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -268,8 +279,7 @@
                 <TextView
                     android:id="@+id/spinnerEndDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Año de fin de estudios" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/labelEndDateError"
@@ -286,6 +296,8 @@
             style="@style/TransparentBoxStroke"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -314,7 +326,6 @@
                     android:focusable="auto"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="top"
-                    android:hint="Información Adicional"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
 
