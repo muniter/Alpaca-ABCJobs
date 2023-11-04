@@ -630,7 +630,7 @@ class DatosLaboralesService:
             error.add("id", "Invalid id")
             return error
 
-        data.end_year = None if data.end_year is 0 else data.end_year
+        data.end_year = None if data.end_year == 0 else data.end_year
         if data.end_year and data.end_year < data.start_year:
             error.add("end_year", "End year must be equal or after start year")
             return error
@@ -750,6 +750,7 @@ class DatosAcademicosService:
     def load(self, model: DatosAcademicos, data: CandidatoDatosAcademicosCreateDTO):
         error = ErrorBuilder(data)
 
+        data.end_year = None if data.end_year == 0 else data.end_year
         if data.end_year and data.end_year < data.start_year:
             error.add("end_year", "End year must be after or equal to start year")
             return error
