@@ -18,6 +18,7 @@ def shared_app_setup(app: FastAPI, router: APIRouter):
             print("Pydantic error", pydantic_error)
             loc, msg = pydantic_error["loc"], pydantic_error["msg"]
             filtered_loc = loc[1:] if loc[0] in ("body", "query", "path") else loc
+            filtered_loc = [str(x) for x in filtered_loc]
             field_string = ".".join(filtered_loc)  # nested fields with dot-notation
             error.add(field_string, msg)
 

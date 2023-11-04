@@ -177,7 +177,7 @@ class DatosLaborales(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     id_persona: Mapped[int] = mapped_column(
-        ForeignKey("persona.id"), nullable=False, unique=True
+        ForeignKey("persona.id"), nullable=False
     )
     persona: Mapped["Persona"] = relationship("Persona", backref="datos_laborales")
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
