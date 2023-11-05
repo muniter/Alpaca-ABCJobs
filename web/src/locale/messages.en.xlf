@@ -130,6 +130,10 @@
           <context context-type="linenumber">147</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -148,6 +152,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
           <context context-type="linenumber">150</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -481,7 +489,7 @@
         <target>Personal Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;personalInfoDisabled&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">19,23</context>
+          <context context-type="linenumber">19,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebirthdate" datatype="html">
@@ -945,10 +953,6 @@
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
           <context context-type="linenumber">169,170</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">181,182</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="nonemptycompany" datatype="html">
         <source>La compañia no puede ser vacío</source>
@@ -964,6 +968,16 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
           <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcompany" datatype="html">
+        <source>Revise el campo compañia: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the company field: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">181,182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyjobstart" datatype="html">
@@ -1060,6 +1074,86 @@
           <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="fullemployeenameplaceholder" datatype="html">
+        <source>Nombres y apellidos</source>
+        <target>Name and last name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="position" datatype="html">
+        <source>Cargo</source>
+        <target>Position</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentpositionplaceholder" datatype="html">
+        <source>Posición Actual</source>
+        <target>Current Position</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="technicalSkills" datatype="html">
+        <source>Habilidades Técnicas</source>
+        <target>Technical Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="skillsplaceholder" datatype="html">
+        <source>Tecnologías y aptitudes</source>
+        <target>Technologies and skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="personality" datatype="html">
+        <source>Personalidad</source>
+        <target>Personality</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="employeepersonalityplaceholder" datatype="html">
+        <source>Seleccionar tipo de personalidad</source>
+        <target>Choose personality type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyemployeename" datatype="html">
+        <source>El nombre del empleado no puede ser vacío</source>
+        <target>Employee name can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypositionname" datatype="html">
+        <source>El cargo del empleado no puede ser vacío</source>
+        <target>Employee position can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypersonality" datatype="html">
+        <source>Debe seleccionar una personalidad</source>
+        <target>You must choose a personality type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
         <source>PORTAL DE CANDIDATOS</source>
         <target>CANDIDATES PORTAL</target>
@@ -1150,6 +1244,62 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
           <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hometab" datatype="html">
+        <source>Home</source>
+        <target>Home</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="personaltab" datatype="html">
+        <source>Personal</source>
+        <target>People</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="teamsprojectstab" datatype="html">
+        <source>Equipos y Proyectos</source>
+        <target>Teams and projects</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="positionstab" datatype="html">
+        <source>Vacantes</source>
+        <target>Positions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatestab" datatype="html">
+        <source>Candidatos</source>
+        <target>Candidates</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hiringstab" datatype="html">
+        <source>Contrataciones</source>
+        <target>Hirings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="insertPeople" datatype="html">
+        <source>Ingresar personal</source>
+        <target>Add Employee</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/person-card/person-card.component.ts</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="language" datatype="html">

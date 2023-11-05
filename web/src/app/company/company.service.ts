@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CompanyLoginRequest, CompanyRegisterRequest } from './Company';
+import { CompanyLoginRequest, CompanyRegisterRequest } from './company';
 import { EmployeeCreationRequest, EmployeeResponse, EmployeesListResponse } from './Employee';
 import { Observable } from 'rxjs';
 import { SkillResponse } from '../shared/skill';
