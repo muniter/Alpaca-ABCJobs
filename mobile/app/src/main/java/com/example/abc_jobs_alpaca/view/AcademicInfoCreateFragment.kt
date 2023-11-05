@@ -169,7 +169,7 @@ class AcademicInfoCreateFragment : Fragment(),
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejo para cuando no se selecciona nada.
+                // TODO: (Siempre hay un dato) Manejo para cuando no se selecciona nada. Aunque viene un valor por defecto.
             }
         }
 

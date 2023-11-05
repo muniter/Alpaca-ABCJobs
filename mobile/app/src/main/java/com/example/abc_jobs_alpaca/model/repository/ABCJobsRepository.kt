@@ -31,6 +31,9 @@ class ABCJobsRepository(private val applicationContext: Application) {
     suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
         return ABCJobsServiceUtils.getInstance(applicationContext).getTypesTitle(token)
     }
+    suspend fun getTechnicalInfoTypes(token: String): Result<TechnicalInfoTypeResponse>{
+        return ABCJobsServiceUtils.getInstance(applicationContext).getTechnicalInfoTypes(token)
+    }
 
     suspend fun postAcademicInfo(token: String, newAcademicInfo: AcademicInfoRequest): Result<AcademicInfoItemResponse>{
         val academicInfoJson = serializeAcademicInfo(newAcademicInfo)
@@ -43,6 +46,17 @@ class ABCJobsRepository(private val applicationContext: Application) {
 
     suspend fun deleteAcademicInfo(token: String, idAcademicInfo: Int): Result<AcademicInfoItemDeleteResponse>{
         return ABCJobsService.getInstance(applicationContext).deleteAcademicInfoItem(token, idAcademicInfo)
+    }
+    suspend fun postTechnicalInfo(token: String, newTechnicalInfo: TechnicalInfoRequest): Result<TechnicalInfoItemResponse>{
+        val technicalInfoJson = serializeTechnicalInfo(newTechnicalInfo)
+        return ABCJobsService.getInstance(applicationContext).postTechnicalInfo(token, technicalInfoJson)
+    }
+    suspend fun getTechnicalInfo(token: String): Result<TechnicalInfoResponse>{
+        return ABCJobsService.getInstance(applicationContext).getTechnicalInfo(token)
+    }
+
+    suspend fun deleteTechnicalInfo(token: String, idTechnicalInfo: Int): Result<TechnicalInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteTechnicalInfo(token, idTechnicalInfo)
     }
 
 }

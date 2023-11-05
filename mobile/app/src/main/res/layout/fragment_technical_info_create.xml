@@ -12,7 +12,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.abc_jobs_alpaca.viewmodel.AcademicInfoCreateViewModel" />
+            type="com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoCreateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

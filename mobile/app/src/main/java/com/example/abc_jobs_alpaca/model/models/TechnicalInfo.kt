@@ -8,6 +8,11 @@ data class TechnicalInfoItemResponse(
     val data: TechnicalInfoItem
 )
 
+data class TechnicalInfoRequest(
+    val description: String,
+    val type: Int
+)
+
 data class TechnicalInfoItem(
     val description: String,
     val id: Int,
@@ -174,4 +179,12 @@ fun deserializeTechnicalInfoItemDeleteError(response: JSONObject): Exception {
         }
     }
     return Exception("Error en la solicitud")
+}
+
+
+fun serializeTechnicalInfo(newTechnicalInfo: TechnicalInfoRequest): JSONObject {
+    val technicalInfo = JSONObject()
+    technicalInfo.put("description", newTechnicalInfo.description)
+    technicalInfo.put("type", newTechnicalInfo.type)
+    return technicalInfo
 }

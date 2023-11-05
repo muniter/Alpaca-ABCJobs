@@ -17,14 +17,8 @@ class AcademicInfoCreateViewModel(
     private val tokenLiveData = MutableLiveData<String?>()
     val typesTitles = MutableLiveData<List<AcademicInfoType>>()
     val token = tokenLiveData
-    private val years = List<Int>(25) { 2021 - it }
-
+    private val years = List<Int>(25) { 2023 - it }
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
-    fun setEnabledElements(state: Boolean) {
-        viewModelScope.launch {
-            enabledElementsLiveData.value = state
-        }
-    }
 
     fun getEnabledElementsLiveData(): LiveData<Boolean> {
         return enabledElementsLiveData
