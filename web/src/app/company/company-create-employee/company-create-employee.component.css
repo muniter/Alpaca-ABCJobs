@@ -1,0 +1,50 @@
+.modal {
+    padding: 2rem;
+}
+
+.left-label {
+    width: 40%;
+}
+
+.right-field {
+    width: 60%;
+}
+
+.form-row {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.header-row {
+    display: flex;
+    justify-content: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.header-width {
+    width: 70%;
+}
+
+.header-input {
+    color: var(--contrastCompanyColor) !important;
+    text-align: center;
+    font-weight: bold !important;
+    font-size: x-large !important;
+}
+
+.form-row-label {
+    font-weight: 500 !important;
+}
+
+.small-button {
+	width: 20%;
+}
+
+.buttons {
+        display: flex;
+        justify-content: end;
+}

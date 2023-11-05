@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { UnloggedLangPickerComponent } from './unlogged-lang-picker/unlogged-lang-picker.component';
 import { CandidateHeaderComponent } from './candidate-header/candidate-header.component';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
+import { PersonCardComponent } from './person-card/person-card.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,23 @@ import { CompanyHeaderComponent } from './company-header/company-header.componen
     MatToolbarModule,
     MatIconModule
   ],
-  declarations: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent, CandidateHeaderComponent, CompanyHeaderComponent],
-  exports: [AbcButtonComponent, LoginLogonContainerComponent, FormHeaderComponent, UnloggedLangPickerComponent, CandidateHeaderComponent, CompanyHeaderComponent]
+  declarations: [
+    AbcButtonComponent,
+    LoginLogonContainerComponent,
+    FormHeaderComponent,
+    UnloggedLangPickerComponent,
+    CandidateHeaderComponent,
+    CompanyHeaderComponent,
+    PersonCardComponent
+  ],
+  exports: [
+    AbcButtonComponent,
+    LoginLogonContainerComponent,
+    FormHeaderComponent,
+    UnloggedLangPickerComponent,
+    CandidateHeaderComponent,
+    CompanyHeaderComponent,
+    PersonCardComponent
+  ]
 })
 export class SharedModule { }
