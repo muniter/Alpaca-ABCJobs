@@ -8,6 +8,7 @@ from common.shared.config import configuration
 from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpleadoDTO,
+    EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
     EquipoCreateDTO,
@@ -19,7 +20,12 @@ from common.shared.api_models.shared import (
     ErrorResponse,
 )
 from common.shared.database.db import recreate_all
-from .empresa import EmpresaService, get_empresa_service
+from .empresa import (
+    EmpresaService,
+    UtilsRepository,
+    get_empresa_service,
+    get_utils_repository,
+)
 
 app = FastAPI(
     openapi_url="/empresas/openapi.json",
@@ -162,6 +168,18 @@ def crear_team(
         response.status_code = status.HTTP_400_BAD_REQUEST
         return ErrorResponse(errors=result)
 
+    return SuccessResponse(data=result)
+
+
+@router.get(
+    "/utils/personalities",
+    response_model=Union[SuccessResponse[List[EmpleadoPersonalityDTO]], ErrorResponse],
+    status_code=status.HTTP_200_OK,
+)
+def get_personalidades(
+    respository: UtilsRepository = Depends(get_utils_repository),
+):
+    result = respository.get_personalidades_dto()
     return SuccessResponse(data=result)
 
 

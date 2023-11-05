@@ -238,9 +238,9 @@ class EmpresaService:
         persona = empleado.persona if empleado.persona else Persona()
         empleado.persona = persona
 
-        [nombre, apellido] = data.name.split(" ", 1)
-        persona.nombres = nombre
-        persona.apellidos = apellido if apellido else ""
+        result = data.name.split(" ", 1)
+        persona.nombres = result[0] if len(result) > 0 else " "
+        persona.apellidos = result[1] if len(result) > 1 else " "
         empleado.cargo = data.title
 
         personalidad = self.utils_repository.get_personalidad_by_id(data.personality_id)
