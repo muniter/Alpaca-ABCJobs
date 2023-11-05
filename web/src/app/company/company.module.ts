@@ -12,6 +12,12 @@ import { CompanyLoginComponent } from './company-login/company-login.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { CompanyRegisterComponent } from './company-register/company-register.component';
 import { CompanyHomeComponent } from './company-home/company-home.component';
+import { CompanyPeopleComponent } from './company-people/company-people.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { CompanyCreateEmployeeComponent } from './company-create-employee/company-create-employee.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -24,9 +30,13 @@ import { CompanyHomeComponent } from './company-home/company-home.component';
     MatCheckboxModule,
     ReactiveFormsModule,
     FormsModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
     SharedModule
   ],
-  declarations: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent],
-  exports: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent]
+  declarations: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent, CompanyPeopleComponent, CompanyCreateEmployeeComponent],
+  exports: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent, CompanyPeopleComponent, CompanyCreateEmployeeComponent]
 })
 export class CompanyModule { }

@@ -1,20 +1,19 @@
 <mat-toolbar color="primary">
   <div class="center-vertical">
-    <div class="logo-div">
+    <div class="logo-div" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">
       <img class="logo-img" src="../../../assets/logo.png">
     </div>
 
-    <span class="tab-label">Home</span>
-    <span class="tab-label">Personal</span>
-    <span class="tab-label">Equipos y Proyectos</span>
-    <span class="tab-label">Vacantes</span>
-    <span class="tab-label">Candidatos</span>
-    <span class="tab-label">Contrataciones</span>
+    <span class="tab-label" i18n="@@hometab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">Home</span>
+    <span class="tab-label" i18n="@@personaltab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyPeople+'/'+token">Personal</span>
+    <span class="tab-label" i18n="@@teamsprojectstab">Equipos y Proyectos</span>
+    <span class="tab-label" i18n="@@positionstab">Vacantes</span>
+    <span class="tab-label" i18n="@@candidatestab">Candidatos</span>
+    <span class="tab-label" i18n="@@hiringstab">Contrataciones</span>
   </div>
   <span class="example-spacer"></span>
   <span flex></span>
-  <div class="center-vertical user-name-icon"
-    [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateProfile+'/'+token">
+  <div class="center-vertical user-name-icon">
     <span class="tab-label">{{username}}</span>
     <button mat-icon-button class="user-icon-button">
       <mat-icon>account_circle</mat-icon>
