@@ -6,6 +6,7 @@ import { EmployeeCreationRequest, EmployeeResponse, EmployeesListResponse } from
 import { Observable } from 'rxjs';
 import { SkillResponse } from '../shared/skill';
 import { PersonalityResponse } from '../shared/Personality';
+import { TeamCreateRequest, TeamCreateResponse, TeamsListResponse } from './Team';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +41,19 @@ export class CompanyService {
   }
   
   postEmployee(token: string, request: EmployeeCreationRequest){
-    console.log("bbbbbbbbbb")
     const headers = this.getHeader(token)
-    console.log(headers)
 
     return this.http.post<EmployeeResponse>(`${this.backCompanyUrl}/employee`, request, { headers })
+  }
+  
+  getTeams(token: string){
+    const headers = this.getHeader(token);
+    return this.http.get<TeamsListResponse>(`${this.backCompanyUrl}/team`, { headers })
+  }
+  
+  postTeam(token: string, request: TeamCreateRequest){
+    const headers = this.getHeader(token);
+    return this.http.post<TeamCreateResponse>(`${this.backCompanyUrl}/team`, request, { headers })
   }
 
   getHeader(token: string) {
