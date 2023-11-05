@@ -1,9 +1,9 @@
-export class Language {
-    id: string;
+export class Personality {
+    id: number;
     name: string;
 
     public constructor(
-        id: string,
+        id: number,
         name: string
     ) {
         this.id = id
@@ -11,13 +11,13 @@ export class Language {
     }
 }
 
-export class LanguageResponse {
+export class PersonalityResponse {
     success: boolean;
-    data: Language[];
+    data: Personality[];
 
     public constructor(
         success: boolean,
-        data: Language[]
+        data: Personality[]
     ) {
         this.success = success
         this.data = data

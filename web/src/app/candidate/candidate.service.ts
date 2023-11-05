@@ -57,13 +57,6 @@ export class CandidateService {
     return this.http.post<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, request, { headers })
   }
 
-  getHeader(token: string) {
-    return {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    };
-  }
-
   getCollegeDegrees(): Observable<CollegeDegreeResponse> {
     return this.http.get<CollegeDegreeResponse>(`${this.backUtilsUrl}/title-types`)
   }
@@ -145,5 +138,11 @@ export class CandidateService {
       `${this.backCandidateUrl}/work-info/${jobId}`, { headers })
   }
 
+  getHeader(token: string) {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  }
 }
   

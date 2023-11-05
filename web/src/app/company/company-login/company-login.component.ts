@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import SharedCustomValidators from "../../shared/utils/shared-custom-validators"
-import { CompanyLoginRequest } from '../company';
+import { CompanyLoginRequest } from '../Company';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';

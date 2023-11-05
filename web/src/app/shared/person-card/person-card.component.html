@@ -1,0 +1,11 @@
+<div class="card-container">
+
+  <div class="icon-div">
+    <mat-icon [inline]="true" *ngIf="type == 'add'">add_circle</mat-icon>
+    <mat-icon [inline]="true" *ngIf="type == 'employee'">account_circle</mat-icon>
+  </div>
+  <div class="person-info">
+    <H2> {{ title }} </H2>
+    <ng-content></ng-content>
+  </div>
+</div>
