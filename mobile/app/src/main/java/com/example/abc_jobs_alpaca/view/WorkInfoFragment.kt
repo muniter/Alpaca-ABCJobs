@@ -1,6 +1,8 @@
 package com.example.abc_jobs_alpaca.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,17 +11,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.WorkInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent
-import com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoViewModel
+import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
 import com.example.abc_jobs_alpaca.viewmodel.WorkInfoViewModel
+import kotlinx.coroutines.launch
 
-/**
- * A fragment representing a list of Items.
- */
-class WorkInfoFragment : Fragment() {
+class WorkInfoFragment : Fragment(),
+    ConfirmDialogFragment.ConfirmDialogListener {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
@@ -39,18 +42,68 @@ class WorkInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_work_list, container, false)
+        repository = ABCJobsRepository(requireActivity().application)
+        viewModel =  ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return WorkInfoViewModel(
+                    ABCJobsRepository(activity!!.application)
+                ) as T
+            }
+        })[WorkInfoViewModel::class.java]
 
-        // Set the adapter
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", null)
+        tokenLiveData.value = token
+
+        tokenLiveData.observe(viewLifecycleOwner) { token ->
+            viewModel.onTokenUpdated(token)
+            viewModel.loadWorkItemsInfo()
+        }
+
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = WorkInfoItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                viewModel.workInfoList.observe(viewLifecycleOwner) { workInfoList ->
+                    adapter = workInfoList?.let {
+                        WorkInfoItemRecyclerViewAdapter(it) { clickedItem ->
+                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@WorkInfoFragment)
+                            confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
+                        }
+                    }
+                    view.adapter = adapter
+                }
             }
         }
         return view
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            viewModel.loadWorkItemsInfo()
+        }
+    }
+
+
+    override fun onConfirmDelete(id: Int){
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", null)
+        if (token != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val result = repository.deleteWorkInfo(token, id)
+                if (result.isSuccess) {
+                    viewModel.loadWorkItemsInfo()
+                }
+                else {
+                    Log.d("WorkInfoFragment", "deleteWorkItem: ${result.exceptionOrNull()}")
+                }
+            }
+        }
     }
 
     companion object {

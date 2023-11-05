@@ -4,18 +4,18 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.abc_jobs_alpaca.databinding.FragmentWorkInfoItemBinding
+import com.example.abc_jobs_alpaca.databinding.FragmentWorkItemBinding
+import com.example.abc_jobs_alpaca.model.models.WorkInfoItem
 
 class WorkInfoItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<WorkInfoItem>,
+    private val onItemClick : (WorkInfoItem) -> Unit
 ) : RecyclerView.Adapter<WorkInfoItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentWorkInfoItemBinding.inflate(
+            FragmentWorkItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -26,19 +26,18 @@ class WorkInfoItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.id.toString()
+
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentWorkInfoItemBinding) :
+    inner class ViewHolder(binding: FragmentWorkItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + idView.text + "'"
         }
     }
 

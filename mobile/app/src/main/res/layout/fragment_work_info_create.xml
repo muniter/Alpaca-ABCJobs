@@ -255,7 +255,7 @@
                                 android:textColor="@color/black" />
 
                             <AutoCompleteTextView
-                                android:id="@+id/autoCompleteSkillTextView"
+                                    android:id="@+id/autoCompleteSkillTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Buscar elementos"

@@ -35,6 +35,10 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsServiceUtils.getInstance(applicationContext).getTechnicalInfoTypes(token)
     }
 
+    suspend fun getTypesSkill(token: String): Result<SkillInfoTypeResponse>{
+        return ABCJobsServiceUtils.getInstance(applicationContext).getSkillsTypes(token)
+    }
+
     suspend fun postAcademicInfo(token: String, newAcademicInfo: AcademicInfoRequest): Result<AcademicInfoItemResponse>{
         val academicInfoJson = serializeAcademicInfo(newAcademicInfo)
         return ABCJobsService.getInstance(applicationContext).postAcademicInfo(token, academicInfoJson)
