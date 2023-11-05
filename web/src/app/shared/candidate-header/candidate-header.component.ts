@@ -39,4 +39,8 @@ export class CandidateHeaderComponent implements OnInit {
     });
   }
 
+  openTest() {
+    this.router.navigateByUrl(`${AppRoutesEnum.technicalTest}/${AppRoutesEnum.technicalTestCandidate}/${this.token}`)
+  }
+
 }

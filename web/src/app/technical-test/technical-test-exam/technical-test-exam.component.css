@@ -1,0 +1,61 @@
+.assessment {
+  padding: 3rem;
+}
+
+.question {
+  background-color: var(--lightColor);
+  padding: 2rem;
+  text-align: center;
+}
+
+.answers {
+  padding: 1rem 2rem;
+}
+
+.answers .answer-item {
+  margin: 1rem 0;
+}
+
+.quiz-item {
+  padding: 2rem;
+  text-align: center;
+}
+
+.quiz-item img {
+  width: 40%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.quiz-item p {
+  padding: 0px;
+  margin: 0.5rem 0px;
+  color: var(--darkColor)
+}
+
+.quiz-item p.quiz-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.quiz-item p.quiz-completed {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.result mat-icon {
+  font-size: 3rem;
+  font-weight: 500;
+  width: auto;
+  height: auto;
+  background-color: var(--lightColor);
+}
+
+.star-result {
+  color: var(--deactiveColor);
+}
+
+.star-result-complete {
+  color: var(--contrastCandidateColor)
+}
+

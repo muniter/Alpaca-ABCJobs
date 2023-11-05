@@ -1,0 +1,31 @@
+<div class="exam">
+  <div class="assessment"  *ngIf="!completedQuiz">
+    <div class="question">
+      <p>{{ quiz?.next_question?.question }}</p>
+    </div>
+    <div class="answers">
+      <div *ngFor="let answer of quiz?.next_question?.answers; let i = index" class="anwer-item">
+        <app-abc-button class="inline-button" color="primary" (click)="answerQuestion(answer)">
+          {{ answer.answer }}
+        </app-abc-button>
+      </div>
+    </div>
+  </div>
+  <div class="result" *ngIf="completedQuiz">
+  <div class="result" >
+    <div class="quiz-item">
+      <img src="../../../assets/rocket.png">
+      <p class="quiz-title">{{ quiz?.result?.exam?.skill?.name }}</p>
+      <p class="quiz-completed" i18n="@@techtestcompletedquiz">Examen finalizado</p>
+      <mat-icon aria-hidden="false" aria-label="Star result" fontIcon="star"
+                [ngClass]="quiz?.result!.result > 0 ? 'star-result-complete' : 'star-result'" >
+      </mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Star result" fontIcon="star"
+                [ngClass]="quiz?.result!.result > 1 ? 'star-result-complete' : 'star-result'" >
+      </mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Star result" fontIcon="star"
+                [ngClass]="quiz?.result!.result > 2 ? 'star-result-complete' : 'star-result'" >
+      </mat-icon>
+    </div>
+  </div>
+</div>

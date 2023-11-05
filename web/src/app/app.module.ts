@@ -12,6 +12,8 @@ import { CandidateModule } from './candidate/candidate.module';
 import { CandidateRoutingModule } from './candidate/candidate-routing.routing';
 import { UserModule } from './user/user.module';
 import { UserRoutingModule } from './user/user-routing.routing';
+import { TechnicalTestModule } from './technical-test/technical-test.module';
+import { TechnicalTestRoutingModule } from './technical-test/technical-test-routing.routing';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { UserRoutingModule } from './user/user-routing.routing';
     CandidateModule,
     CandidateRoutingModule,
     UserModule,
-    UserRoutingModule
+    UserRoutingModule,
+    TechnicalTestModule,
+    TechnicalTestRoutingModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
