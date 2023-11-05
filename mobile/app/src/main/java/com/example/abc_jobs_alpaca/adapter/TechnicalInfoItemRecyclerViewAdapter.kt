@@ -4,8 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.abc_jobs_alpaca.databinding.FragmentTechnicalItemBinding
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItem
 

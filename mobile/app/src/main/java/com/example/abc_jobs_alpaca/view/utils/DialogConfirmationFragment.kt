@@ -1,11 +1,9 @@
-package com.example.abc_jobs_alpaca.view
+package com.example.abc_jobs_alpaca.view.utils
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 
 class ConfirmDialogFragment(private val id: Int, private val listener: ConfirmDialogListener) : DialogFragment() {
 

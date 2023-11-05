@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
 import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 import kotlinx.coroutines.launch
 

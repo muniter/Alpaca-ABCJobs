@@ -2,7 +2,6 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.TechnicalInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
 import com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoViewModel
 import kotlinx.coroutines.launch
 
@@ -31,7 +31,7 @@ class TechnicalInfoFragment : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            columnCount = it.getInt(ARG_COLUMN_COUNT) 
         }
     }
 

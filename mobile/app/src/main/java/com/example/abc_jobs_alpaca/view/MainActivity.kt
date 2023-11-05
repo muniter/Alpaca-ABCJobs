@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity()
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.technicalInfoCreateFragment)
                     supportActionBar?.title = "Crear información técnica"
                 }
+                is WorkInfoFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.workInfoCreateFragment)
+                    supportActionBar?.title = "Crear información laboral"
+                }
                 else -> {
                     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()

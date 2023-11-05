@@ -53,4 +53,23 @@
             android:id="@+id/action_technicalInfoCreateFragment_to_nav_technical_info"
             app:destination="@id/nav_technical_info" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_work_info"
+        android:name="com.example.abc_jobs_alpaca.view.WorkInfoFragment"
+        android:label="Información laboral"
+        tools:layout="@layout/fragment_item_work_list" >
+        <action
+            android:id="@+id/action_nav_work_info_to_workInfoCreateFragment"
+            app:destination="@id/workInfoCreateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workInfoCreateFragment"
+        android:name="com.example.abc_jobs_alpaca.view.WorkInfoCreateFragment"
+        android:label="Creación de Información laboral"
+        tools:layout="@layout/fragment_work_info_create">
+        <action
+            android:id="@+id/action_workInfoCreateFragment_to_nav_work_info"
+            app:destination="@id/nav_work_info" />
+    </fragment>
 </navigation>
