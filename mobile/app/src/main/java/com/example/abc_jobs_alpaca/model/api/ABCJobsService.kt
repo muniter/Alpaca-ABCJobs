@@ -398,4 +398,86 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
+    suspend fun postWorkInfo(token: String, workInfoItem: JSONObject): Result<WorkInfoItemResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        CANDIDATES_PATH,
+                        WORK_INFO_PATH,
+                        workInfoItem,
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val workInfoError = deserializeWorkInfoItemError(jsonError)
+                                    cont.resumeWithException(workInfoError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val workInfo = deserializeWorkInfoItem(response)
+                Result.success(workInfo)
+            } else {
+                val workInfoError = deserializeWorkInfoItemError(response)
+                Result.failure(workInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getWorkInfo(token: String): Result<WorkInfoResponse> {
+        return try {
+            val response = fetchInfo(token, CANDIDATES_PATH, WORK_INFO_PATH)
+            Result.success(deserializeWorkInfo(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
+    suspend fun deleteWorkInfo(token: String, id: Int): Result<WorkInfoItemDeleteResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.DELETE,
+                        CANDIDATES_PATH,
+                        "$WORK_INFO_PATH/$id",
+                        JSONObject(),
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val workInfoError = deserializeWorkInfoItemDeleteError(jsonError)
+                                    cont.resumeWithException(workInfoError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val workInfo = deserializeWorkInfoItemDelete(response)
+                Result.success(workInfo)
+            } else {
+                val workInfoError = deserializeWorkInfoItemDeleteError(response)
+                Result.failure(workInfoError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
 }

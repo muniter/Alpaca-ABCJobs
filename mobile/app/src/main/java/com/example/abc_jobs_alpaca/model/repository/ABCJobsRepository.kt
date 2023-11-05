@@ -59,4 +59,17 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).deleteTechnicalInfo(token, idTechnicalInfo)
     }
 
+    suspend fun postWorkInfo(token: String, newWorkInfo: WorkInfoRequest): Result<WorkInfoItemResponse>{
+        val workInfoJson = serializeWorkInfo(newWorkInfo)
+        return ABCJobsService.getInstance(applicationContext).postWorkInfo(token, workInfoJson)
+    }
+
+    suspend fun getWorkInfo(token: String): Result<WorkInfoResponse>{
+        return ABCJobsService.getInstance(applicationContext).getWorkInfo(token)
+    }
+
+    suspend fun deleteWorkInfo(token: String, idWorkInfo: Int): Result<WorkInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteWorkInfo(token, idWorkInfo)
+    }
+
 }
