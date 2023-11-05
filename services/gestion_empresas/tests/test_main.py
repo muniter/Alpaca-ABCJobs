@@ -180,6 +180,7 @@ def test_endpoint_crear_empleado():
     assert id_empresa
 
     data = empleado_create_dto()
+    data.name = 'hola'
     response = client.post(
         "/employee",
         json=data.model_dump(mode="json"),
