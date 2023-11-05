@@ -381,3 +381,12 @@ def test_endpoint_get_all_results():
     assert response.status_code == 200
     assert len(response.json()["data"]) == 1
     assert response.json()["data"][0]["id"] == result.id
+
+
+def test_service_examen_twice():
+    usuario, _ = crear_usuario_candidato()
+    assert usuario.id_candidato is not None
+    res = examen_service.start_examen(id=1, id_candidato=usuario.id_candidato)
+    assert not isinstance(res, ErrorBuilder)
+    res = examen_service.start_examen(id=2, id_candidato=usuario.id_candidato)
+    assert not isinstance(res, ErrorBuilder)

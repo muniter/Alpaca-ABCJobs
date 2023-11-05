@@ -1,0 +1,83 @@
+.assessment {
+  padding: 3rem;
+}
+
+.question {
+  background-color: var(--lightColor);
+  padding: 2rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.answers {
+  padding: 1rem 2rem;
+}
+
+.answers .answer-item {
+  margin: 1rem 0;
+}
+
+.answers .answer-item p.quiz-button {
+  background-color: var(--darkColor);
+  color: var(--lightColor);
+  text-align: justify;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.answers .answer-item p.quiz-button:hover {
+  background-color: var(--contrastCandidateColor);
+  box-shadow: 10px 10px 5px var(--lightColor);
+}
+
+.quiz-item {
+  padding: 2rem;
+  text-align: center;
+}
+
+.quiz-item img {
+  width: 40%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.quiz-item p {
+  padding: 0px;
+  margin: 0.5rem 0px;
+  color: var(--darkColor)
+}
+
+.quiz-item p.quiz-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.quiz-item p.quiz-completed {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.result mat-icon {
+  font-size: 3rem;
+  font-weight: 500;
+  width: auto;
+  height: auto;
+  background-color: var(--lightColor);
+}
+
+.star-result {
+  color: var(--deactiveColor);
+}
+
+.star-result-complete {
+  color: var(--contrastCandidateColor)
+}
+
+.error {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: rgb(119, 0, 0);
+  background-color: #f2bfc1;
+}

@@ -13,5 +13,7 @@ export enum AppRoutesEnum {
   companyTeamsProjects='teams-projects',
   user='usuario',
   login='login',
-  settings='settings'
+  settings='settings',
+  technicalTest='technical-test',
+  technicalTestCandidate='candidate-test'
 }

@@ -17,6 +17,7 @@ body {
     --darkColor: #191919;
     --lightColor: #E4E4E4;
     --mat-select-panel-background-color: #fff;
+    --deactiveColor: #fff;
 }
 
 app-login-logon-container{
