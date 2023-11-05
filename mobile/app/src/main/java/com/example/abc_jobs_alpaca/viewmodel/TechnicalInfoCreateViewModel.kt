@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,10 +56,21 @@ class TechnicalInfoCreateViewModel(
         }
     }
 
+    fun getIdTypeTechnicalItem(nameTypeTechnicalItem: String): Int{
+        var idTypeTechnicalItem = 0
+        for (type in typesTechnicalInfoTypes.value!!){
+            if (type.name == nameTypeTechnicalItem){
+                idTypeTechnicalItem = type.id
+            }
+        }
+        return idTypeTechnicalItem
+    }
+
     fun saveTechnicalInfoItem(newTechnicalInfo: TechnicalInfoRequest) {
         viewModelScope.launch {
             try {
                 if (token != null) {
+                    Log.d("TechnicalInfoCreateViewModel", "saveTechnicalInfoItem: ${newTechnicalInfo}")
                     abcJobsRepository.postTechnicalInfo(token.value!!, newTechnicalInfo)
                         .onSuccess { }
                         .onFailure { }

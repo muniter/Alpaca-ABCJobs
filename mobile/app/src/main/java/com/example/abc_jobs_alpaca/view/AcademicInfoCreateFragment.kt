@@ -326,7 +326,7 @@ class AcademicInfoCreateFragment : Fragment(),
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = getString(R.string.name_validation_error)
+            labelError.text = "Se debe elegir un tipo de formación"
             isValidTypeDegree = false
             disableButton(view?.findViewById(R.id.academicInfoSaveButton)!!)
         } else {
@@ -364,6 +364,9 @@ class AcademicInfoCreateFragment : Fragment(),
 
     private fun enableButton(button: Button) {
         if (isValidNameInstitution
+            && isValidNameDegree
+            && isValidTypeDegree
+            && isValidDateInit
         ) {
             button.isEnabled = true
         }

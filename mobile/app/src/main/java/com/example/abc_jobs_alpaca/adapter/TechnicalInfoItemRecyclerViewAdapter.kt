@@ -7,13 +7,11 @@ import android.widget.TextView
 
 import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.abc_jobs_alpaca.databinding.FragmentTechnicalItemBinding
+import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItem
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class TechnicalInfoItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<TechnicalInfoItem>,
+    private val onItemClick : (TechnicalInfoItem) -> Unit
 ) : RecyclerView.Adapter<TechnicalInfoItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,8 +28,13 @@ class TechnicalInfoItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.id.toString()
+        holder.typeTechnicalInfoItem.text = item.type.name
+        holder.additionalInfo.text = item.description
+
+        holder.btnDelete.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -39,10 +42,12 @@ class TechnicalInfoItemRecyclerViewAdapter(
     inner class ViewHolder(binding: FragmentTechnicalItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        val typeTechnicalInfoItem : TextView = binding.spinnerTechnicalItem
+        val additionalInfo: TextView = binding.editTextAdditionalInfo
+        val btnDelete = binding.deleteTechnicalInfoItem
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + typeTechnicalInfoItem.text + "'"
         }
     }
 

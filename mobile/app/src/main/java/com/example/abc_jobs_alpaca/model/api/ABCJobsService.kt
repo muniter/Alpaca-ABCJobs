@@ -354,8 +354,8 @@ class ABCJobsService constructor(context: Context){
     suspend fun getTechnicalInfo(token: String): Result<TechnicalInfoResponse> {
         return try {
             val response = fetchInfo(token, CANDIDATES_PATH, TECHNICAL_INFO_PATH)
+            Log.d("TechnicalInfoResponse", response.toString())
             Result.success(deserializeTechnicalInfo(response))
-            Result.failure(deserializeAcademicInfoError(response))
         } catch (e: Exception) {
             Result.failure(e)
         }
