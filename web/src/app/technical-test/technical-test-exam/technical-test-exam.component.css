@@ -6,6 +6,7 @@
   background-color: var(--lightColor);
   padding: 2rem;
   text-align: center;
+  border-radius: 5px;
 }
 
 .answers {
@@ -14,6 +15,20 @@
 
 .answers .answer-item {
   margin: 1rem 0;
+}
+
+.answers .answer-item p.quiz-button {
+  background-color: var(--darkColor);
+  color: var(--lightColor);
+  text-align: justify;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.answers .answer-item p.quiz-button:hover {
+  background-color: var(--contrastCandidateColor);
+  box-shadow: 10px 10px 5px var(--lightColor);
 }
 
 .quiz-item {
@@ -59,3 +74,10 @@
   color: var(--contrastCandidateColor)
 }
 
+.error {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: rgb(119, 0, 0);
+  background-color: #f2bfc1;
+}

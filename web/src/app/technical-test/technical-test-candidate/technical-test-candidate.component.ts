@@ -15,16 +15,20 @@ export class TechnicalTestCandidateComponent implements OnInit {
 
   suggestedQuizzes: Exam[] = [];
   completedQuizzes: ExamResult[] = [];
-  token: string;
+  token: string = "";
 
   constructor(
     private activatedRouter: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     private technicalTestService: TechnicalTestService
-  ) { 
-    this.token = ""
-    if (!this.activatedRouter.snapshot.params['userToken']) {
+  ) {
+    this.validateToken(this.activatedRouter.snapshot.params['userToken']);
+  }
+  
+  validateToken(token:string) {
+    this.token = "";
+    if (!token) {
       this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
     } else {
       this.token = this.activatedRouter.snapshot.params['userToken'];
@@ -39,14 +43,14 @@ export class TechnicalTestCandidateComponent implements OnInit {
     this.technicalTestService.getExamsResult(this.token).subscribe({
       next: (response) => {
         this.completedQuizzes = response.data;
-      }
-    })
-    this.technicalTestService.getExams(this.token).subscribe({
-      next: (response) => {
-        this.suggestedQuizzes = response.data;
-        const completedIds = this.completedQuizzes.map((examResult) => examResult.exam.id);
-        this.suggestedQuizzes = this.suggestedQuizzes.filter(
-                                  (exam) => !completedIds.includes(exam.id) )
+        this.technicalTestService.getExams(this.token).subscribe({
+          next: (response) => {
+            this.suggestedQuizzes = response.data;
+            const completedIds = this.completedQuizzes.map((examResult) => examResult.exam.id);
+            this.suggestedQuizzes = this.suggestedQuizzes.filter(
+                                      (exam) => !completedIds.includes(exam.id) )
+          }
+        })
       }
     })
   }

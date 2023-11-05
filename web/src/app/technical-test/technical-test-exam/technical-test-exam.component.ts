@@ -19,6 +19,7 @@ export class TechnicalTestExamComponent implements OnInit {
   exam: Exam;
   quiz?: Quiz;
   completedQuiz: boolean = false;
+  messageError: string | null = null;
 
   constructor(
     private router: Router,
@@ -32,12 +33,25 @@ export class TechnicalTestExamComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.token || this.token == "") {
+    this.validateToken(this.token)
+    this.startExam();
+  }
+
+  validateToken(token:string|null) {
+    this.token = "";
+    if(!token || token == "") {
       this.dialog?.closeAll();
       this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
     } 
+    this.token = token!;
+  }
 
+  startExam() {
     this.technicalTestService.startExam(this.exam.id, this.token).subscribe({
+      error: (exception) => {
+        this.messageError = $localize`:@@errorstartexam:El servicio de examenes no se encuentra disponible, por favor intente más tarde`;
+        setTimeout(() => { this.messageError = null; this.dialog.closeAll() }, 3000);
+      },
       next: (response) => {
         this.quiz = response.data;
       }
@@ -46,6 +60,10 @@ export class TechnicalTestExamComponent implements OnInit {
 
   answerQuestion(answer: Answer) {
     this.technicalTestService.answerQuestion(this.quiz?.id_result, answer, this.token).subscribe({
+      error: (exception) => {
+        this.messageError = $localize`:@@errornextquestion:El servicio de examenes no se encuentra disponible, por favor intente más tarde`;
+        setTimeout(() => { this.messageError = null; }, 3000);
+      },
       next: (response) => {
         this.quiz = response.data;
         if(this.quiz.result) {

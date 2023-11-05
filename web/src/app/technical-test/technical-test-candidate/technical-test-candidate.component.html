@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="completed-quizzes">
-        <h1>Pruebas Técnicas Realizadas</h1>
+        <h1 i18n="@@techtestcompletedquizzestitle">Pruebas Técnicas Realizadas</h1>
         <drag-scroll [scroll-x-wheel-enabled]="true" 
           [ngClass]="{ 'noempty': completedQuizzes.length > 0 }">
           <div *ngFor="let quiz of completedQuizzes; let i = index" class="quiz-item"
