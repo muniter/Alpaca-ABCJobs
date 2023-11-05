@@ -2,18 +2,11 @@
     padding: 2rem;
 }
 
-.left-label {
-    width: 40%;
-}
-
-.right-field {
-    width: 60%;
-}
-
 .form-row {
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .header-row {
@@ -21,12 +14,12 @@
     justify-content: center;
 }
 
-.full-width {
-    width: 100%;
-}
-
 .header-width {
     width: 70%;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .header-input {
@@ -36,8 +29,8 @@
     font-size: x-large !important;
 }
 
-.form-row-label {
-    font-weight: 500 !important;
+.select-employee {
+    margin-bottom: 1rem;
 }
 
 .small-button {
@@ -47,5 +40,9 @@
 .buttons {
     display: flex;
     justify-content: flex-end;
+}
 
+.error {
+    color: #f44336;
+    font-size: smaller;
 }

@@ -1,0 +1,32 @@
+p {
+    margin-top: 0;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--lightColor);
+    border-radius: 1rem;
+    padding-top: 1rem;
+}
+
+.icon-div {
+    font-size: 9rem;
+    display: flex;
+    justify-content: center;
+}
+
+.subtitle {
+    color: var(--contrastCompanyColor);
+}
+
+.card-info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-img {
+    width: 100%;
+}

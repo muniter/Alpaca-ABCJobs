@@ -13,6 +13,7 @@ import { UnloggedLangPickerComponent } from './unlogged-lang-picker/unlogged-lan
 import { CandidateHeaderComponent } from './candidate-header/candidate-header.component';
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { PersonCardComponent } from './person-card/person-card.component';
+import { TeamProjectCardComponent } from './team-project-card/team-project-card.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { PersonCardComponent } from './person-card/person-card.component';
     UnloggedLangPickerComponent,
     CandidateHeaderComponent,
     CompanyHeaderComponent,
-    PersonCardComponent
+    PersonCardComponent,
+    TeamProjectCardComponent
   ],
   exports: [
     AbcButtonComponent,
@@ -40,7 +42,8 @@ import { PersonCardComponent } from './person-card/person-card.component';
     UnloggedLangPickerComponent,
     CandidateHeaderComponent,
     CompanyHeaderComponent,
-    PersonCardComponent
+    PersonCardComponent,
+    TeamProjectCardComponent
   ]
 })
 export class SharedModule { }

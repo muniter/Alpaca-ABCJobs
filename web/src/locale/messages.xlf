@@ -123,6 +123,10 @@
           <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -148,6 +152,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
           <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -1120,6 +1128,34 @@
           <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="teamnameplaceholder" datatype="html">
+        <source>Nombre del equipo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyteamname" datatype="html">
+        <source> El nombre de equipo no puede ser vacío </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectmember" datatype="html">
+        <source>Seleccionar miembro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonrepeatedteammembers" datatype="html">
+        <source> No es permitido seleccionar el mismo miembro más de una vez. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
         <source>PORTAL DE CANDIDATOS</source>
         <context-group purpose="location">
@@ -1132,6 +1168,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
           <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="people" datatype="html">
+        <source>Personal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-people/company-people.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyregister" datatype="html">
@@ -1188,6 +1231,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.ts</context>
           <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="teams" datatype="html">
+        <source>Equipos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createteam" datatype="html">
+        <source>Crear Equipo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hometab" datatype="html">

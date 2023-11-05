@@ -10,6 +10,7 @@ export enum AppRoutesEnum {
   companyRegister='register',
   companyHome='home', 
   companyPeople='people',
+  companyTeamsProjects='teams-projects',
   user='usuario',
   login='login',
   settings='settings'
