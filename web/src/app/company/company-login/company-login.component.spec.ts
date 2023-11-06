@@ -170,7 +170,7 @@ describe('CompanyLoginComponent', () => {
       "false"
     );
 
-    let companySignUpSpy = spyOn(companyService, 'companyLogin').and.returnValue(of({ success: true }));
+    let companySignUpSpy = spyOn(companyService, 'companyLogin').and.returnValue(of({ success: true, data: {token: "123123"} }));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     component.loginCompany();
