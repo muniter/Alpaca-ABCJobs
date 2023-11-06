@@ -18,15 +18,15 @@
             </div>
             <div class="form-row">
               <div class="left-label">
-                <label class="form-row-label" for="role-{{ item }}" i18n="@@role">
+                <label class="form-row-label role" for="role-{{ item }}" i18n="@@role">
                   Cargo
                 </label>
               </div>
-              <mat-form-field id="roleFormField-{{ item }}" class="form-field right-field" 
+              <mat-form-field id="roleFormField-{{ item }}" class="form-field right-field"
               [ngClass]="{'chips-field-disabled':workInfoDisabled}" appearance="outline"
               subscriptSizing="dynamic" >
-                <input matInput id="role-{{ item }}" formControlName="role"  
-                class="form-control" placeholder="Cargo ocupado" 
+                <input matInput id="role-{{ item }}" formControlName="role"
+                class="form-control" placeholder="Cargo ocupado"
                 i18n-placeholder="@@roleplaceholder">
                 <mat-error *ngIf="job.get('role')?.invalid">
                   {{ getErrorMessage('role', item) }}
@@ -39,11 +39,11 @@
                   Compañia
                 </label>
               </div>
-              <mat-form-field id="companyFormField-{{ item }}" class="form-field right-field" 
-              appearance="outline" subscriptSizing="dynamic" 
+              <mat-form-field id="companyFormField-{{ item }}" class="form-field right-field"
+              appearance="outline" subscriptSizing="dynamic"
               [ngClass]="workInfoDisabled?'chips-field-disabled':''">
-                <input matInput id="company-{{ item }}" class="form-control" 
-                formControlName="company" placeholder="Nombre de la compañia" 
+                <input matInput id="company-{{ item }}" class="form-control"
+                formControlName="company" placeholder="Nombre de la compañia"
                 i18n-placeholder="@@companyplaceholder">
                 <mat-error *ngIf="job.get('company')?.invalid">
                   {{ getErrorMessage('company', item) }}
@@ -52,13 +52,13 @@
             </div>
             <div class="form-row">
               <div class="left-label">
-                <label class="form-row-label" i18n="@@jobframe">
+                <label class="form-row-label periodo" i18n="@@jobframe">
                   Periodo
                 </label>
               </div>
               <div class="right-field space-between">
                 <mat-form-field id="jobStartFormField-{{ item }}" appearance="outline"
-                class="form-field half-right-field" subscriptSizing="dynamic" 
+                class="form-field half-right-field" subscriptSizing="dynamic"
                 [ngClass]="workInfoDisabled?'chips-field-disabled':''">
                   <mat-select id="jobStart-{{ item }}" formControlName="jobStart"
                   placeholder="Seleccione el año" i18n-placeholder="@@jobsstartplaceholder">
@@ -71,7 +71,7 @@
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field id="jobEndFormField-{{ item }}" appearance="outline"
-                class="form-field half-right-field" subscriptSizing="dynamic" 
+                class="form-field half-right-field" subscriptSizing="dynamic"
                 [ngClass]="workInfoDisabled?'chips-field-disabled':''">
                   <mat-select id="jobEnd-{{ item }}" formControlName="jobEnd"
                   placeholder="Seleccione el año" i18n-placeholder="@@jobendplaceholder">
@@ -90,15 +90,15 @@
             </div>
             <div class="form-row">
               <div class="left-label">
-                <label class="form-row-label" for="description-{{ item }}" i18n="@@description">
+                <label class="form-row-label descripcion" for="description-{{ item }}" i18n="@@description">
                   Descripción de labores
                 </label>
               </div>
-              <mat-form-field id="descriptionFormField-{{ item }}" class="form-field right-field" 
-              appearance="outline" subscriptSizing="dynamic" 
+              <mat-form-field id="descriptionFormField-{{ item }}" class="form-field right-field"
+              appearance="outline" subscriptSizing="dynamic"
               [ngClass]="workInfoDisabled?'chips-field-disabled':''">
                 <textarea matInput id="description-{{ item }}" rows="5" class="form-control"
-                formControlName="description" placeholder="Breve descripción de las labores realizadas" 
+                formControlName="description" placeholder="Breve descripción de las labores realizadas"
                 i18n-placeholder="@@descriptionplaceholder"></textarea>
                 <mat-error *ngIf="job.get('description')?.invalid">
                   {{ getErrorMessage('description', item) }}
@@ -139,14 +139,14 @@
         </div>
         <div class="buttons">
           <div class="buttons-left">
-            <app-abc-button *ngIf="!workInfoDisabled" class="inline-button" color="accent" (click)="addJob()"
+            <app-abc-button *ngIf="!workInfoDisabled" class="inline-button add-button" color="accent" (click)="addJob()"
                             i18n="@@jobadd">AÑADIR OTRO</app-abc-button>
           </div>
           <div class="buttons-right">
             <app-abc-button *ngIf="!workInfoDisabled" class="inline-button" color="basic"
                             (click)="cancelOrReload()" i18n="@@cancel">Cancelar</app-abc-button>
             <app-abc-button type="submit" *ngIf="!workInfoDisabled" color="primary"
-                        [disabled]="!workInformationForm.valid" class="inline-button" 
+                        [disabled]="!workInformationForm.valid" class="inline-button"
                         i18n="@@save">Guardar</app-abc-button>
           </div>
         </div>
