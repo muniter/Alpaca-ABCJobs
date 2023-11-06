@@ -60,7 +60,6 @@ class AcademicInfoItemRecyclerViewAdapter(
         val labelEndDate : TextView = binding.labelEndDate
         val info: TextView = binding.editTextAdditionalInfo
 
-
         override fun toString(): String {
             return super.toString() + " '" + nameDegree.text + "'"
         }

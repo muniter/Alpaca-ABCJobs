@@ -37,6 +37,7 @@ class WorkInfoCreateViewModel(
         }
         return idTypeSkill
     }
+
     fun getTypesSkills() {
         viewModelScope.launch{
             try {

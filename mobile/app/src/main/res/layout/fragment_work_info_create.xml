@@ -37,7 +37,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -230,54 +230,40 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutSkill"
-                        style="@style/TransparentBoxStroke"
-                        android:layout_width="0dp"
+                        android:id="@+id/textInputLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:hintEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC" />
 
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC">
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Selecciona un elemento"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC"
+                        tools:ignore="MissingConstraints" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/labelSkill"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Habilidades"
-                                android:textColor="@color/black" />
-
-                            <AutoCompleteTextView
-                                    android:id="@+id/autoCompleteSkillTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Buscar elementos"
-                                android:completionThreshold="1" />
-
-                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                android:id="@+id/flexboxSkillLayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                />
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
 
 
-                            <TextView
-                                android:id="@+id/labelSkillError"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/error_message" />
-                        </LinearLayout>
+                    <TextView
+                        android:id="@+id/labelSkillError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/error_message"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutAdditionalInfo"
@@ -287,7 +273,7 @@
                         app:hintEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSkill">
+                        app:layout_constraintTop_toBottomOf="@+id/labelSkillError">
 
                         <LinearLayout
                             android:layout_width="match_parent"

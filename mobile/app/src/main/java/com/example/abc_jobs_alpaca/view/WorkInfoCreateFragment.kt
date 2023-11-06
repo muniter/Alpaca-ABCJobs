@@ -29,6 +29,7 @@ import com.example.abc_jobs_alpaca.model.models.WorkInfoRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.Validators
 import com.example.abc_jobs_alpaca.viewmodel.WorkInfoCreateViewModel
+import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -45,6 +46,8 @@ class WorkInfoCreateFragment : Fragment(),
     private lateinit var binding: FragmentWorkInfoCreateBinding
     private lateinit var viewModel: WorkInfoCreateViewModel
     private var isFinished = false
+    private var selectedOptions = ArrayList<Int>()
+
 
 
     companion object {
@@ -88,7 +91,7 @@ class WorkInfoCreateFragment : Fragment(),
         val editTextNameRole = view.findViewById<TextInputEditText>(R.id.editTextRole)
         val labelNameCompanyError = view.findViewById<TextView>(R.id.labelCompanyError)
         val labelNameRoleError = view.findViewById<TextView>(R.id.labelRoleError)
-        //val labelTypeSkillError = view.findViewById<TextView>(R.id.labelSkillError)
+        val labelTypeSkillError = view.findViewById<TextView>(R.id.labelSkillError)
         val labelStartDateCError = view.findViewById<TextView>(R.id.labelStartDateCError)
         val labelEndDateCError = view.findViewById<TextView>(R.id.labelEndDateCError)
         endDateLayout.visibility = View.GONE
@@ -98,10 +101,9 @@ class WorkInfoCreateFragment : Fragment(),
 
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
-        val spinnerSkill = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteSkillTextView)
+        val spinnerSkill = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
         val spinnerStartYearC = view.findViewById<AppCompatSpinner>(R.id.spinnerStartDateC)
         val spinnerEndYearC = view.findViewById<AppCompatSpinner>(R.id.spinnerEndDateC)
-        //val skillSelected = spinnerSkill. .selectedItem?.toString() ?: ""
         val startYearSelected = spinnerStartYearC.selectedItem?.toString()?.toInt() ?: 0
         val endYearSelected = spinnerEndYearC.selectedItem?.toString()?.toInt() ?: 0
 
@@ -122,7 +124,24 @@ class WorkInfoCreateFragment : Fragment(),
             if (adapter != null) {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-            //spinnerSkill.adapter = adapter
+            spinnerSkill.setAdapter(adapter)
+        }
+
+
+        val autoComplete  = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
+        val chipGroup = view.findViewById<com.google.android.material.chip.ChipGroup>(R.id.chipGroup)
+
+        autoComplete.setOnItemClickListener { _, _, position, _ ->
+        val selectedOption = viewModel.getIdTypeSkill(autoComplete.adapter.getItem(position).toString())
+        val chip = Chip(requireContext())
+        chip.text = autoComplete.adapter.getItem(position).toString()
+        chip.isCloseIconVisible = true
+        chip.setOnCloseIconClickListener {
+            chipGroup.removeView(chip)
+            }
+            chipGroup.addView(chip)
+            autoComplete.text = null
+            selectedOptions.add(selectedOption.toInt())
         }
 
         val yearsAdapter = ArrayAdapter(
@@ -146,7 +165,6 @@ class WorkInfoCreateFragment : Fragment(),
             }
         }
 
-        //val editTextEducationLevel = convertStringToTextInputEditText(educationLevelSelected)
         val editTextStartYear = convertStringToTextInputEditText(startYearSelected.toString())
         val editTextEndYear = convertStringToTextInputEditText(endYearSelected.toString())
 
@@ -157,9 +175,6 @@ class WorkInfoCreateFragment : Fragment(),
             validateAndShowNameRole(newText, labelNameRoleError)
         }
 
-        //setupFieldValidation(editTextEducationLevel, labelTypeDegreeError ) { newText ->
-        //    validateAndShowTypeDegreeError(newText, labelTypeDegreeError)
-        //}
         setupFieldValidation(editTextStartYear, labelStartDateCError ) { newText ->
             validateAndShowDateError(newText?.toInt(), endYearSelected, labelStartDateCError)
         }
@@ -245,14 +260,10 @@ class WorkInfoCreateFragment : Fragment(),
                 val description =
                     view?.findViewById<EditText>(R.id.editTextDescriptionWork)?.text.toString()
 
-                val skillTypeSelected =
-                    view?.findViewById<Spinner>(R.id.autoCompleteSkillTextView)?.selectedItem.toString()
-                val typeDegree = viewModel.getIdTypeSkill(skillTypeSelected)
-
                 val endYear: Int = if(isFinished) {
-                    view?.findViewById<Spinner>(R.id.spinnerEndDate)?.selectedItem.toString()
-                        .toInt()
+                    view?.findViewById<Spinner>(R.id.spinnerEndDateC)?.selectedItem.toString().toInt()
                 }else 0
+
 
                 toggleControl(false)
                 viewModel.saveWorkInfoItem(
@@ -260,7 +271,7 @@ class WorkInfoCreateFragment : Fragment(),
                         role,
                         company,
                         description,
-                        listOf(typeDegree),
+                        selectedOptions,
                         startYear,
                         endYear
                 ))
@@ -379,7 +390,6 @@ class WorkInfoCreateFragment : Fragment(),
     private fun enableButton(button: Button) {
         if (isValidNameCompany
             && isValidNameRole
-            //&& isValidTypeSkill
             && isValidDateInit
         ) {
             button.isEnabled = true
@@ -393,7 +403,6 @@ class WorkInfoCreateFragment : Fragment(),
         view?.findViewById<TextInputEditText>(R.id.editTextRole)?.isEnabled = estate
         view?.findViewById<TextInputEditText>(R.id.editTextDescriptionWork)?.isEnabled = estate
         view?.findViewById<CheckBox>(R.id.checkBoxCompletedJob)?.isEnabled = estate
-        view?.findViewById<Spinner>(R.id.autoCompleteSkillTextView)?.isEnabled = estate
         view?.findViewById<Spinner>(R.id.spinnerStartDateC)?.isEnabled = estate
         view?.findViewById<Spinner>(R.id.spinnerEndDateC)?.isEnabled = estate
     }
