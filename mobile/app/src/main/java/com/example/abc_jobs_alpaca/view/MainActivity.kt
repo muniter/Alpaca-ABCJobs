@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity() {
             when (navHostFragment?.childFragmentManager?.fragments?.firstOrNull()) {
                 is AcademicInfoFragment -> {
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
+                    supportActionBar?.title = getString(R.string.create_academic_info_title)
+                }
+                is TechnicalInfoFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.technicalInfoCreateFragment)
+                    supportActionBar?.title = "Crear información técnica"
+                }
+                is WorkInfoFragment -> {
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.workInfoCreateFragment)
+                    supportActionBar?.title = "Crear información laboral"
                 }
 
                 else -> {
@@ -66,7 +75,12 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_personal_info, R.id.nav_academic_info, R.id.nav_slideshow
+                R.id.nav_home,
+                R.id.nav_personal_info,
+                R.id.nav_academic_info,
+                R.id.nav_technical_info,
+                R.id.nav_work_info,
+                R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -129,7 +143,6 @@ class MainActivity : AppCompatActivity() {
         configuration.setLocale(locale)
         super.attachBaseContext(newBase.createConfigurationContext(configuration))
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -146,19 +159,10 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.preferencesFragment)
                 return true
             }
-
-            R.id.fab -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
-                return true
-            }
-
             else -> {
                 val navController = findNavController(R.id.nav_host_fragment_content_main)
                 return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
             }
         }
-
     }
-
-
 }

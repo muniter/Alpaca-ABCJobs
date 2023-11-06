@@ -4,6 +4,7 @@ package com.example.abc_jobs_alpaca.model.repository
 import android.app.Application
 import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
+import com.example.abc_jobs_alpaca.model.api.ABCJobsServiceUtils
 import com.example.abc_jobs_alpaca.model.models.*
 
 class ABCJobsRepository(private val applicationContext: Application) {
@@ -12,7 +13,6 @@ class ABCJobsRepository(private val applicationContext: Application) {
         val candidateJson = serializeCandidate(newCandidate)
         return ABCJobsService.getInstance(applicationContext).postCandidate(candidateJson)
     }
-
 
     suspend fun postLoginUser(loginCandidate: UserLoginRequest): Result<UserLoginResponse>{
         val loginUserJson = serializeLoginUser(loginCandidate)
@@ -25,7 +25,6 @@ class ABCJobsRepository(private val applicationContext: Application) {
 
     suspend fun postConfig(token: String, configRequest: ConfigRequest): Result<ConfigData> {
         val configJson = serializeConfig(configRequest)
-        Log.d("ABCJobsRepository", "configJson: $configJson")
         return ABCJobsService.getInstance(applicationContext).postConfig(token, configJson)
     }
 
@@ -40,7 +39,51 @@ class ABCJobsRepository(private val applicationContext: Application) {
     }
 
     suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
-        return ABCJobsService.getInstance(applicationContext).getTypesTitle(token)
+        return ABCJobsServiceUtils.getInstance(applicationContext).getTypesTitle(token)
+    }
+    suspend fun getTechnicalInfoTypes(token: String): Result<TechnicalInfoTypeResponse>{
+        return ABCJobsServiceUtils.getInstance(applicationContext).getTechnicalInfoTypes(token)
+    }
+
+    suspend fun getTypesSkill(token: String): Result<SkillInfoTypeResponse>{
+        return ABCJobsServiceUtils.getInstance(applicationContext).getSkillsTypes(token)
+    }
+
+    suspend fun postAcademicInfo(token: String, newAcademicInfo: AcademicInfoRequest): Result<AcademicInfoItemResponse>{
+        val academicInfoJson = serializeAcademicInfo(newAcademicInfo)
+        return ABCJobsService.getInstance(applicationContext).postAcademicInfo(token, academicInfoJson)
+    }
+
+    suspend fun getAcademicInfo(token: String): Result<AcademicInfoResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAcademicInfo(token)
+    }
+
+    suspend fun deleteAcademicInfo(token: String, idAcademicInfo: Int): Result<AcademicInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteAcademicInfoItem(token, idAcademicInfo)
+    }
+    suspend fun postTechnicalInfo(token: String, newTechnicalInfo: TechnicalInfoRequest): Result<TechnicalInfoItemResponse>{
+        val technicalInfoJson = serializeTechnicalInfo(newTechnicalInfo)
+        return ABCJobsService.getInstance(applicationContext).postTechnicalInfo(token, technicalInfoJson)
+    }
+    suspend fun getTechnicalInfo(token: String): Result<TechnicalInfoResponse>{
+        return ABCJobsService.getInstance(applicationContext).getTechnicalInfo(token)
+    }
+
+    suspend fun deleteTechnicalInfo(token: String, idTechnicalInfo: Int): Result<TechnicalInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteTechnicalInfo(token, idTechnicalInfo)
+    }
+
+    suspend fun postWorkInfo(token: String, newWorkInfo: WorkInfoRequest): Result<WorkInfoItemResponse>{
+        val workInfoJson = serializeWorkInfo(newWorkInfo)
+        return ABCJobsService.getInstance(applicationContext).postWorkInfo(token, workInfoJson)
+    }
+
+    suspend fun getWorkInfo(token: String): Result<WorkInfoResponse>{
+        return ABCJobsService.getInstance(applicationContext).getWorkInfo(token)
+    }
+
+    suspend fun deleteWorkInfo(token: String, idWorkInfo: Int): Result<WorkInfoItemDeleteResponse>{
+        return ABCJobsService.getInstance(applicationContext).deleteWorkInfo(token, idWorkInfo)
     }
 
     suspend fun getCountries(): Result<CountriesResponse> {

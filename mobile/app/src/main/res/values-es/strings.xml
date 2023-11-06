@@ -61,6 +61,7 @@
     <string name="menu_academic_info">Información académica</string>
     <string name="menu_personal_info">Información personal</string>
     <string name="preferencias_del_sistema">Preferencias del sistema</string>
+    <string name="create_academic_info_title">Crear formación académica</string>
     <string name="no_personal_info">El usuario no cuenta con datos de Información personal, los puede agregar usando el botón de la esquina inferior derecha</string>
     <string name="full_name_header">Nombre Completo</string>
     <string name="full_name_placeholder">Nombres y Apellidos</string>

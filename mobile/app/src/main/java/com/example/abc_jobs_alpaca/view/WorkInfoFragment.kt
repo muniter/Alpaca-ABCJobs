@@ -15,18 +15,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
-import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
+import com.example.abc_jobs_alpaca.adapter.WorkInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
-import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
+import com.example.abc_jobs_alpaca.viewmodel.WorkInfoViewModel
 import kotlinx.coroutines.launch
 
-class AcademicInfoFragment : Fragment(),
+class WorkInfoFragment : Fragment(),
     ConfirmDialogFragment.ConfirmDialogListener {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
-    private lateinit var viewModel: AcademicInfoViewModel
+    private lateinit var viewModel: WorkInfoViewModel
     private lateinit var repository: ABCJobsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,17 +41,16 @@ class AcademicInfoFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_academic_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_item_work_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
-
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+        viewModel =  ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return AcademicInfoViewModel(
+                return WorkInfoViewModel(
                     ABCJobsRepository(activity!!.application)
                 ) as T
             }
-        })[AcademicInfoViewModel::class.java]
+        })[WorkInfoViewModel::class.java]
 
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
@@ -59,7 +58,7 @@ class AcademicInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadAcademicItemsInfo()
+            viewModel.loadWorkItemsInfo()
         }
 
         if (view is RecyclerView) {
@@ -68,10 +67,10 @@ class AcademicInfoFragment : Fragment(),
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
-                    adapter = academicInfoList?.let {
-                        AcademicInfoItemRecyclerViewAdapter(it) { clickedItem ->
-                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@AcademicInfoFragment)
+                viewModel.workInfoList.observe(viewLifecycleOwner) { workInfoList ->
+                    adapter = workInfoList?.let {
+                        WorkInfoItemRecyclerViewAdapter(it) { clickedItem ->
+                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@WorkInfoFragment)
                             confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
                         }
                     }
@@ -86,7 +85,7 @@ class AcademicInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            viewModel.loadAcademicItemsInfo()
+            viewModel.loadWorkItemsInfo()
         }
     }
 
@@ -96,23 +95,26 @@ class AcademicInfoFragment : Fragment(),
         val token = sharedPreferences.getString("token", null)
         if (token != null) {
             viewLifecycleOwner.lifecycleScope.launch {
-                val result = repository.deleteAcademicInfo(token, id)
+                val result = repository.deleteWorkInfo(token, id)
                 if (result.isSuccess) {
-                    viewModel.loadAcademicItemsInfo()
+                    viewModel.loadWorkItemsInfo()
                 }
                 else {
-                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.exceptionOrNull()}")
+                    Log.d("WorkInfoFragment", "deleteWorkItem: ${result.exceptionOrNull()}")
                 }
             }
         }
     }
 
     companion object {
+
+        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
+        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            AcademicInfoFragment().apply {
+            WorkInfoFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

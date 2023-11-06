@@ -6,7 +6,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -58,6 +57,7 @@
     <string name="successful_toast_message">Account created successfully</string>
     <string name="successful_login_toast_message">Login successful</string>
     <string name="toast_message_login_failed">Login failed, Email not registered</string>
+    <string name="create_academic_info_title">Crear formación académica</string>
     <string name="cancel_preferences_button">Cancel</string>
     <string name="menu_academic_info">Academic information</string>
     <string name="menu_personal_info">Personal information</string>

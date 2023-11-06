@@ -2,7 +2,6 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,25 +14,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
-import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
+import com.example.abc_jobs_alpaca.adapter.TechnicalInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
-import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
+import com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoViewModel
 import kotlinx.coroutines.launch
 
-class AcademicInfoFragment : Fragment(),
-    ConfirmDialogFragment.ConfirmDialogListener {
+class TechnicalInfoFragment : Fragment(),
+    ConfirmDialogFragment.ConfirmDialogListener{
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
-    private lateinit var viewModel: AcademicInfoViewModel
+    private lateinit var viewModel: TechnicalInfoViewModel
     private lateinit var repository: ABCJobsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            columnCount = it.getInt(ARG_COLUMN_COUNT) 
         }
     }
 
@@ -41,17 +39,17 @@ class AcademicInfoFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_academic_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_item_technical_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return AcademicInfoViewModel(
+                return TechnicalInfoViewModel(
                     ABCJobsRepository(activity!!.application)
                 ) as T
             }
-        })[AcademicInfoViewModel::class.java]
+        })[TechnicalInfoViewModel::class.java]
 
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
@@ -59,7 +57,7 @@ class AcademicInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadAcademicItemsInfo()
+            viewModel.loadTechnicalItemsInfo()
         }
 
         if (view is RecyclerView) {
@@ -68,10 +66,13 @@ class AcademicInfoFragment : Fragment(),
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
-                    adapter = academicInfoList?.let {
-                        AcademicInfoItemRecyclerViewAdapter(it) { clickedItem ->
-                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@AcademicInfoFragment)
+
+                viewModel.technicalInfoList.observe(viewLifecycleOwner) {
+                        technicalInfoList ->
+                    adapter = technicalInfoList?.let {
+                        TechnicalInfoItemRecyclerViewAdapter(it){
+                            clickedItem ->
+                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@TechnicalInfoFragment)
                             confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
                         }
                     }
@@ -86,36 +87,34 @@ class AcademicInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            viewModel.loadAcademicItemsInfo()
+            viewModel.loadTechnicalItemsInfo()
         }
     }
-
-
     override fun onConfirmDelete(id: Int){
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         if (token != null) {
             viewLifecycleOwner.lifecycleScope.launch {
-                val result = repository.deleteAcademicInfo(token, id)
+                val result = repository.deleteTechnicalInfo(token, id)
                 if (result.isSuccess) {
-                    viewModel.loadAcademicItemsInfo()
+                    viewModel.loadTechnicalItemsInfo()
                 }
                 else {
-                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.exceptionOrNull()}")
                 }
             }
         }
     }
 
     companion object {
+        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
-
+        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            AcademicInfoFragment().apply {
+            TechnicalInfoFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
-    }
+        }
 }

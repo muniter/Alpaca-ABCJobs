@@ -5,17 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.abc_jobs_alpaca.model.models.AcademicInfoRequest
-import com.example.abc_jobs_alpaca.model.models.AcademicInfoType
+import com.example.abc_jobs_alpaca.model.models.WorkInfoRequest
+import com.example.abc_jobs_alpaca.model.models.SkillInfoType
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AcademicInfoCreateViewModel(
-    private val abcJobsRepository: ABCJobsRepository): ViewModel() {
+class WorkInfoCreateViewModel(
+    private val abcJobsRepository: ABCJobsRepository
+): ViewModel() {
 
     private val tokenLiveData = MutableLiveData<String?>()
-    val typesTitles = MutableLiveData<List<AcademicInfoType>>()
+    val typesSkills = MutableLiveData<List<SkillInfoType>?>()
     val token = tokenLiveData
     private val years = List<Int>(25) { 2023 - it }
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
@@ -27,23 +28,24 @@ class AcademicInfoCreateViewModel(
 
     fun getYears(): List<Int>{return years}
 
-    fun getIdTypeDegree(nameTypeDegree: String): Int{
-        var idTypeDegree = 0
-        for (type in typesTitles.value!!){
-            if (type.name == nameTypeDegree){
-                idTypeDegree = type.id
+    fun getIdTypeSkill(nameTypeSkill: String): Int{
+        var idTypeSkill = 0
+        for (type in typesSkills.value!!){
+            if (type.name == nameTypeSkill){
+                idTypeSkill = type.id
             }
         }
-        return idTypeDegree
+        return idTypeSkill
     }
-    fun getTypesDegree() {
+
+    fun getTypesSkills() {
         viewModelScope.launch{
             try {
                 if (token != null) {
-                    abcJobsRepository.getTypeTitles(token.value!!)
+                    abcJobsRepository.getTypesSkill(token.value!!)
                         .onSuccess { response ->
                             if (response.success) {
-                                typesTitles.postValue(response.data)
+                                typesSkills.postValue(response.data)
                             } else {
                                 //TODO: message
                                 //messageLiveData.postValue(MessageEvent(MessageType.ERROR, response.message))
@@ -55,7 +57,7 @@ class AcademicInfoCreateViewModel(
                         }
                 }
                 else {
-                    Log.d("AcademicInfoCreateViewModel", "getTypesDegree: token is null")
+                    Log.d("WorkInfoCreateViewModel", "getTypesDegree: token is null")
                 }
             }   catch (e: Exception) {
                 //messageLiveData.postValue(MessageEvent(MessageType.ERROR, e.message.toString()))
@@ -64,9 +66,9 @@ class AcademicInfoCreateViewModel(
     }
 
     // TODO: Block controls while we are waiting for the response if the response is not successful able the controls again
-    fun saveAcademicInfoItem(newAcademicInfo: AcademicInfoRequest) {
+    fun saveWorkInfoItem(newWorkInfo: WorkInfoRequest) {
         viewModelScope.launch(Dispatchers.Default) {
-            abcJobsRepository.postAcademicInfo(token.value!!, newAcademicInfo)
+            abcJobsRepository.postWorkInfo(token.value!!, newWorkInfo)
                 .onSuccess {
                     //TODO: message
                 }

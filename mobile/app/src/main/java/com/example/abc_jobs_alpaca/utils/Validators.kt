@@ -23,4 +23,15 @@ object Validators {
     fun areStringsEqual(str1: String, str2: String): Boolean {
         return str1 == str2
     }
+
+    fun isNotEmpty(text: String): Boolean {
+        return text.isNotEmpty()
+    }
+
+    fun compareTwoNumbers(first: Int?, second: Int?): Boolean {
+        if (first != null) {
+            return first < second!!
+        }
+        return false
+    }
 }

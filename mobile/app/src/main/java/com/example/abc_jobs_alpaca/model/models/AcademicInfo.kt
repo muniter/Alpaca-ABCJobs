@@ -16,6 +16,11 @@ data class AcademicInfoResponse(
     val data: List<AcademicInfoItem>?
 )
 
+data class AcademicInfoItemResponse(
+    val success: Boolean,
+    val data: AcademicInfoItem?
+)
+
 data class AcademicInfoItem(
     val institution: String,
     val title: String,
@@ -27,14 +32,10 @@ data class AcademicInfoItem(
     val type: AcademicInfoType
 )
 
-data class AcademicInfoType(
-    val id: Int,
-    val name: String
-)
 
-data class AcademicInfoTypeResponse(
+data class AcademicInfoItemDeleteResponse(
     val success: Boolean,
-    val data: List<AcademicInfoType>
+    val data: AcademicInfoItem?
 )
 
  fun deserializeAcademicInfoError(response: JSONObject): Exception {
@@ -52,6 +53,31 @@ data class AcademicInfoTypeResponse(
      return Exception("Error en la solicitud")
  }
 
+
+fun deserializeAcademicInfoItem(reponse: JSONObject): AcademicInfoItemResponse{
+    val success = reponse.optBoolean("success", false)
+    val dataObject = reponse.optJSONObject("data")
+
+    val academicInfoItem = dataObject?.let {
+        val institution = it.optString("institution")
+        val title = it.optString("title")
+        val startYear = it.optInt("start_year")
+        val endYear = it.optInt("end_year")
+        val achievement = it.optString("achievement")
+        val id = it.optInt("id")
+        val idPersona = it.optInt("id_persona")
+        val typeObject = it.optJSONObject("type")
+        val type = if (typeObject != null) {
+            val id = typeObject.optInt("id")
+            val name = typeObject.optString("name")
+            AcademicInfoType(id, name)
+        } else {
+            AcademicInfoType(0, "")
+        }
+        AcademicInfoItem(institution, title, startYear, endYear, achievement, id, idPersona, type)
+    } ?: AcademicInfoItem("", "", 0, 0, "", 0, 0, AcademicInfoType(0, ""))
+    return AcademicInfoItemResponse(success, academicInfoItem)
+}
 
 fun deserializeAcademicInfo(response: JSONObject): AcademicInfoResponse {
     val success = response.optBoolean("success", false)
@@ -85,26 +111,45 @@ fun deserializeAcademicInfo(response: JSONObject): AcademicInfoResponse {
     return AcademicInfoResponse(success, academicInfo)
 }
 
-fun deserializeTypesTitles(response: JSONObject): AcademicInfoTypeResponse {
-    val success = response.optBoolean("success", false)
-    val dataObject = response.optJSONArray("data")
 
-    val types = mutableListOf<AcademicInfoType>()
-    if (dataObject != null) {
-        for (i in 0 until dataObject.length()) {
-            val typeObject = dataObject.optJSONObject(i)
-            if (typeObject != null) {
-                val id = typeObject.optInt("id")
-                val name = typeObject.optString("name")
-                types.add(AcademicInfoType(id, name))
-            }
-        }
-    }
 
-    return AcademicInfoTypeResponse(success, types)
+fun serializeAcademicInfo(request:  AcademicInfoRequest): JSONObject {
+    val json = JSONObject()
+    json.put("institution", request.institution)
+    json.put("title", request.title)
+    json.put("start_year", request.start_year)
+    json.put("end_year", request.end_year)
+    json.put("achievement", request.achievement)
+    json.put("type", request.type)
+    return json
 }
 
-fun deserializeTypesTitlesError(response: JSONObject): Exception {
+fun deserializeAcademicInfoItemDelete(response: JSONObject): AcademicInfoItemDeleteResponse {
+    val success = response.optBoolean("success", false)
+    val dataObject = response.optJSONObject("data")
+
+    val academicInfoItem = dataObject?.let {
+        val institution = it.optString("institution")
+        val title = it.optString("title")
+        val startYear = it.optInt("start_year")
+        val endYear = it.optInt("end_year")
+        val achievement = it.optString("achievement")
+        val id = it.optInt("id")
+        val idPersona = it.optInt("id_persona")
+        val typeObject = it.optJSONObject("type")
+        val type = if (typeObject != null) {
+            val id = typeObject.optInt("id")
+            val name = typeObject.optString("name")
+            AcademicInfoType(id, name)
+        } else {
+            AcademicInfoType(0, "")
+        }
+        AcademicInfoItem(institution, title, startYear, endYear, achievement, id, idPersona, type)
+    } ?: AcademicInfoItem("", "", 0, 0, "", 0, 0, AcademicInfoType(0, ""))
+    return AcademicInfoItemDeleteResponse(success, academicInfoItem)
+}
+
+fun deserializeAcademicInfoItemDeleteError(response: JSONObject): Exception {
     val success = response.optBoolean("success", false)
 
     if (!success) {

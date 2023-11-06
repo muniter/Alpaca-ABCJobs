@@ -81,6 +81,9 @@ class LoginFragment : Fragment(), View.OnClickListener, LoginViewModel.Navigatio
 
                 requireActivity().supportFragmentManager.popBackStack()
             }
+            R.id.button_register2 -> {
+                view?.findNavController()?.navigate(R.id.action_loginFragment_to_registerTypeFragment)
+            }
         }
     }
 
@@ -102,7 +105,10 @@ class LoginFragment : Fragment(), View.OnClickListener, LoginViewModel.Navigatio
         val view = binding.root;
 
         val btn: Button = view.findViewById(R.id.button_login)
+        val btnRegister = view.findViewById<Button>(R.id.button_register2)
         btn.setOnClickListener(this)
+        btnRegister.setOnClickListener(this)
+
 
         viewModel.getMessageLiveData().observe(viewLifecycleOwner) { messageEvent ->
             when (messageEvent.type) {

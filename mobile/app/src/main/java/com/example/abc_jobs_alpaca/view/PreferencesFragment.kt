@@ -34,14 +34,10 @@ class PreferencesFragment : Fragment() {
     private lateinit var binding: FragmentPreferencesBinding
     private lateinit var viewModel: PreferencesViewModel
     private val tokenLiveData = MutableLiveData<String?>()
-    //private lateinit var activity: Activity
-
 
     companion object {
         fun newInstance() = PreferencesFragment()
     }
-
-
 
     @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
     override fun onCreateView(
