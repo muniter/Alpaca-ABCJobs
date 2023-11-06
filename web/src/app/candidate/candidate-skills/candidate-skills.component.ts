@@ -18,7 +18,7 @@ export class CandidateSkillsComponent implements OnInit {
   skills: Skill[] = [];
   technicalInfoDisabled: boolean = false;
   technicalsInfo: Tech[] = [];
-  token: string;
+  token: string = "";
   globalError!: string;
   globalMessage!: string;
 
@@ -28,8 +28,12 @@ export class CandidateSkillsComponent implements OnInit {
     private router: Router,
     private candidateService: CandidateService
   ) { 
-    this.token = ""
-    if (!this.activatedRouter.snapshot.params['userToken']) {
+    this.validateToken(this.activatedRouter.snapshot.params['userToken']);
+  }
+
+  validateToken(token:string) {
+    this.token = "";
+    if (!token) {
       this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
     } else {
       this.token = this.activatedRouter.snapshot.params['userToken'];
@@ -99,9 +103,6 @@ export class CandidateSkillsComponent implements OnInit {
         }
       )
     ); 
-
-    console.log(this.knowledge.controls);
-
   }
 
   deleteTech(item: number) {
