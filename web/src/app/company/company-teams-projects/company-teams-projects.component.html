@@ -1,0 +1,17 @@
+<div class="company-theme company-home-body">
+  <app-company-header [username]="'Perfil'"></app-company-header>
+
+  <div class="teams-container">
+    <app-login-logon-container>
+      <H2 i18n="@@teams">Equipos</H2>
+
+      <div class="team-cards">
+        <app-team-project-card class="add-card" type=add title="Crear Equipo" i18n-title="@@createteam" (click)="openAddTeamModal()"/>
+
+        <app-team-project-card *ngFor="let team of teams" type="team" [title]="team.name"
+          [subtitle]="team.employees.length + ' members'" />
+      </div>
+
+    </app-login-logon-container>
+  </div>
+</div>

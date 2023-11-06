@@ -18,6 +18,8 @@ import { CompanyCreateEmployeeComponent } from './company-create-employee/compan
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { CompanyTeamsProjectsComponent } from './company-teams-projects/company-teams-projects.component';
+import { CompanyCreateTeamComponent } from './company-create-team/company-create-team.component';
 
 @NgModule({
   imports: [
@@ -36,7 +38,25 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     SharedModule
   ],
-  declarations: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent, CompanyPeopleComponent, CompanyCreateEmployeeComponent],
-  exports: [CompanyLoginComponent, CompanyRegisterComponent, CompanyLoginComponent, CompanyHomeComponent, CompanyPeopleComponent, CompanyCreateEmployeeComponent]
+  declarations: [
+    CompanyLoginComponent,
+    CompanyRegisterComponent,
+    CompanyLoginComponent,
+    CompanyHomeComponent,
+    CompanyPeopleComponent,
+    CompanyCreateEmployeeComponent,
+    CompanyTeamsProjectsComponent,
+    CompanyCreateTeamComponent
+  ],
+  exports: [
+    CompanyLoginComponent,
+    CompanyRegisterComponent,
+    CompanyLoginComponent,
+    CompanyHomeComponent,
+    CompanyPeopleComponent,
+    CompanyCreateEmployeeComponent,
+    CompanyTeamsProjectsComponent,
+    CompanyCreateTeamComponent
+  ]
 })
 export class CompanyModule { }

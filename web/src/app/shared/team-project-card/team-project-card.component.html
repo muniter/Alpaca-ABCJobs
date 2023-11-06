@@ -1,0 +1,11 @@
+<div class="card-container">
+
+  <div class="icon-div">
+    <mat-icon [inline]="true" *ngIf="type == 'add'">add_circle</mat-icon>
+    <img class="header-img" src="../../../assets/team.jpeg"*ngIf="type == 'team'">
+  </div>
+  <div class="card-info">
+    <H2> {{ title }} </H2>
+    <p class="subtitle"> {{ subtitle }} </p>
+  </div>
+</div>

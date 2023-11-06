@@ -483,7 +483,7 @@ class ExamenResultado(Base):
     )
     examen_tecnico: Mapped["ExamenTecnico"] = relationship("ExamenTecnico")
     id_candidato: Mapped[int] = mapped_column(
-        ForeignKey("candidato.id"), nullable=False, unique=True
+        ForeignKey("candidato.id"), nullable=False
     )
     resultado: Mapped[int] = mapped_column(nullable=True)
     progreso: Mapped[int] = mapped_column(nullable=False, default=0)
