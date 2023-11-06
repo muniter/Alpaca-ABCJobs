@@ -4,6 +4,11 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CompanyHeaderComponent } from './company-header.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('CompanyHeaderComponent', () => {
   let component: CompanyHeaderComponent;
@@ -11,9 +16,24 @@ describe('CompanyHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CompanyHeaderComponent ]
+      imports:[
+        MatDialogModule,
+        MatToolbarModule,
+        RouterModule,
+        MatIconModule
+      ],
+      declarations: [
+        CompanyHeaderComponent
+      ],
+      providers: [
+        DatePipe,
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { 'userToken': '123' } } }
+        }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
