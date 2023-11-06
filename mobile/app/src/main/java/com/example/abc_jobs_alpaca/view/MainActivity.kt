@@ -91,6 +91,10 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.fab.hide()
     }
 
+    fun unhideButton() {
+        binding.appBarMain.fab.show()
+    }
+
     fun updatePreferences(
         selectedLanguage: String,
         selectedDateFormat: String,

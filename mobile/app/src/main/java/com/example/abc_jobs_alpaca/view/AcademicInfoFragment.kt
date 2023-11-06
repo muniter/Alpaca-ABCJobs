@@ -79,6 +79,7 @@ class AcademicInfoFragment : Fragment(),
                 }
             }
         }
+        (activity as MainActivity).unhideButton();
         return view
     }
 
