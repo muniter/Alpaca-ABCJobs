@@ -57,9 +57,6 @@
     <string name="successful_toast_message">Account created successfully</string>
     <string name="successful_login_toast_message">Login successful</string>
     <string name="toast_message_login_failed">Login failed, Email not registered</string>
-    <string name="cancel_preferences_button">Cancelar</string>
-    <string name="menu_academic_info">Información académica</string>
-    <string name="preferencias_del_sistema">Preferencias del sistema</string>
     <string name="create_academic_info_title">Crear formación académica</string>
     <string name="cancel_preferences_button">Cancel</string>
     <string name="menu_academic_info">Academic information</string>
