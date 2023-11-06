@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CompanyHeaderComponent } from './company-header.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('CompanyHeaderComponent', () => {
   let component: CompanyHeaderComponent;
@@ -11,6 +12,9 @@ describe('CompanyHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule
+      ],
       declarations: [ CompanyHeaderComponent ]
     })
     .compileComponents();
