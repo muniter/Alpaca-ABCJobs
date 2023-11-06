@@ -80,6 +80,7 @@ class TechnicalInfoFragment : Fragment(),
                 }
             }
         }
+        (activity as MainActivity).unhideButton();
         return view
     }
 
