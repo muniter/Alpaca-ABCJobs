@@ -1,0 +1,42 @@
+<div class="modal">
+  <form [formGroup]="teamCreateForm" (ngSubmit)="teamCreation()">
+    <div class="form">
+
+      <div class="form-row header-row">
+        <mat-form-field class="form-field header-width" id="employeeNameFormField" appearance="outline"
+          subscriptSizing="dynamic">
+          <input matInput id="name" class="form-control header-input" formControlName="name"
+            placeholder="Nombre del equipo" i18n-placeholder="@@teamnameplaceholder">
+          <mat-error *ngIf="teamCreateForm.get('name')!.invalid" i18n="@@nonemptyteamname">
+            El nombre de equipo no puede ser vacío
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field full-width select-employee" appearance="outline" subscriptSizing="dynamic" *ngFor="let employee of [].constructor(selectedEmployees.length+1); index as indexOfelement;">
+          <mat-select placeholder="Seleccionar miembro" i18n-placeholder="@@selectmember" (selectionChange)="handleSelection($event, indexOfelement)">
+            <mat-option [value]="null" >
+              
+            </mat-option>
+            <mat-option *ngFor="let employee of allEmployees" [value]="employee">
+              {{employee.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-error class="error" *ngIf="repeatedMembers" i18n="@@nonrepeatedteammembers">
+        No es permitido seleccionar el mismo miembro más de una vez. 
+      </mat-error>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button"
+          [disabled]="!teamCreateForm.valid || selectedEmployees.length < 1" color="primary"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+
+    </div>
+  </form>
+</div>

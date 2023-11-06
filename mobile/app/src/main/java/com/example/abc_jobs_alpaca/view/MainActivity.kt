@@ -18,8 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
-class MainActivity : AppCompatActivity()
-{
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -34,9 +33,10 @@ class MainActivity : AppCompatActivity()
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
 
-            when(navHostFragment?.childFragmentManager?.fragments?.firstOrNull()) {
+            when (navHostFragment?.childFragmentManager?.fragments?.firstOrNull()) {
                 is AcademicInfoFragment -> {
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.academicInfoCreateFragment)
                     supportActionBar?.title = getString(R.string.create_academic_info_title)
@@ -49,13 +49,14 @@ class MainActivity : AppCompatActivity()
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.workInfoCreateFragment)
                     supportActionBar?.title = "Crear información laboral"
                 }
+
                 else -> {
                     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
                 }
             }
         }
-        
+
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
         val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
@@ -63,9 +64,9 @@ class MainActivity : AppCompatActivity()
 
         if (selectedLanguage != null
             && selectedDateFormat != null
-            && selectedTimeFormat != null)
-            {
-                    updatePreferences(selectedLanguage, selectedDateFormat, selectedTimeFormat)
+            && selectedTimeFormat != null
+        ) {
+            updatePreferences(selectedLanguage, selectedDateFormat, selectedTimeFormat)
         }
 
 
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity()
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
+                R.id.nav_personal_info,
                 R.id.nav_academic_info,
                 R.id.nav_technical_info,
                 R.id.nav_work_info,
@@ -85,7 +87,15 @@ class MainActivity : AppCompatActivity()
         navView.setupWithNavController(navController)
     }
 
-    fun updatePreferences(selectedLanguage: String, selectedDateFormat: String, selectedTimeFormat: String) {
+    fun hideButton() {
+        binding.appBarMain.fab.hide()
+    }
+
+    fun updatePreferences(
+        selectedLanguage: String,
+        selectedDateFormat: String,
+        selectedTimeFormat: String
+    ) {
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
@@ -100,6 +110,7 @@ class MainActivity : AppCompatActivity()
                     recreate()
                 }
             }
+
             "Español" -> {
                 if (currentLanguage != "es") {
                     setLocale("es")

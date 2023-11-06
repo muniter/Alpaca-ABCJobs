@@ -8,6 +8,9 @@ import { LanguageResponse } from '../shared/Language';
 import { CollegeDegree, CollegeDegreeResponse } from '../shared/CollegeDegree';
 import { X } from '@angular/cdk/keycodes';
 import { Career, CareerResponse, CareerServiceSchema } from './career';
+import { Job, JobResponse, JobServiceSchema } from './job';
+import { SkillResponse } from '../shared/skill';
+import { TechRequest, TechRequestRow, TechResponse, TechServiceSchema } from './tech';
 
 @Injectable({
   providedIn: 'root'
@@ -53,13 +56,6 @@ export class CandidateService {
     const headers = this.getHeader(token)
 
     return this.http.post<PersonalInfoResponse>(`${this.backCandidateUrl}/personal-info`, request, { headers })
-  }
-
-  getHeader(token: string) {
-    return {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    };
   }
 
   getCollegeDegrees(): Observable<CollegeDegreeResponse> {
@@ -108,11 +104,57 @@ export class CandidateService {
       `${this.backCandidateUrl}/academic-info/${careerId}`, { headers })
   }
 
- /*  updateCareersInfo(request: Career[], token: string): Observable<any> {
-    const headers = this.getHeader(token);
-    return this.http.post<CareerResponse>(
-      `${this.backCandidateUrl}/academic-info`, request, { headers })
-  } */
+  getSkills(): Observable<SkillResponse> {
+    return this.http.get<SkillResponse>(`${this.backUtilsUrl}/skills`)
+  }
 
+  getJobsInfo(token: string): Observable<JobResponse> {
+    const headers = this.getHeader(token);
+    return this.http.get<JobResponse>(`${this.backCandidateUrl}/work-info`, { headers })
+  }
+
+  addJobInfo(request: JobServiceSchema, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+
+    return this.http.post<JobResponse>(
+      `${this.backCandidateUrl}/work-info`, request, { headers })
+  }
+
+  updateJobInfo(request: JobServiceSchema, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+
+    return this.http.post<JobResponse>(
+      `${this.backCandidateUrl}/work-info/${request.id}`, request, { headers })
+  }
+
+  deleteJobInfo(jobId: number, token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    return this.http.delete<JobResponse>(
+      `${this.backCandidateUrl}/work-info/${jobId}`, { headers })
+  }
+
+  getTechnicalInfoTypes(): Observable<SkillResponse> {
+    return this.http.get<SkillResponse>(`${this.backUtilsUrl}/technical-info-types`)
+  }
+
+  getTechnicalInfo(token: string): Observable<TechResponse> {
+    const headers = this.getHeader(token);
+    return this.http.get<TechResponse>(`${this.backCandidateUrl}/technical-info`, { headers })
+  }
+
+  updateTechnicalInfo(requestRows: TechRequestRow[], token: string): Observable<any> {
+    const headers = this.getHeader(token);
+    const request = new TechRequest(requestRows);
+
+    return this.http.post<JobResponse>(
+      `${this.backCandidateUrl}/technical-info/batch-set`, request, { headers })
+  }
+
+  getHeader(token: string) {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  }
 }
-  
+

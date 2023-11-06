@@ -1,0 +1,48 @@
+.modal {
+    padding: 2rem;
+}
+
+.form-row {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header-row {
+    display: flex;
+    justify-content: center;
+}
+
+.header-width {
+    width: 70%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.header-input {
+    color: var(--contrastCompanyColor) !important;
+    text-align: center;
+    font-weight: bold !important;
+    font-size: x-large !important;
+}
+
+.select-employee {
+    margin-bottom: 1rem;
+}
+
+.small-button {
+    width: 20%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.error {
+    color: #f44336;
+    font-size: smaller;
+}

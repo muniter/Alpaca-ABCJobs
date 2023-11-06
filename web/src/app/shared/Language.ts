@@ -19,7 +19,7 @@ export class LanguageResponse {
         success: boolean,
         data: Language[]
     ) {
-        this.success = success,
-            this.data = data
+        this.success = success
+        this.data = data
     }
 }

@@ -26,6 +26,7 @@
         android:name="com.example.abc_jobs_alpaca.view.PreferencesFragment"
         android:label="@string/preferencias_del_sistema"
         tools:layout="@layout/fragment_preferences"/>
+
     <fragment
         android:id="@+id/academicInfoCreateFragment"
         android:name="com.example.abc_jobs_alpaca.view.AcademicInfoCreateFragment"
@@ -72,4 +73,9 @@
             android:id="@+id/action_workInfoCreateFragment_to_nav_work_info"
             app:destination="@id/nav_work_info" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_personal_info"
+        android:name="com.example.abc_jobs_alpaca.view.PersonalInfoFragment"
+        android:label="@string/menu_academic_info"
+        tools:layout="@layout/fragment_personal_info" />
 </navigation>

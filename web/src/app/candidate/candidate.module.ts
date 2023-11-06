@@ -18,6 +18,8 @@ import { CandidateProfileComponent } from './candidate-profile/candidate-profile
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { CandidateWorkComponent } from './candidate-work/candidate-work.component';
+import { CandidateSkillsComponent } from './candidate-skills/candidate-skills.component';
 
 @NgModule({
   imports: [
@@ -45,14 +47,18 @@ import { MatSelectModule } from '@angular/material/select';
     CandidateLoginComponent,
     CandidateHomeComponent, 
     CandidateProfileComponent,
-    CandidateEducationComponent
+    CandidateEducationComponent,
+    CandidateWorkComponent,
+    CandidateSkillsComponent
   ],
   exports: [
     CandidateRegisterComponent,
     CandidateLoginComponent,
     CandidateHomeComponent, 
     CandidateProfileComponent,
-    CandidateEducationComponent
+    CandidateEducationComponent,
+    CandidateWorkComponent,
+    CandidateSkillsComponent
   ]
 })
 export class CandidateModule { }

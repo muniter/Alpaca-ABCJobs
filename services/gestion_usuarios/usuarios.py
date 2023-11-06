@@ -78,7 +78,7 @@ class UsuarioService:
             error.add("password", "Dirección de correo o contraseña incorrectos")
             return error
 
-        usuario_dto = usuario.build_usuario_dto()
+        usuario_dto = usuario.build_dto()
         return UsuarioLoginResponseDTO(
             usuario=usuario_dto,
             token=self.create_token(usuario_dto),
@@ -123,7 +123,7 @@ class UsuarioService:
 
         usuario = result
 
-        usuario_dto = usuario.build_usuario_dto()
+        usuario_dto = usuario.build_dto()
 
         return UsuarioLoginResponseDTO(
             usuario=usuario_dto,

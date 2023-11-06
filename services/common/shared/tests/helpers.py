@@ -55,7 +55,7 @@ def crear_usuario_empresa() -> Tuple[Usuario, str]:
         session.add(usuario)
         session.commit()
         session.refresh(usuario)
-        dto = usuario.build_usuario_dto()
+        dto = usuario.build_dto()
         token = create_token(dto.model_dump())
         return usuario, token
 
@@ -71,6 +71,6 @@ def crear_usuario_candidato() -> Tuple[Usuario, str]:
         session.add(usuario)
         session.commit()
         session.refresh(usuario)
-        dto = usuario.build_usuario_dto()
+        dto = usuario.build_dto()
         token = create_token(dto.model_dump())
         return usuario, token

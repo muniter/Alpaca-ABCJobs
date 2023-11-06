@@ -1,0 +1,90 @@
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 1rem 0rem;
+  color: var(--contrastCandidateColor)
+}
+
+mat-divider {
+  width: 100%;
+  align-self: center;
+  justify-content: center;
+}
+
+.job-item {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.edit-icon, .delete-icon {    
+  transform: scale(1.5);
+}
+
+fieldset {
+  border: none;
+}
+
+.left-label {
+  width: 40%;
+}
+
+.right-field {
+  width: 60%;
+}
+
+.half-right-field {
+  width: 49%;
+}
+
+.form-row {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-left {
+  padding-top: 1rem;
+  float: left;
+}
+
+.buttons-right {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: right;
+}
+
+.chips-field-disabled {
+  background-color: var(--lightColor);
+}
+
+.job-delete {
+  text-align: right;
+}
+
+.success {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
+}
+
+.error {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: rgb(119, 0, 0);
+  background-color: #f2bfc1;
+}
+
+.form-row-label {
+  font-size: 1.5rem;
+}

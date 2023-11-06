@@ -1,0 +1,27 @@
+app-team-project-card {
+    width: 20%;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin: 1rem 0rem;
+    color: var(--contrastCompanyColor)
+}
+
+.teams-container {
+    padding: 0% 10%;
+    height: 90%;
+}
+
+.team-cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.add-card {
+    cursor: pointer;
+}

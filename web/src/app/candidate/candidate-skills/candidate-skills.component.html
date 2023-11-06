@@ -1,0 +1,78 @@
+<form [formGroup]="technicalInformationForm" (ngSubmit)="saveTechnicalInfo()">
+  <fieldset>
+    <div class="form">
+      <div class="technical-information-title">
+        <H2 class="section-title" i18n="@@technicalinfo">Conocimientos Técnicos
+          <mat-icon class="edit-icon" (click)="enableForm();" *ngIf="technicalInfoDisabled">
+            edit
+          </mat-icon>
+        </H2>
+      </div>
+      <div formArrayName="knowledge" >
+        <div *ngFor="let know of knowledge.controls; let item=index" >
+          <div [formGroupName]="item" class="know-item">
+            <div class="know-delete">
+              <mat-icon class="delete-icon" (click)="deleteTech(item)" *ngIf="!technicalInfoDisabled">
+                delete
+              </mat-icon>
+            </div>
+            <div class="know-label" *ngIf="technicalInfoDisabled">
+              <p>{{ know.get('tech')?.value.name }}</p>
+              <span i18n="@@techtestnotfound">Prueba no disponible o no realizada</span>
+            </div>
+            <div class="form-row" *ngIf="!technicalInfoDisabled">
+              <mat-form-field id="techFormField-{{ item }}" class="form-field left-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="{'chips-field-disabled':technicalInfoDisabled}" >
+                <mat-select id="tech-{{ item }}" formControlName="tech" 
+                placeholder="Seleccionar" i18n-placeholder="@@techplaceholder">
+                  <mat-option *ngFor="let tech of skills" [value]="tech">
+                    {{tech.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="know.get('tech')?.invalid">
+                  {{ getErrorMessage('tech', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <div class="left-label">
+                <label class="form-row-label" for="moreInfoTech-{{ item }}" i18n="@@moreinfotech">
+                  Información adicional
+                </label>
+              </div>
+              <mat-form-field id="moreInfoTechFormField-{{ item }}" class="form-field right-field" 
+              appearance="outline" subscriptSizing="dynamic" 
+              [ngClass]="technicalInfoDisabled?'chips-field-disabled':''">
+                <textarea matInput id="moreInfoTech-{{ item }}" rows="5" class="form-control"
+                formControlName="moreInfoTech" placeholder="Aspectos relevantes de su expertise" 
+                i18n-placeholder="@@moreinfotechplaceholder"></textarea>
+                <mat-error *ngIf="know.get('moreInfoTech')?.invalid">
+                  {{ getErrorMessage('moreInfoTech', item) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+        <div class="messages">
+          <p class="error" *ngIf="globalError" >{{globalError}}</p>
+          <p class="success" *ngIf="globalMessage" >{{globalMessage}}</p>
+        </div>
+        <div class="buttons">
+          <div class="buttons-left">
+            <app-abc-button *ngIf="!technicalInfoDisabled" class="inline-button" color="accent" (click)="addTech()"
+                            i18n="@@techadd">AÑADIR OTRO</app-abc-button>
+          </div>
+          <div class="buttons-right">
+            <app-abc-button *ngIf="!technicalInfoDisabled" class="inline-button" color="basic"
+                            (click)="cancelOrReload()" i18n="@@cancel">Cancelar</app-abc-button>
+            <app-abc-button type="submit" *ngIf="!technicalInfoDisabled" color="primary"
+                        [disabled]="!technicalInformationForm.valid" class="inline-button" 
+                        i18n="@@save">Guardar</app-abc-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>

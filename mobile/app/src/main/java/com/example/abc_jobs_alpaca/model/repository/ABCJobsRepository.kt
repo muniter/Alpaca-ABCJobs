@@ -28,6 +28,16 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).postConfig(token, configJson)
     }
 
+    suspend fun getPersonalInfo(token: String): Result<PersonalInfoResponse?> {
+        return ABCJobsService.getInstance(applicationContext).getPersonalInfo(token)
+    }
+
+    suspend fun postPersonalInfo(token: String, personalInfoRequest: PersonalInfoRequest): Result<PersonalInfoResponse?> {
+        val configJson = serializePersonalInfo(personalInfoRequest)
+
+        return ABCJobsService.getInstance(applicationContext).postPersonalInfo(token, configJson)
+    }
+
     suspend fun getTypeTitles(token: String): Result<AcademicInfoTypeResponse>{
         return ABCJobsServiceUtils.getInstance(applicationContext).getTypesTitle(token)
     }
@@ -74,6 +84,10 @@ class ABCJobsRepository(private val applicationContext: Application) {
 
     suspend fun deleteWorkInfo(token: String, idWorkInfo: Int): Result<WorkInfoItemDeleteResponse>{
         return ABCJobsService.getInstance(applicationContext).deleteWorkInfo(token, idWorkInfo)
+    }
+
+    suspend fun getCountries(): Result<CountriesResponse> {
+        return ABCJobsService.getInstance(applicationContext).getCountries()
     }
 
 }

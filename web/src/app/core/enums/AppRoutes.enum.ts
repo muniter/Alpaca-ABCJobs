@@ -9,7 +9,11 @@ export enum AppRoutesEnum {
   companyLogin='login',
   companyRegister='register',
   companyHome='home', 
+  companyPeople='people',
+  companyTeamsProjects='teams-projects',
   user='usuario',
   login='login',
-  settings='settings'
+  settings='settings',
+  technicalTest='technical-test',
+  technicalTestCandidate='candidate-test'
 }

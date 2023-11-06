@@ -126,6 +126,18 @@
           <context context-type="linenumber">138</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -140,6 +152,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
           <context context-type="linenumber">142</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -283,7 +307,15 @@
         <target>Error: <x id="PH" equiv-text="value"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">228</context>
         </context-group>
       </trans-unit>
       <trans-unit id="errordeletecareer" datatype="html">
@@ -307,7 +339,7 @@
         <target>Updated row (<x id="PH" equiv-text="career.id"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">246</context>
+          <context context-type="linenumber">249</context>
         </context-group>
       </trans-unit>
       <trans-unit id="okaddcareer" datatype="html">
@@ -315,7 +347,7 @@
         <target>Row in</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">254</context>
+          <context context-type="linenumber">259</context>
         </context-group>
       </trans-unit>
       <trans-unit id="email" datatype="html">
@@ -469,7 +501,7 @@
         <target>Personal Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;personalInfoDisabled&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">19,23</context>
+          <context context-type="linenumber">19,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebirthdate" datatype="html">
@@ -804,6 +836,468 @@
           <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="technicalinfo" datatype="html">
+        <source>Conocimientos Técnicos <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm();&quot; *ngIf=&quot;technicalInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <target>Technical knowledge <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm();&quot; *ngIf=&quot;technicalInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">5,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestnotfound" datatype="html">
+        <source>Prueba no disponible o no realizada</source>
+        <target>Test not available or not performed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techplaceholder" datatype="html">
+        <source>Seleccionar</source>
+        <target>Choose</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="moreinfotech" datatype="html">
+        <source> Información adicional </source>
+        <target>Additional info</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="moreinfotechplaceholder" datatype="html">
+        <source>Aspectos relevantes de su expertise</source>
+        <target>Relevant aspects of your expertise</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techadd" datatype="html">
+        <source>AÑADIR OTRO</source>
+        <target>ADD ANOTHER</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptytech" datatype="html">
+        <source>Debe seleccionar una tecnología</source>
+        <target>Must select a technology</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrortech" datatype="html">
+        <source>Revise el campo de tecnología: 
+                              <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Review the technology field: 
+                              <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">117,118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptymoreinfotech" datatype="html">
+        <source>Información adicional no puede ser solo espacios</source>
+        <target>Additional information cannot be just spaces</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthmoreinfotech" datatype="html">
+        <source>Información adicional puede tener hasta 500 caracteres</source>
+        <target>Additional information can be up to 500 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrormoreinfotech" datatype="html">
+        <source>Revise el campo de información adicional: 
+                                 <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the additional information field: 
+                                 <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">127,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okupdatetechnicalinfo" datatype="html">
+        <source>Información técnica actualizada</source>
+        <target>Updated technical information</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="workinfo" datatype="html">
+        <source>Información Laboral <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
+        <target>Work Information  <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">5,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="role" datatype="html">
+        <source> Cargo </source>
+        <target>Role</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="roleplaceholder" datatype="html">
+        <source>Cargo ocupado</source>
+        <target>Position</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="company" datatype="html">
+        <source> Compañia </source>
+        <target>Company</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="companyplaceholder" datatype="html">
+        <source>Nombre de la compañia</source>
+        <target>Company name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobframe" datatype="html">
+        <source> Periodo </source>
+        <target>Range</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobsstartplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <target>Select year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobendplaceholder" datatype="html">
+        <source>Seleccione el año</source>
+        <target>Select year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobendinprogress" datatype="html">
+        <source> En curso </source>
+        <target>In progress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">78,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source> Descripción de labores </source>
+        <target>Job description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">93,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="descriptionplaceholder" datatype="html">
+        <source>Breve descripción de las labores realizadas</source>
+        <target>Brief description of the tasks performed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobskills" datatype="html">
+        <source>Roles y habilidades</source>
+        <target>Roles and skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobadd" datatype="html">
+        <source>AÑADIR OTRO</source>
+        <target>ADD ANOTHER</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyjob" datatype="html">
+        <source>El cargo no puede ser vacío</source>
+        <target>The position cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthjob" datatype="html">
+        <source>El cargo debe tener entre 2 y 255 caracteres</source>
+        <target>The position must be between 2 and 255 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjob" datatype="html">
+        <source>Revise el campo cargo: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the position field: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">169,170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptycompany" datatype="html">
+        <source>La compañia no puede ser vacío</source>
+        <target>The company cannot be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthcompany" datatype="html">
+        <source>La compañia debe tener entre 2 y 255 caracteres</source>
+        <target>Company must be between 2 and 255 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorcompany" datatype="html">
+        <source>Revise el campo compañia: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the company field: 
+                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">181,182</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyjobstart" datatype="html">
+        <source>Debe seleccionar un año</source>
+        <target>You must choose a year</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjobstart" datatype="html">
+        <source>Revise el campo año de inicio: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the start year field: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">189,190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nongreaterthanjobend" datatype="html">
+        <source>El año final debe ser mayor o igual al inicial</source>
+        <target>The final year must be greater than or equal to the initial one</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorjobend" datatype="html">
+        <source>Revise el campo año de finalización: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the Year Ended field: 
+                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">197,198</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptdescription" datatype="html">
+        <source>La descripción no puede ser solo espacios en blanco</source>
+        <target>Description can't be just whitespace</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">204</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidlengthdescription" datatype="html">
+        <source>La descripción debe tener entre 2 y 500 caracteres</source>
+        <target>Description must be between 2 and 500 characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrordescription" datatype="html">
+        <source>Revise el campo logros: 
+                   <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the achievements field: 
+                   <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">209,210</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errordeletejob" datatype="html">
+        <source>Error al eliminar el registro</source>
+        <target>Error deleting record</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okdeletejob" datatype="html">
+        <source>Registro eliminado (<x id="PH" equiv-text="id"/>)</source>
+        <target>Deleted record (<x id="PH" equiv-text="id"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">247</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okupdatejob" datatype="html">
+        <source>Registro actualizado (<x id="PH" equiv-text="job.id"/>)</source>
+        <target>Updated record (<x id="PH" equiv-text="job.id"/>)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">274</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okaddjob" datatype="html">
+        <source>Registro ingresado</source>
+        <target>Created record</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
+          <context context-type="linenumber">284</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullemployeenameplaceholder" datatype="html">
+        <source>Nombres y apellidos</source>
+        <target>Name and last name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="position" datatype="html">
+        <source>Cargo</source>
+        <target>Position</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currentpositionplaceholder" datatype="html">
+        <source>Posición Actual</source>
+        <target>Current Position</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="technicalSkills" datatype="html">
+        <source>Habilidades Técnicas</source>
+        <target>Technical Skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="skillsplaceholder" datatype="html">
+        <source>Tecnologías y aptitudes</source>
+        <target>Technologies and skills</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="personality" datatype="html">
+        <source>Personalidad</source>
+        <target>Personality</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="employeepersonalityplaceholder" datatype="html">
+        <source>Seleccionar tipo de personalidad</source>
+        <target>Choose personality type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyemployeename" datatype="html">
+        <source>El nombre del empleado no puede ser vacío</source>
+        <target>Employee name can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypositionname" datatype="html">
+        <source>El cargo del empleado no puede ser vacío</source>
+        <target>Employee position can not be empty</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptypersonality" datatype="html">
+        <source>Debe seleccionar una personalidad</source>
+        <target>You must choose a personality type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="teamnameplaceholder" datatype="html">
+        <source>Nombre del equipo</source>
+        <target>Team name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyteamname" datatype="html">
+        <source> El nombre de equipo no puede ser vacío </source>
+        <target> Team name can not be empty </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectmember" datatype="html">
+        <source>Seleccionar miembro</source>
+        <target>Choose member</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonrepeatedteammembers" datatype="html">
+        <source> No es permitido seleccionar el mismo miembro más de una vez. </source>
+        <target> A member can not be selected more than once. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
         <source>PORTAL DE CANDIDATOS</source>
         <target>CANDIDATES PORTAL</target>
@@ -830,6 +1324,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-login/company-login.component.ts</context>
           <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="people" datatype="html">
+        <source>Personal</source>
+        <target>People</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-people/company-people.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyregister" datatype="html">
@@ -896,12 +1398,156 @@
           <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="teams" datatype="html">
+        <source>Equipos</source>
+        <target>Teams</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createteam" datatype="html">
+        <source>Crear Equipo</source>
+        <target>New Team</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menutechtests" datatype="html">
+        <source>Pruebas Técnicas</source>
+        <target>Technical tests</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/candidate-header/candidate-header.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hometab" datatype="html">
+        <source>Home</source>
+        <target>Home</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="personaltab" datatype="html">
+        <source>Personal</source>
+        <target>People</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="teamsprojectstab" datatype="html">
+        <source>Equipos y Proyectos</source>
+        <target>Teams and projects</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="positionstab" datatype="html">
+        <source>Vacantes</source>
+        <target>Positions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatestab" datatype="html">
+        <source>Candidatos</source>
+        <target>Candidates</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hiringstab" datatype="html">
+        <source>Contrataciones</source>
+        <target>Hirings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="insertPeople" datatype="html">
+        <source>Ingresar personal</source>
+        <target>Add Employee</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/person-card/person-card.component.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="language" datatype="html">
         <source>Idioma: </source>
         <target>Language: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/unlogged-lang-picker/unlogged-lang-picker.component.html</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestsuggestedquizzestitle" datatype="html">
+        <source>Pruebas Técnicas Sugeridas</source>
+        <target>Suggested Technical Tests</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techteststart" datatype="html">
+        <source>COMENZAR</source>
+        <target>BEGIN</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestnosuggestedquizzes" datatype="html">
+        <source> Pronto tendremos nuevos exámenes disponibles </source>
+        <target>Soon we will have new exams available</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestcompletedquizzestitle" datatype="html">
+        <source>Pruebas Técnicas Realizadas</source>
+        <target>Technical Tests Performed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestnocompletedquizzes" datatype="html">
+        <source> No has completado ningún examen, ¡¡¡ comienza ahora !!! </source>
+        <target>You haven't completed any exams, start now!!!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techtestcompletedquiz" datatype="html">
+        <source>Examen finalizado</source>
+        <target>Exam finished</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-exam/technical-test-exam.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errorstartexam" datatype="html">
+        <source>El servicio de examenes no se encuentra disponible, por favor intente más tarde</source>
+        <target>The exam service is not available, please try again later</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-exam/technical-test-exam.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errornextquestion" datatype="html">
+        <source>El servicio de examenes no se encuentra disponible, por favor intente más tarde</source>
+        <target>The exam service is not available, please try again later</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/technical-test/technical-test-exam/technical-test-exam.component.ts</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="languageApp" datatype="html">

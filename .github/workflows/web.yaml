@@ -45,14 +45,19 @@ jobs:
         working-directory: ./web
         run: npm ci
 
-      - name: Test
-        if: false
-        working-directory: ./web
-        run: npm run test
-
       - name: Build
         working-directory: ./web
         run: npm run build
+
+      - name: Test
+        working-directory: ./web
+        run: npm run test
+
+      - name: Copy coverage results
+        if: github.ref == 'refs/heads/master'
+        working-directory: ./web
+        run:
+          aws s3 sync --delete coverage/abcjobs s3://abc-jobs-artifacts/test_reports/web
 
       - name: Deploy to AWS S3
         if: github.ref == 'refs/heads/master'

@@ -11,6 +11,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyLoginComponent } from './company-login/company-login.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { CompanyRegisterComponent } from './company-register/company-register.component';
+import { CompanyHomeComponent } from './company-home/company-home.component';
+import { CompanyPeopleComponent } from './company-people/company-people.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { CompanyCreateEmployeeComponent } from './company-create-employee/company-create-employee.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { CompanyTeamsProjectsComponent } from './company-teams-projects/company-teams-projects.component';
+import { CompanyCreateTeamComponent } from './company-create-team/company-create-team.component';
 
 @NgModule({
   imports: [
@@ -23,9 +32,31 @@ import { CompanyRegisterComponent } from './company-register/company-register.co
     MatCheckboxModule,
     ReactiveFormsModule,
     FormsModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
     SharedModule
   ],
-  declarations: [CompanyLoginComponent, CompanyRegisterComponent],
-  exports: [CompanyLoginComponent, CompanyRegisterComponent]
+  declarations: [
+    CompanyLoginComponent,
+    CompanyRegisterComponent,
+    CompanyLoginComponent,
+    CompanyHomeComponent,
+    CompanyPeopleComponent,
+    CompanyCreateEmployeeComponent,
+    CompanyTeamsProjectsComponent,
+    CompanyCreateTeamComponent
+  ],
+  exports: [
+    CompanyLoginComponent,
+    CompanyRegisterComponent,
+    CompanyLoginComponent,
+    CompanyHomeComponent,
+    CompanyPeopleComponent,
+    CompanyCreateEmployeeComponent,
+    CompanyTeamsProjectsComponent,
+    CompanyCreateTeamComponent
+  ]
 })
 export class CompanyModule { }
