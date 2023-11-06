@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.model.models
 
+import org.json.JSONArray
 import org.json.JSONObject
 
 data class WorkInfoRequest(
@@ -172,7 +173,7 @@ fun serializeWorkInfo(workInfo: WorkInfoRequest): JSONObject {
     jsonObject.put("role", workInfo.role)
     jsonObject.put("company", workInfo.company)
     jsonObject.put("description", workInfo.description)
-    jsonObject.put("skills", workInfo.skills)
+    jsonObject.put("skills", JSONArray(workInfo.skills))
     jsonObject.put("start_year", workInfo.start_year)
     jsonObject.put("end_year", workInfo.end_year)
     return jsonObject
