@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import (
+    CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoConocimientoTecnicoDTO,
     CandidatoCreateResponseDTO,
@@ -301,7 +302,7 @@ class CandidatoService:
         candidato = self.repository.crear(data)
         usuario = self.__crear_usuario(candidato, data.password)
         return CandidatoCreateResponseDTO(
-            candidato=candidato.build_candidato_dto(),
+            candidato=candidato.build_dto(),
             token=usuario.token,
         )
 
@@ -348,12 +349,12 @@ class CandidatoService:
                 persona.lenguajes.append(lang)
 
         persona = self.persona_repository.crear(persona)
-        return persona.build_informacion_personal_dto()
+        return persona.build_dto()
 
     def get_informacion_personal(self, id: int) -> CandidatoPersonalInformationDTO:
         candidato = self.repository.get_by_id(id)
         assert candidato is not None
-        return candidato.persona.build_informacion_personal_dto()
+        return candidato.persona.build_dto()
 
 
 class ConocimientoTecnicosRepository:
@@ -445,6 +446,33 @@ class ConocimientoTecnicosService:
         result = self.repository.create(result)
         return result.build_dto()
 
+    def batch_set(
+        self, id_candidato: int, data: CandidatoConocimientoTecnicoBatchSetDTO
+    ) -> Union[ErrorBuilder, List[CandidatoConocimientoTecnicoDTO]]:
+        candidato = self.candidato_repository.get_by_id(id_candidato)
+        if not candidato:
+            error = ErrorBuilder(data)
+            error.add("global", "Invalid candiato id")
+            return error
+
+        conocimientos = self.repository.get_all_from_id_persona(candidato.id_persona)
+
+        # delete all
+        for conocimiento in conocimientos:
+            self.repository.delete_by_id(conocimiento.id)
+
+        for conocimiento in data.list:
+            conocimiento = self.load(
+                ConocimientoTecnicos(id_persona=candidato.id_persona), conocimiento
+            )
+            if isinstance(conocimiento, ErrorBuilder):
+                return conocimiento
+
+            self.repository.create(conocimiento)
+
+        all = self.get_all(id_candidato)
+        return all
+
     def update(
         self, id: int, id_candidato: int, data: CandidatoConocimientoTecnicoCreateDTO
     ):
@@ -500,7 +528,6 @@ class ConocimientoTecnicosService:
             return error
 
         model.tipo = tipo
-        model.calificacion = data.raiting
         model.descripcion = data.description
         return model
 
@@ -531,7 +558,7 @@ class DatosLaboralesService:
             error.add("global", "Invalid id")
             return error
 
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def get_all(self, id_candidato: int) -> List[CandidatoDatosLaboralesDTO]:
         candidato = self.candidato_repository.get_by_id(id_candidato)
@@ -539,7 +566,7 @@ class DatosLaboralesService:
             return []
 
         datos_laborales = self.repository.get_all_from_id_persona(candidato.id_persona)
-        return [datos.build_datos_laborales_dto() for datos in datos_laborales]
+        return [datos.build_dto() for datos in datos_laborales]
 
     def crear(
         self, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
@@ -556,7 +583,7 @@ class DatosLaboralesService:
             return result
 
         result = self.repository.crear(result)
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def update(
         self, id: int, id_candidato: int, data: CandidatoDatosLaboralesCreateDTO
@@ -578,7 +605,7 @@ class DatosLaboralesService:
             return result
 
         result = self.repository.update(result)
-        return result.build_datos_laborales_dto()
+        return result.build_dto()
 
     def delete(self, id: int, id_candidato: int):
         datos_laborales = self.repository.get_by_id(id)
@@ -603,8 +630,13 @@ class DatosLaboralesService:
             error.add("id", "Invalid id")
             return error
 
+        data.end_year = None if data.end_year == 0 else data.end_year
         if data.end_year and data.end_year < data.start_year:
             error.add("end_year", "End year must be equal or after start year")
+            return error
+
+        if data.start_year < 1900:
+            error.add("start_year", "Start year must be after 1900")
             return error
 
         model.empresa = data.company
@@ -718,6 +750,7 @@ class DatosAcademicosService:
     def load(self, model: DatosAcademicos, data: CandidatoDatosAcademicosCreateDTO):
         error = ErrorBuilder(data)
 
+        data.end_year = None if data.end_year == 0 else data.end_year
         if data.end_year and data.end_year < data.start_year:
             error.add("end_year", "End year must be after or equal to start year")
             return error

@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <div class="center-vertical">
+    <div class="logo-div" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">
+      <img class="logo-img" src="../../../assets/logo.png">
+    </div>
+
+    <span class="tab-label" i18n="@@hometab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">Home</span>
+    <span class="tab-label" i18n="@@personaltab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyPeople+'/'+token">Personal</span>
+    <span class="tab-label" i18n="@@teamsprojectstab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyTeamsProjects+'/'+token">Equipos y Proyectos</span>
+    <span class="tab-label" i18n="@@positionstab">Vacantes</span>
+    <span class="tab-label" i18n="@@candidatestab">Candidatos</span>
+    <span class="tab-label" i18n="@@hiringstab">Contrataciones</span>
+  </div>
+  <span class="example-spacer"></span>
+  <span flex></span>
+  <div class="center-vertical user-name-icon">
+    <span class="tab-label">{{username}}</span>
+    <button mat-icon-button class="user-icon-button">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+  <div class="center-vertical user-settings-icon">
+    <button mat-icon-button class="user-icon-button">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

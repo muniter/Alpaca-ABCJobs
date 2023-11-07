@@ -66,7 +66,7 @@ export class CompanyLoginComponent implements OnInit {
 
     this.companyService.companyLogin(loginData).subscribe({
       error: (exception) => this.setErrorBack(exception),
-      complete: () => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}`)
+      next: (response) => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}/${response.data.token}`)
     })
   }
 }

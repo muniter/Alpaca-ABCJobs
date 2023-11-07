@@ -1,0 +1,29 @@
+H2 {
+    color: var(--contrastCompanyColor);
+    margin: 0rem;
+}
+
+.icon-div {
+    font-size: 11rem;
+    margin-right: 0.5rem;
+    display: flex;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    border: solid black 3px;
+    border-radius: 1rem;
+}
+
+.person-info{
+    display: flex;
+    align-items: safe start;
+    flex-direction: column;
+    justify-content: center;
+}
+
+:host ::ng-deep mat-chip {
+    padding: 0.1rem !important;
+    height: auto !important;
+}

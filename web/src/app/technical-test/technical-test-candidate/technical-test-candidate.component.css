@@ -1,0 +1,59 @@
+.technical-test-container {
+  padding: 0% 10%;
+  text-align: center;
+}
+
+.suggested-quizzes, .completed-quizzes {
+  width: 100%;
+}
+
+drag-scroll.noempty {
+  height: 30vmin;
+  width: 100%;
+  overflow: hidden;
+}
+
+.quiz-item {
+  display: inline-flex  ;
+  background-color: var(--lightColor);
+  height: 80%;
+  width: 15%;
+  border-radius: 0.75rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.quiz-item img {
+  width: 40%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.quiz-item p {
+  padding: 0px;
+  margin: 0.5rem 0px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--darkColor)
+}
+
+app-abc-button.inline-button {
+  display: grid;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0.5rem 0;
+  padding: 0;
+  color: var(--contrastCandidateColor)
+}
+
+.star-result {
+  color: var(--deactiveColor);
+}
+
+.star-result-complete {
+  color: var(--contrastCandidateColor)
+}

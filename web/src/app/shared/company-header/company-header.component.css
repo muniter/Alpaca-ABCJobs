@@ -1,0 +1,40 @@
+mat-icon {
+    color: var(--lightColor);
+    transform: scale(2);
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.center-vertical {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.user-name-icon {
+    cursor: pointer;
+}
+
+.logo-div {
+    height: 80%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--contrastCompanyColor);
+    margin-right: 2rem;
+    margin-left: 1rem;
+}
+
+.logo-img {
+    max-height: 100%;
+}
+
+.tab-label {
+    margin-right: 1rem;
+    font-weight: initial;
+    cursor: pointer;
+}

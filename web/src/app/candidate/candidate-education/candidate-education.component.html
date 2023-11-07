@@ -139,7 +139,7 @@
           </div>
           <div class="buttons-right">
             <app-abc-button *ngIf="!academicInfoDisabled" class="inline-button" color="basic"
-                            (click)="cancel()" i18n="@@cancel">Cancelar</app-abc-button>
+                            (click)="cancelOrReload()" i18n="@@cancel">Cancelar</app-abc-button>
             <app-abc-button type="submit" *ngIf="!academicInfoDisabled" color="primary"
                         [disabled]="!academicInformationForm.valid" class="inline-button" 
                         i18n="@@save">Guardar</app-abc-button>

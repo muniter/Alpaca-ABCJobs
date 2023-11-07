@@ -1,0 +1,83 @@
+<div class="modal">
+  <form [formGroup]="employeeCreateForm" (ngSubmit)="employeeCreation()">
+    <div class="form">
+
+      <div class="form-row header-row">
+        <mat-form-field class="form-field header-width" id="employeeNameFormField" appearance="outline"
+          subscriptSizing="dynamic">
+          <input matInput id="name" class="form-control header-input" formControlName="name"
+            placeholder="Nombres y apellidos" i18n-placeholder="@@fullemployeenameplaceholder">
+          <mat-error *ngIf="employeeCreateForm.get('name')!.invalid">
+            {{ getErrorMessage('name') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@position">Cargo</label>
+        </div>
+        <mat-form-field class="form-field right-field" id="employeePositionFormField" appearance="outline"
+          subscriptSizing="dynamic">
+          <input matInput id="position" class="form-control" formControlName="position" placeholder="Posición Actual"
+            i18n-placeholder="@@currentpositionplaceholder">
+          <mat-error *ngIf="employeeCreateForm.get('position')!.invalid">
+            {{ getErrorMessage('position') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@technicalSkills">Habilidades Técnicas</label>
+        </div>
+        <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+          <mat-chip-grid #chipGrid>
+            <mat-chip-row *ngFor="let skill of selectedSkills" (removed)="removeSkill(skill)">
+              {{skill}}
+              <button matChipRemove [attr.aria-label]="'remove ' + skill">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input #languageInput formControlName="skills" [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addSkill($event)"
+            placeholder="Tecnologías y aptitudes" i18n-placeholder="@@skillsplaceholder"/>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+              {{skill}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="employeeCreateForm.get('skills')!.invalid">
+            {{ 'aaaaaaaaaaaaaaaaaaaaa' }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@personality">Personalidad</label>
+        </div>
+        <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+          <mat-select class="form-control" formControlName="personality" placeholder="Seleccionar tipo de personalidad" i18n-placeholder="@@employeepersonalityplaceholder">
+            <mat-option *ngFor="let personality of personalities" [value]="personality">
+              {{personality.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="employeeCreateForm.get('personality')!.invalid">
+            {{ getErrorMessage('personality') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button"
+          [disabled]="!employeeCreateForm.valid || selectedSkills.length < 1" color="primary"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+
+    </div>
+  </form>
+</div>
