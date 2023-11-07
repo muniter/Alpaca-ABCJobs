@@ -78,6 +78,7 @@ class WorkInfoFragment : Fragment(),
                 }
             }
         }
+        (activity as MainActivity).unhideButton();
         return view
     }
 
