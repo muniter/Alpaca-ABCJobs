@@ -114,5 +114,7 @@
     <string name="description_label">Descripción</string>
     <string name="description_placeholder">Ingrese la descripción de sus actividades</string>
     <string name="skills_label">Habilidades</string>
+    <string name="technical_info_title">Información técnica</string>
+    <string name="work_info_title">Información laboral</string>
 
 </resources>

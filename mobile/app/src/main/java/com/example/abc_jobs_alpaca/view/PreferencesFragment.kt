@@ -3,6 +3,7 @@ package com.example.abc_jobs_alpaca.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,9 @@ import androidx.lifecycle.Observer
 import com.example.abc_jobs_alpaca.databinding.FragmentPreferencesBinding
 import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class PreferencesFragment : Fragment() {
@@ -37,6 +40,13 @@ class PreferencesFragment : Fragment() {
 
     companion object {
         fun newInstance() = PreferencesFragment()
+        const val DATE_FORMAT_1 = "dd/MM/yyyy"
+        const val DATE_FORMAT_2 = "dd-MM-yyyy"
+        const val DATE_FORMAT_3 = "yyyy/MM/dd"
+        const val DATE_FORMAT_4 = "yyyy-MM-dd"
+        const val TIME_FORMAT_1 = "12h"
+        const val TIME_FORMAT_2 = "24h"
+
     }
 
     @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
@@ -59,7 +69,7 @@ class PreferencesFragment : Fragment() {
         dateFormatSpinner = binding.dateFormatSpinner
         timeFormatSpinner = binding.timeFormatSpinner
 
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        var sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         tokenLiveData.value = token
 
@@ -76,6 +86,7 @@ class PreferencesFragment : Fragment() {
             val selectedLanguage = viewModel.languageSpinnerItems[viewModel.selectedLanguagePosition.value ?: 0]
             val selectedDateFormat = viewModel.dateFormatSpinnerItems[viewModel.selectedDateFormatPosition.value ?: 0]
             val selectedTimeFormat = viewModel.timeFormatSpinnerItems[viewModel.selectedTimeFormatPosition.value ?: 0]
+
 
             var auxLanguage ="";
             when(selectedLanguage){
@@ -115,54 +126,71 @@ class PreferencesFragment : Fragment() {
         timeFormatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeFormatSpinner.adapter = timeFormatAdapter
 
-            return binding.root
+        var languageView = binding.languageView
+        var dateFormatView = binding.dateView
+        var timeFormatView = binding.timeView
+
+        val currentLanguage = sharedPreferences.getString("language", "")
+        languageView.text = "$currentLanguage"
+
+        var currentDate = Date()
+        var xx = dateFormatted(currentDate)
+        dateFormatView.text = "$xx"
+
+        var currentTime = Time()
+        currentTime.setToNow()
+        var yy = timeFormatted(currentTime)
+        timeFormatView.text = "$yy"
+
+
+        return binding.root
+    }
+
+
+
+    private fun dateFormatted(date : Date): String {
+        val dateString: String;
+        var sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        var dateFormat = sharedPreferences.getString("dateFormat", "")
+        when(dateFormat){
+            DATE_FORMAT_1 -> dateString = SimpleDateFormat(DATE_FORMAT_1, Locale.getDefault()).format(date)
+            DATE_FORMAT_2 -> dateString = SimpleDateFormat(DATE_FORMAT_2, Locale.getDefault()).format(date)
+            DATE_FORMAT_3-> dateString = SimpleDateFormat(DATE_FORMAT_3, Locale.getDefault()).format(date)
+            DATE_FORMAT_4 -> dateString = SimpleDateFormat(DATE_FORMAT_4, Locale.getDefault()).format(date)
+            else -> dateString = ""
+        }
+        return dateString
+    }
+
+    private fun timeFormatted(time: Time): String {
+        val timeString: String
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val timeFormat = sharedPreferences.getString("timeFormat", TIME_FORMAT_1) // Obtiene la preferencia de formato de hora
+
+        val formatPattern = if (timeFormat == TIME_FORMAT_2) {
+            "HH:mm" // Formato de 24 horas
+        } else {
+            "hh:mm a" // Formato de 12 horas con AM/PM
         }
 
-        private fun getCurrentHour(timeFormat: String): String {
-            val calendar = Calendar.getInstance()
-            val hourOfDay = calendar[Calendar.HOUR_OF_DAY]
-            val minute = calendar[Calendar.MINUTE]
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, time.hour)
+        calendar.set(Calendar.MINUTE, time.minute)
 
-            val formattedHour: String
-            if (timeFormat == "12 horas") {
-                val amPm = if (hourOfDay < 12) "AM" else "PM"
-                val hour12 = if (hourOfDay % 12 == 0) 12 else hourOfDay % 12
-                formattedHour =
-                    String.format(Locale.getDefault(), "%02d:%02d %s", hour12, minute, amPm)
-            } else {
-                formattedHour = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+        timeString = SimpleDateFormat(formatPattern, Locale.getDefault()).format(calendar.time)
+
+        return timeString
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return PreferencesViewModel(activity!!.application) as T
             }
-
-            return formattedHour
-        }
-
-        private fun getCurrentDate(dateFormat: String): String {
-            val calendar = Calendar.getInstance()
-            val year = calendar[Calendar.YEAR]
-            val month = calendar[Calendar.MONTH] + 1
-            val day = calendar[Calendar.DAY_OF_MONTH]
-
-            val formattedDate: String
-            if (dateFormat == "DD/MM/YYYY") {
-                formattedDate =
-                    String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year)
-            } else if (dateFormat == "MM/DD/YYYY") {
-                formattedDate =
-                    String.format(Locale.getDefault(), "%02d/%02d/%04d", month, day, year)
-            } else {
-                formattedDate = ""
-            }
-            return formattedDate
-        }
-
-        override fun onActivityCreated(savedInstanceState: Bundle?) {
-            super.onActivityCreated(savedInstanceState)
-            viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory{
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return PreferencesViewModel(activity!!.application) as T
-                }
-            })[PreferencesViewModel::class.java]
-        }
+        })[PreferencesViewModel::class.java]
+    }
 
 }
