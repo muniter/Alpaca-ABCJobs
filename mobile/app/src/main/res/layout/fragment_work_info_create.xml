@@ -66,7 +66,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Cargo"
+                                android:text="@string/role_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su cargo"
+                                android:hint="@string/role_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -114,7 +114,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Empresa"
+                                android:text="@string/company_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -125,7 +125,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese la empresa"
+                                android:hint="@string/company_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -162,14 +162,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Fecha de inicio"
+                                android:text="@string/start_date_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerStartDateC"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Año de inicio" />
+                                android:hint="@string/start_date_placeholder" />
 
                             <TextView
                                 android:id="@+id/labelStartDateCError"
@@ -185,7 +185,7 @@
                         android:id="@+id/checkBoxCompletedJob"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="¿Dejo de trabajar ahí?"
+                        android:text="@string/job_checkbox"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDateC" />
@@ -210,14 +210,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Fecha fin"
+                                android:text="@string/end_date_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerEndDateC"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Año de finalización" />
+                                android:hint="@string/end_date_placeholder" />
 
                             <TextView
                                 android:id="@+id/labelEndDateCError"
@@ -225,6 +225,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:textColor="@color/error_message" />
+
+                            <TextView
+                                android:id="@+id/labelSkill"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/skills_label"
+                                android:textColor="@color/black" />
+
                         </LinearLayout>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -235,35 +244,34 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Selecciona un elemento"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC"
-                        tools:ignore="MissingConstraints" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEndDateC" >
 
 
-                    <TextView
-                        android:id="@+id/labelSkillError"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/error_message"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/select_element_label"
+                            app:layout_constraintTop_toBottomOf="@+id/labelSkill" />
 
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+
+                        <TextView
+                            android:id="@+id/labelSkillError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/error_message"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutAdditionalInfo"
@@ -273,7 +281,7 @@
                         app:hintEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/labelSkillError">
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -286,7 +294,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Descripción"
+                                android:text="@string/description_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -299,7 +307,7 @@
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top"
-                                android:hint="Ingrese la descripción de sus actividades"
+                                android:hint="@string/description_placeholder"
                                 android:inputType="textMultiLine"
                                 android:minLines="3" />
 

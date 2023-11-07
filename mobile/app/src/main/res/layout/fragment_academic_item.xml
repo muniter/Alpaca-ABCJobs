@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Título Obtenido"
+                    android:text="@string/degree_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nivel de Estudios"
+                    android:text="@string/degree_type_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -162,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Institución Educativa"
+                    android:text="@string/institution_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -203,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Fecha de inicio"
+                    android:text="@string/start_date_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -223,7 +223,7 @@
             android:layout_marginEnd="5dp"
             android:clickable="false"
             android:editable="false"
-            android:text="¿Culminó los estudios?"
+            android:text="@string/studies_finished_checkbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate"
@@ -251,7 +251,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Fecha fin de estudio"
+                    android:text="@string/end_date_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -286,7 +286,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Información Adicional"
+                    android:text="@string/extra_info_label"
                     android:textColor="@color/black" />
 
                 <TextView

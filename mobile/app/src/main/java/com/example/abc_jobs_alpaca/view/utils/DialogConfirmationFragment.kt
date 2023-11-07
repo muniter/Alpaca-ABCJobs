@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.example.abc_jobs_alpaca.R
 
 class ConfirmDialogFragment(private val id: Int, private val listener: ConfirmDialogListener) : DialogFragment() {
 
@@ -13,13 +14,13 @@ class ConfirmDialogFragment(private val id: Int, private val listener: ConfirmDi
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
-            .setTitle("Confirmación")
-            .setMessage("¿Está seguro que desea eliminar este elemento?")
-            .setPositiveButton("Aceptar") { dialog, _ ->
+            .setTitle(getString(R.string.title_dialog))
+            .setMessage(getString(R.string.question_dialog))
+            .setPositiveButton(getString(R.string.confirm_message)) { dialog, _ ->
                 listener.onConfirmDelete(id)
                 dismiss()
             }
-            .setNegativeButton("Cancelar") { dialog, _ ->
+            .setNegativeButton(getString(R.string.cancel_message)) { dialog, _ ->
                 dismiss()
             }
             .create()

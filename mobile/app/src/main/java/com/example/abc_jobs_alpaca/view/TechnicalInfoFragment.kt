@@ -101,6 +101,7 @@ class TechnicalInfoFragment : Fragment(),
                     viewModel.loadTechnicalItemsInfo()
                 }
                 else {
+                    //TODO: Something
                 }
             }
         }
