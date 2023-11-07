@@ -9,6 +9,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.abc_jobs_alpaca.databinding.FragmentWorkItemBinding
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItem
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class WorkInfoItemRecyclerViewAdapter(
     private val values: List<WorkInfoItem>,
@@ -40,7 +42,15 @@ class WorkInfoItemRecyclerViewAdapter(
         holder.description.text = item.description
         holder.endYear.visibility = if (state) TextView.VISIBLE else TextView.GONE
         holder.labelEndYear.visibility = if (state) TextView.VISIBLE else TextView.GONE
+        holder.chipGroup.removeAllViews()
 
+        val context = holder.itemView.context
+
+        item.skills.forEach {
+            val chip = Chip(context)
+            chip.text = it.name  // Establece el texto en el Chip
+            holder.chipGroup.addView(chip)
+        }
         holder.btnDelete.setOnClickListener {
             onItemClick(item)
         }
@@ -60,6 +70,7 @@ class WorkInfoItemRecyclerViewAdapter(
         val checkBox: CheckBox = binding.checkBoxCompletedJobE
         val labelEndYear : TextView = binding.labelEndDateCE
         val btnDelete : ImageButton = binding.deleteWorkInfoItem
+        val chipGroup : ChipGroup = binding.chipGroupSkillsE
 
 
         override fun toString(): String {

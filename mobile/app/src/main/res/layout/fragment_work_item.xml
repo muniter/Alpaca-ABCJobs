@@ -255,10 +255,11 @@
                     android:text="Habilidades"
                     android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/spinnerSkillE"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupSkillsE"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    />
 
             </LinearLayout>
 
