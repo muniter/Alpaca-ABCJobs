@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Cargo"
+                    android:text="@string/role_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Empresa"
+                    android:text="@string/company_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -169,7 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Fecha de inicio"
+                    android:text="@string/start_date_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -189,7 +189,7 @@
             android:layout_marginEnd="5dp"
             android:clickable="false"
             android:editable="false"
-            android:text="¿Dejó de trabajar ahí?"
+            android:text="@string/job_checkbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate"
@@ -217,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Fecha fin de estudio"
+                    android:text="@string/end_date_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -252,13 +252,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Habilidades"
+                    android:text="@string/skills_label"
                     android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/spinnerSkillE"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupSkillsE"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    />
 
             </LinearLayout>
 
@@ -288,7 +289,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Descripción de actividades"
+                    android:text= "@string/description_label"
                     android:textColor="@color/black" />
 
                 <TextView

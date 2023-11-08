@@ -190,11 +190,6 @@ class TechnicalInfoCreateFragment : Fragment(),
 
                 val typeTechnicalItem = viewModel.getIdTypeTechnicalItem(typeTechnical)
                 toggleControl(false)
-
-                Log.d("TechnicalInfoCreateFragment",
-                    "description: $description" +
-                    "typeTechnicalItem: $typeTechnicalItem"
-                )
                 viewModel.saveTechnicalInfoItem(
                     TechnicalInfoRequest(
                         description,

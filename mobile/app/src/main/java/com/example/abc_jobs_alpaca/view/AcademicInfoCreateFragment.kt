@@ -56,7 +56,7 @@ class AcademicInfoCreateFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
 
-        requireActivity().title = "Crear formación académica"
+        requireActivity().title = getString(R.string.create_academic_info_title)
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -326,7 +326,7 @@ class AcademicInfoCreateFragment : Fragment(),
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "Se debe elegir un tipo de formación"
+            labelError.text = getString(R.string.type_degree_error_message)
             isValidTypeDegree = false
             disableButton(view?.findViewById(R.id.academicInfoSaveButton)!!)
         } else {
@@ -348,7 +348,7 @@ class AcademicInfoCreateFragment : Fragment(),
 
         if (!isValid || !isValidDate) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "La fecha de inicio debe ser menor a la fecha de fin"
+            labelError.text = getString(R.string.date_error_message)
             isValidDateInit = false
             disableButton(view?.findViewById(R.id.academicInfoSaveButton)!!)
         } else {

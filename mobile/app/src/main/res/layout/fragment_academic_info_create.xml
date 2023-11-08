@@ -66,7 +66,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Título Obtenido"
+                                android:text="@string/degree_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese su grado académico"
+                                android:hint="@string/degree_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -113,14 +113,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Nivel de Estudios"
+                                android:text="@string/degree_type_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerEducationLevel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Nivel de Estudios" />
+                                android:hint="@string/degree_type_spinner" />
 
                             <TextView
                                 android:id="@+id/labelEducationLevelError"
@@ -154,7 +154,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Institución Educativa"
+                                android:text="@string/institution_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -165,7 +165,7 @@
                                 android:ems="10"
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
-                                android:hint="Ingrese la institución educativa"
+                                android:hint="@string/institution_placeholder"
                                 android:inputType="textPersonName"
                                 android:textAlignment="viewStart"
                                 android:textColorHint="@color/accent"
@@ -202,14 +202,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Fecha de inicio"
+                                android:text="@string/start_date_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerStartDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Año de inicio" />
+                                android:hint="@string/start_date_placeholder" />
 
                             <TextView
                                 android:id="@+id/labelStartDateError"
@@ -225,7 +225,7 @@
                         android:id="@+id/checkBoxCompletedStudies"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="¿Culminó los estudios?"
+                        android:text="@string/studies_finished_checkbox"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutStartDate" />
@@ -251,14 +251,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Fecha fin de estudio"
+                                android:text="@string/end_date_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerEndDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Año de fin de estudios" />
+                                android:hint="@string/end_date_placeholder" />
 
                             <TextView
                                 android:id="@+id/labelEndDateError"
@@ -291,7 +291,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Información Adicional"
+                                android:text="@string/extra_info_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -304,7 +304,7 @@
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top"
-                                android:hint="Información Adicional"
+                                android:hint="@string/extra_info_placeholder"
                                 android:inputType="textMultiLine"
                                 android:minLines="3" />
 

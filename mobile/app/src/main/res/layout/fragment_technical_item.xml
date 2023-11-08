@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nivel de Estudios"
+                    android:text="@string/technical_info_label"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nivel de conocimiento"
+                    android:text="level_technical_knowledge_label"
                     android:textColor="@color/black" />
 
                 <RatingBar
@@ -171,7 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Información Adicional"
+                    android:text="@string/extra_info_technical_label"
                     android:textColor="@color/black" />
 
                 <TextView

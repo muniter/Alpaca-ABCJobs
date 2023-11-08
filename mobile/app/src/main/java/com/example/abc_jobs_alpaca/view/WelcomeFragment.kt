@@ -71,7 +71,7 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
         when (context) {
             is OnElementHideListener -> elementHideListener = context
             is OnLanguageChangeListener -> languageChangeListener = context
-            else -> throw IllegalArgumentException("El contexto debe implementar las interfaces necesarias.")
+            else -> throw IllegalArgumentException(getString(R.string.context_error_message))
         }
     }
 

@@ -64,14 +64,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Conocimiento técnico"
+                                android:text="@string/technical_info_label"
                                 android:textColor="@color/black" />
 
                             <Spinner
                                 android:id="@+id/spinnerTechnicalItem"
                                 android:layout_width="match_parent"
                                 android:layout_height="70dp"
-                                android:hint="Conocimiento técnico" />
+                                android:hint="@string/technical_info_placeholder" />
 
                             <TextView
                                 android:id="@+id/labelTechnicalItemError"
@@ -105,7 +105,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Nivel de conocimiento"
+                                android:text="@string/level_technical_knowledge_label"
                                 android:textColor="@color/black" />
 
                             <RatingBar
@@ -146,7 +146,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Información Adicional"
+                                android:text="@string/extra_info_technical_label"
                                 android:textColor="@color/black" />
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -159,7 +159,7 @@
                                 android:focusable="auto"
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="top"
-                                android:hint="Información Adicional"
+                                android:hint="@string/extra_info_tecnical_placeholder"
                                 android:inputType="textMultiLine"
                                 android:minLines="3" />
 
