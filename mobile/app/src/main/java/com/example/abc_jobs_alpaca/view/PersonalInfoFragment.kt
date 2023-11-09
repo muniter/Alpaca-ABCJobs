@@ -3,6 +3,8 @@ package com.example.abc_jobs_alpaca.view
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -25,6 +28,7 @@ import com.example.abc_jobs_alpaca.databinding.FragmentPersonalInfoBinding
 import com.example.abc_jobs_alpaca.model.models.Country
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.utils.Validators
 import com.example.abc_jobs_alpaca.viewmodel.PersonalInfoViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
@@ -32,6 +36,10 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -41,6 +49,14 @@ class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnIte
     companion object {
         fun newInstance() = PersonalInfoFragment()
     }
+
+    private var isValidBirthDate: Boolean = true
+    private var isValidCity: Boolean = true
+    private var isValidAddress: Boolean = true
+    private var isValidPhone: Boolean = true
+    private var isValidBio: Boolean = true
+    private var isAgeless: Boolean = false
+
 
     private lateinit var viewModel: PersonalInfoViewModel
     private lateinit var binding: FragmentPersonalInfoBinding
@@ -95,32 +111,137 @@ class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnIte
             }
         })
 
+        setValidations(view)
+
         (activity as MainActivity).hideButton();
 
         return view
     }
 
-
-
     private fun showDatePicker() {
 
         var year = viewModel.personalInfo.value?.birth_date?.year ?: 0
-        var month = viewModel.personalInfo.value?.birth_date?.month ?: 0
-        var day = viewModel.personalInfo.value?.birth_date?.date ?: 1
+        var month = viewModel.personalInfo.value?.birth_date?.monthValue ?: 0
+        var day = viewModel.personalInfo.value?.birth_date?.dayOfMonth ?: 1
 
-        var cal = Calendar.getInstance()
         val dpd = DatePickerDialog(this.requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            val localDate = LocalDate.of(year, monthOfYear + 1, dayOfMonth)
 
-            viewModel.personalInfo.value?.birth_date = Date(year-1900, monthOfYear, dayOfMonth)
+            viewModel.personalInfo.value?.birth_date = localDate
+            if(ChronoUnit.YEARS.between(localDate, LocalDate.now()) < 18) {
+                val labelBirthDateError = requireView()
+                    .findViewById<TextView>(R.id.labelBirthDateError)
+
+                this.isAgeless = true
+                validateAndShowBirthDateError("", labelBirthDateError)
+            } else {
+                this.isAgeless = false
+            }
 
             viewModel.updateDateString()
-        }, year+1900, month, day)
+
+        }, year, month-1, day)
 
         dpd.show()
+    }
+
+    // Validation
+    private fun setValidations(view: View){
+        val editBirthDateName = view.findViewById<EditText>(R.id.editTextDate)
+        val labelBirthDateError = view.findViewById<TextView>(R.id.labelBirthDateError)
+
+        setupFieldValidation(editBirthDateName, labelBirthDateError) { newText ->
+            validateAndShowBirthDateError(newText, labelBirthDateError)
+        }
+
+        val editCityName = view.findViewById<TextInputEditText>(R.id.editTextCity)
+        val labelCityError = view.findViewById<TextView>(R.id.labelCityError)
+
+        setupFieldValidation(editCityName, labelCityError) { newText ->
+            validateAndShowCityError(newText, labelCityError)
+        }
+
+        val editAddressName = view.findViewById<TextInputEditText>(R.id.editTextAddress)
+        val labelAddressError = view.findViewById<TextView>(R.id.labelAddressError)
+
+        setupFieldValidation(editAddressName, labelAddressError) { newText ->
+            validateAndShowAddressError(newText, labelAddressError)
+        }
+
+        val editPhoneName = view.findViewById<TextInputEditText>(R.id.editTextPhone)
+        val labelPhoneError = view.findViewById<TextView>(R.id.labelPhoneError)
+
+        setupFieldValidation(editPhoneName, labelPhoneError) { newText ->
+            validateAndShowPhoneError(newText, labelPhoneError)
+        }
+
+        val editBioName = view.findViewById<TextInputEditText>(R.id.editTextBio)
+        val labelBioError = view.findViewById<TextView>(R.id.labelBioError)
+
+        setupFieldValidation(editBioName, labelBioError) { newText ->
+            validateAndShowBioError(newText, labelBioError)
+        }
+    }
+
+    private fun setupFieldValidation(
+        editText: EditText,
+        errorLabel: TextView,
+        validationFunction: (String) -> Unit
+    ) {
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val newText = editText.text.toString()
+                validationFunction(newText)
+            }
+        }
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+        })
+    }
+
+    private fun setupFieldValidation(
+        editText: TextInputEditText,
+        errorLabel: TextView,
+        validationFunction: (String) -> Unit
+    ) {
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val newText = editText.text.toString()
+                validationFunction(newText)
+            }
+        }
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val newText = s.toString()
+                validationFunction(newText)
+            }
+        })
     }
 
     override fun onClick(v: View?) {
@@ -132,7 +253,7 @@ class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnIte
                 // Format the selected date into a string
 
                 if (birthDate != null) {
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     val formattedDate = dateFormat.format(birthDate)
 
                     birthDateString = formattedDate
@@ -187,7 +308,101 @@ class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnIte
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        var a = 1
     }
 
+    private fun validateAndShowBirthDateError(text: String, labelError: TextView) {
+        val isValid = Validators.isValidBirthDate(text)
+
+        if (!isValid || isAgeless) {
+            labelError.visibility = View.VISIBLE
+            labelError.text = getString(R.string.birthdate_validation_error)
+            isValidCity = false
+            disableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        } else {
+            labelError.visibility = View.GONE
+            labelError.text = ""
+            isValidCity = true
+            enableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        }
+    }
+
+    private fun validateAndShowCityError(text: String, labelError: TextView) {
+        val isValid = Validators.isValidCity(text)
+
+        if (!isValid) {
+            labelError.visibility = View.VISIBLE
+            labelError.text = getString(R.string.city_validation_error)
+            isValidCity = false
+            disableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        } else {
+            labelError.visibility = View.GONE
+            labelError.text = ""
+            isValidCity = true
+            enableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        }
+    }
+
+    private fun validateAndShowAddressError(text: String, labelError: TextView) {
+        val isValid = Validators.isValidAddress(text)
+
+        if (!isValid) {
+            labelError.visibility = View.VISIBLE
+            labelError.text = getString(R.string.address_validation_error)
+            isValidAddress = false
+            disableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        } else {
+            labelError.visibility = View.GONE
+            labelError.text = ""
+            isValidAddress = true
+            enableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        }
+    }
+
+    private fun validateAndShowPhoneError(text: String, labelError: TextView) {
+        val isValid = Validators.isValidPhone(text)
+
+        if (!isValid) {
+            labelError.visibility = View.VISIBLE
+            labelError.text = getString(R.string.phone_validation_error)
+            isValidPhone = false
+            disableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        } else {
+            labelError.visibility = View.GONE
+            labelError.text = ""
+            isValidPhone = true
+            enableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        }
+    }
+
+    private fun validateAndShowBioError(text: String, labelError: TextView) {
+        val isValid = Validators.isValidBio(text)
+
+        if (!isValid) {
+            labelError.visibility = View.VISIBLE
+            labelError.text = getString(R.string.bio_validation_error)
+            isValidBio = false
+            disableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        } else {
+            labelError.visibility = View.GONE
+            labelError.text = ""
+            isValidBio = true
+            enableButton(view?.findViewById(R.id.button_save_personal_info)!!)
+        }
+    }
+
+    private fun disableButton(button: Button) {
+        button.isEnabled = false
+    }
+
+    private fun enableButton(button: Button) {
+        if (isValidBirthDate &&
+            isValidCity &&
+            isValidAddress &&
+            isValidPhone &&
+            isValidBio &&
+            !isAgeless
+        ) {
+            button.isEnabled = true
+        }
+    }
 }

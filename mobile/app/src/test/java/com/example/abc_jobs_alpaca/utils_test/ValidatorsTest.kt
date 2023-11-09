@@ -35,6 +35,7 @@ class ValidatorsTest {
     fun testIsPasswordValid() {
         assertTrue(Validators.isPasswordValid(faker.random.randomString(8)))
         assertFalse(Validators.isPasswordValid(faker.random.randomString(7)))
+        assertFalse(Validators.isPasswordValid(faker.random.randomString(256)))
     }
 
     @Test
@@ -44,5 +45,63 @@ class ValidatorsTest {
 
         assertTrue(Validators.areStringsEqual(str1, str1));
         assertFalse(Validators.areStringsEqual(str1, str2));
+    }
+
+    @Test
+    fun testIsNonEmpty() {
+        assertTrue(Validators.isNotEmpty(faker.random.randomString(8)))
+        assertFalse(Validators.isNotEmpty(""))
+    }
+
+    @Test
+    fun testCompareTwoNumbers() {
+        assertTrue(Validators.compareTwoNumbers(1,2))
+        assertFalse(Validators.compareTwoNumbers(11,2))
+        assertFalse(Validators.compareTwoNumbers(2,2))
+        assertFalse(Validators.compareTwoNumbers(null,2))
+    }
+
+    @Test
+    fun testIsValidCity() {
+        assertTrue(Validators.isValidCity(""))
+        assertFalse(Validators.isValidCity(faker.random.randomString(4)))
+        assertTrue(Validators.isValidCity(faker.random.randomString(5)))
+        assertTrue(Validators.isValidCity(faker.random.randomString(255)))
+        assertFalse(Validators.isValidCity(faker.random.randomString(256)))
+    }
+
+    @Test
+    fun testIsValidAddress() {
+        assertTrue(Validators.isValidAddress(""))
+        assertFalse(Validators.isValidAddress(faker.random.randomString(4)))
+        assertTrue(Validators.isValidAddress(faker.random.randomString(5)))
+        assertTrue(Validators.isValidAddress(faker.random.randomString(255)))
+        assertFalse(Validators.isValidAddress(faker.random.randomString(256)))
+    }
+
+    @Test
+    fun testIsValidPhone() {
+        assertTrue(Validators.isValidPhone(""))
+        assertFalse(Validators.isValidPhone(faker.random.randomString(1)))
+        assertTrue(Validators.isValidPhone(faker.random.randomString(2)))
+        assertTrue(Validators.isValidPhone(faker.random.randomString(15)))
+        assertFalse(Validators.isValidPhone(faker.random.randomString(16)))
+    }
+
+    @Test
+    fun testIsValidBio() {
+        assertTrue(Validators.isValidBio(""))
+        assertFalse(Validators.isValidBio(faker.random.randomString(9)))
+        assertTrue(Validators.isValidBio(faker.random.randomString(10)))
+        assertTrue(Validators.isValidBio(faker.random.randomString(255)))
+        assertFalse(Validators.isValidBio(faker.random.randomString(256)))
+    }
+
+    @Test
+    fun testIsValidBirthDate() {
+        assertFalse(Validators.isValidBirthDate("11/11/202321"))
+        assertTrue(Validators.isValidBirthDate("11/11/2021"))
+        assertTrue(Validators.isValidBirthDate("2011/11/21"))
+        assertFalse(Validators.isValidBirthDate("11/2021"))
     }
 }

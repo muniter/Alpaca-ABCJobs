@@ -81,7 +81,6 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
             val xx = abcJobsRepository.getConfig(it.data?.token!!)
             xx.onSuccess {
                 setConfigToPreferences(it!!)
-                Log.d("LoginViewModel", "Logged")
             }
             xx.onFailure{
             }
