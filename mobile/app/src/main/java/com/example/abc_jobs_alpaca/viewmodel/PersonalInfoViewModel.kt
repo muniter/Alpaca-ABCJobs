@@ -13,6 +13,7 @@ import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 import java.util.Locale
 
@@ -71,11 +72,11 @@ class PersonalInfoViewModel(
     }
 
     fun updateDateString() {
-        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        val dateFormatter = DateTimeFormatter.ofPattern(dateFormat)
         // Format the selected date into a string
 
         if (personalInfo.value?.birth_date != null) {
-            val formattedDate = dateFormat.format(personalInfo.value?.birth_date)
+            val formattedDate = dateFormatter.format(personalInfo.value?.birth_date)
 
             parsedDate.postValue(formattedDate)
         }

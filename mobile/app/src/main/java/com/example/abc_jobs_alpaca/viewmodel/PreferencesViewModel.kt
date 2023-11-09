@@ -14,9 +14,7 @@ import com.example.abc_jobs_alpaca.model.models.UserTimeFormat
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
 
-class PreferencesViewModel (private val application: Application) : ViewModel() {
-
-    private val abcJobsRepository = ABCJobsRepository(application)
+class PreferencesViewModel (private val application: Application, private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
 
     var selectedLanguagePosition = MutableLiveData<Int>()
     val selectedDateFormatPosition = MutableLiveData<Int>()
@@ -34,7 +32,7 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
         tokenLiveData.value = token
     }
 
-    fun save(){
+    suspend fun save(){
         val language = UserLanguageApp.values()[selectedLanguagePosition.value ?: 0]
         val dateFormat = UserDateFormat.values()[selectedDateFormatPosition.value ?: 0]
         val timeFormat = UserTimeFormat.values()[selectedTimeFormatPosition.value ?: 0]
@@ -42,13 +40,12 @@ class PreferencesViewModel (private val application: Application) : ViewModel() 
         val token = tokenLiveData.value ?: return
 
         val newConfigRequest = ConfigRequest(language, dateFormat, timeFormat)
-        viewModelScope.launch {
-            abcJobsRepository.postConfig(token,newConfigRequest)
-                .onSuccess {
-                    preferencesUpdatedLiveData.value = Unit
-                }
-                .onFailure { Log.d("PreferencesViewModel", "Error al guardar la configuración") }
-        }
+        abcJobsRepository.postConfig(token,newConfigRequest)
+            .onSuccess {
+                preferencesUpdatedLiveData.value = Unit
+            }
+            .onFailure { Log.d("PreferencesViewModel", "Error al guardar la configuración") }
+
     }
 }
 

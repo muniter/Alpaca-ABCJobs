@@ -34,4 +34,29 @@ object Validators {
         }
         return false
     }
+
+    fun isValidCity(city: String): Boolean {
+        return city.isEmpty() || city.length in 5..255
+    }
+
+    fun isValidAddress(address: String): Boolean {
+        return address.isEmpty() || address.length in 5..255
+    }
+
+    fun isValidPhone(phone: String): Boolean {
+        return phone.isEmpty() || phone.length in 2..15
+    }
+
+    fun isValidBio(bio: String): Boolean {
+        return bio.isEmpty() || bio.length in 10..255
+    }
+
+    fun isValidBirthDate(text: String): Boolean {
+        val splitted = text.split('/')
+        if(splitted.size != 3 || splitted[0].length + splitted[1].length + splitted[2].length != 8){
+            return  false
+        }
+
+        return true
+    }
 }

@@ -2,6 +2,8 @@ package com.example.abc_jobs_alpaca.model.models
 
 import com.example.abc_jobs_alpaca.utils.Utils
 import org.json.JSONObject
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.Date
 
 data class PersonalInfoResponse(
@@ -24,7 +26,7 @@ data class PersonalInfo(
     var last_names: String?,
     var full_name: String?,
     var email: String?,
-    var birth_date: Date?,
+    var birth_date: LocalDate?,
     var country_code: Int?,
     var country: String?,
     var city: String?,
@@ -51,7 +53,7 @@ fun deserializePersonalInfo(response: JSONObject): PersonalInfoResponse? {
         val last_names = Utils.optNullableString(dataObject, "last_names")
         val full_name = Utils.optNullableString(dataObject, "full_name")
         val email = Utils.optNullableString(dataObject, "email")
-        val birth_date = if (stringDate == null || splitDate?.size != 3) null else Date(splitDate[0].toInt() - 1900, splitDate[1].toInt() - 1, splitDate[2].toInt())
+        val birth_date = if (stringDate == null || splitDate?.size != 3) null else LocalDate.of(splitDate[0].toInt(), splitDate[1].toInt(), splitDate[2].toInt())
         val country_code = Utils.optNullableInt(dataObject,"country_code")
         val country = Utils.optNullableString(dataObject, "country")
         val city = Utils.optNullableString(dataObject, "city")

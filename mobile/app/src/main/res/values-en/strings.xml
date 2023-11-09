@@ -116,5 +116,10 @@
     <string name="skills_label">Skills</string>
     <string name="technical_info_title">Technical Information</string>
     <string name="work_info_title">Work Information</string>
+    <string name="city_validation_error">City must be between 5 and 255 characters long.</string>
+    <string name="address_validation_error">Address must be between 5 and 255 characters long.</string>
+    <string name="phone_validation_error">Phone number must be between 2 and 15 characters long.</string>
+    <string name="bio_validation_error">Bio number must be between 10 and 255 characters long.</string>
+    <string name="birthdate_validation_error">Debe ingresar una fecha válida y su edad debe ser mayor a 18 años.</string>
 
 </resources>
