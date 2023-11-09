@@ -214,6 +214,48 @@ class LoginViewModelTest {
     }
 
     @Test
+    fun testExceptionLoginWithError() {
+        runTest {
+            launch(Dispatchers.Main) {
+                val errorMessage = "mocked error"
+                val email = faker.internet.email()
+                val pass = faker.random.randomString(8)
+
+                Mockito.`when`(
+                    repositoryMock.postLoginUser(
+                        ArgumentMatchers.any(UserLoginRequest::class.java)
+                            ?: UserLoginRequest(email, pass)
+                    )
+                ).thenReturn(
+                    Result.failure(
+                        Error(errorMessage)
+                    )
+                )
+                delay(300)
+
+                loginViewModel.login(email, pass)
+
+                Mockito.verify(repositoryMock, Mockito.times(1)).postLoginUser(
+                    ArgumentMatchers.any(UserLoginRequest::class.java) ?: UserLoginRequest(
+                        email,
+                        pass
+                    )
+                )
+                delay(300)
+
+                Assert.assertEquals(
+                    MessageType.ERROR,
+                    (loginViewModel.getMessageLiveData().value as MessageEvent).type
+                )
+                Assert.assertEquals(
+                    "",
+                    (loginViewModel.getMessageLiveData().value as MessageEvent).content
+                )
+            }
+        }
+    }
+
+    @Test
     fun testExceptionWithoutMessageLogin() {
         runTest {
             launch(Dispatchers.Main) {
@@ -259,5 +301,74 @@ class LoginViewModelTest {
         val liveDataResponse = loginViewModel.getMessageLiveData()
 
         Assert.assertNotNull(liveDataResponse)
+    }
+
+    @Test
+    fun testGetEnabledElementsLiveData() {
+        val liveDataResponse = loginViewModel.getEnabledElementsLiveData()
+
+        Assert.assertNotNull(liveDataResponse)
+    }
+
+    @Test
+    fun testSuccessLoginFailGetConfig() {
+        runTest {
+            launch(Dispatchers.Main) {
+                val email = faker.internet.email()
+                val pass = faker.random.randomString(8)
+                val token = faker.random.randomString(28)
+
+                val userData = UserData(
+                    User(1, email, 1),
+                    token
+                )
+
+                Mockito.`when`(
+                    repositoryMock.getConfig(token)
+                ).thenReturn(
+                    Result.failure(
+                        Exception()
+                    )
+                )
+                delay(300)
+
+                Mockito.`when`(
+                    repositoryMock.postLoginUser(
+                        ArgumentMatchers.any(UserLoginRequest::class.java)
+                            ?: UserLoginRequest(email, pass)
+                    )
+                ).thenReturn(
+                    Result.success(
+                        UserLoginResponse(
+                            true,
+                            userData
+                        )
+                    )
+                )
+                delay(300)
+
+                loginViewModel.login(email, pass)
+
+                Mockito.verify(repositoryMock, Mockito.times(1)).getConfig(token)
+                delay(300)
+
+                Mockito.verify(repositoryMock, Mockito.times(1)).postLoginUser(
+                    ArgumentMatchers.any(UserLoginRequest::class.java) ?: UserLoginRequest(
+                        email,
+                        pass
+                    )
+                )
+                delay(300)
+
+                Assert.assertEquals(
+                    MessageType.SUCCESS,
+                    (loginViewModel.getMessageLiveData().value as MessageEvent).type
+                )
+                Assert.assertEquals(
+                    userData,
+                    (loginViewModel.getMessageLiveData().value as MessageEvent).content
+                )
+            }
+        }
     }
 }
