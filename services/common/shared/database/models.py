@@ -176,9 +176,7 @@ class DatosLaborales(Base):
     __tablename__ = "datos_laborales"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_persona: Mapped[int] = mapped_column(
-        ForeignKey("persona.id"), nullable=False
-    )
+    id_persona: Mapped[int] = mapped_column(ForeignKey("persona.id"), nullable=False)
     persona: Mapped["Persona"] = relationship("Persona", backref="datos_laborales")
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
     empresa: Mapped[str] = mapped_column(String(255), nullable=False)
@@ -425,9 +423,10 @@ class ExamenTecnico(Base):
         "ExamenPregunta", back_populates="examen_tecnico"
     )
 
-    def build_dto(self) -> ExamenDTO:
+    def build_dto(self, completed: bool = False) -> ExamenDTO:
         return ExamenDTO(
             id=self.id,
+            completed=completed,
             skill=self.rol_habilidad.build_dto(),
             number_of_questions=3,
         )

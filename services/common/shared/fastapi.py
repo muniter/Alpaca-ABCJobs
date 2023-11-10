@@ -3,9 +3,13 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from .api_models.shared import ErrorBuilder
 from .config import configuration
-from fastapi import FastAPI, Request, APIRouter
+from fastapi import FastAPI, Request, APIRouter, Response
 from fastapi.middleware.cors import CORSMiddleware
 from .logger import logger
+
+
+def get_response(response: Response) -> Response:
+    return response
 
 
 def shared_app_setup(app: FastAPI, router: APIRouter):
