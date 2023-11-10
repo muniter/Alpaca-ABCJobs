@@ -1,6 +1,9 @@
-from typing import Optional, TypeVar, Generic, Union, List, Dict
+from typing import Optional, Type, TypeVar, Generic, Union, List, Dict
+from fastapi import Depends, Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.util import defaultdict
+
 
 # Type Variables
 T = TypeVar("T")
@@ -24,7 +27,18 @@ class ErrorResponse(BaseModel):
     errors: E
 
 
-APIResponse = Union[SuccessResponse[T], ErrorResponse]
+def APIResponseModel(model: Type[T]) -> Type[Union[SuccessResponse[T], ErrorResponse]]:
+    return Union[SuccessResponse[model], ErrorResponse]
+
+
+def APIResponse(
+    result: Union[T, "ErrorBuilder"],
+) -> Union[SuccessResponse[T], JSONResponse]:
+    if isinstance(result, ErrorBuilder):
+        data = ErrorResponse(errors=result)
+        return JSONResponse(status_code=400, content=data.model_dump())
+
+    return SuccessResponse(data=result)
 
 
 class ErrorBuilder:
@@ -37,7 +51,9 @@ class ErrorBuilder:
     def add(self, field: str, message: str):
         if self._model and field != "global":
             if not hasattr(self._model, field):
-                raise ValueError(f"{field} is not an attribute of the provided BaseModel")
+                raise ValueError(
+                    f"{field} is not an attribute of the provided BaseModel"
+                )
         self.has_error = True
         self._errors[field].append(message)
 

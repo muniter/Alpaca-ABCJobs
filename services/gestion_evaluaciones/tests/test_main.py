@@ -60,7 +60,9 @@ def complete_exam() -> Tuple[Usuario, ExamenResultadoDTO, str]:
 
 
 def test_service_get_examenes():
-    result = examen_service.get_all_examenes()
+    usuario, _ = crear_usuario_candidato()
+    assert usuario.id_candidato is not None
+    result = examen_service.get_all_examenes(id_candidato=usuario.id_candidato)
     assert not isinstance(result, ErrorBuilder)
     assert len(result) > 0
 
@@ -73,7 +75,7 @@ def test_endpoint_get_examenes():
 
 
 def test_service_get_examen():
-    result = examen_service.get_examen(id=1)
+    result = examen_service.get_examen(id_examen=1, id_candidato=1)
     assert not isinstance(result, ErrorBuilder)
     assert result.id == 1
     assert result.skill.name == "Python Developer"
@@ -126,7 +128,7 @@ def test_service_examen_process_answer():
     assert next_result.next_question.id != question.id
 
 
-def test_service_examen_complete_exam():
+def service_examen_complete_exam():
     # An exam is completed with 3 answers
     usuario, _ = crear_usuario_candidato()
     assert usuario.id_candidato is not None
@@ -155,6 +157,25 @@ def test_service_examen_complete_exam():
     assert not isinstance(next_result, ErrorBuilder)
     assert next_result.next_question is None
     assert next_result.result is not None
+
+    return usuario, next_result.result
+
+
+def test_service_examen_complete_exam():
+    service_examen_complete_exam()
+
+
+def test_get_examenes_shows_completed():
+    _, result = service_examen_complete_exam()
+    examenes = examen_service.get_all_examenes(id_candidato=result.id_candidato)
+    assert len(examenes) > 0
+    answered = filter(lambda e: e.completed is True and e.id == result.exam.id, examenes)
+    assert len(list(answered)) == 1
+
+    # Get exam
+    exam = examen_service.get_examen(id_examen=result.exam.id, id_candidato=result.id_candidato)
+    assert not isinstance(exam, ErrorBuilder)
+    assert exam.completed is True
 
 
 def test_endpoint_complete_exam():

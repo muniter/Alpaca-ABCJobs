@@ -8,6 +8,7 @@ from common.shared.api_models.gestion_candidatos import RolHabilidadDTO
 class ExamenDTO(BaseModel):
     id: int
     skill: RolHabilidadDTO
+    completed: Optional[bool]
     number_of_questions: int
 
 
