@@ -1,5 +1,6 @@
 from typing import Optional, Type, TypeVar, Generic, Union, List, Dict
-from fastapi import Depends
+from fastapi import Depends, Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.util import defaultdict
 
@@ -32,13 +33,11 @@ def APIResponseModel(model: Type[T]) -> Type[Union[SuccessResponse[T], ErrorResp
 
 def APIResponse(
     result: Union[T, "ErrorBuilder"],
-) -> Union[SuccessResponse[T], ErrorResponse]:
+) -> Union[SuccessResponse[T], JSONResponse]:
     if isinstance(result, ErrorBuilder):
-        from common.shared.fastapi import get_response
+        data = ErrorResponse(errors=result)
+        return JSONResponse(status_code=400, content=data.model_dump())
 
-        response = Depends(get_response)
-        response.status_code = 400
-        return ErrorResponse(errors=result)
     return SuccessResponse(data=result)
 
 

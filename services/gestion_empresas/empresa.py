@@ -76,21 +76,12 @@ class UtilsRepository:
         query = select(Personalidad).where(Personalidad.id == id)
         return self.session.execute(query).scalar_one_or_none()
 
-    def get_roles_habilidades(self) -> list[RolesHabilidades]:
-        query = select(RolesHabilidades)
-        return list(self.session.execute(query).scalars().all())
-
-    def get_roles_habilidades_dto(self) -> List[RolHabilidadDTO]:
-        return [p.build_dto() for p in self.get_roles_habilidades()]
-
     def get_rol_habilidad_by_id(self, id: int) -> Union[RolesHabilidades, None]:
         query = select(RolesHabilidades).where(RolesHabilidades.id == id)
         return self.session.execute(query).scalar_one_or_none()
 
 
 class EmpleadoRepository:
-    # Get by id, create, update, delete
-
     def __init__(
         self,
         session: Session,
@@ -115,17 +106,6 @@ class EmpleadoRepository:
         # Refresh
         self.session.refresh(data)
         return data
-
-    def update(self, data: Empleado) -> Empleado:
-        self.session.add(data)
-        self.session.commit()
-        # Refresh
-        self.session.refresh(data)
-        return data
-
-    def delete(self, data: Empleado):
-        self.session.delete(data)
-        self.session.commit()
 
 
 class EquipoRepository:

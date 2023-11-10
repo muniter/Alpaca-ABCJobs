@@ -1,5 +1,5 @@
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.encoders import jsonable_encoder
 from .api_models.shared import ErrorBuilder
 from .config import configuration
@@ -13,6 +13,7 @@ def get_response(response: Response) -> Response:
 
 
 def shared_app_setup(app: FastAPI, router: APIRouter):
+
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(
         request: Request, exc: RequestValidationError
