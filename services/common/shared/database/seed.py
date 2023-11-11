@@ -65,5 +65,6 @@ def seed():
 
         logger.info("Seeding empresas")
         seed_empresas(count=2)
+
         logger.info("Seeding candidatos")
         seed_candidatos(count=50)
