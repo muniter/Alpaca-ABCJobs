@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItem
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import kotlinx.coroutines.launch
 
-class WorkInfoViewModel (private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
+class WorkInfoViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
     private val _workInfoList = MutableLiveData<List<WorkInfoItem>?>()
@@ -33,27 +31,26 @@ class WorkInfoViewModel (private val abcJobsRepository: ABCJobsRepository) : Vie
         navigationListener = listener
     }
 
-    fun loadWorkItemsInfo() {
-        viewModelScope.launch {
-            try {
-                if (token != null) {
-                    abcJobsRepository.getWorkInfo(token.value!!)
-                        .onSuccess { response ->
-                            Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $response")
-                            if (response.success) {
-                                _workInfoList.postValue(response.data)
-                                navigationListener?.navigateToNextScreen()
-                            }
+    suspend fun loadWorkItemsInfo() {
+        try {
+            if (token != null) {
+                abcJobsRepository.getWorkInfo(token.value!!)
+                    .onSuccess { response ->
+                        Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $response")
+                        if (response.success) {
+                            _workInfoList.value = response.data
+                            navigationListener?.navigateToNextScreen()
                         }
-                        .onFailure {
-                            Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $it")
-                        }
-                } else {
-                    //TODO: message
-                }
-            } catch (e: Exception) {
-
+                    }
+                    .onFailure {
+                        Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $it")
+                    }
+            } else {
+                //TODO: message
             }
+        } catch (e: Exception) {
+
         }
+
     }
 }

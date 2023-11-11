@@ -59,7 +59,7 @@ class AcademicInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadAcademicItemsInfo()
+            lifecycleScope.launch { viewModel.loadAcademicItemsInfo() }
         }
 
         if (view is RecyclerView) {
@@ -87,7 +87,7 @@ class AcademicInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            viewModel.loadAcademicItemsInfo()
+            lifecycleScope.launch { viewModel.loadAcademicItemsInfo() }
         }
     }
 

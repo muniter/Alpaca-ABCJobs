@@ -3,19 +3,13 @@ package com.example.abc_jobs_alpaca.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.model.models.Country
 import com.example.abc_jobs_alpaca.model.models.PersonalInfo
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.MessageEvent
 import com.example.abc_jobs_alpaca.utils.MessageType
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
-import java.util.ArrayList
-import java.util.Locale
 
 class PersonalInfoViewModel(
     private val token: String,
@@ -23,29 +17,31 @@ class PersonalInfoViewModel(
     private val abcJobsRepository: ABCJobsRepository
 ) : ViewModel() {
     val parsedDate: MutableLiveData<String?> = MutableLiveData(null)
-    val countrys: LiveData<ArrayList<Country?>> = liveData {
+    var countrys: MutableLiveData<ArrayList<Country?>> = MutableLiveData(ArrayList())
+    val personalInfo: MutableLiveData<PersonalInfo?> = MutableLiveData(null)
+
+    suspend fun loadData() {
 
         var countries = ArrayList<Country?>()
-        countries.add(Country(null,"","","-Seleccionar-",""))
+        countries.add(Country(null, "", "", "-Seleccionar-", ""))
 
         abcJobsRepository.getCountries()
             .onSuccess {
-                countries.addAll(it.data!!)
-                emit(countries)
+                if (it != null) {
+                    countries.addAll(it.data!!)
+                }
+                countrys.value = countries
             }
             .onFailure {
-                emit(countries)
+                countrys.value = countries
             }
-    }
 
-    val personalInfo: LiveData<PersonalInfo?> = liveData {
-
-        showForm.postValue(false)
-        enableForm.postValue(false)
+        showForm.value = false
+        enableForm.value = false
 
         abcJobsRepository.getPersonalInfo(token)
             .onSuccess {
-                emit(it!!.data)
+                personalInfo.value = (it?.data)
 
                 if (it?.data?.birth_date != null ||
                     it?.data?.country_code != null ||
@@ -55,7 +51,7 @@ class PersonalInfoViewModel(
                     it?.data?.biography != null ||
                     it?.data?.languages != null
                 ) {
-                    showForm.postValue(true)
+                    showForm.value =true
                 }
 
                 if (it?.data?.birth_date != null) {
@@ -67,7 +63,7 @@ class PersonalInfoViewModel(
                 }
             }
             .onFailure {
-                emit(null)
+                personalInfo.value = null
             }
     }
 
@@ -78,7 +74,7 @@ class PersonalInfoViewModel(
         if (personalInfo.value?.birth_date != null) {
             val formattedDate = dateFormatter.format(personalInfo.value?.birth_date)
 
-            parsedDate.postValue(formattedDate)
+            parsedDate.value = formattedDate
         }
     }
 
@@ -86,16 +82,8 @@ class PersonalInfoViewModel(
     val enableForm = MutableLiveData<Boolean>()
 
     private val messageLiveData = MutableLiveData<MessageEvent>()
-    fun getMessageLiveData(): LiveData<MessageEvent> {
-        return messageLiveData
-    }
 
     private val enabledElementsLiveData = MutableLiveData<Boolean>()
-    private fun setEnabledElements(state: Boolean) {
-        viewModelScope.launch {
-            enabledElementsLiveData.value = state
-        }
-    }
 
     fun getEnabledElementsLiveData(): LiveData<Boolean> {
         return enabledElementsLiveData

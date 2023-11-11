@@ -33,15 +33,14 @@ class TechnicalInfoViewModel (private val abcJobsRepository: ABCJobsRepository) 
         navigationListener = listener
     }
 
-    fun loadTechnicalItemsInfo() {
-        viewModelScope.launch {
+    suspend fun loadTechnicalItemsInfo() {
             try {
-                if (token != null) {
+                if (token?.value != null) {
                     abcJobsRepository.getTechnicalInfo(token.value!!)
                         .onSuccess { response ->
                             Log.d("TechnicalInfoViewModel", "loadTechnicalItemsInfo: $response")
                             if (response.success) {
-                                _technicalInfoList.postValue(response.data)
+                                _technicalInfoList.value = response.data
                                 navigationListener?.navigateToNextScreen()
                             }
                         }
@@ -54,6 +53,6 @@ class TechnicalInfoViewModel (private val abcJobsRepository: ABCJobsRepository) 
             } catch (e: Exception) {
 
             }
-        }
+
     }
 }
