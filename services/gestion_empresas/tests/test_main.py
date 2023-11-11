@@ -1,14 +1,19 @@
 from fastapi.testclient import TestClient
-from common.shared.api_models.gestion_empresas import EmpleadoCreateDTO, EquipoCreateDTO
+from common.shared.api_models.gestion_empresas import (
+    EmpleadoCreateDTO,
+    EquipoCreateDTO,
+    VacanteCreateDTO,
+)
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
-from common.shared.tests.helpers import crear_usuario_empresa
+from common.shared.tests.helpers import crear_usuario_empresa, create_token_from_usuario, usuario_empresa_existente
 from gestion_empresas.empresa import (
     EmpleadoRepository,
     EmpresaRepository,
     EmpresaService,
     EquipoRepository,
     UtilsRepository,
+    VacanteRepository,
 )
 from gestion_empresas.main import app
 from faker import Faker
@@ -21,11 +26,13 @@ empresa_repository = EmpresaRepository(session=session)
 utils_repository = UtilsRepository(session=session)
 empleado_repository = EmpleadoRepository(session=session)
 equipo_repository = EquipoRepository(session=session)
+vacante_repository = VacanteRepository(session=session)
 empresa_service = EmpresaService(
     repository=empresa_repository,
     utils_repository=utils_repository,
     empleado_repository=empleado_repository,
     equipo_repository=equipo_repository,
+    vacante_repository=vacante_repository,
 )
 
 
@@ -180,7 +187,7 @@ def test_endpoint_crear_empleado():
     assert id_empresa
 
     data = empleado_create_dto()
-    data.name = 'hola'
+    data.name = "hola"
     response = client.post(
         "/employee",
         json=data.model_dump(mode="json"),
@@ -294,3 +301,100 @@ def test_endpoint_utils_personalities():
     assert response.status_code == 200
     result = response.json()["data"]
     assert len(result) > 0
+
+
+def crear_vacante_dto(id_equipo: int):
+    return VacanteCreateDTO(
+        team_id=id_equipo,
+        name=faker.name(),
+        description=faker.text(),
+    )
+
+
+def crear_vacante(id_equipo: int | None = None):
+    usuario, _ = usuario_empresa_existente()
+    id_empresa = usuario.id_empresa
+    assert id_empresa
+    equipos = equipo_repository.get_all(id_empresa=id_empresa)
+    equipo = equipos[0]
+    data = crear_vacante_dto(id_equipo=id_equipo or equipo.id)
+    result = empresa_service.crear_vacante(id_empresa=id_empresa, data=data)
+    return result, data, usuario
+
+
+def test_service_crear_vacante():
+    result, data, _ = crear_vacante()
+    assert not isinstance(result, ErrorBuilder)
+    assert result.name == data.name
+    assert result.description == data.description
+    assert result.team.id == data.team_id
+
+
+def test_service_crear_vacante_error():
+    result, _, _ = crear_vacante(id_equipo=999999)
+    assert isinstance(result, ErrorBuilder)
+    assert result.serialize()["id_team"] is not None
+
+
+def test_service_get_vacante():
+    vacante, _, _ = crear_vacante()
+    assert not isinstance(vacante, ErrorBuilder)
+    # Get
+    result = empresa_service.get_vacante_by_id(
+        id_empresa=vacante.company.id, id_vacante=vacante.id
+    )
+    assert not isinstance(result, ErrorBuilder)
+    assert result.id == vacante.id
+    assert result.name == vacante.name
+    assert result.description == vacante.description
+
+    # Get non existent
+    result = empresa_service.get_vacante_by_id(
+        id_empresa=vacante.company.id, id_vacante=999999
+    )
+    assert isinstance(result, ErrorBuilder)
+
+    # Get All
+    result = empresa_service.get_all_vacantes(id_empresa=vacante.company.id)
+    assert not isinstance(result, ErrorBuilder)
+    assert vacante.id in [v.id for v in result]
+
+
+def test_endpoint_get_vacante():
+    vacante, _, usuario = crear_vacante()
+    token = create_token_from_usuario(usuario)
+    assert not isinstance(vacante, ErrorBuilder)
+
+    response = client.get(
+        f"/vacancy/{vacante.id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert result["id"] == vacante.id
+    assert result["name"] == vacante.name
+    assert result["description"] == vacante.description
+
+    # Get all
+    response = client.get(
+        "/vacancy",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert vacante.id in [v["id"] for v in result]
+
+
+def test_endpoint_crear_vacante():
+    _, data, usuario = crear_vacante()
+    token = create_token_from_usuario(usuario)
+
+    response = client.post(
+        "/vacancy",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 201
+    result = response.json()["data"]
+    assert result["name"] == data.name
+    assert result["description"] == data.description
