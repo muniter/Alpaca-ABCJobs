@@ -102,7 +102,7 @@ jobs:
         with:
           task-definition: services/gestion_evaluaciones/task-definition.json
           container-name: gestion-evaluaciones
-          image: ${{ env.REPOSITORY }}
+          image: ${{ env.IMAGE }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
