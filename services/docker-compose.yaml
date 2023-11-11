@@ -76,6 +76,24 @@ services:
       - ./gestion_usuarios:/usr/src/app/gestion_usuarios
       - ./common:/usr/src/app/common
     env_file: .env
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
+      timeout: 7s
+      retries: 5
+
+  gestion_proyectos:
+    container_name: gestion_proyectos
+    image: 428011609647.dkr.ecr.us-east-1.amazonaws.com/abc-gestion-proyectos:latest
+    build:
+      context: .
+      dockerfile: gestion_proyectos/Dockerfile
+      target: base
+    ports:
+      - "3004:80"
+    volumes:
+      - ./gestion_proyectos:/usr/src/app/gestion_proyectos
+      - ./common:/usr/src/app/common
+    env_file: .env
     depends_on:
       init_container:
         condition: service_completed_successfully

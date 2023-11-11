@@ -11,4 +11,4 @@ COPY common/requirements.txt ./setup.py .
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
-COPY common ./common
+COPY . .
