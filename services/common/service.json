@@ -1,0 +1,20 @@
+{
+  "cluster": "abc-cluster",
+  "serviceName": "common",
+  "taskDefinition": "common-task",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-02be9ab57fea970ff",
+        "subnet-09765ef03abf53d69"
+      ],
+      "securityGroups": [
+        "sg-0e9000d9de402c4b9"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "enableExecuteCommand": true
+}
