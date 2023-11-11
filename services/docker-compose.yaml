@@ -76,9 +76,6 @@ services:
       - ./gestion_usuarios:/usr/src/app/gestion_usuarios
       - ./common:/usr/src/app/common
     env_file: .env
-    depends_on:
-      init_container:
-        condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "curl -f localhost/health?source=docker || exit 1"]
       timeout: 7s
