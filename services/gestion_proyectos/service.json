@@ -6,7 +6,7 @@
   "launchType": "FARGATE",
   "loadBalancers": [
     {
-      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-proyectos-tg/a01ebc46d9fb5fde",
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:428011609647:targetgroup/gestion-proyectos-tg/5e66ad292f3f77e8",
       "containerName": "gestion-proyectos",
       "containerPort": 80
     }
