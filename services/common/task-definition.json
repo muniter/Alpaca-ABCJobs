@@ -34,16 +34,6 @@
           "awslogs-multiline-pattern": "^(INFO|DEBUG|WARN|ERROR|CRITICAL)"
         }
       },
-      "healthCheck": {
-        "command": [
-          "CMD-SHELL",
-          "curl -f localhost/health?source=ecs || exit 1"
-        ],
-        "interval": 30,
-        "timeout": 5,
-        "retries": 3,
-        "startPeriod": 3
-      },
       "essential": true
     }
   ],
