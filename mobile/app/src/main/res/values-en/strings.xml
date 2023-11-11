@@ -120,6 +120,8 @@
     <string name="address_validation_error">Address must be between 5 and 255 characters long.</string>
     <string name="phone_validation_error">Phone number must be between 2 and 15 characters long.</string>
     <string name="bio_validation_error">Bio number must be between 10 and 255 characters long.</string>
-    <string name="birthdate_validation_error">Debe ingresar una fecha válida y su edad debe ser mayor a 18 años.</string>
+    <string name="birthdate_validation_error">It must be a valid date</string>
+    <string name="exam_list_title">Exams</string>
+    <string name="rating_label">Level of knowledge</string>
 
 </resources>
