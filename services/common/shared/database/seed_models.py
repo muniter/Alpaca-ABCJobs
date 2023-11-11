@@ -78,7 +78,7 @@ def seed_empresas(count: int):
 
 def seed_candidatos(count: int):
     for n in range(1, count + 1):
-        seed_candidato(email=f"canddiato{n}@email.com")
+        seed_candidato(email=f"candidato{n}@email.com")
 
 
 def seed_empresa(email: str):
