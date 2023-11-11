@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoItem
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import kotlinx.coroutines.launch
 
-class AcademicInfoViewModel (private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
+class AcademicInfoViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
 
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
@@ -34,28 +32,30 @@ class AcademicInfoViewModel (private val abcJobsRepository: ABCJobsRepository) :
         navigationListener = listener
     }
 
-    fun loadAcademicItemsInfo() {
-        viewModelScope.launch {
-            try {
-                if (token != null) {
-                    abcJobsRepository.getAcademicInfo(token.value!!)
-                        .onSuccess { response ->
-                            if (response.success) {
-                                Log.d("AcademicInfoViewModel", "loadAcademicItemsInfo: ${response.data}")
-                                _academicInfoList.postValue(response.data)
-                                navigationListener?.navigateToNextScreen()
-                            }
+    suspend fun loadAcademicItemsInfo() {
+        try {
+            if (token?.value != null) {
+                abcJobsRepository.getAcademicInfo(token.value!!)
+                    .onSuccess { response ->
+                        if (response.success) {
+                            Log.d(
+                                "AcademicInfoViewModel",
+                                "loadAcademicItemsInfo: ${response.data}"
+                            )
+                            _academicInfoList.value = response.data
+                            navigationListener?.navigateToNextScreen()
                         }
-                        .onFailure {
-                            //TODO: something
-                        }
-                } else {
-                    //TODO: message
-                }
-            } catch (e: Exception) {
-
+                    }
+                    .onFailure {
+                        //TODO: something
+                    }
+            } else {
+                //TODO: message
             }
+        } catch (e: Exception) {
+
         }
+
     }
 
 }

@@ -4,16 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.abc_jobs_alpaca.model.models.WorkInfoRequest
 import com.example.abc_jobs_alpaca.model.models.SkillInfoType
+import com.example.abc_jobs_alpaca.model.models.WorkInfoRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class WorkInfoCreateViewModel(
     private val abcJobsRepository: ABCJobsRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val tokenLiveData = MutableLiveData<String?>()
     val typesSkills = MutableLiveData<List<SkillInfoType>?>()
@@ -24,58 +21,60 @@ class WorkInfoCreateViewModel(
     fun getEnabledElementsLiveData(): LiveData<Boolean> {
         return enabledElementsLiveData
     }
-    fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
 
-    fun getYears(): List<Int>{return years}
+    fun onTokenUpdated(token: String?) {
+        tokenLiveData.value = token
+    }
 
-    fun getIdTypeSkill(nameTypeSkill: String): Int{
+    fun getYears(): List<Int> {
+        return years
+    }
+
+    fun getIdTypeSkill(nameTypeSkill: String): Int {
         var idTypeSkill = 0
-        for (type in typesSkills.value!!){
-            if (type.name == nameTypeSkill){
+        for (type in typesSkills.value!!) {
+            if (type.name == nameTypeSkill) {
                 idTypeSkill = type.id
             }
         }
         return idTypeSkill
     }
 
-    fun getTypesSkills() {
-        viewModelScope.launch{
-            try {
-                if (token != null) {
-                    abcJobsRepository.getTypesSkill(token.value!!)
-                        .onSuccess { response ->
-                            if (response.success) {
-                                typesSkills.postValue(response.data)
-                            } else {
-                                //TODO: message
-                                //messageLiveData.postValue(MessageEvent(MessageType.ERROR, response.message))
-                            }
-                        }
-                        .onFailure {
+    suspend fun getTypesSkills() {
+        try {
+            if (token != null) {
+                abcJobsRepository.getTypesSkill(token.value!!)
+                    .onSuccess { response ->
+                        if (response.success) {
+                            typesSkills.value = response.data
+                        } else {
                             //TODO: message
-                            //messageLiveData.postValue(MessageEvent(MessageType.ERROR, error.message.toString()))
+                            //messageLiveData.postValue(MessageEvent(MessageType.ERROR, response.message))
                         }
-                }
-                else {
-                    Log.d("WorkInfoCreateViewModel", "getTypesDegree: token is null")
-                }
-            }   catch (e: Exception) {
-                //messageLiveData.postValue(MessageEvent(MessageType.ERROR, e.message.toString()))
+                    }
+                    .onFailure {
+                        //TODO: message
+                        //messageLiveData.postValue(MessageEvent(MessageType.ERROR, error.message.toString()))
+                    }
+            } else {
+                Log.d("WorkInfoCreateViewModel", "getTypesDegree: token is null")
             }
+        } catch (e: Exception) {
+            //messageLiveData.postValue(MessageEvent(MessageType.ERROR, e.message.toString()))
         }
+
     }
 
     // TODO: Block controls while we are waiting for the response if the response is not successful able the controls again
-    fun saveWorkInfoItem(newWorkInfo: WorkInfoRequest) {
-        viewModelScope.launch(Dispatchers.Default) {
-            abcJobsRepository.postWorkInfo(token.value!!, newWorkInfo)
-                .onSuccess {
-                    //TODO: message
-                }
-                .onFailure {
-                    //TODO: message
-                }
-        }
+    suspend fun saveWorkInfoItem(newWorkInfo: WorkInfoRequest) {
+        abcJobsRepository.postWorkInfo(token.value!!, newWorkInfo)
+            .onSuccess {
+                //TODO: message
+            }
+            .onFailure {
+                //TODO: message
+            }
+
 
     }
 

@@ -86,14 +86,14 @@ class CandidateRegisterViewModelTest {
                 Mockito.`when`(repositoryMock.postCandidate(newCandidate)).thenReturn(
                     Result.success(newCandidateResponse)
                 )
-                delay(300)
+                delay(400)
 
                 candidateRegisterViewModel.postCandidate(
                     newCandidate
                 )
 
                 Mockito.verify(repositoryMock, times(1)).postCandidate(newCandidate)
-                delay(300)
+                delay(400)
 
                 Assert.assertEquals(
                     MessageType.SUCCESS,
@@ -128,14 +128,14 @@ class CandidateRegisterViewModelTest {
                         NetworkError()
                     )
                 )
-                delay(300)
+                delay(400)
 
                 candidateRegisterViewModel.postCandidate(
                     newCandidate
                 )
 
                 Mockito.verify(repositoryMock, times(1)).postCandidate(newCandidate)
-                delay(300)
+                delay(400)
 
                 Assert.assertEquals(
                     MessageType.ERROR,
@@ -169,14 +169,14 @@ class CandidateRegisterViewModelTest {
                         Exception(errorMessage)
                     )
                 )
-                delay(300)
+                delay(400)
 
                 candidateRegisterViewModel.postCandidate(
                     newCandidate
                 )
 
                 Mockito.verify(repositoryMock, times(1)).postCandidate(newCandidate)
-                delay(300)
+                delay(400)
 
                 Assert.assertEquals(
                     MessageType.ERROR,
@@ -208,14 +208,14 @@ class CandidateRegisterViewModelTest {
                         Exception()
                     )
                 )
-                delay(300)
+                delay(400)
 
                 candidateRegisterViewModel.postCandidate(
                     newCandidate
                 )
 
                 Mockito.verify(repositoryMock, times(1)).postCandidate(newCandidate)
-                delay(300)
+                delay(400)
 
                 Assert.assertEquals(
                     MessageType.ERROR,

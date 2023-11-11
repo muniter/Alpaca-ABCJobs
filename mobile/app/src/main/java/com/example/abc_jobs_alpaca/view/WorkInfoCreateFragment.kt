@@ -1,11 +1,9 @@
 package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +17,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentWorkInfoCreateBinding
@@ -32,11 +33,11 @@ import com.example.abc_jobs_alpaca.viewmodel.WorkInfoCreateViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class WorkInfoCreateFragment : Fragment(),
     View.OnClickListener,
-    WorkInfoCreateViewModel.NavigationListener
-{
+    WorkInfoCreateViewModel.NavigationListener {
 
     private val tokenLiveData = MutableLiveData<String?>()
     private var isValidNameCompany: Boolean = false
@@ -47,7 +48,6 @@ class WorkInfoCreateFragment : Fragment(),
     private lateinit var viewModel: WorkInfoCreateViewModel
     private var isFinished = false
     private var selectedOptions = ArrayList<Int>()
-
 
 
     companion object {
@@ -83,10 +83,10 @@ class WorkInfoCreateFragment : Fragment(),
         binding.lifecycleOwner = viewLifecycleOwner
 
         val view = inflater.inflate(R.layout.fragment_work_info_create, container, false)
-        val btnSave : Button = view.findViewById(R.id.workInfoSaveButton)
-        val btnCancel : Button = view.findViewById(R.id.workInfoCancelButton)
-        val checkFinishedStudies : CheckBox = view.findViewById(R.id.checkBoxCompletedJob)
-        val endDateLayout : TextInputLayout = view.findViewById(R.id.textInputLayoutEndDateC)
+        val btnSave: Button = view.findViewById(R.id.workInfoSaveButton)
+        val btnCancel: Button = view.findViewById(R.id.workInfoCancelButton)
+        val checkFinishedStudies: CheckBox = view.findViewById(R.id.checkBoxCompletedJob)
+        val endDateLayout: TextInputLayout = view.findViewById(R.id.textInputLayoutEndDateC)
         val editTextNameCompany = view.findViewById<TextInputEditText>(R.id.editTextCompany)
         val editTextNameRole = view.findViewById<TextInputEditText>(R.id.editTextRole)
         val labelNameCompanyError = view.findViewById<TextView>(R.id.labelCompanyError)
@@ -99,7 +99,8 @@ class WorkInfoCreateFragment : Fragment(),
         btnSave.setOnClickListener(this)
         btnCancel.setOnClickListener(this)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         val spinnerSkill = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
         val spinnerStartYearC = view.findViewById<AppCompatSpinner>(R.id.spinnerStartDateC)
@@ -110,7 +111,7 @@ class WorkInfoCreateFragment : Fragment(),
         tokenLiveData.value = token
         tokenLiveData.observe(viewLifecycleOwner) { it ->
             viewModel.onTokenUpdated(it)
-            viewModel.getTypesSkills()
+            lifecycleScope.launch { viewModel.getTypesSkills() }
         }
 
         viewModel.typesSkills.observe(viewLifecycleOwner) { types ->
@@ -128,16 +129,18 @@ class WorkInfoCreateFragment : Fragment(),
         }
 
 
-        val autoComplete  = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
-        val chipGroup = view.findViewById<com.google.android.material.chip.ChipGroup>(R.id.chipGroup)
+        val autoComplete = view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
+        val chipGroup =
+            view.findViewById<com.google.android.material.chip.ChipGroup>(R.id.chipGroup)
 
         autoComplete.setOnItemClickListener { _, _, position, _ ->
-        val selectedOption = viewModel.getIdTypeSkill(autoComplete.adapter.getItem(position).toString())
-        val chip = Chip(requireContext())
-        chip.text = autoComplete.adapter.getItem(position).toString()
-        chip.isCloseIconVisible = true
-        chip.setOnCloseIconClickListener {
-            chipGroup.removeView(chip)
+            val selectedOption =
+                viewModel.getIdTypeSkill(autoComplete.adapter.getItem(position).toString())
+            val chip = Chip(requireContext())
+            chip.text = autoComplete.adapter.getItem(position).toString()
+            chip.isCloseIconVisible = true
+            chip.setOnCloseIconClickListener {
+                chipGroup.removeView(chip)
             }
             chipGroup.addView(chip)
             autoComplete.text = null
@@ -149,17 +152,17 @@ class WorkInfoCreateFragment : Fragment(),
             android.R.layout.simple_spinner_item,
             viewModel.getYears()
         )
-        if(yearsAdapter != null){
+        if (yearsAdapter != null) {
             yearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerStartYearC.adapter = yearsAdapter
             spinnerEndYearC.adapter = yearsAdapter
         }
 
         checkFinishedStudies.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
+            if (isChecked) {
                 endDateLayout.visibility = View.VISIBLE
                 isFinished = true
-            }else{
+            } else {
                 endDateLayout.visibility = View.GONE
                 isFinished = false
             }
@@ -168,27 +171,35 @@ class WorkInfoCreateFragment : Fragment(),
         val editTextStartYear = convertStringToTextInputEditText(startYearSelected.toString())
         val editTextEndYear = convertStringToTextInputEditText(endYearSelected.toString())
 
-        setupFieldValidation(editTextNameCompany, labelNameCompanyError ) { newText ->
+        setupFieldValidation(editTextNameCompany, labelNameCompanyError) { newText ->
             validateAndShowNameCompanyError(newText, labelNameCompanyError)
         }
-        setupFieldValidation(editTextNameRole, labelNameRoleError ) { newText ->
+        setupFieldValidation(editTextNameRole, labelNameRoleError) { newText ->
             validateAndShowNameRole(newText, labelNameRoleError)
         }
 
-        setupFieldValidation(editTextStartYear, labelStartDateCError ) { newText ->
+        setupFieldValidation(editTextStartYear, labelStartDateCError) { newText ->
             validateAndShowDateError(newText?.toInt(), endYearSelected, labelStartDateCError)
         }
 
-        if(isFinished){
-            setupFieldValidation(editTextEndYear, labelEndDateCError ) { newText ->
+        if (isFinished) {
+            setupFieldValidation(editTextEndYear, labelEndDateCError) { newText ->
                 validateAndShowDateError(startYearSelected, newText?.toInt(), labelEndDateCError)
             }
         }
 
         spinnerStartYearC.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                validateAndShowDateError(spinnerStartYearC.selectedItem.toString().toInt(), spinnerEndYearC.selectedItem.toString().toInt(),
-                    labelEndDateCError)
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                validateAndShowDateError(
+                    spinnerStartYearC.selectedItem.toString().toInt(),
+                    spinnerEndYearC.selectedItem.toString().toInt(),
+                    labelEndDateCError
+                )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -197,9 +208,17 @@ class WorkInfoCreateFragment : Fragment(),
         }
 
         spinnerEndYearC.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                validateAndShowDateError(spinnerStartYearC.selectedItem.toString().toInt(), spinnerEndYearC.selectedItem.toString().toInt(),
-                    labelEndDateCError)
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                validateAndShowDateError(
+                    spinnerStartYearC.selectedItem.toString().toInt(),
+                    spinnerEndYearC.selectedItem.toString().toInt(),
+                    labelEndDateCError
+                )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -210,7 +229,7 @@ class WorkInfoCreateFragment : Fragment(),
         return view
     }
 
-    override  fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -255,31 +274,39 @@ class WorkInfoCreateFragment : Fragment(),
                 val role = view?.findViewById<EditText>(R.id.editTextRole)?.text.toString()
 
                 val startYear =
-                    view?.findViewById<Spinner>(R.id.spinnerStartDateC)?.selectedItem.toString().toInt()
+                    view?.findViewById<Spinner>(R.id.spinnerStartDateC)?.selectedItem.toString()
+                        .toInt()
 
                 val description =
                     view?.findViewById<EditText>(R.id.editTextDescriptionWork)?.text.toString()
 
-                val endYear: Int = if(isFinished) {
-                    view?.findViewById<Spinner>(R.id.spinnerEndDateC)?.selectedItem.toString().toInt()
-                }else 0
+                val endYear: Int = if (isFinished) {
+                    view?.findViewById<Spinner>(R.id.spinnerEndDateC)?.selectedItem.toString()
+                        .toInt()
+                } else 0
 
 
                 toggleControl(false)
-                viewModel.saveWorkInfoItem(
-                    WorkInfoRequest(
-                        role,
-                        company,
-                        description,
-                        selectedOptions,
-                        startYear,
-                        endYear
-                ))
-                view?.findNavController()?.navigate(R.id.action_workInfoCreateFragment_to_nav_work_info)
+                lifecycleScope.launch {
+                    viewModel.saveWorkInfoItem(
+                        WorkInfoRequest(
+                            role,
+                            company,
+                            description,
+                            selectedOptions,
+                            startYear,
+                            endYear
+                        )
+                    )
+                }
+                view?.findNavController()
+                    ?.navigate(R.id.action_workInfoCreateFragment_to_nav_work_info)
 
             }
+
             R.id.workInfoCancelButton -> {
-                view?.findNavController()?.navigate(R.id.action_workInfoCreateFragment_to_nav_work_info)
+                view?.findNavController()
+                    ?.navigate(R.id.action_workInfoCreateFragment_to_nav_work_info)
             }
         }
     }
@@ -365,9 +392,9 @@ class WorkInfoCreateFragment : Fragment(),
     private fun validateAndShowDateError(first: Int?, second: Int?, labelError: TextView) {
         val isValid = Validators.isNotEmpty(first.toString())
         var isValidDate: Boolean
-        if(isFinished){
+        if (isFinished) {
             isValidDate = Validators.compareTwoNumbers(first, second)
-        }else{
+        } else {
             isValidDate = true
         }
 
@@ -383,6 +410,7 @@ class WorkInfoCreateFragment : Fragment(),
             enableButton(view?.findViewById(R.id.workInfoSaveButton)!!)
         }
     }
+
     private fun disableButton(button: Button) {
         button.isEnabled = false
     }
