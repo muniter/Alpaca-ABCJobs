@@ -9,9 +9,6 @@ from common.shared.database.models import Usuario
 from gestion_proyectos.proyectos import ProyectoRepository, ProyectoService
 from gestion_proyectos.main import app
 from common.shared.tests.helpers import (
-    crear_usuario_candidato,
-    crear_usuario_empresa,
-    get_empresa,
     usuario_empresa_existente,
 )
 from faker import Faker

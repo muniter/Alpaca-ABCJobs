@@ -14,6 +14,7 @@ from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpresaCreateDTO,
     EquipoCreateDTO,
+    VacanteCreateDTO,
 )
 from common.shared.api_models.gestion_proyectos import ProyectoCreateDTO
 from common.shared.api_models.shared import ErrorBuilder
@@ -37,6 +38,7 @@ from gestion_empresas.empresa import (
     EmpresaService,
     EquipoRepository,
     UtilsRepository,
+    VacanteRepository,
 )
 
 faker = Faker()
@@ -49,11 +51,13 @@ empresa_repository = EmpresaRepository(session=session)
 utils_repository = UtilsRepository(session=session)
 empleado_repository = EmpleadoRepository(session=session)
 equipo_repository = EquipoRepository(session=session)
+vacante_repository = VacanteRepository(session=session)
 empresa_service = EmpresaService(
     repository=empresa_repository,
     utils_repository=utils_repository,
     empleado_repository=empleado_repository,
     equipo_repository=equipo_repository,
+    vacante_repository=vacante_repository,
 )
 candidate_service = CandidatoService(session)
 roles_habilidades_repository = RolesHabilidadesRepository(session)
@@ -82,7 +86,7 @@ def seed_candidatos(count: int):
 
 
 def seed_empresa(email: str):
-    logger.info(f"Seeding empresa: {email}")
+    logger.info(f"Seeding empresa: {email} ")
     empresa = empresa_service.crear(
         EmpresaCreateDTO(
             nombre=faker.company(),
@@ -105,7 +109,7 @@ def seed_empresa(email: str):
             id_empresa=id_empresa,
             data=EmpleadoCreateDTO(
                 name=faker.name(),
-                title=faker.job(),
+                title=tech_job(),
                 skills=[skill.id for skill in emp_skills],
                 personality_id=faker.random_int(min=1, max=10),
             ),
@@ -151,6 +155,21 @@ def seed_empresa(email: str):
 
     logger.info(f"Seeded {len(proyectos)} proyectos")
 
+    # Vacantes
+    vacantes = []
+    logger.info(f"Seeding vacantes")
+    for _ in range(faker.random_int(min=2, max=4)):
+        vacante = empresa_service.crear_vacante(
+            id_empresa=id_empresa,
+            data=VacanteCreateDTO(
+                team_id=faker.random_element(elements=equipos).id,
+                name=tech_job(),
+                description=faker.sentence(),
+            ),
+        )
+        assert not isinstance(vacante, ErrorBuilder)
+        vacantes.append(vacante)
+
 
 def seed_candidato(email: str):
     logger.info(f"Seeding candidato {email}")
@@ -192,7 +211,7 @@ def seed_candidato(email: str):
         logger.debug(f"Seeding datos laborales {id_candidato}")
         for _ in range(faker.random_int(min=1, max=3)):
             data = CandidatoDatosLaboralesCreateDTO(
-                role=faker.job(),
+                role=tech_job(),
                 company=faker.company(),
                 description=faker.text(max_nb_chars=200),
                 start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
@@ -212,7 +231,7 @@ def seed_candidato(email: str):
         logger.debug(f"Seeding datos academicos {id_candidato}")
         for _ in range(faker.random_int(min=1, max=3)):
             data = CandidatoDatosLaboralesCreateDTO(
-                role=faker.job(),
+                role=tech_job(),
                 company=faker.company(),
                 description=faker.text(max_nb_chars=200),
                 start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
@@ -276,3 +295,42 @@ def unique_random_choice(elements, length):
         if max_attempts == 0:
             raise Exception("Max attempts reached")
     return result
+
+
+def tech_job():
+    jobs = [
+        "Software Engineer",
+        "Software Developer",
+        "Software Architect",
+        "Python Developer",
+        "Java Developer",
+        "C# Developer",
+        "Javascript Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Fullstack Developer",
+        "DevOps Engineer",
+        "Data Engineer",
+        "Data Scientist",
+        "Data Analyst",
+        "Machine Learning Engineer",
+        "QA Engineer",
+        "QA Automation Engineer",
+        "QA Manual Engineer",
+        "Typescript Developer",
+        "React Developer",
+        "Angular Developer",
+        "Vue Developer",
+        "IT Support",
+        "IT Manager",
+        "Business Analyst",
+        "Product Manager",
+        "Product Owner",
+        "Ux Designer",
+        "Go Developer",
+        "Ruby Developer",
+        "Agile Coach",
+        "Scrum Master",
+    ]
+    return faker.random_element(elements=jobs)
+

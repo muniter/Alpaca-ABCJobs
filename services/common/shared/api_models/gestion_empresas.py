@@ -1,3 +1,4 @@
+from fastapi.applications import Optional
 from pydantic import BaseModel, StringConstraints
 from typing import Annotated, List
 
@@ -65,3 +66,21 @@ class EquipoCreateDTO(BaseModel):
         str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
     ]
     employees: List[int]
+
+
+class VacanteDTO(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    company: EmpresaDTO
+    team: EquipoDTO
+
+
+class VacanteCreateDTO(BaseModel):
+    team_id: int
+    name: Annotated[
+        str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+    ]
+    description: Annotated[
+        Optional[str], StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+    ]

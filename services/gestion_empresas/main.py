@@ -13,6 +13,8 @@ from common.shared.api_models.gestion_empresas import (
     EmpresaCreateDTO,
     EquipoCreateDTO,
     EquipoDTO,
+    VacanteCreateDTO,
+    VacanteDTO,
 )
 from common.shared.api_models.shared import (
     APIResponse,
@@ -126,6 +128,47 @@ def crear_team(
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.crear_equipo(id_empresa=user.id_empresa, data=data)
+    return APIResponse(result)
+
+
+@router.get(
+    "/vacancy",
+    response_model=APIResponseModel(List[VacanteDTO]),
+    status_code=status.HTTP_200_OK,
+)
+def get_all_vacancies(
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_all_vacantes(id_empresa=user.id_empresa)
+    return APIResponse(result)
+
+
+@router.get(
+    "/vacancy/{id}",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def get_vacancy(
+    id: int,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_vacante_by_id(id_empresa=user.id_empresa, id_vacante=id)
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_201_CREATED,
+)
+def crear_vacancy(
+    data: VacanteCreateDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.crear_vacante(id_empresa=user.id_empresa, data=data)
     return APIResponse(result)
 
 

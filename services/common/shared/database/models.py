@@ -43,6 +43,7 @@ from ..api_models.gestion_empresas import (
     EmpleadoPersonalityDTO,
     EmpresaDTO,
     EquipoDTO,
+    VacanteDTO,
 )
 
 from ..api_models.gestion_usuarios import (
@@ -68,6 +69,7 @@ class Empresa(Base):
 
     proyectos: Mapped[List["Proyecto"]] = relationship("Proyecto", back_populates="empresa")
     equipos: Mapped[List["Equipo"]] = relationship("Equipo", back_populates="empresa")
+    vacantes: Mapped[List["Vacante"]] = relationship("Vacante", back_populates="empresa")
 
     def build_dto(self) -> EmpresaDTO:
         return EmpresaDTO(
@@ -412,6 +414,7 @@ class Equipo(Base):
     empresa: Mapped["Empresa"] = relationship("Empresa", back_populates="equipos")
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     empleados: Mapped[List[Empleado]] = relationship(secondary=empleado_equipo)
+    vacantes: Mapped[List["Vacante"]] = relationship("Vacante", back_populates="equipo")
 
     def build_dto(self) -> EquipoDTO:
         return EquipoDTO(
@@ -538,3 +541,24 @@ class Proyecto(Base):
             description=self.descripcion,
             team=self.equipo.build_dto(),
         )
+
+
+class Vacante(Base):
+    __tablename__ = "vacante"
+
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
+    empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
+    descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
+    equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
+
+    def build_dto(self) -> VacanteDTO:
+        return VacanteDTO(
+            id=self.id,
+            name=self.name,
+            description=self.descripcion,
+            company=self.empresa.build_dto(),
+            team=self.equipo.build_dto(),
+                )
