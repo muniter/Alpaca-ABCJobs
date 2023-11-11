@@ -44,11 +44,6 @@
         "retries": 3,
         "startPeriod": 3
       },
-      "portMappings": [
-        {
-          "containerPort": 80
-        }
-      ],
       "essential": true
     }
   ],
