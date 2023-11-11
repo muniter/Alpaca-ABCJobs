@@ -1,8 +1,9 @@
 from typing import List, Optional, Union
-from sqlalchemy import select, delete, func
-from sqlalchemy.orm import Session
+from sqlalchemy import select, delete, func, or_
+from sqlalchemy.orm import Session, aliased
 
 from fastapi import Depends
+from common.shared.logger import logger
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
@@ -15,6 +16,8 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoDatosLaboralesDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
+    CandidatoSearchDTO,
+    CandidatoSearchResultDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -32,6 +35,7 @@ from common.shared.database.models import (
     Lenguaje,
     Persona,
     RolesHabilidades,
+    datos_laborales_roles,
 )
 from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
@@ -779,6 +783,125 @@ class DatosAcademicosService:
         return model
 
 
+class CandidatoSearchService:
+    def __init__(self, session: Session = Depends(get_db_session_dependency)):
+        self.session = session
+
+    def search(self, search: CandidatoSearchDTO) -> List[CandidatoSearchResultDTO]:
+        query = select(Candidato).join(Persona, Persona.id == Candidato.id_persona)
+        query = self._apply_filters(query, search)
+        query_string = str(query.compile(compile_kwargs={"literal_binds": True}))
+        logger.info("Search payload: %s", search.model_dump_json())
+        logger.info("Search query: %s", query_string)
+
+        result = self.session.execute(query).scalars().all()
+        logger.info("Search result, count: %s", len(result))
+        # Remove duplicates
+        candidatos = {candidato.id: candidato for candidato in result}
+
+        return self.build_dtos(list(candidatos.values()), search)
+
+    def _apply_filters(self, query, search: CandidatoSearchDTO):
+        if search.country_code:
+            query = query.where(Persona.country_code == search.country_code)
+
+        if search.technical_info_types:
+            query = query.join(
+                ConocimientoTecnicos, ConocimientoTecnicos.id_persona == Persona.id
+            ).where(ConocimientoTecnicos.id_tipo.in_(search.technical_info_types))
+
+        if search.languages:
+            query = query.where(
+                Persona.lenguajes.any(Lenguaje.id.in_(search.languages))
+            )
+
+        if search.least_academic_level:
+            alias = aliased(DatosAcademicos)
+            query = query.join(alias, alias.id_persona == Persona.id).where(
+                alias.id_tipo >= search.least_academic_level
+            )
+
+        if search.study_areas:
+            alias = aliased(DatosAcademicos)
+            query = query.join(alias, alias.id_persona == Persona.id)
+            clauses = []
+            for study_area in search.study_areas:
+                clauses.append(alias.titulo.like(f"%{study_area}%"))
+
+            query = query.where(or_(*clauses))
+
+        if search.skills:
+            query = (
+                query.join(DatosLaborales, DatosLaborales.id_persona == Persona.id)
+                .join(
+                    datos_laborales_roles,
+                    datos_laborales_roles.c.id_datos_laborales == DatosLaborales.id,
+                )
+                .where(datos_laborales_roles.c.id_rol.in_(search.skills))
+            )
+
+        return query
+
+    def build_dtos(
+        self, candidatos: List[Candidato], search: CandidatoSearchDTO
+    ) -> List[CandidatoSearchResultDTO]:
+        result = []
+        for candidato in candidatos:
+            skills = []
+            skills_related = []
+            if search.skills:
+                for datos_laborales in candidato.persona.datos_laborales:
+                    for rol in datos_laborales.roles_habilidades:
+                        skills.append(rol.build_dto())
+                        if rol.id in search.skills:
+                            skills_related.append(rol.build_dto())
+
+            tinfo_types = [
+                t.tipo.build_dto() for t in candidato.persona.conocimientos_tecnicos
+            ]
+
+            tinfo_types_related = []
+
+            if search.technical_info_types:
+                search_types = search.technical_info_types
+                tinfo_types_related = list(
+                    filter(lambda t: t.id in search_types, tinfo_types)
+                )
+
+            country = (
+                candidato.persona.pais.build_dto() if candidato.persona.pais else None
+            )
+
+            languages = [
+                lenguaje.build_dto() for lenguaje in candidato.persona.lenguajes
+            ]
+            languages_related = []
+            if search.languages:
+                search_languages = search.languages
+                languages_related = list(
+                    filter(lambda lang: lang.id in search_languages, languages)
+                )
+
+            dto = CandidatoSearchResultDTO(
+                id=candidato.id,
+                nombres=candidato.persona.nombres,
+                apellidos=candidato.persona.apellidos,
+                email=candidato.persona.email,
+                country=country,
+                city=candidato.persona.ciudad,
+                technical_info_types=tinfo_types,
+                technical_info_types_related=tinfo_types_related,
+                skills=skills,
+                skills_related=skills_related,
+                languages=languages,
+                languages_related=languages_related,
+            )
+
+            result.append(dto)
+
+        return result
+
+
 def get_datos_academicos_repository(
     session: Session = Depends(get_db_session_dependency),
 ) -> DatosAcademicosRepository:
@@ -852,3 +975,9 @@ def get_conocimientos_tecnicos_service(
     session: Session = Depends(get_db_session_dependency),
 ) -> ConocimientoTecnicosService:
     return ConocimientoTecnicosService(session=session)
+
+
+def get_candidato_search_service(
+    session: Session = Depends(get_db_session_dependency),
+) -> CandidatoSearchService:
+    return CandidatoSearchService(session=session)

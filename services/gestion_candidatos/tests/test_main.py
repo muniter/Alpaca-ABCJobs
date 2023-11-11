@@ -1,4 +1,3 @@
-import json
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoBatchSetDTO,
