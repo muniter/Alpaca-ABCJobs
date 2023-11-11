@@ -185,3 +185,36 @@ class CandidatoConocimientoTecnicoCreateDTO(CandidatoConocimientoTecnicoDTOBase)
 
 class CandidatoConocimientoTecnicoBatchSetDTO(BaseModel):
     list: List[CandidatoConocimientoTecnicoCreateDTO]
+
+
+class CandidatoSearchDTO(BaseModel):
+    # País
+    country_code: Optional[int] = None
+
+    # Tecnologías
+    technical_info_types: Optional[List[int]] = None
+
+    # Idiomas
+    languages: Optional[List[str]] = None
+
+    # Nivel de estudios mínimo
+    least_academic_level: Optional[int] = None
+
+    # Areas de Studio
+    study_areas: Optional[List[str]] = None
+
+    # Roles
+    skills: Optional[List[int]] = None
+
+
+class CandidatoSearchResultDTO(CandidatoDTO):
+    country: Optional["CountryDTO"]
+    city: Optional[str]
+    # Skills and roles
+    skills: List["RolHabilidadDTO"]
+    skills_related: List["RolHabilidadDTO"]
+    # Tecnologías
+    technical_info_types: List["CandidatoConocimientoTecnicoTipoDTO"]
+    technical_info_types_related: List["CandidatoConocimientoTecnicoTipoDTO"]
+    languages: List["LenguajeDTO"]
+    languages_related: List["LenguajeDTO"]

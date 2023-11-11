@@ -35,6 +35,7 @@ from ..api_models.gestion_candidatos import (
     CandidatoDatosLaboralesDTO,
     CandidatoDatosLaboralesTipoDTO,
     CandidatoPersonalInformationDTO,
+    CountryDTO,
     LenguajeDTO,
     RolHabilidadDTO,
 )
@@ -67,9 +68,13 @@ class Empresa(Base):
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
 
-    proyectos: Mapped[List["Proyecto"]] = relationship("Proyecto", back_populates="empresa")
+    proyectos: Mapped[List["Proyecto"]] = relationship(
+        "Proyecto", back_populates="empresa"
+    )
     equipos: Mapped[List["Equipo"]] = relationship("Equipo", back_populates="empresa")
-    vacantes: Mapped[List["Vacante"]] = relationship("Vacante", back_populates="empresa")
+    vacantes: Mapped[List["Vacante"]] = relationship(
+        "Vacante", back_populates="empresa"
+    )
 
     def build_dto(self) -> EmpresaDTO:
         return EmpresaDTO(
@@ -107,6 +112,15 @@ class Country(Base):
     en_short_name: Mapped[str] = mapped_column(String(255), nullable=False)
     nationality: Mapped[str] = mapped_column(String(255), nullable=False)
 
+    def build_dto(self) -> CountryDTO:
+        return CountryDTO(
+            num_code=self.num_code,
+            alpha_2_code=self.alpha_2_code,
+            alpha_3_code=self.alpha_3_code,
+            en_short_name=self.en_short_name,
+            nationality=self.nationality,
+        )
+
 
 person_language = Table(
     "persona_languaje",
@@ -122,6 +136,12 @@ class Lenguaje(Base):
 
     id: Mapped[str] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def build_dto(self) -> LenguajeDTO:
+        return LenguajeDTO(
+            id=self.id,
+            name=self.nombre,
+        )
 
 
 class Persona(Base):
@@ -144,6 +164,15 @@ class Persona(Base):
     fecha_creacion: Mapped[str] = mapped_column(Date, nullable=False, default="now()")
     fecha_actualizacion: Mapped[str] = mapped_column(
         Date, nullable=False, default="now()", onupdate="now()"
+    )
+    conocimientos_tecnicos: Mapped[List["ConocimientoTecnicos"]] = relationship(
+        "ConocimientoTecnicos", back_populates="persona"
+    )
+    datos_academicos: Mapped[List["DatosAcademicos"]] = relationship(
+        "DatosAcademicos", back_populates="persona"
+    )
+    datos_laborales: Mapped[List["DatosLaborales"]] = relationship(
+        "DatosLaborales", back_populates="persona"
     )
 
     def build_dto(self) -> CandidatoPersonalInformationDTO:
@@ -193,7 +222,9 @@ class DatosLaborales(Base):
 
     id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_persona: Mapped[int] = mapped_column(ForeignKey("persona.id"), nullable=False)
-    persona: Mapped["Persona"] = relationship("Persona", backref="datos_laborales")
+    persona: Mapped["Persona"] = relationship(
+        "Persona", back_populates="datos_laborales"
+    )
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
     empresa: Mapped[str] = mapped_column(String(255), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(500), nullable=False)
@@ -236,7 +267,9 @@ class DatosAcademicos(Base):
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=False
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="datos_academicos")
+    persona: Mapped["Persona"] = relationship(
+        "Persona", back_populates="datos_academicos"
+    )
 
     id_tipo: Mapped[int] = mapped_column(
         ForeignKey("datos_academicos_tipo.id"), nullable=False, unique=False
@@ -285,7 +318,7 @@ class ConocimientoTecnicos(Base):
         ForeignKey("persona.id"), nullable=False, unique=False
     )
     persona: Mapped["Persona"] = relationship(
-        "Persona", backref="conocimiento_tecnicos"
+        "Persona", back_populates="conocimientos_tecnicos"
     )
 
     id_tipo: Mapped[int] = mapped_column(
@@ -561,4 +594,4 @@ class Vacante(Base):
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
-                )
+        )

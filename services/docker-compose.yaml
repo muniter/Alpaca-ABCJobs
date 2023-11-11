@@ -108,7 +108,7 @@ services:
       context: .
       dockerfile: common/Dockerfile
     volumes:
-      - ./common:/usr/src/app/common
+      - ./:/usr/src/app/
     env_file: .env
     command: 'python -c "from common import init_container"'
     depends_on:
