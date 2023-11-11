@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/examImageView"
-        android:layout_width="532dp"
+        android:layout_width="446dp"
         android:layout_height="98dp"
         android:layout_weight="1"
         android:src="@drawable/logo_rounded_layout_background" />

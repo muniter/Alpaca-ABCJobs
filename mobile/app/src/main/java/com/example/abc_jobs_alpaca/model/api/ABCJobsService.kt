@@ -28,6 +28,8 @@ class ABCJobsService constructor(context: Context){
         private var UTILS_PATH = "/utils"
         private var COUNTRIES_PATH = "/countries"
         private var TITLE_TYPES_PATH = "/title-types"
+        private var EVALUATIONS_PATH = "/evaluaciones"
+        private var EXAMS_PATH = "/exam"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -615,5 +617,12 @@ class ABCJobsService constructor(context: Context){
     }
 
 
-    suspend
+    suspend fun getAllExams(token: String): Result<ExamItemResponse> {
+        return try {
+            val response = fetchInfo(token, EVALUATIONS_PATH, EXAMS_PATH)
+            Result.success(deserializeExamItems(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

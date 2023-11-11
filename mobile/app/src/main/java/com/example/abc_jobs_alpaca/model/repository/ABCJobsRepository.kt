@@ -90,4 +90,8 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getCountries()
     }
 
+    suspend fun getAllExams(token: String): Result<ExamItemResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAllExams(token)
+    }
+
 }

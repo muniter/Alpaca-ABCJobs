@@ -86,7 +86,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/answer2TitleTextView"
+                                android:id="@+id/answerTitleTextView"
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -98,14 +98,14 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
-                                android:id="@+id/radioButton2"
+                                android:id="@+id/radioButton"
                                 android:layout_width="4dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1" />
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/answer2TextView"
+                            android:id="@+id/answerTextView"
                             android:layout_width="match_parent"
                             android:layout_height="40dp" />
 
@@ -172,7 +172,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/answer2TitleTextView"
+                                android:id="@+id/answer3TitleTextView"
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -184,14 +184,14 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
-                                android:id="@+id/radioButton2"
+                                android:id="@+id/radioButton3"
                                 android:layout_width="4dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1" />
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/answer2TextView"
+                            android:id="@+id/answer3TextView"
                             android:layout_width="match_parent"
                             android:layout_height="40dp" />
 

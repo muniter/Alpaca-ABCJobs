@@ -78,4 +78,20 @@
         android:name="com.example.abc_jobs_alpaca.view.PersonalInfoFragment"
         android:label="@string/menu_personal_info"
         tools:layout="@layout/fragment_personal_info" />
+
+    <fragment
+        android:id="@+id/nav_exam_list"
+        android:name="com.example.abc_jobs_alpaca.view.ExamFragment"
+        android:label="Lista de exámenes"
+        tools:layout="@layout/fragment_exam_list" >
+        <action
+            android:id="@+id/action_nav_exam_list_to_nav_exam_take"
+            app:destination="@id/nav_exam_take" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_exam_take"
+        android:name="com.example.abc_jobs_alpaca.view.ExamTakeFragment"
+        android:label="Realizar examen"
+        tools:layout="@layout/fragment_exam_take" />
 </navigation>
