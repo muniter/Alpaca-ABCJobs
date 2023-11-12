@@ -61,72 +61,7 @@ export class CompanySearchParamsComponent implements OnInit {
     }
   }
 
-  /* loadCandidates() {
-    //this.candidates = [];
-
-    let countries = [
-      new Country(1, "CO", "COL", "Colombia", "Colombian@"),
-      new Country(2, "AR", "ARG", "Argentina", "Argentin@")
-    ];
-
-    let skills = [
-      new Skill(1, "Python"),
-      new Skill(2, "Java"),
-      new Skill(3, "Desarrollo de software")
-    ]
-
-    let roles = [
-      new Skill(1, "Tester"),
-      new Skill(2, "Developer"),
-      new Skill(3, "Scrum Master")
-    ]
-
-    let languages = [
-      new Language("ES", "Español"),
-      new Language("EN", "Inglés"),
-      new Language("FR", "Francés")
-    ]
-
-    this.candidates = [
-      new CandidateSearch(
-        "Juan", 
-        "Perez", 
-        "juan.perez@email.com", 
-        "Bogota", 
-        countries[0], 
-        [skills[1]],
-        [roles[0], roles[1]],
-        []
-      ),
-      new CandidateSearch(
-        "Juan", 
-        "Perez", 
-        "juan.perez@email.com", 
-        "Bogota", 
-        countries[0], 
-        [],
-        [],
-        []
-      )
-    ];
-    for(let i = 0; i < 10; i++) {
-      this.candidates.push(
-        new CandidateSearch(
-          "Pedro Samuel", 
-          "Gutierrez Saldarriaga", 
-          "emailmuuuylargooooo@email.com", 
-          "Buenos aires", 
-          countries[1], 
-          [...skills],
-          [...roles],
-          [...languages]
-        )
-      );
-    }
-  } */
-
   ngOnInit() {
-    /* this.loadCandidates(); */
 
     this.countries = []
     this.candidateService.getCountries().subscribe({
@@ -183,7 +118,6 @@ export class CompanySearchParamsComponent implements OnInit {
         );
       }
     })
- 
 
     this.searchCandidatesForm = this.formBuilder.group(
       {
