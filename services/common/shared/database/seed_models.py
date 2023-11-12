@@ -3,6 +3,7 @@ from sqlalchemy import select, text
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoCreateDTO,
+    CandidatoDatosAcademicosCreateDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoPersonalInformationUpdateDTO,
 )
@@ -14,6 +15,7 @@ from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpresaCreateDTO,
     EquipoCreateDTO,
+    VacanteCreateDTO,
 )
 from common.shared.api_models.gestion_proyectos import ProyectoCreateDTO
 from common.shared.api_models.shared import ErrorBuilder
@@ -37,6 +39,7 @@ from gestion_empresas.empresa import (
     EmpresaService,
     EquipoRepository,
     UtilsRepository,
+    VacanteRepository,
 )
 
 faker = Faker()
@@ -49,11 +52,13 @@ empresa_repository = EmpresaRepository(session=session)
 utils_repository = UtilsRepository(session=session)
 empleado_repository = EmpleadoRepository(session=session)
 equipo_repository = EquipoRepository(session=session)
+vacante_repository = VacanteRepository(session=session)
 empresa_service = EmpresaService(
     repository=empresa_repository,
     utils_repository=utils_repository,
     empleado_repository=empleado_repository,
     equipo_repository=equipo_repository,
+    vacante_repository=vacante_repository,
 )
 candidate_service = CandidatoService(session)
 roles_habilidades_repository = RolesHabilidadesRepository(session)
@@ -82,7 +87,7 @@ def seed_candidatos(count: int):
 
 
 def seed_empresa(email: str):
-    logger.info(f"Seeding empresa: {email}")
+    logger.info(f"Seeding empresa: {email} ")
     empresa = empresa_service.crear(
         EmpresaCreateDTO(
             nombre=faker.company(),
@@ -105,7 +110,7 @@ def seed_empresa(email: str):
             id_empresa=id_empresa,
             data=EmpleadoCreateDTO(
                 name=faker.name(),
-                title=faker.job(),
+                title=tech_job(),
                 skills=[skill.id for skill in emp_skills],
                 personality_id=faker.random_int(min=1, max=10),
             ),
@@ -151,6 +156,21 @@ def seed_empresa(email: str):
 
     logger.info(f"Seeded {len(proyectos)} proyectos")
 
+    # Vacantes
+    vacantes = []
+    logger.info(f"Seeding vacantes")
+    for _ in range(faker.random_int(min=2, max=4)):
+        vacante = empresa_service.crear_vacante(
+            id_empresa=id_empresa,
+            data=VacanteCreateDTO(
+                team_id=faker.random_element(elements=equipos).id,
+                name=tech_job(),
+                description=faker.sentence(),
+            ),
+        )
+        assert not isinstance(vacante, ErrorBuilder)
+        vacantes.append(vacante)
+
 
 def seed_candidato(email: str):
     logger.info(f"Seeding candidato {email}")
@@ -167,18 +187,27 @@ def seed_candidato(email: str):
 
     id_candidato = candidato.candidato.id
     roles_habilidades = roles_habilidades_repository.get()
+    lenguajes = candidate_service.lenguaje_repository.get_all()
+    countries = candidate_service.country_repository.get_all()
+    pre_countries = ["US", "CO", "EC", "AF"]
+    countries = list(filter(lambda c: c.alpha_2_code in pre_countries, countries))
 
     # Datos Personales
     if faker.boolean():
         logger.debug(f"Seeding datos personales {id_candidato}")
+        lenguajes = [
+            le.id
+            for le in unique_random_choice(lenguajes, faker.random_int(min=1, max=4))
+        ]
+        lenguajes.append("EN")
         data = CandidatoPersonalInformationUpdateDTO(
             birth_date=faker.date_of_birth(minimum_age=18, maximum_age=100),
-            country_code=4,
+            country_code=faker.random_element(elements=countries).num_code,
             city=faker.city(),
             address=faker.address(),
             phone=faker.numerify(text="#########"),
             biography=faker.text(max_nb_chars=200),
-            languages=["EN", "ES"],
+            languages=lenguajes,
         )
         candidate_service.update_informacion_personal(
             id=id_candidato,
@@ -190,9 +219,9 @@ def seed_candidato(email: str):
     # Datos Laborales
     if faker.boolean():
         logger.debug(f"Seeding datos laborales {id_candidato}")
-        for _ in range(faker.random_int(min=1, max=3)):
+        for _ in range(faker.random_int(min=2, max=4)):
             data = CandidatoDatosLaboralesCreateDTO(
-                role=faker.job(),
+                role=tech_job(),
                 company=faker.company(),
                 description=faker.text(max_nb_chars=200),
                 start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
@@ -208,23 +237,21 @@ def seed_candidato(email: str):
             assert not isinstance(result, ErrorBuilder)
 
     # Datos Academicos
+    tipos = datos_academicos_service.repository.get_tipos()
     if faker.boolean():
         logger.debug(f"Seeding datos academicos {id_candidato}")
-        for _ in range(faker.random_int(min=1, max=3)):
-            data = CandidatoDatosLaboralesCreateDTO(
-                role=faker.job(),
-                company=faker.company(),
-                description=faker.text(max_nb_chars=200),
+        for _ in range(faker.random_int(min=1, max=4)):
+            data = CandidatoDatosAcademicosCreateDTO(
+                institution="University " + faker.company(),
+                title=faker.job(),
                 start_year=faker.date_between(start_date="-10y", end_date="-5y").year,
                 end_year=faker.date_between(start_date="-4y", end_date="-1y").year,
-                skills=[
-                    role.id
-                    for role in unique_random_choice(
-                        roles_habilidades, faker.random_int(min=1, max=5)
-                    )
-                ],
+                type=faker.random_element(elements=tipos).id,
+                achievement=None,
             )
-            result = datos_laborales_service.crear(id_candidato=id_candidato, data=data)
+            result = datos_academicos_service.crear(
+                id_candidato=id_candidato, data=data
+            )
             assert not isinstance(result, ErrorBuilder)
 
     conocimientos = conocimientos_tecnico_repository.get_tipos()
@@ -276,3 +303,41 @@ def unique_random_choice(elements, length):
         if max_attempts == 0:
             raise Exception("Max attempts reached")
     return result
+
+
+def tech_job():
+    jobs = [
+        "Software Engineer",
+        "Software Developer",
+        "Software Architect",
+        "Python Developer",
+        "Java Developer",
+        "C# Developer",
+        "Javascript Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Fullstack Developer",
+        "DevOps Engineer",
+        "Data Engineer",
+        "Data Scientist",
+        "Data Analyst",
+        "Machine Learning Engineer",
+        "QA Engineer",
+        "QA Automation Engineer",
+        "QA Manual Engineer",
+        "Typescript Developer",
+        "React Developer",
+        "Angular Developer",
+        "Vue Developer",
+        "IT Support",
+        "IT Manager",
+        "Business Analyst",
+        "Product Manager",
+        "Product Owner",
+        "Ux Designer",
+        "Go Developer",
+        "Ruby Developer",
+        "Agile Coach",
+        "Scrum Master",
+    ]
+    return faker.random_element(elements=jobs)

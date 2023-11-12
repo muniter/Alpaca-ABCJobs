@@ -1,4 +1,3 @@
-import json
 from fastapi.testclient import TestClient
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoBatchSetDTO,
@@ -133,9 +132,22 @@ def test_update_informacion_personal():
 
 
 def test_get_informacion_personal():
-    usuario, token = crear_usuario_candidato()
+    _, token = crear_usuario_candidato()
     response = client.get(
         "/personal-info",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["data"]["names"] is not None
+
+
+def test_get_informacion_personal_by_id():
+    usuario_candidato, _ = crear_usuario_candidato()
+    _, token = crear_usuario_empresa()
+    assert usuario_candidato.id_candidato is not None
+    response = client.get(
+        f"/personal-info/{usuario_candidato.id_candidato}",
         headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == 200

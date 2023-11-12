@@ -14,20 +14,26 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoDatosLaboralesTipoDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
+    CandidatoSearchDTO,
+    CandidatoSearchResultDTO,
     CountryDTO,
     LenguajeDTO,
     RolHabilidadDTO,
 )
 from common.shared.config import configuration
-from common.shared.api_models.gestion_usuarios import UsuarioCandidatoDTO
+from common.shared.api_models.gestion_usuarios import (
+    UsuarioCandidatoDTO,
+    UsuarioEmpresaDTO,
+)
 from common.shared.logger import logger
 from common.shared.fastapi import shared_app_setup
-from common.shared.jwt import get_request_user_candidato
+from common.shared.jwt import get_request_user_candidato, get_request_user_empresa
 from common.shared.api_models.shared import (
     APIResponse,
     APIResponseModel,
 )
 from .candidato import (
+    CandidatoSearchService,
     CandidatoService,
     ConocimientoTecnicosRepository,
     ConocimientoTecnicosService,
@@ -46,6 +52,7 @@ from .candidato import (
     get_datos_laborales_service,
     get_lenguaje_repository,
     get_roles_habilidades_repository,
+    get_candidato_search_service,
 )
 
 app = FastAPI(
@@ -67,6 +74,20 @@ def crear(
     service: CandidatoService = Depends(get_candidato_service),
 ):
     return APIResponse(result=service.crear(data))
+
+
+@router.post(
+    "/search",
+    response_model=APIResponseModel(List[CandidatoSearchResultDTO]),
+    status_code=status.HTTP_200_OK,
+)
+def search(
+    data: CandidatoSearchDTO,
+    service: CandidatoSearchService = Depends(get_candidato_search_service),
+    _: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.search(data)
+    return APIResponse(result)
 
 
 @router.post(
@@ -93,6 +114,21 @@ def get_personal_info(
     service: CandidatoService = Depends(get_candidato_service),
 ):
     result = service.get_informacion_personal(user.id_candidato)
+    return APIResponse(result=result)
+
+
+@router.get(
+    "/personal-info/{id}",
+    description="Get personal information by id (Only for Companies)",
+    response_model=APIResponseModel(CandidatoPersonalInformationDTO),
+    status_code=status.HTTP_200_OK,
+)
+def get_personal_info_by_id(
+    id: int,
+    service: CandidatoService = Depends(get_candidato_service),
+    _: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_informacion_personal(id)
     return APIResponse(result=result)
 
 
