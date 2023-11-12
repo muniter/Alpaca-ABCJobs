@@ -20,6 +20,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { CompanyTeamsProjectsComponent } from './company-teams-projects/company-teams-projects.component';
 import { CompanyCreateTeamComponent } from './company-create-team/company-create-team.component';
+import { CompanySearchCandidatesComponent } from './company-search-candidates/company-search-candidates.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
 
 @NgModule({
   imports: [
@@ -36,7 +39,8 @@ import { CompanyCreateTeamComponent } from './company-create-team/company-create
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ],
   declarations: [
     CompanyLoginComponent,
@@ -46,7 +50,9 @@ import { CompanyCreateTeamComponent } from './company-create-team/company-create
     CompanyPeopleComponent,
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
-    CompanyCreateTeamComponent
+    CompanyCreateTeamComponent,
+    CompanySearchCandidatesComponent,
+    CompanySearchParamsComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -56,7 +62,9 @@ import { CompanyCreateTeamComponent } from './company-create-team/company-create
     CompanyPeopleComponent,
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
-    CompanyCreateTeamComponent
+    CompanyCreateTeamComponent,
+    CompanySearchCandidatesComponent,
+    CompanySearchParamsComponent
   ]
 })
 export class CompanyModule { }

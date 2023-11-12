@@ -1,0 +1,152 @@
+<div class="company-theme company-home-body">
+  <app-company-header [username]="'Perfil'"></app-company-header>
+  <div class="search-candidates-container">
+    <app-login-logon-container>
+      <div class="form" *ngIf="!activeSearch">
+        <form [formGroup]="searchCandidatesForm" (ngSubmit)="searchCandidates()">
+          <fieldset>
+            <div class="form">
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatescountry">País</label>
+                </div>
+                <mat-form-field class="form-field half-right-field" appearance="outline"
+                  subscriptSizing="dynamic">
+                  <mat-select formControlName="country_code">
+                    <mat-option *ngFor="let country of countries" [value]="country.num_code">
+                      {{country.en_short_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatestechs">Tecnologías</label>
+                </div>
+                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                  <mat-chip-grid #chipGridTech>
+                    <mat-chip-row *ngFor="let tech of selectedTechs" (removed)="removeTech(tech)">
+                      {{tech}}
+                      <button matChipRemove [attr.aria-label]="'remove ' + tech">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip-row>
+                  </mat-chip-grid>
+                  <input #techInput formControlName="technical_info_types" [matChipInputFor]="chipGridTech"
+                    [matAutocomplete]="autoTech" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addTech($event)" />
+                  <mat-autocomplete #autoTech="matAutocomplete" (optionSelected)="selectedTech($event)">
+                    <mat-option *ngFor="let tech of filteredTechs | async" [value]="tech">
+                      {{tech}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidateslanguages">Idiomas</label>
+                </div>
+                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                  <mat-chip-grid #chipGridLanguage>
+                    <mat-chip-row *ngFor="let language of selectedLanguages" (removed)="removeLanguage(language)">
+                      {{language}}
+                      <button matChipRemove [attr.aria-label]="'remove ' + language">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip-row>
+                  </mat-chip-grid>
+                  <input #languageInput formControlName="languages" [matChipInputFor]="chipGridLanguage"
+                    [matAutocomplete]="autoLanguage" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addLanguage($event)" />
+                  <mat-autocomplete #autoLanguage="matAutocomplete" (optionSelected)="selectedLanguage($event)">
+                    <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
+                      {{language}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatespersonality">Personalidad</label>
+                </div>
+                <mat-form-field class="form-field half-right-field" appearance="outline"
+                  subscriptSizing="dynamic">
+                  <mat-select formControlName="personality_code">
+                    <mat-option *ngFor="let personality of personalities" [value]="personality.id">
+                      {{personality.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatescollegedegrees">Nivel de estudio mínimo</label>
+                </div>
+                <mat-form-field class="form-field half-right-field" appearance="outline"
+                  subscriptSizing="dynamic">
+                  <mat-select formControlName="least_academic_level">
+                    <mat-option *ngFor="let collegeDegree of collegeDegrees" [value]="collegeDegree.id">
+                      {{collegeDegree.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatesstudyareas">Áreas de estudio</label>
+                </div>
+                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                  <mat-chip-grid #chipGridStudyArea>
+                    <mat-chip-row *ngFor="let studyArea of selectedStudyAreas" (removed)="removeStudyArea(studyArea)">
+                      {{studyArea}}
+                      <button matChipRemove [attr.aria-label]="'remove ' + studyArea">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip-row>
+                  </mat-chip-grid>
+                  <input #studyAreaInput formControlName="study_areas" [matChipInputFor]="chipGridStudyArea"
+                    [matAutocomplete]="autoStudyArea" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addStudyArea($event)" />
+                  <mat-autocomplete #autoStudyArea="matAutocomplete" (optionSelected)="selectedStudyArea($event)">
+                    <mat-option *ngFor="let studyArea of filteredStudyAreas | async" [value]="studyArea">
+                      {{studyArea}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <div class="left-label">
+                  <label class="form-row-label" i18n="@@searchcandidatesroles">Roles</label>
+                </div>
+                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                  <mat-chip-grid #chipGridRole>
+                    <mat-chip-row *ngFor="let role of selectedRoles" (removed)="removeRole(role)">
+                      {{role}}
+                      <button matChipRemove [attr.aria-label]="'remove ' + role">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip-row>
+                  </mat-chip-grid>
+                  <input #roleInput formControlName="roles" [matChipInputFor]="chipGridRole"
+                    [matAutocomplete]="autoRole" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addRole($event)" />
+                  <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="selectedRole($event)">
+                    <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+                      {{role}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <app-company-search-candidates [candidates]="candidates" *ngIf="!activeSearch">        
+      </app-company-search-candidates>
+      <div class="search-button" *ngIf="!activeSearch">
+        <app-abc-button class="inline-button" color="primary" (click)="enableSearch()"
+          i18n="@@candidatesearchstart">BÚSQUEDA</app-abc-button>
+      </div>
+    </app-login-logon-container>
+  </div>
+</div>

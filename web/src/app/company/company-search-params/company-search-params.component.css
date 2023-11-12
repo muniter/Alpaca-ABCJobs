@@ -1,0 +1,10 @@
+.search-candidates-container {
+  padding: 0% 2%;
+}
+
+.search-button {
+  text-align: right;
+  position: relative;
+  top:-60px;
+  left: 35%;
+}

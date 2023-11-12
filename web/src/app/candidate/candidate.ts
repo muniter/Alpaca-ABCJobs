@@ -1,5 +1,6 @@
 import { Country } from "../shared/Country";
 import { Language } from "../shared/Language";
+import { Skill } from "../shared/skill";
 
 export class Candidate {
   names: string;
@@ -158,4 +159,31 @@ export class SavePersonalInfoRequest {
     this.biography = biography;
     this.languages = languages ? languages.map(lang => lang.id) : null;
   }
+}
+
+export class CandidateSearch extends Candidate {
+  city: string;
+  country: Country;
+  skills: Skill[];
+  roles: Skill[];
+  languages: Language[];
+
+  public constructor(
+    names: string,
+    lastnames: string,
+    email: string,
+    city: string,
+    country: Country,
+    skills: Skill[],
+    roles: Skill[],
+    languages: Language[]
+  ) {
+    super(names, lastnames, email);
+    this.city = city;
+    this.country = country;
+    this.skills = skills;
+    this.roles = roles;
+    this.languages = languages;
+  }
+
 }
