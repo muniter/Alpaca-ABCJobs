@@ -353,12 +353,12 @@ class CandidatoService:
                 persona.lenguajes.append(lang)
 
         persona = self.persona_repository.crear(persona)
-        return persona.build_dto()
+        return candidato.build_detail_dto()
 
     def get_informacion_personal(self, id: int) -> CandidatoPersonalInformationDTO:
         candidato = self.repository.get_by_id(id)
         assert candidato is not None
-        return candidato.persona.build_dto()
+        return candidato.build_detail_dto()
 
 
 class ConocimientoTecnicosRepository:
