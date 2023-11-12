@@ -1,3 +1,4 @@
+import { da } from "@faker-js/faker";
 import { Country } from "../shared/Country";
 import { Language } from "../shared/Language";
 import { Skill } from "../shared/skill";
@@ -161,29 +162,56 @@ export class SavePersonalInfoRequest {
   }
 }
 
-export class CandidateSearch extends Candidate {
-  city: string;
+export class CandidateSearch {
+  nombres: string;
+  apellidos: string;
+  email: string;
   country: Country;
+  city: string;
   skills: Skill[];
-  roles: Skill[];
+  skills_related: Skill[];
+  technical_info_types: Skill[];
+  technical_info_types_related: Skill[];
   languages: Language[];
+  languages_related: Language[];
 
   public constructor(
-    names: string,
-    lastnames: string,
+    nombres: string,
+    apellidos: string,
     email: string,
-    city: string,
     country: Country,
+    city: string,
     skills: Skill[],
-    roles: Skill[],
-    languages: Language[]
+    skills_related: Skill[],
+    technical_info_types: Skill[],
+    technical_info_types_related: Skill[],
+    languages: Language[],
+    languages_related: Language[]
   ) {
-    super(names, lastnames, email);
-    this.city = city;
+    this.nombres = nombres;
+    this.apellidos = apellidos;
+    this.email = email;
     this.country = country;
+    this.city = city;
     this.skills = skills;
-    this.roles = roles;
+    this.skills_related = skills_related;
+    this.technical_info_types = technical_info_types;
+    this.technical_info_types_related = technical_info_types_related;
     this.languages = languages;
+    this.languages_related = languages_related;
   }
 
+}
+
+export class CandidateSearchResponse {
+  success: boolean;
+  data: CandidateSearch[]
+
+  public constructor(
+    success: boolean,
+    data: CandidateSearch[]
+  ) {
+    this.success = success;
+    this.data = data
+  }
 }

@@ -2,15 +2,16 @@
   <app-company-header [username]="'Perfil'"></app-company-header>
   <div class="search-candidates-container">
     <app-login-logon-container>
-      <div class="form" *ngIf="!activeSearch">
+      <H2 i18n="@@searchcandidatestitle">Búsqueda de candidatos</H2>
+      <div class="form" *ngIf="activeSearch">
         <form [formGroup]="searchCandidatesForm" (ngSubmit)="searchCandidates()">
           <fieldset>
-            <div class="form">
+            <div>
               <div class="form-row">
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatescountry">País</label>
                 </div>
-                <mat-form-field class="form-field half-right-field" appearance="outline"
+                <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
                   <mat-select formControlName="country_code">
                     <mat-option *ngFor="let country of countries" [value]="country.num_code">
@@ -23,7 +24,7 @@
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatestechs">Tecnologías</label>
                 </div>
-                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
                   <mat-chip-grid #chipGridTech>
                     <mat-chip-row *ngFor="let tech of selectedTechs" (removed)="removeTech(tech)">
                       {{tech}}
@@ -46,7 +47,7 @@
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidateslanguages">Idiomas</label>
                 </div>
-                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
                   <mat-chip-grid #chipGridLanguage>
                     <mat-chip-row *ngFor="let language of selectedLanguages" (removed)="removeLanguage(language)">
                       {{language}}
@@ -69,7 +70,7 @@
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatespersonality">Personalidad</label>
                 </div>
-                <mat-form-field class="form-field half-right-field" appearance="outline"
+                <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
                   <mat-select formControlName="personality_code">
                     <mat-option *ngFor="let personality of personalities" [value]="personality.id">
@@ -82,7 +83,7 @@
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatescollegedegrees">Nivel de estudio mínimo</label>
                 </div>
-                <mat-form-field class="form-field half-right-field" appearance="outline"
+                <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
                   <mat-select formControlName="least_academic_level">
                     <mat-option *ngFor="let collegeDegree of collegeDegrees" [value]="collegeDegree.id">
@@ -95,9 +96,9 @@
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatesstudyareas">Áreas de estudio</label>
                 </div>
-                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
                   <mat-chip-grid #chipGridStudyArea>
-                    <mat-chip-row *ngFor="let studyArea of selectedStudyAreas" (removed)="removeStudyArea(studyArea)">
+                    <mat-chip-row *ngFor="let studyArea of studyAreas" (removed)="removeStudyArea(studyArea)">
                       {{studyArea}}
                       <button matChipRemove [attr.aria-label]="'remove ' + studyArea">
                         <mat-icon>cancel</mat-icon>
@@ -105,20 +106,15 @@
                     </mat-chip-row>
                   </mat-chip-grid>
                   <input #studyAreaInput formControlName="study_areas" [matChipInputFor]="chipGridStudyArea"
-                    [matAutocomplete]="autoStudyArea" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                     (matChipInputTokenEnd)="addStudyArea($event)" />
-                  <mat-autocomplete #autoStudyArea="matAutocomplete" (optionSelected)="selectedStudyArea($event)">
-                    <mat-option *ngFor="let studyArea of filteredStudyAreas | async" [value]="studyArea">
-                      {{studyArea}}
-                    </mat-option>
-                  </mat-autocomplete>
                 </mat-form-field>
               </div>
               <div class="form-row">
                 <div class="left-label">
                   <label class="form-row-label" i18n="@@searchcandidatesroles">Roles</label>
                 </div>
-                <mat-form-field class="form-field right-field" appearance="outline" subscriptSizing="dynamic">
+                <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
                   <mat-chip-grid #chipGridRole>
                     <mat-chip-row *ngFor="let role of selectedRoles" (removed)="removeRole(role)">
                       {{role}}
@@ -136,6 +132,11 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
+              </div>
+              <div class="buttons">
+                <app-abc-button type="submit" color="primary"
+                  [disabled]="!searchCandidatesForm.valid" class="inline-button"
+                  i18n="@@search">Buscar</app-abc-button>
               </div>
             </div>
           </fieldset>

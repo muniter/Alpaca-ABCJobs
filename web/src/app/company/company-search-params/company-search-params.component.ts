@@ -12,6 +12,9 @@ import { Personality } from 'src/app/shared/Personality';
 import { Skill } from 'src/app/shared/skill';
 import { CompanyService } from '../company.service';
 import { CollegeDegree } from 'src/app/shared/CollegeDegree';
+import { Search } from '../search';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppRoutesEnum } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-company-search-params',
@@ -20,6 +23,7 @@ import { CollegeDegree } from 'src/app/shared/CollegeDegree';
 })
 export class CompanySearchParamsComponent implements OnInit {
 
+  token: string;
   candidates: CandidateSearch[] = []; 
   activeSearch: boolean = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -36,9 +40,7 @@ export class CompanySearchParamsComponent implements OnInit {
   filteredTechs!: Observable<string[]>;
   selectedTechs: string[] = []
   objectStudyAreas!: Skill[];
-  studyAreas!: string[];
-  filteredStudyAreas!: Observable<string[]>;
-  selectedStudyAreas: string[] = []
+  studyAreas: string[] = [];
   objectRoles!: Skill[];
   roles!: string[];
   filteredRoles!: Observable<string[]>;
@@ -46,12 +48,21 @@ export class CompanySearchParamsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private activatedRouter: ActivatedRoute,
+    private router: Router,
     private candidateService: CandidateService,
     private companyService: CompanyService
-  ) { }
+  ) { 
+    this.token = ""
+    if (!this.activatedRouter.snapshot.params['userToken']) {
+      this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+    } else {
+      this.token = this.activatedRouter.snapshot.params['userToken'];
+    }
+  }
 
-  loadCandidates() {
-    /* this.candidates = []; */
+  /* loadCandidates() {
+    //this.candidates = [];
 
     let countries = [
       new Country(1, "CO", "COL", "Colombia", "Colombian@"),
@@ -112,10 +123,10 @@ export class CompanySearchParamsComponent implements OnInit {
         )
       );
     }
-  }
+  } */
 
   ngOnInit() {
-    this.loadCandidates();
+    /* this.loadCandidates(); */
 
     this.countries = []
     this.candidateService.getCountries().subscribe({
@@ -160,19 +171,6 @@ export class CompanySearchParamsComponent implements OnInit {
       }
     })
 
-    /* this.studyAreas = []
-    this.objectStudyAreas = []
-    this.candidateService.getCollegeDegrees().subscribe({
-      next: (response) => {
-        this.objectStudyAreas = response.data
-        this.languages = this.objectLanguages.map(lang => lang.name)
-        this.filteredLanguages = this.searchCandidatesForm.controls['languages'].valueChanges.pipe(
-          startWith(null),
-          map((language: string | null) => (language ? this._filterLanguage(language) : this.languages.slice())),
-        );
-      }
-    }) */
-
     this.roles = []
     this.objectRoles = []
     this.candidateService.getSkills().subscribe({
@@ -205,7 +203,26 @@ export class CompanySearchParamsComponent implements OnInit {
   }
 
   searchCandidates() {
-    console.log("search candidates");
+    let search: Search = new Search(
+      this.searchCandidatesForm.get('country_code')?.getRawValue(),
+      this.objectTechs.filter(x => this.selectedTechs?.includes(x?.name))
+                      .map((skill) => skill.id ),
+      this.objectLanguages.filter(x => this.selectedLanguages?.includes(x?.name))
+                      .map((skill) => skill.id ),
+      this.searchCandidatesForm.get('least_academic_level')?.getRawValue(),
+      this.studyAreas,
+      this.objectRoles.filter(x => this.selectedRoles?.includes(x?.name))
+                      .map((skill) => skill.id )
+    );
+
+    this.candidateService.searchCandidate(search, this.token).subscribe({
+      error: (exception) => console.log(exception),
+      next: (response) => {
+        this.candidates = response.data
+        this.activeSearch = false;
+      }
+    });
+
   }
 
   removeLanguage(language: string): void {
@@ -265,33 +282,20 @@ export class CompanySearchParamsComponent implements OnInit {
   }
 
   removeStudyArea(studyArea: string): void {
-    const index = this.selectedStudyAreas.indexOf(studyArea);
+    const index = this.studyAreas.indexOf(studyArea);
     if (index >= 0) {
-      this.selectedStudyAreas.splice(index, 1);
+      this.studyAreas.splice(index, 1);
     }
   }
 
   addStudyArea(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
-      this.selectedStudyAreas.push(value);
+      this.studyAreas.push(value);
     }
     event.chipInput!.clear();
   }
-
-  selectedStudyArea(event: MatAutocompleteSelectedEvent): void {
-    const index = this.selectedStudyAreas.indexOf(event.option.viewValue);
-    if (index < 0) {
-      this.selectedStudyAreas.push(event.option.viewValue);
-      this.searchCandidatesForm.get('study_areas')!.setValue(null);
-    }
-  }
-
-  private _filterStudyArea(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.studyAreas.filter(studyArea => studyArea.toLowerCase().includes(filterValue));
-  }
-
+  
   removeRole(role: string): void {
     const index = this.selectedRoles.indexOf(role);
     if (index >= 0) {

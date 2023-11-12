@@ -2,9 +2,42 @@
   padding: 0% 2%;
 }
 
+h2 {
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 0rem;
+  color: var(--contrastCompanyColor)
+}
+
 .search-button {
   text-align: right;
   position: relative;
   top:-60px;
   left: 35%;
+}
+
+.form-row {
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form fieldset {
+  border: 0px;
+}
+
+.form {
+  width: 80%;
+}
+
+.form mat-form-field {
+  width: 60%;
+  padding: 5px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
 }
