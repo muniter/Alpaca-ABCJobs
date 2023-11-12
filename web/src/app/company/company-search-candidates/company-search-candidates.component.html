@@ -1,0 +1,28 @@
+<div class="candidates-search-cards" [ngClass]="itemsInPage > 4 ? 'tresxtres' : 'dosxdos'">
+  <app-person-card *ngFor="let candidate of candidates | paginate: { itemsPerPage: itemsInPage, currentPage: page }" 
+    [title]="candidate.nombres + ' ' + candidate.apellidos" type=employee>
+    <h3 i18n="@@technologies">Tecnologías</h3>
+    <mat-chip-listbox>
+      <mat-chip class="pequena" *ngFor="let tech of candidate.technical_info_types">{{tech.name}}</mat-chip>
+    </mat-chip-listbox>
+    <p class="notfound" i18n="@techsnotfound" *ngIf="!(candidate.technical_info_types.length>0)">no seleccionados</p>
+    <h3 i18n="@@roles">Roles</h3>
+    <mat-chip-listbox>
+      <mat-chip class="pequena" *ngFor="let rol of candidate.skills">{{rol.name}}</mat-chip>
+    </mat-chip-listbox>
+    <p class="notfound" i18n="@rolesnotfound" *ngIf="!(candidate.skills.length>0)">no seleccionados</p>
+    <h3 i18n="@@languages">Idiomas</h3>
+    <mat-chip-listbox>
+      <mat-chip class="pequena" *ngFor="let language of candidate.languages">{{language.name}}</mat-chip>
+    </mat-chip-listbox>
+    <p class="notfound" i18n="@languagesnotfound" *ngIf="!(candidate.languages.length>0)">no seleccionados</p>
+    <div class="location">
+      <mat-icon>place</mat-icon>
+      <span>{{candidate.city}}, {{(candidate.country) ? candidate.country.en_short_name : ''}}</span>
+    </div>
+  </app-person-card>
+  <p id="candidatesnotfound" *ngIf="!(candidates.length > 0)" i18n="@@candidatesearchnotfound">Sin resultados, inicie una nueva búsqueda</p>
+</div>
+<div class="has-text-centered">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
