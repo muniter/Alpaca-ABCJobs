@@ -1,11 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { CandidateSearch } from 'src/app/candidate/candidate';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
-import { Country } from 'src/app/shared/Country';
-import { Skill } from 'src/app/shared/skill';
-import { Language } from 'src/app/shared/Language';
 
 @Component({
   selector: 'app-company-search-candidates',
@@ -21,8 +17,7 @@ export class CompanySearchCandidatesComponent implements OnInit {
 
   constructor(
     private activatedRouter: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
+    private router: Router
   ) { 
     this.validateToken(this.activatedRouter.snapshot.params['userToken']);
   }
@@ -30,7 +25,7 @@ export class CompanySearchCandidatesComponent implements OnInit {
   validateToken(token:string) {
     this.token = "";
     if (!token) {
-      this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+      this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyLogin}`)
     } else {
       this.token = this.activatedRouter.snapshot.params['userToken'];
     }
@@ -45,16 +40,5 @@ export class CompanySearchCandidatesComponent implements OnInit {
   onResize() {
     this.itemsInPage = (window.innerWidth > 1500) ? 9 : 4;
   }
-
-  /* candidateSearchDialog() {
-    const dialog = this.dialog.open(CompanySearchParamsComponent, {
-      data: { token: this.token, dialog: this.dialog, theme: 'company-theme' },
-      width: '40%'
-    });
-
-    dialog.afterClosed().subscribe(result => {
-      this.loadCandidates();
-    });
-  } */
 
 }

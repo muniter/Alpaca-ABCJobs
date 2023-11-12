@@ -23,7 +23,7 @@ import { AppRoutesEnum } from 'src/app/core/enums';
 })
 export class CompanySearchParamsComponent implements OnInit {
 
-  token: string;
+  token: string = "";
   candidates: CandidateSearch[] = []; 
   activeSearch: boolean = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -53,33 +53,42 @@ export class CompanySearchParamsComponent implements OnInit {
     private candidateService: CandidateService,
     private companyService: CompanyService
   ) { 
-    this.token = ""
-    if (!this.activatedRouter.snapshot.params['userToken']) {
-      this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
+    this.validateToken(this.activatedRouter.snapshot.params['userToken']);
+  }
+
+  validateToken(token:string) {
+    this.token = "";
+    if (!token) {
+      this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyLogin}`)
     } else {
       this.token = this.activatedRouter.snapshot.params['userToken'];
     }
   }
 
-  ngOnInit() {
-
+  getCountries() {
     this.countries = []
     this.candidateService.getCountries().subscribe({
       next: (response) => this.countries = response.data
     })
+  }
 
+  getPersonalities() {
     this.personalities = []
     this.companyService.getPersonalities().subscribe({
       next: (response) => this.personalities = response.data
     })
+  }
 
+  getCollegeDegrees() {
     this.collegeDegrees = []
     this.candidateService.getCollegeDegrees().subscribe({
       next: (response) => {
         this.collegeDegrees = response.data;
       }
     })
+  }
 
+  getTechs() {
     this.techs = []
     this.objectTechs = []
     this.candidateService.getTechnicalInfoTypes().subscribe({
@@ -92,7 +101,9 @@ export class CompanySearchParamsComponent implements OnInit {
         );
       }
     })
+  }
 
+  getLanguages() {
     this.languages = []
     this.objectLanguages = []
     this.candidateService.getLanguages().subscribe({
@@ -105,7 +116,9 @@ export class CompanySearchParamsComponent implements OnInit {
         );
       }
     })
+  }
 
+  getRoles() {
     this.roles = []
     this.objectRoles = []
     this.candidateService.getSkills().subscribe({
@@ -118,6 +131,15 @@ export class CompanySearchParamsComponent implements OnInit {
         );
       }
     })
+  }
+
+  ngOnInit() {
+    this.getCountries();
+    this.getPersonalities
+    this.getCollegeDegrees();
+    this.getTechs();
+    this.getLanguages();
+    this.getRoles();
 
     this.searchCandidatesForm = this.formBuilder.group(
       {

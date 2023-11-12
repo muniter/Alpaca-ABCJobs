@@ -21,10 +21,8 @@
       <span>{{candidate.city}}, {{(candidate.country) ? candidate.country.en_short_name : ''}}</span>
     </div>
   </app-person-card>
-  <p *ngIf="!(candidates.length > 0)" i18n="@@candidatesearchnotfound">Sin resultados, inicie una nueva búsqueda</p>
+  <p id="candidatesnotfound" *ngIf="!(candidates.length > 0)" i18n="@@candidatesearchnotfound">Sin resultados, inicie una nueva búsqueda</p>
 </div>
 <div class="has-text-centered">
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  <!-- <app-abc-button class="inline-button" color="primary" 
-      i18n="@@candidatesearchstart">BÚSQUEDA</app-abc-button> -->
 </div>
