@@ -188,6 +188,9 @@ def seed_candidato(email: str):
     id_candidato = candidato.candidato.id
     roles_habilidades = roles_habilidades_repository.get()
     lenguajes = candidate_service.lenguaje_repository.get_all()
+    countries = candidate_service.country_repository.get_all()
+    pre_countries = ["US", "CO", "EC", "AF"]
+    countries = list(filter(lambda c: c.alpha_2_code in pre_countries, countries))
 
     # Datos Personales
     if faker.boolean():
@@ -199,7 +202,7 @@ def seed_candidato(email: str):
         lenguajes.append("EN")
         data = CandidatoPersonalInformationUpdateDTO(
             birth_date=faker.date_of_birth(minimum_age=18, maximum_age=100),
-            country_code=4,
+            country_code=faker.random_element(elements=countries).num_code,
             city=faker.city(),
             address=faker.address(),
             phone=faker.numerify(text="#########"),
