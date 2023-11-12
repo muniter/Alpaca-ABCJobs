@@ -14,6 +14,7 @@ from common.shared.api_models.gestion_empresas import (
     EquipoDTO,
     VacanteCreateDTO,
     VacanteDTO,
+    VacantePreseleccionDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -25,6 +26,7 @@ from common.shared.database.models import (
     Empresa,
     Equipo,
     Persona,
+    Candidato,
     Personalidad,
     RolesHabilidades,
     Vacante,
@@ -160,6 +162,17 @@ class VacanteRepository:
         return list(self.session.execute(query).scalars().all())
 
     def crear(self, data: Vacante) -> Vacante:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def get_candidato_by_id(self, id: int) -> Union[Candidato, None]:
+        query = select(Candidato).where(Candidato.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def update(self, data: Vacante) -> Vacante:
         self.session.add(data)
         self.session.commit()
         # Refresh
@@ -399,6 +412,31 @@ class EmpresaService:
         vacante.id_equipo = data.team_id
 
         vacante = self.vacante_repository.crear(vacante)
+
+        return vacante.build_dto()
+
+    def preselecionar_vacante(
+            self, id_empresa: int, id_vacante: int, data: VacantePreseleccionDTO
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        error = ErrorBuilder()
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        if not vacante:
+            error.add("global", "Vacancy not found")
+            return error
+
+        candidato = self.vacante_repository.get_candidato_by_id(data.id_candidate)
+        if not candidato:
+            error.add("id_candidate", "Candidate not found")
+            return error
+
+        if candidato.id in [c.id for c in vacante.preseleccion]:
+            error.add("id_candidate", "Candidate already preselected")
+            return error
+
+        vacante.preseleccion.append(candidato)
+        vacante = self.vacante_repository.update(vacante)
 
         return vacante.build_dto()
 

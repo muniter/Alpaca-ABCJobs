@@ -91,7 +91,7 @@ class Candidato(Base):
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=True
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="candidato")
+    persona: Mapped["Persona"] = relationship("Persona", back_populates="candidato")
     usuario: Mapped["Usuario"] = relationship(back_populates="candidato")
 
     def build_dto(self) -> CandidatoDTO:
@@ -101,6 +101,9 @@ class Candidato(Base):
             apellidos=self.persona.apellidos,
             email=self.persona.email,
         )
+
+    def build_detail_dto(self) -> CandidatoPersonalInformationDTO:
+        return self.persona.build_dto()
 
 
 class Country(Base):
@@ -174,12 +177,17 @@ class Persona(Base):
     datos_laborales: Mapped[List["DatosLaborales"]] = relationship(
         "DatosLaborales", back_populates="persona"
     )
+    candidato: Mapped[Optional[Candidato]] = relationship(
+        Candidato, back_populates="persona", uselist=False
+    )
 
     def build_dto(self) -> CandidatoPersonalInformationDTO:
         lenguajes = [
             LenguajeDTO(id=lang.id, name=lang.nombre) for lang in self.lenguajes
         ]
         return CandidatoPersonalInformationDTO(
+            id_candidate=self.candidato.id if self.candidato else None,
+            id_persona=self.id,
             names=self.nombres,
             last_names=self.apellidos,
             full_name=f"{self.nombres} {self.apellidos}",
@@ -576,6 +584,15 @@ class Proyecto(Base):
         )
 
 
+vacante_candidato = Table(
+    "vacante_candidato",
+    Base.metadata,
+    Column("id_vacante", ForeignKey("vacante.id")),
+    Column("id_candidato", ForeignKey("candidato.id")),
+    PrimaryKeyConstraint("id_vacante", "id_candidato"),
+)
+
+
 class Vacante(Base):
     __tablename__ = "vacante"
 
@@ -586,6 +603,9 @@ class Vacante(Base):
     descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
     equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
+    preseleccion: Mapped[List[Candidato]] = relationship(
+        "Candidato", secondary=vacante_candidato
+    )
 
     def build_dto(self) -> VacanteDTO:
         return VacanteDTO(
@@ -594,4 +614,5 @@ class Vacante(Base):
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
+            preselection=[cand.build_detail_dto() for cand in self.preseleccion],
         )

@@ -15,6 +15,7 @@ from common.shared.api_models.gestion_empresas import (
     EquipoDTO,
     VacanteCreateDTO,
     VacanteDTO,
+    VacantePreseleccionDTO,
 )
 from common.shared.api_models.shared import (
     APIResponse,
@@ -169,6 +170,23 @@ def crear_vacancy(
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.crear_vacante(id_empresa=user.id_empresa, data=data)
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/preselect",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_201_CREATED,
+)
+def preselect_vacancy(
+    id: int,
+    data: VacantePreseleccionDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.preselecionar_vacante(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
     return APIResponse(result)
 
 
