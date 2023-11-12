@@ -90,9 +90,16 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView" />
+                                android:text="TextView"
+                                tools:text="Opción 1" />
 
                             <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/idOptionTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -102,6 +109,7 @@
                                 android:layout_width="4dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1" />
+
                         </LinearLayout>
 
                         <TextView
@@ -133,9 +141,16 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView" />
+                                android:text="TextView"
+                                tools:text="Opción 2" />
 
                             <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/idOptionTextView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -176,9 +191,16 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView" />
+                                android:text="TextView"
+                                tools:text="Opción 3" />
 
                             <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/idOptionTextView3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -216,7 +238,7 @@
                         android:textColor="@color/accent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.58"
-                        app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
+                        />
 
                 </LinearLayout>
 

@@ -11,12 +11,25 @@ data class ExamItem(
     val number_of_questions: Int
 )
 
+data class ExaItemExtend(
+    val id: Int,
+    val skill: SkillInfoType?,
+    val completed: Boolean,
+    val number_of_questions: Int,
+    val questions: List<Question>
+)
+
 data class ExamItemResponse(
     val success: Boolean,
     val data: List<ExamItem>?
 )
 
 data class ExamStartResponse(
+    val success: Boolean,
+    val data: ExamStartData
+)
+
+data class AnswerQuestionResponse(
     val success: Boolean,
     val data: ExamStartData
 )
@@ -42,7 +55,10 @@ data class Answer(
     val answer: String
 )
 
-
+fun deserializeAnswerQuestionError(response: JSONObject): Exception {
+    val error = response.optString("error")
+    return Exception(error)
+}
 
 fun deserializeExamItems(response: JSONObject): ExamItemResponse {
     val success = response.optBoolean("success", false)
@@ -91,12 +107,56 @@ fun deserializeExamStart(response: JSONObject): ExamStartResponse {
     return ExamStartResponse(success, examStartData)
 }
 
+fun deserializeAnswerQuestion(response: JSONObject): AnswerQuestionResponse {
+    val success = response.optBoolean("success", false)
+    val dataObject = response.optJSONObject("data")
+
+    val id_result = dataObject?.optInt("id_result")
+    val id_exam = dataObject?.optInt("id_exam")
+    val next_question = dataObject?.optJSONObject("next_question")
+    val result = dataObject?.opt("result")
+
+    val question = Question(
+        next_question?.optInt("id")!!,
+        next_question.optInt("id_exam"),
+        next_question.optString("question"),
+        next_question.optInt("difficulty"),
+        next_question.optJSONArray("answers")
+    )
+
+    val examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result!!)
+
+    return AnswerQuestionResponse(success, examStartData)
+}
+
 fun deserializeAnswer(response: JSONObject): Answer {
     val id = response.optInt("id")
     val id_question = response.optInt("id_question")
     val answer = response.optString("answer")
 
     return Answer(id, id_question, answer)
+}
+
+fun serializeAnswer(answer: Answer): JSONObject {
+    val answerJson = JSONObject()
+    answerJson.put("id", answer.id)
+    answerJson.put("id_question", answer.id_question)
+    answerJson.put("answer", answer.answer)
+    return answerJson
+}
+
+fun deserializerAnswers(response: JSONArray): List<Answer> {
+    val answers = mutableListOf<Answer>()
+    for (i in 0 until response.length()) {
+        val answerObject = response.optJSONObject(i)
+        if (answerObject != null) {
+            val id = answerObject.optInt("id")
+            val id_question = answerObject.optInt("id_question")
+            val answer = answerObject.optString("answer")
+            answers.add(Answer(id, id_question, answer))
+        }
+    }
+    return answers
 }
 
 fun deserializeQuestion(response: JSONObject): Question {
@@ -111,6 +171,6 @@ fun deserializeQuestion(response: JSONObject): Question {
 
 
 fun deserializeExamStartError(response: JSONObject): Exception {
-    val error = response.optString("error")
+    val error = response.optString("errors")
     return Exception(error)
 }

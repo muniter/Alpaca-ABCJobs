@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.model.models.Answer
 import com.example.abc_jobs_alpaca.model.models.Question
+import com.example.abc_jobs_alpaca.model.models.deserializeAnswer
+import com.example.abc_jobs_alpaca.model.models.deserializeQuestion
+import com.example.abc_jobs_alpaca.model.models.deserializerAnswers
+import com.example.abc_jobs_alpaca.model.models.serializeAnswer
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -17,6 +21,8 @@ class ExamTakeViewModel(
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
     val question = MutableLiveData<Question>()
+    val answers = MutableLiveData<List<Answer>>()
+    val idResult = MutableLiveData<Int>()
 
     fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
 
@@ -28,14 +34,20 @@ class ExamTakeViewModel(
                         .onSuccess { response ->
                             if (response.success) {
                                 question.postValue(response.data.next_question)
-                                Log.d("ExamTakeViewModel", "postStartExam: ${response.data.next_question}")
+                                idResult.postValue(response.data.id_result)
+                                answers.postValue(response.data.next_question.answers?.let {
+                                    deserializerAnswers(
+                                        it
+                                    )
+                                })
+                                Log.d("ExamTakeViewModel", "postStartExam1: ${response.data.next_question}")
                             } else {
-                                Log.d("ExamTakeViewModel", "postStartExam: ${response.success}")
+                                Log.d("ExamTakeViewModel", "postStartExam2: ${response.success}")
 
                             }
                         }
                         .onFailure {
-                            Log.d("ExamTakeViewModel", "postStartExam: ${it.message}")
+                            Log.d("ExamTakeViewModel", "postStartExam3: ${it.message}")
                         }
                 }
             } catch (e: Exception) {
@@ -44,4 +56,39 @@ class ExamTakeViewModel(
         }
     }
 
+
+    fun submitAnswer(idAnswer: Int) {
+        viewModelScope.launch {
+            try {
+                if (token != null) {
+                    val answer = answers.value?.find { it.id == idAnswer }
+                    if (answer != null) {
+                        abcJobsRepository.postAnswerQuestion(token.value!!, idResult.value!!, answer)
+                            .onSuccess { response ->
+                                if (response.success) {
+                                    question.postValue(response.data.next_question)
+                                    answers.postValue(response.data.next_question.answers?.let {
+                                        deserializerAnswers(
+                                            it
+                                        )
+                                    })
+                                    Log.d("ExamTakeViewModel", "postStartExam1: ${response.data.next_question}")
+                                } else {
+                                    Log.d("ExamTakeViewModel", "postStartExam2: ${response.success}")
+
+                                }
+                            }
+                            .onFailure {
+                                Log.d("ExamTakeViewModel", "postStartExam3: ${it.message}")
+                            }
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
 }
+
+

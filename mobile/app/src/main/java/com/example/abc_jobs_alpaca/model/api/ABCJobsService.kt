@@ -32,6 +32,7 @@ class ABCJobsService constructor(context: Context){
         private var EXAMS_PATH = "/exam"
         private var EXAM_RESULTS_PATH = "/exam-result"
         private var EXAM_ACTION_START = "/start"
+        private var EXAM_ACTION_ANSWER = "/answer"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -657,6 +658,42 @@ class ABCJobsService constructor(context: Context){
             } else {
                 val examStartError = deserializeExamStartError(response)
                 Result.failure(examStartError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postAnswerQuestion(token: String, idResult: Int, answer: JSONObject): Result<AnswerQuestionResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        EVALUATIONS_PATH,
+                        "$EXAM_RESULTS_PATH/$idResult$EXAM_ACTION_ANSWER",
+                        answer,
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val answerQuestionError = deserializeAnswerQuestionError(jsonError)
+                                    cont.resumeWithException(answerQuestionError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val answerQuestion = deserializeAnswerQuestion(response)
+                Result.success(answerQuestion)
+            } else {
+                val answerQuestionError = deserializeAnswerQuestionError(response)
+                Result.failure(answerQuestionError)
             }
         } catch (e: Exception) {
             Log.d("NETWORK_ERROR", e.toString())
