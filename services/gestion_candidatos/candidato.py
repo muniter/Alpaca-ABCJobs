@@ -355,9 +355,14 @@ class CandidatoService:
         persona = self.persona_repository.crear(persona)
         return candidato.build_detail_dto()
 
-    def get_informacion_personal(self, id: int) -> CandidatoPersonalInformationDTO:
+    def get_informacion_personal(
+        self, id: int
+    ) -> Union[CandidatoPersonalInformationDTO, ErrorBuilder]:
         candidato = self.repository.get_by_id(id)
-        assert candidato is not None
+        if not candidato:
+            error = ErrorBuilder()
+            error.add("global", "Candidate not found")
+            return error
         return candidato.build_detail_dto()
 
 

@@ -118,6 +118,21 @@ def get_personal_info(
 
 
 @router.get(
+    "/personal-info/{id}",
+    description="Get personal information by id (Only for Companies)",
+    response_model=APIResponseModel(CandidatoPersonalInformationDTO),
+    status_code=status.HTTP_200_OK,
+)
+def get_personal_info_by_id(
+    id: int,
+    service: CandidatoService = Depends(get_candidato_service),
+    _: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.get_informacion_personal(id)
+    return APIResponse(result=result)
+
+
+@router.get(
     "/work-info",
     response_model=APIResponseModel(List[CandidatoDatosLaboralesDTO]),
     status_code=status.HTTP_200_OK,
