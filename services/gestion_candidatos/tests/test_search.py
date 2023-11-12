@@ -225,6 +225,38 @@ def test_by_multiple():
         assert candidato.id in [c.id for c in result]
 
 
+def test_search_skills_should_show():
+    existing = (
+        select(Candidato)
+        .join(Candidato.persona)
+        .join(DatosLaborales, DatosLaborales.id_persona == Persona.id)
+        .join(
+            datos_laborales_roles,
+            datos_laborales_roles.c.id_datos_laborales == DatosLaborales.id,
+        )
+        .group_by(Candidato.id)
+        .where(DatosLaborales.id.isnot(None), Persona.country_code.isnot(None))
+        .limit(1)
+    )
+
+    result = session.execute(existing).scalars().one_or_none()
+    assert result is not None
+    candidato = result
+
+    result = search_service.search(
+        CandidatoSearchDTO(
+            country_code=candidato.persona.country_code,
+        )
+    )
+    assert len(result) > 0
+    assert candidato.id in [c.id for c in result]
+    cand_result = next(filter(lambda x: x.id == candidato.id, result), None)
+    assert cand_result is not None
+    assert cand_result.languages is not None
+    assert cand_result.skills is not None
+    assert not cand_result.skills_related
+
+
 def test_endpoint():
     _, token = crear_usuario_empresa()
 

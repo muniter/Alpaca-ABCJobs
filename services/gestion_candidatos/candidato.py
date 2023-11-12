@@ -854,12 +854,11 @@ class CandidatoSearchService:
         for candidato in candidatos:
             skills = []
             skills_related = []
-            if search.skills:
-                for datos_laborales in candidato.persona.datos_laborales:
-                    for rol in datos_laborales.roles_habilidades:
-                        skills.append(rol.build_dto())
-                        if rol.id in search.skills:
-                            skills_related.append(rol.build_dto())
+            for datos_laborales in candidato.persona.datos_laborales:
+                for rol in datos_laborales.roles_habilidades:
+                    skills.append(rol.build_dto())
+                    if search.skills and rol.id in search.skills:
+                        skills_related.append(rol.build_dto())
 
             tinfo_types = [
                 t.tipo.build_dto() for t in candidato.persona.conocimientos_tecnicos
