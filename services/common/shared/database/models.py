@@ -103,7 +103,26 @@ class Candidato(Base):
         )
 
     def build_detail_dto(self) -> CandidatoPersonalInformationDTO:
-        return self.persona.build_dto()
+        persona = self.persona
+        lenguajes = [
+            LenguajeDTO(id=lang.id, name=lang.nombre) for lang in persona.lenguajes
+        ]
+        return CandidatoPersonalInformationDTO(
+            id_candidate=self.id,
+            id_persona=persona.id,
+            names=persona.nombres,
+            last_names=persona.apellidos,
+            full_name=f"{persona.nombres} {persona.apellidos}",
+            email=persona.email,
+            birth_date=persona.fecha_nacimiento,
+            country_code=persona.country_code,
+            country=persona.pais.en_short_name if persona.pais else None,
+            city=persona.ciudad,
+            address=persona.direccion,
+            phone=persona.celular,
+            biography=persona.biografia,
+            languages=lenguajes if lenguajes else None,
+        )
 
 
 class Country(Base):
@@ -180,27 +199,6 @@ class Persona(Base):
     candidato: Mapped[Optional[Candidato]] = relationship(
         Candidato, back_populates="persona", uselist=False
     )
-
-    def build_dto(self) -> CandidatoPersonalInformationDTO:
-        lenguajes = [
-            LenguajeDTO(id=lang.id, name=lang.nombre) for lang in self.lenguajes
-        ]
-        return CandidatoPersonalInformationDTO(
-            id_candidate=self.candidato.id if self.candidato else None,
-            id_persona=self.id,
-            names=self.nombres,
-            last_names=self.apellidos,
-            full_name=f"{self.nombres} {self.apellidos}",
-            email=self.email,
-            birth_date=self.fecha_nacimiento,
-            country_code=self.country_code,
-            country=self.pais.en_short_name if self.pais else None,
-            city=self.ciudad,
-            address=self.direccion,
-            phone=self.celular,
-            biography=self.biografia,
-            languages=lenguajes if lenguajes else None,
-        )
 
 
 datos_laborales_roles = Table(

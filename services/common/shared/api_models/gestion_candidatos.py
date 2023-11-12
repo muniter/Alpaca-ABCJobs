@@ -45,7 +45,7 @@ class CountryDTO(BaseModel):
 
 
 class CandidatoPersonalInformationDTO(BaseModel):
-    id_candidate: Optional[int]
+    id_candidate: int
     id_persona: int
     names: str
     last_names: str
