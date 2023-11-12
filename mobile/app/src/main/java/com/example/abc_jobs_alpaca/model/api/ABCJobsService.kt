@@ -30,6 +30,8 @@ class ABCJobsService constructor(context: Context){
         private var TITLE_TYPES_PATH = "/title-types"
         private var EVALUATIONS_PATH = "/evaluaciones"
         private var EXAMS_PATH = "/exam"
+        private var EXAM_RESULTS_PATH = "/exam-result"
+        private var EXAM_ACTION_START = "/start"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -625,4 +627,41 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
+
+    suspend fun postStartExam(token: String, examId: Int): Result<ExamStartResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        EVALUATIONS_PATH,
+                        "$EXAM_RESULTS_PATH/$examId$EXAM_ACTION_START",
+                        JSONObject(),
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val examStartError = deserializeExamStartError(jsonError)
+                                    cont.resumeWithException(examStartError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val examStart = deserializeExamStart(response)
+                Result.success(examStart)
+            } else {
+                val examStartError = deserializeExamStartError(response)
+                Result.failure(examStartError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
 }
