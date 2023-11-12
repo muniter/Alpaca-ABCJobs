@@ -143,10 +143,11 @@ def test_get_informacion_personal():
 
 
 def test_get_informacion_personal_by_id():
-    usuario, token = crear_usuario_candidato()
-    assert usuario.id_candidato is not None
+    usuario_candidato, _ = crear_usuario_candidato()
+    _, token = crear_usuario_empresa()
+    assert usuario_candidato.id_candidato is not None
     response = client.get(
-        f"/personal-info/{usuario.id_candidato}",
+        f"/personal-info/{usuario_candidato.id_candidato}",
         headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == 200
