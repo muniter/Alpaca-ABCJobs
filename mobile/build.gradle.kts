@@ -4,10 +4,20 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     kotlin("kapt") version "1.9.10"
     id("jacoco") apply true
+    id ("androidx.navigation.safeargs") version "2.5.3" apply false
 }
 
 buildscript {
-    dependencies{
-        classpath("org.jacoco:org.jacoco.core:0.8.6")
+    repositories {
+        google()
+        mavenCentral()
     }
+    dependencies {
+        classpath("org.jacoco:org.jacoco.core:0.8.6")
+        //classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
+    }
+
 }
+
+

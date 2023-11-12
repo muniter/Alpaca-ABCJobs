@@ -85,13 +85,18 @@
         android:label="Lista de exámenes"
         tools:layout="@layout/fragment_exam_list" >
         <action
-            android:id="@+id/action_nav_exam_list_to_nav_exam_take"
-            app:destination="@id/nav_exam_take" />
+            android:id="@+id/action_nav_exam_list_to_examTakeFragment"
+            app:destination="@id/examTakeFragment" >
+        </action>
     </fragment>
-
     <fragment
-        android:id="@+id/nav_exam_take"
+        android:id="@+id/examTakeFragment"
         android:name="com.example.abc_jobs_alpaca.view.ExamTakeFragment"
-        android:label="Realizar examen"
-        tools:layout="@layout/fragment_exam_take" />
+        android:label="Tomar examen"
+        tools:layout="@layout/fragment_exam_take">
+        <argument
+            android:name="examId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

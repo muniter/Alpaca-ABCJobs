@@ -15,7 +15,8 @@ import com.example.abc_jobs_alpaca.model.models.ExamItem
  * TODO: Replace the implementation with code for your data type.
  */
 class ExamRecyclerViewAdapter(
-    private val values: List<ExamItem>?
+    private val values: List<ExamItem>?,
+    private val onItemClick : (ExamItem) -> Unit
 ) : RecyclerView.Adapter<ExamRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,7 +45,9 @@ class ExamRecyclerViewAdapter(
         if (item != null) {
             holder.numberOfQuestions.text = item.number_of_questions.toString()
         }
-        
+        holder.btnStartExam.setOnClickListener {
+            onItemClick(item!!)
+        }
 //        holder.contentView.text = item.content
     }
 
@@ -55,6 +58,7 @@ class ExamRecyclerViewAdapter(
         val skillTitle : TextView = binding.skillTextView
         val completed: CheckBox = binding.stateExam
         val numberOfQuestions: TextView = binding.scoreTextView
+        val btnStartExam = binding.startExamBtn
 
 //        val contentView: TextView = binding.content
 //        override fun toString(): String {

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.ExamRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
@@ -68,7 +69,12 @@ class ExamFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 viewModel.exams.observe(viewLifecycleOwner) { exams ->
-                    adapter = ExamRecyclerViewAdapter(exams)
+                    adapter = ExamRecyclerViewAdapter(exams) {
+                        val action = ExamFragmentDirections.actionNavExamListToExamTakeFragment()
+                                    .setExamId(it.id)
+
+                        view.findNavController().navigate(action)
+                    }
                 }
             }
         }
