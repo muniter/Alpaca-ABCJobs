@@ -135,7 +135,7 @@ export class CompanySearchParamsComponent implements OnInit {
 
   ngOnInit() {
     this.getCountries();
-    this.getPersonalities
+    this.getPersonalities();
     this.getCollegeDegrees();
     this.getTechs();
     this.getLanguages();
