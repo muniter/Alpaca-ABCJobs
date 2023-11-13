@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.abc_jobs_alpaca.R
@@ -32,6 +33,7 @@ import com.example.abc_jobs_alpaca.utils.MessageType
 import com.example.abc_jobs_alpaca.utils.Validators
 import com.example.abc_jobs_alpaca.viewmodel.CandidateRegisterViewModel
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
 class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
     CandidateRegisterViewModel.NavigationListener {
@@ -234,7 +236,7 @@ class CandidatoRegisterFragment : Fragment(), View.OnClickListener,
                     password = password,
                 )
 
-                viewModel.postCandidate(candidate)
+                lifecycleScope.launch { viewModel.postCandidate(candidate) }
 
                 requireActivity().supportFragmentManager.popBackStack()
             }
