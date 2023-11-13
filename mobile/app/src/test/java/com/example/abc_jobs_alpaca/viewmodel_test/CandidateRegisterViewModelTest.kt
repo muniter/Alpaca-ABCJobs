@@ -91,9 +91,9 @@ class CandidateRegisterViewModelTest {
                 candidateRegisterViewModel.postCandidate(
                     newCandidate
                 )
+                delay(400)
 
                 Mockito.verify(repositoryMock, times(1)).postCandidate(newCandidate)
-                delay(400)
 
                 Assert.assertEquals(
                     MessageType.SUCCESS,
