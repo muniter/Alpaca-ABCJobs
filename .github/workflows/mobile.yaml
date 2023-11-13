@@ -62,7 +62,7 @@ jobs:
       # Copy Test Coverage Report to s3 artifacts
       - name: Copy test coverage report to s3
         working-directory: mobile
-        # if: false
+        if: github.ref == 'refs/heads/master'
         run: aws s3 sync --delete app/build/reports/coverage/test/debug s3://abc-jobs-artifacts/test_reports/mobile
 
       # Run Build Project
@@ -76,5 +76,6 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Upload APK to S3
+        if: github.ref == 'refs/heads/master'
         working-directory: mobile
         run: aws s3 sync app/build/outputs/apk s3://abc-jobs-artifacts/mobile/apk
