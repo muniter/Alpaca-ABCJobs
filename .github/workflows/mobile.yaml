@@ -11,6 +11,7 @@ on:
       - 'master'
     paths:
       - 'mobile/**'
+      - '.github/workflows/mobile.yaml'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -53,8 +54,14 @@ jobs:
       # Run Tests Build
       - name: Run gradle tests
         working-directory: mobile
-        if: false
-        run: ./gradlew test
+        # if: false
+        run: ./gradlew createDebugUnitTestCoverageReport
+
+      # Copy Test Coverage Report to s3 artifacts
+      - name: Copy test coverage report to s3
+        working-directory: mobile
+        # if: false
+        run: aws s3 sync --delete app/build/reports/coverage/test/debug s3://abc-jobs-artifacts/test_reports/mobile
 
       # Run Build Project
       - name: Build gradle project
