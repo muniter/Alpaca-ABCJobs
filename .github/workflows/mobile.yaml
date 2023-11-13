@@ -52,11 +52,12 @@ jobs:
         working-directory: mobile
         run: chmod +x ./gradlew
 
-      # Run Tests Build
       - name: Run gradle tests
-        working-directory: mobile
-        # if: false
-        run: ./gradlew createDebugUnitTestCoverageReport
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 4
+          command: cd mobile && ./gradlew createDebugUnitTestCoverageReport
 
       # Copy Test Coverage Report to s3 artifacts
       - name: Copy test coverage report to s3
