@@ -13,6 +13,7 @@ export enum AppRoutesEnum {
   companyTeamsProjects='teams-projects',
   companySearchCandidates='search-candidates',
   companySearchCandidatesParams='search-candidates-params',
+  companyVacancy='vacancy',
   user='usuario',
   login='login',
   settings='settings',

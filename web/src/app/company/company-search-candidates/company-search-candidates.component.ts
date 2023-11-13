@@ -2,6 +2,8 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { CandidateSearch } from 'src/app/candidate/candidate';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
+import { MatDialog } from '@angular/material/dialog';
+import { CompanySearchPreselectComponent } from '../company-search-preselect/company-search-preselect.component';
 
 @Component({
   selector: 'app-company-search-candidates',
@@ -17,7 +19,8 @@ export class CompanySearchCandidatesComponent implements OnInit {
 
   constructor(
     private activatedRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) { 
     this.validateToken(this.activatedRouter.snapshot.params['userToken']);
   }
@@ -39,6 +42,13 @@ export class CompanySearchCandidatesComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.itemsInPage = (window.innerWidth > 1500) ? 9 : 4;
+  }
+
+  showDialogInfo(candidateId: number) {
+    const dialog = this.dialog.open(CompanySearchPreselectComponent, {
+      data: { token: this.token, dialog: this.dialog, theme: 'company-theme', candidateId: candidateId },
+      width: '40%'
+    });
   }
 
 }

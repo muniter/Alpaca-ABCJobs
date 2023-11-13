@@ -146,6 +146,7 @@ describe('CompanySearchParamsComponent', () => {
     roleResponse = new SkillResponse(true, roles);
 
     candidateSearch1 = new CandidateSearch(
+      faker.number.int(),
       faker.person.firstName(), 
       faker.person.lastName(),
       faker.internet.email(),
@@ -159,6 +160,7 @@ describe('CompanySearchParamsComponent', () => {
       []
     );
     candidateSearch1 = new CandidateSearch(
+      faker.number.int(),
       faker.person.firstName(), 
       faker.person.lastName(),
       faker.internet.email(),

@@ -1,6 +1,6 @@
 <div class="candidates-search-cards" [ngClass]="itemsInPage > 4 ? 'tresxtres' : 'dosxdos'">
   <app-person-card *ngFor="let candidate of candidates | paginate: { itemsPerPage: itemsInPage, currentPage: page }" 
-    [title]="candidate.nombres + ' ' + candidate.apellidos" type=employee>
+    [title]="candidate.nombres + ' ' + candidate.apellidos" type=employee (click)="showDialogInfo(candidate.id)">
     <h3 i18n="@@technologies">Tecnologías</h3>
     <mat-chip-listbox>
       <mat-chip class="pequena" *ngFor="let tech of candidate.technical_info_types">{{tech.name}}</mat-chip>
