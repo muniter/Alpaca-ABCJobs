@@ -163,6 +163,7 @@ export class SavePersonalInfoRequest {
 }
 
 export class CandidateSearch {
+  id: number;
   nombres: string;
   apellidos: string;
   email: string;
@@ -176,6 +177,7 @@ export class CandidateSearch {
   languages_related: Language[];
 
   public constructor(
+    id: number,
     nombres: string,
     apellidos: string,
     email: string,
@@ -188,6 +190,7 @@ export class CandidateSearch {
     languages: Language[],
     languages_related: Language[]
   ) {
+    this.id = id;
     this.nombres = nombres;
     this.apellidos = apellidos;
     this.email = email;

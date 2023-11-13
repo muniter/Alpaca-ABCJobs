@@ -83,6 +83,7 @@ describe('CompanySearchCandidatesComponent', () => {
     langs_related = [lang1];
 
     candidate1 = new CandidateSearch(
+      1,
       "name", 
       "lastname", 
       "name@email.com", 
@@ -96,6 +97,7 @@ describe('CompanySearchCandidatesComponent', () => {
       langs_related
     );
     candidate2 = new CandidateSearch(
+      2,
       "name 2", 
       "lastname 2", 
       "name2@email.com", 
