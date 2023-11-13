@@ -7,6 +7,7 @@ import { SkillResponse } from '../shared/skill';
 import { EmployeesListResponse } from './Employee';
 import { TeamsListResponse } from './Team';
 import { PersonalityResponse } from '../shared/Personality';
+import { VacancyResponse } from './vacancy';
 
 describe('Service: Company', () => {
   beforeEach(() => {
@@ -50,6 +51,13 @@ describe('Service: Company', () => {
     service.getTeams("tokentest").subscribe(value => {
       expect(value).toBeDefined();
       expect(value).toBeInstanceOf(TeamsListResponse);
+    });
+  }));
+
+  it('should get vacancies', inject([CompanyService, HttpClientTestingModule], (service: CompanyService, client: HttpClientTestingModule) => {
+    service.getVacancies("tokentest").subscribe(value => {
+      expect(value).toBeDefined();
+      expect(value).toBeInstanceOf(VacancyResponse);
     });
   }));
 

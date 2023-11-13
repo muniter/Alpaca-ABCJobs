@@ -138,6 +138,14 @@
           <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -164,6 +172,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
           <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -316,6 +332,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
           <context context-type="linenumber">228</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.ts</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="errordeletecareer" datatype="html">
@@ -1525,6 +1545,32 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
           <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchcandidatesvacancy" datatype="html">
+        <source>Vacante</source>
+        <target>Vacancy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="responseerrorvacancy" datatype="html">
+        <source>Mensaje: 
+                 <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Message: 
+                 <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.ts</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="okpreselectcandidate" datatype="html">
+        <source>Candidato preseleccionado satisfactoriamente</source>
+        <target>Successfully preselected candidate</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.ts</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="teams" datatype="html">
