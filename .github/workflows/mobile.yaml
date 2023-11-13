@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - 'master'
+      - '*'
     paths:
       - 'mobile/**'
       - '.github/workflows/mobile.yaml'
