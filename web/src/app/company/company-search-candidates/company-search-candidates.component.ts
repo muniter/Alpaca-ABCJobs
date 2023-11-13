@@ -46,8 +46,7 @@ export class CompanySearchCandidatesComponent implements OnInit {
 
   showDialogInfo(candidateId: number) {
     const dialog = this.dialog.open(CompanySearchPreselectComponent, {
-      data: { token: this.token, dialog: this.dialog, theme: 'company-theme', candidateId: candidateId },
-      width: '40%'
+      data: { token: this.token, dialog: this.dialog, theme: 'company-theme', candidateId: candidateId }
     });
   }
 
