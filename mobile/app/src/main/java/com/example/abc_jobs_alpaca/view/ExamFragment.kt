@@ -1,7 +1,9 @@
 package com.example.abc_jobs_alpaca.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,11 +14,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.ExamRecyclerViewAdapter
+import com.example.abc_jobs_alpaca.databinding.FragmentExamListBinding
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.ExamListViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +36,7 @@ class ExamFragment : Fragment() {
     private lateinit var viewModel: ExamListViewModel
     private lateinit var repository: ABCJobsRepository
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +45,7 @@ class ExamFragment : Fragment() {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,21 +68,37 @@ class ExamFragment : Fragment() {
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadExams()
+            viewModel.viewModelScope.launch {
+                try {
+                    withContext(Dispatchers.IO) {
+
+                        val exams = viewModel.loadExams()
+                        val examsResult = viewModel.loadExamsResult()
+
+                        // Change to main thread to manage LiveData
+                        withContext(Dispatchers.Main) {
+                            if (exams != null && examsResult != null && viewModel.exams.value != null && viewModel.examsResult.value != null) {
+                                viewModel.mapExamsResult(viewModel.exams, viewModel.examsResult)
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    //TODO: Handle error
+                }
+            }
         }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                viewModel.exams.observe(viewLifecycleOwner) { exams ->
+        viewModel.examsResultMapped.observe(viewLifecycleOwner) { exams ->
+            Log.d("ExamFragment", "ExamFragmentMapped: ${exams}")
+            if (view is RecyclerView) {
+                with(view) {
+                    layoutManager = when {
+                        columnCount <= 1 -> LinearLayoutManager(context)
+                        else -> GridLayoutManager(context, columnCount)
+                    }
                     adapter = ExamRecyclerViewAdapter(exams) {
-                        val action = ExamFragmentDirections.actionNavExamListToExamTakeFragment()
-                                    .setExamId(it.id)
-
+                        val action =
+                            ExamFragmentDirections.actionNavExamListToExamTakeFragment().setExamId(it.exam.id)
                         view.findNavController().navigate(action)
                     }
                 }

@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.abc_jobs_alpaca.model.models.Answer
 import com.example.abc_jobs_alpaca.model.models.Question
-import com.example.abc_jobs_alpaca.model.models.deserializeAnswer
-import com.example.abc_jobs_alpaca.model.models.deserializeQuestion
 import com.example.abc_jobs_alpaca.model.models.deserializerAnswers
-import com.example.abc_jobs_alpaca.model.models.serializeAnswer
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
 import org.json.JSONArray

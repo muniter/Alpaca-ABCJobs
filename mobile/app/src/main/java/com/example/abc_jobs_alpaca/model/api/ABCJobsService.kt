@@ -620,10 +620,19 @@ class ABCJobsService constructor(context: Context){
     }
 
 
-    suspend fun getAllExams(token: String): Result<ExamItemResponse> {
+    suspend fun getAllExams(token: String): Result<ExamsResponse> {
         return try {
             val response = fetchInfo(token, EVALUATIONS_PATH, EXAMS_PATH)
-            Result.success(deserializeExamItems(response))
+            Result.success(deserializeExams(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAllExamsResults(token: String): Result<ExamsExtendResponse> {
+        return try {
+            val response = fetchInfo(token, EVALUATIONS_PATH, EXAM_RESULTS_PATH)
+            Result.success(deserializeExamsResult(response))
         } catch (e: Exception) {
             Result.failure(e)
         }

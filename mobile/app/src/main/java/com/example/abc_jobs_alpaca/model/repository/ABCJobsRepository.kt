@@ -2,11 +2,9 @@ package com.example.abc_jobs_alpaca.model.repository
 
 
 import android.app.Application
-import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
 import com.example.abc_jobs_alpaca.model.api.ABCJobsServiceUtils
 import com.example.abc_jobs_alpaca.model.models.*
-import org.json.JSONObject
 
 class ABCJobsRepository(private val applicationContext: Application) {
 
@@ -91,8 +89,12 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getCountries()
     }
 
-    suspend fun getAllExams(token: String): Result<ExamItemResponse>{
+    suspend fun getAllExams(token: String): Result<ExamsResponse>{
         return ABCJobsService.getInstance(applicationContext).getAllExams(token)
+    }
+
+    suspend fun getAllExamsResult(token: String): Result<ExamsExtendResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAllExamsResults(token)
     }
 
     suspend fun postExamStart(token: String, examId: Int): Result<ExamStartResponse>{

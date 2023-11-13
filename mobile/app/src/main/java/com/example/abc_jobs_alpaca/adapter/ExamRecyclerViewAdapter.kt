@@ -9,14 +9,15 @@ import android.widget.TextView
 import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.abc_jobs_alpaca.databinding.FragmentExamBinding
 import com.example.abc_jobs_alpaca.model.models.ExamItem
+import com.example.abc_jobs_alpaca.model.models.ExamItemExtend
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class ExamRecyclerViewAdapter(
-    private val values: List<ExamItem>?,
-    private val onItemClick : (ExamItem) -> Unit
+    private val values: List<ExamItemExtend>?,
+    private val onItemClick : (ExamItemExtend) -> Unit
 ) : RecyclerView.Adapter<ExamRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +29,6 @@ class ExamRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -37,13 +37,13 @@ class ExamRecyclerViewAdapter(
             holder.idView.text = item.id.toString()
         }
         if (item != null) {
-            holder.skillTitle.text = item.skill?.name
+            holder.skillTitle.text = item.exam.skill?.name
         }
         if (item != null) {
             holder.completed.isChecked = item.completed
         }
         if (item != null) {
-            holder.numberOfQuestions.text = item.number_of_questions.toString()
+            holder.numberOfQuestions.text = item.result.toString()
         }
         holder.btnStartExam.setOnClickListener {
             onItemClick(item!!)
