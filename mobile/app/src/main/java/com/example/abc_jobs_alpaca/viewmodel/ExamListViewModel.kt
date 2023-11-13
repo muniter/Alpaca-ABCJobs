@@ -36,21 +36,12 @@ class ExamListViewModel(private val abcJobsRepository: ABCJobsRepository): ViewM
                 if (token != null) {
                     abcJobsRepository.getAllExams(token.value!!)
                         .onSuccess { response ->
-                            if (response.success) {
+                            if (response.success)
                                 _exams.postValue(response.data)
-                                Log.d("ExamListViewModel", "loadExams: ${response.data}")
-                                //navigationListener?.navigateToNextScreen()
-                            }
                         }
-                        .onFailure {
-
-                        }
-                } else {
-
-                }
-            } catch (e: Exception) {
-
-            }
+                        .onFailure {}
+                } else {}
+            } catch (e: Exception) {}
     }
 
     suspend fun loadExamsResult() {
@@ -62,7 +53,6 @@ class ExamListViewModel(private val abcJobsRepository: ABCJobsRepository): ViewM
                             if (response.data != null) {
                                 _examsResult.postValue(response.data)
                                 Log.d("ExamListViewModel", "loadExamsResult: ${response.data}")
-                                //navigationListener?.navigateToNextScreen()
                             } else {
                                 Log.d("ExamListViewModel", "loadExamsResult: ${response.data}")
                             }
@@ -78,7 +68,7 @@ class ExamListViewModel(private val abcJobsRepository: ABCJobsRepository): ViewM
         }
     }
 
-    fun mapExamsResult(
+    suspend fun allExamsResult(
         exams: MutableLiveData<List<ExamItem>?>,
         examsResult: MutableLiveData<List<ExamItemExtend>?>
     ) {
@@ -86,33 +76,43 @@ class ExamListViewModel(private val abcJobsRepository: ABCJobsRepository): ViewM
         val examsValue = exams.value
         val examsResultMapped = mutableListOf<ExamItemExtend>()
         if (examsResult.value != null && exams.value != null) {
-            for (exam in examsValue!!) {
-                for (examResult in  examsResultValue!!) {
-                    if (exam.id == examResult.exam.id ) {
-                        examsResultMapped.add(
-                            ExamItemExtend(
-                                examResult.id,
-                                exam,
-                                examResult.id_candidato,
-                                examResult.result,
-                                examResult.completed
-                            )
-                        )
-                    }
-                }
-                if(!examsResultMapped.any { it.exam.id == exam.id })
-                    examsResultMapped.add(ExamItemExtend(0, exam, 0, 0, false))
-            }
-            _examsResultMapped.postValue(examsResultMapped)
+            mapExams(examsValue, examsResultValue, examsResultMapped)
         }
         else if( examsResult.value == null && exams.value != null){
             for (exam in examsValue!!) {
                 examsResultMapped.add(ExamItemExtend(0, exam, 0, 0, false))
             }
-            _examsResultMapped.postValue(examsResultMapped)
         }
-        else {
-            Log.d("ExamListViewModel", "mapExamsResult: else")
+        else {}
+        _examsResultMapped.postValue(sortExams(examsResultMapped))
+    }
+
+    private fun sortExams(examsResultMapped: MutableList<ExamItemExtend>):List<ExamItemExtend> {
+        examsResultMapped.sortBy { it.exam.completed }
+        return examsResultMapped
+    }
+
+    private fun mapExams(
+        examsValue: List<ExamItem>?,
+        examsResultValue: List<ExamItemExtend>?,
+        examsResultMapped: MutableList<ExamItemExtend>
+    ) {
+        for (exam in examsValue!!) {
+            for (examResult in examsResultValue!!) {
+                if (exam.id == examResult.exam.id) {
+                    examsResultMapped.add(
+                        ExamItemExtend(
+                            examResult.id,
+                            exam,
+                            examResult.id_candidato,
+                            examResult.result,
+                            examResult.completed
+                        )
+                    )
+                }
+            }
+            if (!examsResultMapped.any { it.exam.id == exam.id })
+                examsResultMapped.add(ExamItemExtend(0, exam, 0, 0, false))
         }
     }
 }

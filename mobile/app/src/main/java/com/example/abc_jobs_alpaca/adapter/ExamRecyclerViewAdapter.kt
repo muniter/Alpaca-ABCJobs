@@ -5,23 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.abc_jobs_alpaca.databinding.FragmentExamBinding
-import com.example.abc_jobs_alpaca.model.models.ExamItem
 import com.example.abc_jobs_alpaca.model.models.ExamItemExtend
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class ExamRecyclerViewAdapter(
     private val values: List<ExamItemExtend>?,
     private val onItemClick : (ExamItemExtend) -> Unit
 ) : RecyclerView.Adapter<ExamRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             FragmentExamBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -35,20 +27,24 @@ class ExamRecyclerViewAdapter(
         val item = values?.get(position)
         if (item != null) {
             holder.idView.text = item.id.toString()
-        }
-        if (item != null) {
             holder.skillTitle.text = item.exam.skill?.name
-        }
-        if (item != null) {
             holder.completed.isChecked = item.completed
+            if(item.completed){
+                holder.btnStartExam.visibility = android.view.View.GONE
+            }
+            else{
+                holder.btnStartExam.visibility = android.view.View.VISIBLE
+            }
+
+            if(item.result == null)
+                holder.numberOfQuestions.text = "0"
+            else
+                holder.numberOfQuestions.text = (item.result * 100 / item.exam.number_of_questions).toString()
         }
-        if (item != null) {
-            holder.numberOfQuestions.text = item.result.toString()
-        }
+
         holder.btnStartExam.setOnClickListener {
             onItemClick(item!!)
         }
-//        holder.contentView.text = item.content
     }
 
     override fun getItemCount(): Int = values?.size!!
@@ -59,11 +55,6 @@ class ExamRecyclerViewAdapter(
         val completed: CheckBox = binding.stateExam
         val numberOfQuestions: TextView = binding.scoreTextView
         val btnStartExam = binding.startExamBtn
-
-//        val contentView: TextView = binding.content
-//        override fun toString(): String {
-//            return super.toString() + " '" + contentView.text + "'"
-//        }
     }
 
 }

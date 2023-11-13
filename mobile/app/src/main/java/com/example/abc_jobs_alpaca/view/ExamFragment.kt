@@ -3,7 +3,6 @@ package com.example.abc_jobs_alpaca.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,24 +17,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.ExamRecyclerViewAdapter
-import com.example.abc_jobs_alpaca.databinding.FragmentExamListBinding
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.ExamListViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/**
- * A fragment representing a list of Items.
- */
 class ExamFragment : Fragment() {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
     private lateinit var viewModel: ExamListViewModel
     private lateinit var repository: ABCJobsRepository
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +58,31 @@ class ExamFragment : Fragment() {
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         tokenLiveData.value = token
+        correlateExams()
+        loadExamsInAdapter(view)
+        return view
+    }
 
+    private fun loadExamsInAdapter(view: View?) {
+        viewModel.examsResultMapped.observe(viewLifecycleOwner) { exams ->
+            if (view is RecyclerView) {
+                with(view) {
+                    layoutManager = when {
+                        columnCount <= 1 -> LinearLayoutManager(context)
+                        else -> GridLayoutManager(context, columnCount)
+                    }
+                    adapter = ExamRecyclerViewAdapter(exams) {
+                        val action =
+                            ExamFragmentDirections.actionNavExamListToExamTakeFragment()
+                                .setExamId(it.exam.id)
+                        view.findNavController().navigate(action)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun correlateExams() {
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
             viewModel.viewModelScope.launch {
@@ -78,33 +95,15 @@ class ExamFragment : Fragment() {
                         // Change to main thread to manage LiveData
                         withContext(Dispatchers.Main) {
                             if (exams != null && examsResult != null && viewModel.exams.value != null && viewModel.examsResult.value != null) {
-                                viewModel.mapExamsResult(viewModel.exams, viewModel.examsResult)
+                                viewModel.allExamsResult(viewModel.exams, viewModel.examsResult)
                             }
                         }
                     }
                 } catch (e: Exception) {
-                    //TODO: Handle error
+                    //TODO: Manejo de exceptions
                 }
             }
         }
-
-        viewModel.examsResultMapped.observe(viewLifecycleOwner) { exams ->
-            Log.d("ExamFragment", "ExamFragmentMapped: ${exams}")
-            if (view is RecyclerView) {
-                with(view) {
-                    layoutManager = when {
-                        columnCount <= 1 -> LinearLayoutManager(context)
-                        else -> GridLayoutManager(context, columnCount)
-                    }
-                    adapter = ExamRecyclerViewAdapter(exams) {
-                        val action =
-                            ExamFragmentDirections.actionNavExamListToExamTakeFragment().setExamId(it.exam.id)
-                        view.findNavController().navigate(action)
-                    }
-                }
-            }
-        }
-        return view
     }
 
     companion object {

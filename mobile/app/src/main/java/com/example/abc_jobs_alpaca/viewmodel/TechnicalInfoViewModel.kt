@@ -52,7 +52,7 @@ class TechnicalInfoViewModel (private val abcJobsRepository: ABCJobsRepository) 
                     //TODO: message
                 }
             } catch (e: Exception) {
-
+                //TODO: Manejo de exceptions
             }
         }
     }

@@ -57,7 +57,8 @@
         <CheckBox
             android:id="@+id/stateExam"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/startExamBtn"

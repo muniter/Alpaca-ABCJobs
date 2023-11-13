@@ -98,5 +98,8 @@
             android:name="examId"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_examTakeFragment_to_nav_exam_list"
+            app:destination="@id/nav_exam_list" />
     </fragment>
 </navigation>

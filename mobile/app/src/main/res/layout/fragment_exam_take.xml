@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text="Pregunta"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="Opción 1"
                                 tools:text="Opción 1" />
 
                             <Space
@@ -102,7 +102,8 @@
                                 android:id="@+id/idOptionTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:visibility="invisible" />
 
                             <RadioButton
                                 android:id="@+id/radioButton"
@@ -141,7 +142,7 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="Opción 2"
                                 tools:text="Opción 2" />
 
                             <Space
@@ -153,7 +154,8 @@
                                 android:id="@+id/idOptionTextView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:visibility="invisible" />
 
                             <RadioButton
                                 android:id="@+id/radioButton2"
@@ -191,7 +193,7 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="Opción 3"
                                 tools:text="Opción 3" />
 
                             <Space
@@ -203,7 +205,8 @@
                                 android:id="@+id/idOptionTextView3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:visibility="invisible" />
 
                             <RadioButton
                                 android:id="@+id/radioButton3"

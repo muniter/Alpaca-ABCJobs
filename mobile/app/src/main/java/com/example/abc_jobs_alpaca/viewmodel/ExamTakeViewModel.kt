@@ -9,7 +9,8 @@ import com.example.abc_jobs_alpaca.model.models.Question
 import com.example.abc_jobs_alpaca.model.models.deserializerAnswers
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import kotlinx.coroutines.launch
-import org.json.JSONArray
+import org.json.JSONObject
+
 
 class ExamTakeViewModel(
     private val abcJobsRepository: ABCJobsRepository
@@ -19,11 +20,15 @@ class ExamTakeViewModel(
     val token = tokenLiveData
     val question = MutableLiveData<Question>()
     val answers = MutableLiveData<List<Answer>>()
-    val idResult = MutableLiveData<Int>()
+    private val idResult = MutableLiveData<Int>()
 
     fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
 
-    fun postStartExam(idExam: Int) {
+    interface NavigationListener { fun navigateToNextScreen() }
+    private var navigationListener: NavigationListener? = null
+    fun setNavigationListener(listener: NavigationListener) { navigationListener = listener }
+
+    suspend fun postStartExam(idExam: Int) {
         viewModelScope.launch {
             try {
                 if (token != null) {
@@ -37,7 +42,6 @@ class ExamTakeViewModel(
                                         it
                                     )
                                 })
-                                Log.d("ExamTakeViewModel", "postStartExam1: ${response.data.next_question}")
                             } else {
                                 Log.d("ExamTakeViewModel", "postStartExam2: ${response.success}")
 
@@ -48,13 +52,13 @@ class ExamTakeViewModel(
                         }
                 }
             } catch (e: Exception) {
-
+                //TODO: Manejo de exceptions
             }
         }
     }
 
 
-    fun submitAnswer(idAnswer: Int) {
+    suspend fun submitAnswer(idAnswer: Int) {
         viewModelScope.launch {
             try {
                 if (token != null) {
@@ -69,6 +73,9 @@ class ExamTakeViewModel(
                                             it
                                         )
                                     })
+                                    if(response.data.next_question == null){
+                                        navigationListener?.navigateToNextScreen()
+                                    }
                                     Log.d("ExamTakeViewModel", "postStartExam1: ${response.data.next_question}")
                                 } else {
                                     Log.d("ExamTakeViewModel", "postStartExam2: ${response.success}")
@@ -81,7 +88,7 @@ class ExamTakeViewModel(
                     }
                 }
             } catch (e: Exception) {
-
+                // TODO: Manejo de excepciones
             }
         }
     }
