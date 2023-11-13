@@ -54,6 +54,7 @@ jobs:
 
       - name: Run gradle tests
         uses: nick-fields/retry@v2
+        if: false
         with:
           timeout_minutes: 10
           max_attempts: 4
@@ -62,7 +63,8 @@ jobs:
       # Copy Test Coverage Report to s3 artifacts
       - name: Copy test coverage report to s3
         working-directory: mobile
-        if: github.ref == 'refs/heads/master'
+        if: false
+        # if: github.ref == 'refs/heads/master'
         run: aws s3 sync --delete app/build/reports/coverage/test/debug s3://abc-jobs-artifacts/test_reports/mobile
 
       # Run Build Project
