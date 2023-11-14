@@ -43,7 +43,7 @@ data class AnswerQuestionResponse(
 data class ExamStartData(
     val id_result: Int,
     val id_exam: Int,
-    val next_question: Question,
+    val next_question: Question?,
     val result: Any?
 )
 
@@ -147,15 +147,21 @@ fun deserializeAnswerQuestion(response: JSONObject): AnswerQuestionResponse {
     val next_question = dataObject?.optJSONObject("next_question")
     val result = dataObject?.opt("result")
 
-    val question = Question(
-        next_question?.optInt("id")!!,
-        next_question.optInt("id_exam"),
-        next_question.optString("question"),
-        next_question.optInt("difficulty"),
-        next_question.optJSONArray("answers")
-    )
+    val examStartData: ExamStartData
 
-    val examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result!!)
+    if(next_question == null){
+        examStartData = ExamStartData(id_result!!, id_exam!!, null, result!!)
+        return AnswerQuestionResponse(success, examStartData)
+    }else{
+        val question = Question(
+            next_question?.optInt("id")!!,
+            next_question?.optInt("id_exam")!!,
+            next_question?.optString("question")!!,
+            next_question?.optInt("difficulty")!!,
+            next_question?.optJSONArray("answers")!!
+        )
+        examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result!!)
+    }
 
     return AnswerQuestionResponse(success, examStartData)
 }

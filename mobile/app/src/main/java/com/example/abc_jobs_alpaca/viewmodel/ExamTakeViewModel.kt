@@ -18,15 +18,11 @@ class ExamTakeViewModel(
 
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
-    val question = MutableLiveData<Question>()
-    val answers = MutableLiveData<List<Answer>>()
+    val question = MutableLiveData<Question?>()
+    val answers = MutableLiveData<List<Answer>?>()
     private val idResult = MutableLiveData<Int>()
 
     fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
-
-    interface NavigationListener { fun navigateToNextScreen() }
-    private var navigationListener: NavigationListener? = null
-    fun setNavigationListener(listener: NavigationListener) { navigationListener = listener }
 
     suspend fun postStartExam(idExam: Int) {
         viewModelScope.launch {
@@ -37,7 +33,7 @@ class ExamTakeViewModel(
                             if (response.success) {
                                 question.postValue(response.data.next_question)
                                 idResult.postValue(response.data.id_result)
-                                answers.postValue(response.data.next_question.answers?.let {
+                                answers.postValue(response.data.next_question?.answers?.let {
                                     deserializerAnswers(
                                         it
                                     )
@@ -67,16 +63,18 @@ class ExamTakeViewModel(
                         abcJobsRepository.postAnswerQuestion(token.value!!, idResult.value!!, answer)
                             .onSuccess { response ->
                                 if (response.success) {
-                                    question.postValue(response.data.next_question)
-                                    answers.postValue(response.data.next_question.answers?.let {
-                                        deserializerAnswers(
-                                            it
-                                        )
-                                    })
                                     if(response.data.next_question == null){
-                                        navigationListener?.navigateToNextScreen()
+                                        question.postValue(null)
+                                        answers.postValue(null)
                                     }
-                                    Log.d("ExamTakeViewModel", "postStartExam1: ${response.data.next_question}")
+                                    else{
+                                        question.postValue(response.data.next_question)
+                                        answers.postValue(response.data.next_question?.answers?.let {
+                                            deserializerAnswers(
+                                                it
+                                            )
+                                        })
+                                    }
                                 } else {
                                     Log.d("ExamTakeViewModel", "postStartExam2: ${response.success}")
 

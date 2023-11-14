@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class ExamTakeFragment : Fragment(),
-    View.OnClickListener,
-    ExamTakeViewModel.NavigationListener{
+    View.OnClickListener{
 
     private lateinit var binding: FragmentExamTakeBinding
     private lateinit var viewModel: ExamTakeViewModel
@@ -73,12 +72,14 @@ class ExamTakeFragment : Fragment(),
         val checkbox = view?.findViewById<RadioButton>(R.id.radioButton)
         val checkbox2 = view?.findViewById<RadioButton>(R.id.radioButton2)
         val checkbox3 = view?.findViewById<RadioButton>(R.id.radioButton3)
+        val checkbox4 = view?.findViewById<RadioButton>(R.id.radioButton4)
 
         checkbox?.setOnCheckedChangeListener {
                 _, isChecked ->
             if (isChecked) {
                 checkbox2?.isChecked = false
                 checkbox3?.isChecked = false
+                checkbox4?.isChecked = false
             }
         }
 
@@ -87,6 +88,7 @@ class ExamTakeFragment : Fragment(),
             if (isChecked) {
                 checkbox?.isChecked = false
                 checkbox3?.isChecked = false
+                checkbox4?.isChecked = false
             }
         }
 
@@ -95,6 +97,16 @@ class ExamTakeFragment : Fragment(),
             if (isChecked) {
                 checkbox?.isChecked = false
                 checkbox2?.isChecked = false
+                checkbox4?.isChecked = false
+            }
+        }
+
+        checkbox4?.setOnCheckedChangeListener {
+                _, isChecked ->
+            if (isChecked) {
+                checkbox?.isChecked = false
+                checkbox2?.isChecked = false
+                checkbox3?.isChecked = false
             }
         }
 
@@ -109,17 +121,29 @@ class ExamTakeFragment : Fragment(),
             }
 
         }
-        //?.findViewById<TextView>(R.id.questionTitleTextView)?.text = examId.toString()
         viewModel.question.observe(viewLifecycleOwner) { question ->
-            view?.findViewById<TextView>(R.id.questionBodyTextView)?.text = question?.question
+            if(question != null){
+                view?.findViewById<TextView>(R.id.questionBodyTextView)?.text = question?.question
+                if (checkbox != null) { checkbox.isChecked = false }
+                if (checkbox2 != null) { checkbox2.isChecked = false }
+                if (checkbox3 != null) { checkbox3.isChecked = false }
+                if (checkbox4 != null) {checkbox4.isChecked = false }
+            }
+            else{
+                view?.findNavController()?.navigate(R.id.action_examTakeFragment_to_nav_exam_list)
+            }
         }
         viewModel.answers.observe(viewLifecycleOwner) { answers ->
-            view?.findViewById<TextView>(R.id.answerTextView)?.text = answers?.get(0)?.answer
-            view?.findViewById<TextView>(R.id.answer2TextView)?.text = answers?.get(1)?.answer
-            view?.findViewById<TextView>(R.id.answer3TextView)?.text = answers?.get(2)?.answer
-            view?.findViewById<TextView>(R.id.idOptionTextView)?.text = answers?.get(0)?.id.toString()
-            view?.findViewById<TextView>(R.id.idOptionTextView2)?.text = answers?.get(1)?.id.toString()
-            view?.findViewById<TextView>(R.id.idOptionTextView3)?.text = answers?.get(2)?.id.toString()
+            if(answers != null){
+                view?.findViewById<TextView>(R.id.answerTextView)?.text = answers?.get(0)?.answer
+                view?.findViewById<TextView>(R.id.answer2TextView)?.text = answers?.get(1)?.answer
+                view?.findViewById<TextView>(R.id.answer3TextView)?.text = answers?.get(2)?.answer
+                view?.findViewById<TextView>(R.id.answer4TextView)?.text = answers?.get(3)?.answer
+                view?.findViewById<TextView>(R.id.idOptionTextView)?.text = answers?.get(0)?.id.toString()
+                view?.findViewById<TextView>(R.id.idOptionTextView2)?.text = answers?.get(1)?.id.toString()
+                view?.findViewById<TextView>(R.id.idOptionTextView3)?.text = answers?.get(2)?.id.toString()
+                view?.findViewById<TextView>(R.id.idOptionTextView4)?.text = answers?.get(3)?.id.toString()
+            }
         }
         return view
     }
@@ -140,6 +164,8 @@ class ExamTakeFragment : Fragment(),
                         view?.findViewById<TextView>(R.id.idOptionTextView2)?.text.toString().toInt()
                     view?.findViewById<RadioButton>(R.id.radioButton3)?.isChecked == true ->
                         view?.findViewById<TextView>(R.id.idOptionTextView3)?.text.toString().toInt()
+                    view?.findViewById<RadioButton>(R.id.radioButton4)?.isChecked == true ->
+                        view?.findViewById<TextView>(R.id.idOptionTextView4)?.text.toString().toInt()
                     else -> {
                         Log.d("ExamTakeFragment", "No option selected")
                         return
@@ -154,10 +180,6 @@ class ExamTakeFragment : Fragment(),
                 view?.findNavController()?.navigate(R.id.action_examTakeFragment_to_nav_exam_list)
             }
         }
-    }
-
-    override fun navigateToNextScreen() {
-        view?.findNavController()?.navigate(R.id.action_examTakeFragment_to_nav_exam_list)
     }
 
 }
