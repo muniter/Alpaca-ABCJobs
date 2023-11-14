@@ -61,7 +61,6 @@ jobs:
 
       - name: Run gradle tests
         uses: nick-fields/retry@v2
-        if: false
         with:
           timeout_minutes: 10
           max_attempts: 4
