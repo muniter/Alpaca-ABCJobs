@@ -57,7 +57,7 @@ class TechnicalInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadTechnicalItemsInfo()
+            lifecycleScope.launch { viewModel.loadTechnicalItemsInfo() }
         }
 
         if (view is RecyclerView) {
@@ -88,7 +88,7 @@ class TechnicalInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            viewModel.loadTechnicalItemsInfo()
+            lifecycleScope.launch { viewModel.loadTechnicalItemsInfo() }
         }
     }
     override fun onConfirmDelete(id: Int){

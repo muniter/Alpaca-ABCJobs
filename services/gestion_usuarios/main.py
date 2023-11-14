@@ -8,7 +8,7 @@ from common.shared.api_models.gestion_usuarios import (
     UsuarioRegisterDTO,
 )
 from common.shared.config import configuration
-from common.shared.api_models.shared import ErrorBuilder, ErrorResponse, SuccessResponse
+from common.shared.api_models.shared import APIResponse, APIResponseModel
 from common.shared.fastapi import shared_app_setup
 from common.shared.jwt import get_request_user
 from gestion_usuarios.usuarios import (
@@ -28,54 +28,44 @@ shared_app_setup(app, router)
 
 @router.post(
     "/crear",
-    response_model=Union[SuccessResponse[UsuarioLoginResponseDTO], ErrorResponse],
+    response_model=APIResponseModel(UsuarioLoginResponseDTO),
     status_code=201,
 )
 def crear(
     data: UsuarioRegisterDTO,
-    response: Response,
     service: UsuarioService = Depends(get_usuario_service),
 ):
     result = service.crear_login(data)
-    if isinstance(result, ErrorBuilder):
-        response.status_code = 400
-        return ErrorResponse(errors=result)
-
-    return SuccessResponse(data=result)
+    return APIResponse(result)
 
 
 @router.post(
     "/login",
-    response_model=Union[SuccessResponse[UsuarioLoginResponseDTO], ErrorResponse],
+    response_model=APIResponseModel(UsuarioLoginResponseDTO),
     status_code=200,
 )
 def login(
     data: UsuarioLoginDTO,
-    response: Response,
     service: UsuarioService = Depends(get_usuario_service),
 ):
     result = service.login(data)
-    if isinstance(result, ErrorBuilder):
-        response.status_code = 400
-        return ErrorResponse(errors=result)
-
-    return SuccessResponse(data=result)
+    return APIResponse(result)
 
 
 @router.get(
     "/me",
-    response_model=Union[SuccessResponse[UsuarioDTO], ErrorResponse],
+    response_model=APIResponseModel(UsuarioDTO),
     status_code=200,
 )
 def me(
     user: UsuarioDTO = Depends(get_request_user),
 ):
-    return SuccessResponse(data=user)
+    return APIResponse(user)
 
 
 @router.post(
     "/config",
-    response_model=Union[SuccessResponse[UsuarioConfigDTO], ErrorResponse],
+    response_model=APIResponseModel(UsuarioConfigDTO),
     status_code=200,
 )
 def set_config(
@@ -84,12 +74,12 @@ def set_config(
     repository: UsuarioRepository = Depends(get_usuario_repository),
 ):
     repository.set_config(current_user.id, config.config)
-    return SuccessResponse(data=config)
+    return APIResponse(config)
 
 
 @router.get(
     "/config",
-    response_model=Union[SuccessResponse[UsuarioConfigDTO], ErrorResponse],
+    response_model=APIResponseModel(UsuarioConfigDTO),
     status_code=200,
 )
 def get_config(
@@ -99,7 +89,7 @@ def get_config(
     user_model = repository.get_by_id(current_user.id)
     assert user_model is not None
     assert current_user is not None
-    return SuccessResponse(data=UsuarioConfigDTO(config=user_model.config))
+    return APIResponse(UsuarioConfigDTO(config=user_model.config))
 
 
 if not configuration.in_aws:

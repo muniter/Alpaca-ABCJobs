@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { SkillResponse } from '../shared/skill';
 import { PersonalityResponse } from '../shared/Personality';
 import { TeamCreateRequest, TeamCreateResponse, TeamsListResponse } from './Team';
+import { VacancyRequest, VacancyResponse } from './vacancy';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,16 @@ export class CompanyService {
   postTeam(token: string, request: TeamCreateRequest){
     const headers = this.getHeader(token);
     return this.http.post<TeamCreateResponse>(`${this.backCompanyUrl}/team`, request, { headers })
+  }
+
+  getVacancies(token: string): Observable<VacancyResponse> {
+    const headers = this.getHeader(token);
+    return this.http.get<VacancyResponse>(`${this.backCompanyUrl}/vacancy`, { headers })
+  }
+
+  preselectCandidate(token: string, vacancyId: number, request: VacancyRequest){
+    const headers = this.getHeader(token);
+    return this.http.post<VacancyResponse>(`${this.backCompanyUrl}/vacancy/${vacancyId}/preselect`, request, { headers })
   }
 
   getHeader(token: string) {

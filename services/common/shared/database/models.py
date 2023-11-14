@@ -1,13 +1,24 @@
 from typing import List
 from typing import Optional
 from sqlalchemy import ForeignKey
-from sqlalchemy import String, JSON, Date, Column, Table, PrimaryKeyConstraint
+from sqlalchemy import (
+    String,
+    Identity,
+    JSON,
+    Date,
+    Column,
+    Table,
+    PrimaryKeyConstraint,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 from datetime import date
+
+from common.shared.api_models.gestion_proyectos import ProyectoDTO
 
 from ..api_models.gestion_evaluaciones import (
     ExamenDTO,
@@ -24,6 +35,7 @@ from ..api_models.gestion_candidatos import (
     CandidatoDatosLaboralesDTO,
     CandidatoDatosLaboralesTipoDTO,
     CandidatoPersonalInformationDTO,
+    CountryDTO,
     LenguajeDTO,
     RolHabilidadDTO,
 )
@@ -32,6 +44,7 @@ from ..api_models.gestion_empresas import (
     EmpleadoPersonalityDTO,
     EmpresaDTO,
     EquipoDTO,
+    VacanteDTO,
 )
 
 from ..api_models.gestion_usuarios import (
@@ -51,9 +64,17 @@ class Base(DeclarativeBase):
 class Empresa(Base):
     __tablename__ = "empresa"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+
+    proyectos: Mapped[List["Proyecto"]] = relationship(
+        "Proyecto", back_populates="empresa"
+    )
+    equipos: Mapped[List["Equipo"]] = relationship("Equipo", back_populates="empresa")
+    vacantes: Mapped[List["Vacante"]] = relationship(
+        "Vacante", back_populates="empresa"
+    )
 
     def build_dto(self) -> EmpresaDTO:
         return EmpresaDTO(
@@ -66,11 +87,11 @@ class Empresa(Base):
 class Candidato(Base):
     __tablename__ = "candidato"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=True
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="candidato")
+    persona: Mapped["Persona"] = relationship("Persona", back_populates="candidato")
     usuario: Mapped["Usuario"] = relationship(back_populates="candidato")
 
     def build_dto(self) -> CandidatoDTO:
@@ -81,15 +102,46 @@ class Candidato(Base):
             email=self.persona.email,
         )
 
+    def build_detail_dto(self) -> CandidatoPersonalInformationDTO:
+        persona = self.persona
+        lenguajes = [
+            LenguajeDTO(id=lang.id, name=lang.nombre) for lang in persona.lenguajes
+        ]
+        return CandidatoPersonalInformationDTO(
+            id_candidate=self.id,
+            id_persona=persona.id,
+            names=persona.nombres,
+            last_names=persona.apellidos,
+            full_name=f"{persona.nombres} {persona.apellidos}",
+            email=persona.email,
+            birth_date=persona.fecha_nacimiento,
+            country_code=persona.country_code,
+            country=persona.pais.en_short_name if persona.pais else None,
+            city=persona.ciudad,
+            address=persona.direccion,
+            phone=persona.celular,
+            biography=persona.biografia,
+            languages=lenguajes if lenguajes else None,
+        )
+
 
 class Country(Base):
     __tablename__ = "countries"
 
-    num_code: Mapped[int] = mapped_column(primary_key=True)
+    num_code: Mapped[int] = mapped_column(Identity(), primary_key=True)
     alpha_2_code: Mapped[str] = mapped_column(String(2), nullable=False, unique=True)
     alpha_3_code: Mapped[str] = mapped_column(String(3), nullable=False, unique=True)
     en_short_name: Mapped[str] = mapped_column(String(255), nullable=False)
     nationality: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def build_dto(self) -> CountryDTO:
+        return CountryDTO(
+            num_code=self.num_code,
+            alpha_2_code=self.alpha_2_code,
+            alpha_3_code=self.alpha_3_code,
+            en_short_name=self.en_short_name,
+            nationality=self.nationality,
+        )
 
 
 person_language = Table(
@@ -107,11 +159,17 @@ class Lenguaje(Base):
     id: Mapped[str] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
 
+    def build_dto(self) -> LenguajeDTO:
+        return LenguajeDTO(
+            id=self.id,
+            name=self.nombre,
+        )
+
 
 class Persona(Base):
     __tablename__ = "persona"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombres: Mapped[str] = mapped_column(String(255), nullable=False)
     apellidos: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=True, unique=True)
@@ -129,25 +187,18 @@ class Persona(Base):
     fecha_actualizacion: Mapped[str] = mapped_column(
         Date, nullable=False, default="now()", onupdate="now()"
     )
-
-    def build_dto(self) -> CandidatoPersonalInformationDTO:
-        lenguajes = [
-            LenguajeDTO(id=lang.id, name=lang.nombre) for lang in self.lenguajes
-        ]
-        return CandidatoPersonalInformationDTO(
-            names=self.nombres,
-            last_names=self.apellidos,
-            full_name=f"{self.nombres} {self.apellidos}",
-            email=self.email,
-            birth_date=self.fecha_nacimiento,
-            country_code=self.country_code,
-            country=self.pais.en_short_name if self.pais else None,
-            city=self.ciudad,
-            address=self.direccion,
-            phone=self.celular,
-            biography=self.biografia,
-            languages=lenguajes if lenguajes else None,
-        )
+    conocimientos_tecnicos: Mapped[List["ConocimientoTecnicos"]] = relationship(
+        "ConocimientoTecnicos", back_populates="persona"
+    )
+    datos_academicos: Mapped[List["DatosAcademicos"]] = relationship(
+        "DatosAcademicos", back_populates="persona"
+    )
+    datos_laborales: Mapped[List["DatosLaborales"]] = relationship(
+        "DatosLaborales", back_populates="persona"
+    )
+    candidato: Mapped[Optional[Candidato]] = relationship(
+        Candidato, back_populates="persona", uselist=False
+    )
 
 
 datos_laborales_roles = Table(
@@ -162,7 +213,7 @@ datos_laborales_roles = Table(
 class RolesHabilidades(Base):
     __tablename__ = "roles_habilidades"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
 
     def build_dto(self) -> RolHabilidadDTO:
@@ -175,11 +226,11 @@ class RolesHabilidades(Base):
 class DatosLaborales(Base):
     __tablename__ = "datos_laborales"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    id_persona: Mapped[int] = mapped_column(
-        ForeignKey("persona.id"), nullable=False
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    id_persona: Mapped[int] = mapped_column(ForeignKey("persona.id"), nullable=False)
+    persona: Mapped["Persona"] = relationship(
+        "Persona", back_populates="datos_laborales"
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="datos_laborales")
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
     empresa: Mapped[str] = mapped_column(String(255), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(500), nullable=False)
@@ -205,7 +256,7 @@ class DatosLaborales(Base):
 class DatosAcademicosTipo(Base):
     __tablename__ = "datos_academicos_tipo"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
 
     def build_dto(self) -> CandidatoDatosLaboralesTipoDTO:
@@ -218,11 +269,13 @@ class DatosAcademicosTipo(Base):
 class DatosAcademicos(Base):
     __tablename__ = "datos_academicos"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=False
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="datos_academicos")
+    persona: Mapped["Persona"] = relationship(
+        "Persona", back_populates="datos_academicos"
+    )
 
     id_tipo: Mapped[int] = mapped_column(
         ForeignKey("datos_academicos_tipo.id"), nullable=False, unique=False
@@ -253,7 +306,7 @@ class DatosAcademicos(Base):
 class ConocimientoTecnicoTipo(Base):
     __tablename__ = "conocimiento_tecnico_tipo"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
 
     def build_dto(self) -> CandidatoConocimientoTecnicoTipoDTO:
@@ -266,12 +319,12 @@ class ConocimientoTecnicoTipo(Base):
 class ConocimientoTecnicos(Base):
     __tablename__ = "conocimiento_tecnicos"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=False
     )
     persona: Mapped["Persona"] = relationship(
-        "Persona", backref="conocimiento_tecnicos"
+        "Persona", back_populates="conocimientos_tecnicos"
     )
 
     id_tipo: Mapped[int] = mapped_column(
@@ -294,7 +347,7 @@ class ConocimientoTecnicos(Base):
 class Usuario(Base):
     __tablename__ = "usuario"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     email: Mapped[str] = mapped_column(String(255), nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     id_empresa: Mapped[Optional[int]] = mapped_column(
@@ -329,7 +382,7 @@ class Usuario(Base):
 
 class Personalidad(Base):
     __tablename__ = "personality_types"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
 
     def build_dto(self) -> EmpleadoPersonalityDTO:
@@ -351,7 +404,7 @@ empleado_roles = Table(
 class Empleado(Base):
     __tablename__ = "empleado"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=True
     )
@@ -395,11 +448,12 @@ empleado_equipo = Table(
 class Equipo(Base):
     __tablename__ = "equipo"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
-    empresa: Mapped["Empresa"] = relationship("Empresa", backref="equipos")
+    empresa: Mapped["Empresa"] = relationship("Empresa", back_populates="equipos")
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     empleados: Mapped[List[Empleado]] = relationship(secondary=empleado_equipo)
+    vacantes: Mapped[List["Vacante"]] = relationship("Vacante", back_populates="equipo")
 
     def build_dto(self) -> EquipoDTO:
         return EquipoDTO(
@@ -412,7 +466,7 @@ class Equipo(Base):
 
 class ExamenTecnico(Base):
     __tablename__ = "examen_tecnico"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_rol_habilidad: Mapped[int] = mapped_column(
         ForeignKey("roles_habilidades.id"), nullable=False
     )
@@ -425,9 +479,10 @@ class ExamenTecnico(Base):
         "ExamenPregunta", back_populates="examen_tecnico"
     )
 
-    def build_dto(self) -> ExamenDTO:
+    def build_dto(self, completed: bool = False) -> ExamenDTO:
         return ExamenDTO(
             id=self.id,
+            completed=completed,
             skill=self.rol_habilidad.build_dto(),
             number_of_questions=3,
         )
@@ -435,7 +490,7 @@ class ExamenTecnico(Base):
 
 class ExamenPregunta(Base):
     __tablename__ = "examen_pregunta"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_examen_tecnico: Mapped[int] = mapped_column(
         ForeignKey("examen_tecnico.id"), nullable=False
     )
@@ -460,7 +515,7 @@ class ExamenPregunta(Base):
 
 class ExamenRespuesta(Base):
     __tablename__ = "examen_respuesta"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     respuesta: Mapped[str] = mapped_column(String(255), nullable=False)
     id_examen_pregunta: Mapped[int] = mapped_column(
         ForeignKey("examen_pregunta.id"), nullable=False
@@ -477,7 +532,7 @@ class ExamenRespuesta(Base):
 
 class ExamenResultado(Base):
     __tablename__ = "examen_resultado"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     id_examen_tecnico: Mapped[int] = mapped_column(
         ForeignKey("examen_tecnico.id"), nullable=False
     )
@@ -500,4 +555,62 @@ class ExamenResultado(Base):
             id_candidato=self.id_candidato,
             result=self.resultado,
             completed=self.completado,
+        )
+
+
+class Proyecto(Base):
+    __tablename__ = "proyecto"
+
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(255), nullable=False)
+    descripcion: Mapped[str] = mapped_column(String(500), nullable=True)
+    id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
+    equipo: Mapped["Equipo"] = relationship("Equipo", backref="proyectos")
+    id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
+    empresa: Mapped["Empresa"] = relationship("Empresa", back_populates="proyectos")
+
+    __table_args__ = (
+        UniqueConstraint("id_empresa", "nombre", name="unique_empresa_nombre"),
+    )
+
+    def build_dto(self) -> ProyectoDTO:
+        return ProyectoDTO(
+            id=self.id,
+            name=self.nombre,
+            description=self.descripcion,
+            team=self.equipo.build_dto(),
+        )
+
+
+vacante_candidato = Table(
+    "vacante_candidato",
+    Base.metadata,
+    Column("id_vacante", ForeignKey("vacante.id")),
+    Column("id_candidato", ForeignKey("candidato.id")),
+    PrimaryKeyConstraint("id_vacante", "id_candidato"),
+)
+
+
+class Vacante(Base):
+    __tablename__ = "vacante"
+
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
+    empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
+    descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
+    equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
+    preseleccion: Mapped[List[Candidato]] = relationship(
+        "Candidato", secondary=vacante_candidato
+    )
+
+    def build_dto(self) -> VacanteDTO:
+        return VacanteDTO(
+            id=self.id,
+            name=self.name,
+            description=self.descripcion,
+            company=self.empresa.build_dto(),
+            team=self.equipo.build_dto(),
+            preselection=[cand.build_detail_dto() for cand in self.preseleccion],
         )

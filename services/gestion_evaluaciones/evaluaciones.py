@@ -1,6 +1,6 @@
-from typing import List, Union
+from typing import List
 from fastapi import Depends
-from sqlalchemy import select, delete, func
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from common.shared.api_models.gestion_evaluaciones import (
     ExamenDTO,
@@ -66,17 +66,31 @@ class ExamenRepository:
         )
         return self.session.execute(query).scalar_one_or_none()
 
-    def get_resultado(self, id_result: int, id_candidato: int) -> ExamenResultado | None:
+    def get_resultado(
+        self, id_result: int, id_candidato: int
+    ) -> ExamenResultado | None:
         query = select(ExamenResultado).where(
             ExamenResultado.id == id_result,
             ExamenResultado.id_candidato == id_candidato,
         )
         return self.session.execute(query).scalar_one_or_none()
 
-    def get_all_resultados_completados(self, id_candidato: int) -> List[ExamenResultado]:
+    def get_resultado_for_examen(
+        self, id_candidato: int, id_examen: int, completado: bool = False
+    ) -> ExamenResultado | None:
         query = select(ExamenResultado).where(
             ExamenResultado.id_candidato == id_candidato,
-            ExamenResultado.completado.is_(True)
+            ExamenResultado.id_examen_tecnico == id_examen,
+            ExamenResultado.completado == completado,
+        )
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_all_resultados_completados(
+        self, id_candidato: int
+    ) -> List[ExamenResultado]:
+        query = select(ExamenResultado).where(
+            ExamenResultado.id_candidato == id_candidato,
+            ExamenResultado.completado.is_(True),
         )
         return list(self.session.execute(query).scalars().all())
 
@@ -97,21 +111,35 @@ class ExamenService:
     def __init__(self, repository: ExamenRepository):
         self.repository = repository
 
-    def get_examen(self, id: int) -> ExamenDTO | ErrorBuilder:
-        examen = self.repository.get_examen(id=id)
+    def get_examen(self, id_examen: int, id_candidato: int) -> ExamenDTO | ErrorBuilder:
+        examen = self.repository.get_examen(id=id_examen)
+        resultado = self.repository.get_resultado_for_examen(
+            id_candidato=id_candidato, id_examen=id_examen, completado=True
+        )
         if not examen:
             error = ErrorBuilder()
             error.add("global", "Exam not found")
             return error
 
-        return examen.build_dto()
+        return examen.build_dto(completed=resultado is not None)
 
-    def get_all_examenes(self) -> List[ExamenDTO]:
+    def get_all_examenes(self, id_candidato: int) -> List[ExamenDTO]:
         examenes = self.repository.get_all_examenes()
-        return [examen.build_dto() for examen in examenes]
+        respuestas = self.repository.get_all_resultados_completados(
+            id_candidato=id_candidato
+        )
+        respuestas_dict = {r.id_examen_tecnico: r for r in respuestas}
+        return [
+            examen.build_dto(completed=examen.id in respuestas_dict)
+            for examen in examenes
+        ]
 
-    def get_resultado(self, id_result: int, id_candidato: int) -> ExamenResultadoDTO | ErrorBuilder:
-        resultado = self.repository.get_resultado(id_result=id_result, id_candidato=id_candidato)
+    def get_resultado(
+        self, id_result: int, id_candidato: int
+    ) -> ExamenResultadoDTO | ErrorBuilder:
+        resultado = self.repository.get_resultado(
+            id_result=id_result, id_candidato=id_candidato
+        )
         if not resultado:
             error = ErrorBuilder()
             error.add("global", "Result not found")
@@ -122,13 +150,15 @@ class ExamenService:
     def get_all_results(self, id_candidato: int) -> List[ExamenResultadoDTO]:
         return [
             r.build_dto()
-            for r in self.repository.get_all_resultados_completados(id_candidato=id_candidato)
+            for r in self.repository.get_all_resultados_completados(
+                id_candidato=id_candidato
+            )
         ]
 
     def start_examen(
         self, id: int, id_candidato: int
     ) -> ExamenStepResponseDTO | ErrorBuilder:
-        examen = self.get_examen(id=id)
+        examen = self.get_examen(id_examen=id, id_candidato=id_candidato)
         error = ErrorBuilder()
         if not examen:
             error.add("global", "Exam not found")
@@ -150,7 +180,9 @@ class ExamenService:
     def process_answer(
         self, id_result: int, id_candidato: int, resp: ExamenRespuestaDTO
     ) -> ExamenStepResponseDTO | ErrorBuilder:
-        resultado = self.repository.get_resultado(id_result=id_result, id_candidato=id_candidato)
+        resultado = self.repository.get_resultado(
+            id_result=id_result, id_candidato=id_candidato
+        )
         error = ErrorBuilder()
         if not resultado:
             error.add("global", "Exam not found")

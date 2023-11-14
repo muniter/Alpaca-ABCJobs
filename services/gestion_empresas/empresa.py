@@ -12,6 +12,9 @@ from common.shared.api_models.gestion_empresas import (
     EmpresaCreateDTO,
     EquipoCreateDTO,
     EquipoDTO,
+    VacanteCreateDTO,
+    VacanteDTO,
+    VacantePreseleccionDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -23,8 +26,10 @@ from common.shared.database.models import (
     Empresa,
     Equipo,
     Persona,
+    Candidato,
     Personalidad,
     RolesHabilidades,
+    Vacante,
 )
 from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
@@ -76,21 +81,12 @@ class UtilsRepository:
         query = select(Personalidad).where(Personalidad.id == id)
         return self.session.execute(query).scalar_one_or_none()
 
-    def get_roles_habilidades(self) -> list[RolesHabilidades]:
-        query = select(RolesHabilidades)
-        return list(self.session.execute(query).scalars().all())
-
-    def get_roles_habilidades_dto(self) -> List[RolHabilidadDTO]:
-        return [p.build_dto() for p in self.get_roles_habilidades()]
-
     def get_rol_habilidad_by_id(self, id: int) -> Union[RolesHabilidades, None]:
         query = select(RolesHabilidades).where(RolesHabilidades.id == id)
         return self.session.execute(query).scalar_one_or_none()
 
 
 class EmpleadoRepository:
-    # Get by id, create, update, delete
-
     def __init__(
         self,
         session: Session,
@@ -115,17 +111,6 @@ class EmpleadoRepository:
         # Refresh
         self.session.refresh(data)
         return data
-
-    def update(self, data: Empleado) -> Empleado:
-        self.session.add(data)
-        self.session.commit()
-        # Refresh
-        self.session.refresh(data)
-        return data
-
-    def delete(self, data: Empleado):
-        self.session.delete(data)
-        self.session.commit()
 
 
 class EquipoRepository:
@@ -155,6 +140,46 @@ class EquipoRepository:
         return data
 
 
+class VacanteRepository:
+    session: Session
+
+    def __init__(
+        self,
+        session: Session,
+    ):
+        self.session = session
+
+    def get_by_id(self, id: int, id_empresa: int) -> Union[Vacante, None]:
+        query = (
+            select(Vacante)
+            .where(Vacante.id == id)
+            .where(Vacante.id_empresa == id_empresa)
+        )
+        return self.session.execute(query).scalar_one_or_none()
+
+    def get_all(self, id_empresa: int) -> List[Vacante]:
+        query = select(Vacante).where(Vacante.id_empresa == id_empresa)
+        return list(self.session.execute(query).scalars().all())
+
+    def crear(self, data: Vacante) -> Vacante:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def get_candidato_by_id(self, id: int) -> Union[Candidato, None]:
+        query = select(Candidato).where(Candidato.id == id)
+        return self.session.execute(query).scalar_one_or_none()
+
+    def update(self, data: Vacante) -> Vacante:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+
 class EmpresaService:
     repository: EmpresaRepository
     usuario_client: UsuarioClient
@@ -168,6 +193,7 @@ class EmpresaService:
         utils_repository: UtilsRepository,
         empleado_repository: EmpleadoRepository,
         equipo_repository: EquipoRepository,
+        vacante_repository: VacanteRepository,
         usuario_client: UsuarioClient = UsuarioClient(),
     ):
         self.repository = repository
@@ -175,6 +201,7 @@ class EmpresaService:
         self.utils_repository = utils_repository
         self.empleado_repository = empleado_repository
         self.equipo_repository = equipo_repository
+        self.vacante_repository = vacante_repository
 
     def __crear_usuario(
         self, empresa: Empresa, password: str
@@ -350,6 +377,69 @@ class EmpresaService:
 
         return equipo
 
+    def get_vacante_by_id(
+        self, id_empresa: int, id_vacante: int
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        if not vacante:
+            error = ErrorBuilder()
+            error.add("global", "Vacancy not found")
+            return error
+
+        return vacante.build_dto()
+
+    def get_all_vacantes(self, id_empresa: int) -> List[VacanteDTO]:
+        vacantes = self.vacante_repository.get_all(id_empresa=id_empresa)
+        return [v.build_dto() for v in vacantes]
+
+    def crear_vacante(
+        self, id_empresa: int, data: VacanteCreateDTO
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = Vacante()
+        vacante.name = data.name
+        vacante.descripcion = data.description
+        vacante.id_empresa = id_empresa
+        equipo = self.equipo_repository.get_by_id(
+            id=data.team_id, id_empresa=id_empresa
+        )
+        if not equipo:
+            error = ErrorBuilder()
+            error.add("id_team", "Team does not exist")
+            return error
+
+        vacante.id_equipo = data.team_id
+
+        vacante = self.vacante_repository.crear(vacante)
+
+        return vacante.build_dto()
+
+    def preselecionar_vacante(
+            self, id_empresa: int, id_vacante: int, data: VacantePreseleccionDTO
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        error = ErrorBuilder()
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        if not vacante:
+            error.add("global", "Vacancy not found")
+            return error
+
+        candidato = self.vacante_repository.get_candidato_by_id(data.id_candidate)
+        if not candidato:
+            error.add("id_candidate", "Candidate not found")
+            return error
+
+        if candidato.id in [c.id for c in vacante.preseleccion]:
+            error.add("id_candidate", "Candidate already preselected")
+            return error
+
+        vacante.preseleccion.append(candidato)
+        vacante = self.vacante_repository.update(vacante)
+
+        return vacante.build_dto()
+
 
 def get_empresa_repository(
     session: Session = Depends(get_db_session_dependency),
@@ -375,15 +465,23 @@ def get_equipo_repository(
     return EquipoRepository(session=session)
 
 
+def get_vacaante_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> VacanteRepository:
+    return VacanteRepository(session=session)
+
+
 def get_empresa_service(
     repository: EmpresaRepository = Depends(get_empresa_repository),
     utils_service: UtilsRepository = Depends(get_utils_repository),
     empleado_repository: EmpleadoRepository = Depends(get_empleado_repository),
     equipo_repository: EquipoRepository = Depends(get_equipo_repository),
+    vacante_repository: VacanteRepository = Depends(get_vacaante_repository),
 ) -> EmpresaService:
     return EmpresaService(
         repository=repository,
         utils_repository=utils_service,
         empleado_repository=empleado_repository,
         equipo_repository=equipo_repository,
+        vacante_repository=vacante_repository,
     )

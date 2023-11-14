@@ -1,7 +1,10 @@
 import csv
 from pathlib import Path
-
 from sqlalchemy import text
+
+from common.shared.database.seed_models import seed_candidato, seed_candidatos, seed_empresas
+
+from .seed_models import seed_empresa
 from ..logger import logger
 from .db import get_db_session, recreate_all
 
@@ -59,3 +62,9 @@ def seed():
             session.execute(text(f.read()))
             session.commit()
             logger.info("Seeding examenes done")
+
+        logger.info("Seeding empresas")
+        seed_empresas(count=2)
+
+        logger.info("Seeding candidatos")
+        seed_candidatos(count=50)

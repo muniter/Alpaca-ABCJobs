@@ -1,7 +1,6 @@
 package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,8 +14,11 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentTechnicalInfoCreateBinding
@@ -25,6 +27,7 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.Validators
 import com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoCreateViewModel
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
 
 class TechnicalInfoCreateFragment : Fragment(),
@@ -73,12 +76,14 @@ class TechnicalInfoCreateFragment : Fragment(),
             false
         )
 
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
 
         val btnSave: Button = view.findViewById(R.id.technicalInfoSaveButton)
-        val btnCancel : Button = view.findViewById(R.id.technicalInfoCancelButton)
-        val spinnerTechnicalTypeItem = view.findViewById<AppCompatSpinner>(R.id.spinnerTechnicalItem)
+        val btnCancel: Button = view.findViewById(R.id.technicalInfoCancelButton)
+        val spinnerTechnicalTypeItem =
+            view.findViewById<AppCompatSpinner>(R.id.spinnerTechnicalItem)
         val labelTypeTechnicalItemError = view.findViewById<TextView>(R.id.labelTechnicalItemError)
         val editTextDescription = view.findViewById<TextInputEditText>(R.id.editTextDescriptionInfo)
         val labelDescriptionError = view.findViewById<TextView>(R.id.labelDescriptionInfoError)
@@ -90,7 +95,7 @@ class TechnicalInfoCreateFragment : Fragment(),
         tokenLiveData.value = token
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.getTypesTechnicalItems()
+            lifecycleScope.launch { viewModel.getTypesTechnicalItems() }
         }
 
         viewModel.typesTechnicalInfoTypes.observe(viewLifecycleOwner) { typesTechnicalInfoTypes ->
@@ -131,9 +136,12 @@ class TechnicalInfoCreateFragment : Fragment(),
         editText.setText(text)
         return editText
     }
+
     override fun navigateToNextScreen() {
-        view?.findNavController()?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
+        view?.findNavController()
+            ?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
     }
+
     private fun setupFieldValidation(
         editText: TextInputEditText,
         errorLabel: TextView,
@@ -182,22 +190,30 @@ class TechnicalInfoCreateFragment : Fragment(),
 
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.technicalInfoSaveButton -> {
-                val description = view?.findViewById<TextInputEditText>(R.id.editTextDescriptionInfo)?.text.toString()
-                val typeTechnical = view?.findViewById<Spinner>(R.id.spinnerTechnicalItem)?.selectedItem.toString()
+                val description =
+                    view?.findViewById<TextInputEditText>(R.id.editTextDescriptionInfo)?.text.toString()
+                val typeTechnical =
+                    view?.findViewById<Spinner>(R.id.spinnerTechnicalItem)?.selectedItem.toString()
 
                 val typeTechnicalItem = viewModel.getIdTypeTechnicalItem(typeTechnical)
                 toggleControl(false)
-                viewModel.saveTechnicalInfoItem(
-                    TechnicalInfoRequest(
-                        description,
-                        typeTechnicalItem
-                    ))
-                view?.findNavController()?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
+                lifecycleScope.launch {
+                    viewModel.saveTechnicalInfoItem(
+                        TechnicalInfoRequest(
+                            description,
+                            typeTechnicalItem
+                        )
+                    )
+                }
+                view?.findNavController()
+                    ?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
             }
+
             R.id.technicalInfoCancelButton -> {
-                view?.findNavController()?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
+                view?.findNavController()
+                    ?.navigate(R.id.action_technicalInfoCreateFragment_to_nav_technical_info)
             }
         }
     }

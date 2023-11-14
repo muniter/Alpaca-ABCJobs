@@ -1,16 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CandidateLoginRequest, CandidateFormRegister, CandidateServiceSchema, PersonalInfoResponse, SavePersonalInfoRequest } from './candidate';
+import { CandidateLoginRequest, CandidateFormRegister, CandidateServiceSchema, PersonalInfoResponse, SavePersonalInfoRequest, CandidateSearchResponse } from './candidate';
 import { CountryResponse } from '../shared/Country';
 import { LanguageResponse } from '../shared/Language';
-import { CollegeDegree, CollegeDegreeResponse } from '../shared/CollegeDegree';
-import { X } from '@angular/cdk/keycodes';
+import { CollegeDegreeResponse } from '../shared/CollegeDegree';
 import { Career, CareerResponse, CareerServiceSchema } from './career';
-import { Job, JobResponse, JobServiceSchema } from './job';
+import { JobResponse, JobServiceSchema } from './job';
 import { SkillResponse } from '../shared/skill';
-import { TechRequest, TechRequestRow, TechResponse, TechServiceSchema } from './tech';
+import { TechRequest, TechRequestRow, TechResponse } from './tech';
+import { Search } from '../company/search';
 
 @Injectable({
   providedIn: 'root'
@@ -148,6 +148,11 @@ export class CandidateService {
 
     return this.http.post<JobResponse>(
       `${this.backCandidateUrl}/technical-info/batch-set`, request, { headers })
+  }
+
+  searchCandidate(request: Search, token: string){
+    const headers = this.getHeader(token);
+    return this.http.post<CandidateSearchResponse>(`${this.backCandidateUrl}/search`, request, { headers })
   }
 
   getHeader(token: string) {

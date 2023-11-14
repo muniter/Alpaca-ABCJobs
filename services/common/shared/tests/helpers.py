@@ -1,11 +1,12 @@
 from typing import Tuple
+
+from sqlalchemy import select
 from common.shared.jwt import create_token
 from ..database.db import get_db_session
 from ..database.models import Candidato, Empresa, Persona, Usuario
 from faker import Faker
 
 faker = Faker()
-
 
 def crear_persona() -> Persona:
     with get_db_session() as session:
@@ -44,6 +45,21 @@ def crear_empresa() -> Empresa:
         return empresa
 
 
+def get_empresa(id: int) -> Empresa:
+    with get_db_session() as session:
+        empresa = session.execute(
+            select(Empresa).where(Empresa.id == id)
+        ).scalar_one_or_none()
+        assert empresa
+        return empresa
+
+
+def create_token_from_usuario(usuario: Usuario) -> str:
+    dto = usuario.build_dto()
+    token = create_token(dto.model_dump())
+    return token
+
+
 def crear_usuario_empresa() -> Tuple[Usuario, str]:
     with get_db_session() as session:
         empresa = crear_empresa()
@@ -55,8 +71,17 @@ def crear_usuario_empresa() -> Tuple[Usuario, str]:
         session.add(usuario)
         session.commit()
         session.refresh(usuario)
-        dto = usuario.build_dto()
-        token = create_token(dto.model_dump())
+        token = create_token_from_usuario(usuario)
+        return usuario, token
+
+
+def usuario_empresa_existente(id_empresa: int = 1) -> Tuple[Usuario, str]:
+    with get_db_session() as session:
+        usuario = session.execute(
+            select(Usuario).where(Usuario.id_empresa == id_empresa)
+        ).scalar_one_or_none()
+        assert usuario
+        token = create_token_from_usuario(usuario)
         return usuario, token
 
 
@@ -71,6 +96,5 @@ def crear_usuario_candidato() -> Tuple[Usuario, str]:
         session.add(usuario)
         session.commit()
         session.refresh(usuario)
-        dto = usuario.build_dto()
-        token = create_token(dto.model_dump())
+        token = create_token_from_usuario(usuario)
         return usuario, token

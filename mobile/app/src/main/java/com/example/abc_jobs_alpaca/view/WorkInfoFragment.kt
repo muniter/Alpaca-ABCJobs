@@ -58,7 +58,7 @@ class WorkInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            viewModel.loadWorkItemsInfo()
+            lifecycleScope.launch { viewModel.loadWorkItemsInfo() }
         }
 
         if (view is RecyclerView) {
@@ -86,7 +86,7 @@ class WorkInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            viewModel.loadWorkItemsInfo()
+            lifecycleScope.launch { viewModel.loadWorkItemsInfo() }
         }
     }
 

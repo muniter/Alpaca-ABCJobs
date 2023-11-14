@@ -1,7 +1,8 @@
+from fastapi.applications import Optional
 from pydantic import BaseModel, StringConstraints
 from typing import Annotated, List
 
-from common.shared.api_models.gestion_candidatos import RolHabilidadDTO
+from common.shared.api_models.gestion_candidatos import CandidatoDTO, CandidatoPersonalInformationDTO, RolHabilidadDTO
 
 
 class EmpresaCreateDTO(BaseModel):
@@ -65,3 +66,26 @@ class EquipoCreateDTO(BaseModel):
         str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
     ]
     employees: List[int]
+
+
+class VacanteDTO(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    company: EmpresaDTO
+    team: EquipoDTO
+    preselection: List[CandidatoPersonalInformationDTO]
+
+
+class VacanteCreateDTO(BaseModel):
+    team_id: int
+    name: Annotated[
+        str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+    ]
+    description: Annotated[
+        Optional[str], StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+    ]
+
+
+class VacantePreseleccionDTO(BaseModel):
+    id_candidate: int

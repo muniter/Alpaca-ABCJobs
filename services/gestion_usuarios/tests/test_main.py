@@ -110,6 +110,7 @@ def test_crear_empresa_email_ya_registrado():
     }
 
     response = client.post("/usuarios/crear", json=test_data)
+    print(response.json(), response.status_code)
     assert response.status_code == 400
     json = response.json()
     assert json["errors"]["email"] is not None

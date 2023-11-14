@@ -9,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -31,18 +28,12 @@ import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.utils.Validators
 import com.example.abc_jobs_alpaca.viewmodel.PersonalInfoViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -82,6 +73,8 @@ class PersonalInfoFragment : Fragment(), View.OnClickListener, AdapterView.OnIte
                 return PersonalInfoViewModel(token, dateFormat, ABCJobsRepository(activity!!.application)) as T
             }
         })[PersonalInfoViewModel::class.java]
+
+        lifecycleScope.launch { viewModel.loadData() }
 
         binding.viewModel = viewModel
 
