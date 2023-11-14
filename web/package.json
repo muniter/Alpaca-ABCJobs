@@ -21,15 +21,16 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "ngx-drag-scroll": "^16.0.0",
+    "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.4",
-    "@angular/language-server": "^16.2.0",
     "@angular/cli": "^16.2.4",
     "@angular/compiler-cli": "^16.2.0",
+    "@angular/language-server": "^16.2.0",
     "@angular/localize": "^16.2.7",
     "@faker-js/faker": "^8.2.0",
     "@types/jasmine": "~4.3.0",

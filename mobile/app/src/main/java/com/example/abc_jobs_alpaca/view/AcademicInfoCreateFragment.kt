@@ -39,9 +39,9 @@ class AcademicInfoCreateFragment : Fragment(),
 
     private val tokenLiveData = MutableLiveData<String?>()
     private var isValidNameInstitution: Boolean = false
-    private var isValidTypeDegree: Boolean = false
+    private var isValidTypeDegree: Boolean = true
     private var isValidNameDegree: Boolean = false
-    private var isValidDateInit: Boolean = false
+    private var isValidDateInit: Boolean = true
     private lateinit var binding: FragmentAcademicInfoCreateBinding
     private lateinit var viewModel: AcademicInfoCreateViewModel
     private var isFinished = false
@@ -199,6 +199,8 @@ class AcademicInfoCreateFragment : Fragment(),
                 //TODO: Manejo para cuando no se selecciona nada. Aunque viene un valor por defecto.
             }
         }
+
+        disableButton(view.findViewById(R.id.academicInfoSaveButton)!!)
 
         return view
     }
