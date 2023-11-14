@@ -123,5 +123,13 @@
     <string name="birthdate_validation_error">Debe ingresar una fecha válida y su edad debe ser mayor a 18 años.</string>
     <string name="exam_list_title">Exámenes</string>
     <string name="rating_label">Nivel de conocimiento</string>
+    <string name="option1_label">Opción 1</string>
+    <string name="question_label">Pregunta</string>
+    <string name="leave_button_label">Abandonar</string>
+    <string name="option2_label">Opción 2</string>
+    <string name="option3_label">Opción 3</string>
+    <string name="option4_label">Opción 4</string>
+    <string name="submit_button_label">Enviar</string>
+    <string name="take_exam_title">Tomar examen</string>
 
 </resources>

@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Pregunta"
+                        android:text="@string/question_label"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Abandonar" />
+                        android:text="@string/leave_button_label" />
                 </LinearLayout>
 
                 <TextView
@@ -72,12 +72,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="76dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -90,8 +90,8 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Opción 1"
-                                tools:text="Opción 1" />
+                                android:text="@string/option1_label"
+                                tools:text="@string/option1_label" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
                         <TextView
                             android:id="@+id/answerTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -129,7 +129,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -142,8 +142,8 @@
                                 android:layout_width="179dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Opción 2"
-                                tools:text="Opción 2" />
+                                android:text="@string/option2_label"
+                                tools:text="@string/option2_label" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
                         <TextView
                             android:id="@+id/answer2TextView"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -180,12 +180,12 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -198,8 +198,8 @@
                                     android:layout_width="179dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Opción 3"
-                                    tools:text="Opción 3" />
+                                    android:text="@string/option3_label"
+                                    tools:text="@string/option3_label" />
 
                                 <Space
                                     android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
                             <TextView
                                 android:id="@+id/answer3TextView"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp" />
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 
@@ -238,7 +238,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -256,8 +256,8 @@
                                     android:layout_width="179dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Opción 4"
-                                    tools:text="Opción 4" />
+                                    android:text="@string/option4_label"
+                                    tools:text="@string/option4_label" />
 
                                 <Space
                                     android:layout_width="wrap_content"
@@ -281,7 +281,7 @@
                             <TextView
                                 android:id="@+id/answer4TextView"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp" />
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 
@@ -302,7 +302,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/rounded_layout_background"
-                        android:text="Enviar"
+                        android:text="@string/submit_button_label"
                         android:textColor="@color/accent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.58"

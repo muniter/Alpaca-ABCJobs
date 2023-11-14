@@ -40,7 +40,7 @@ class ExamTakeFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
 
-        requireActivity().title = "Crear información técnica"
+        requireActivity().title = getString(R.string.take_exam_title)
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -174,7 +174,6 @@ class ExamTakeFragment : Fragment(),
                 viewModel.viewModelScope.launch {
                     viewModel.submitAnswer(idOption)
                 }
-                Log.d("ExamTakeFragment", "idOption: $idOption")
             }
             R.id.leaveButton -> {
                 view?.findNavController()?.navigate(R.id.action_examTakeFragment_to_nav_exam_list)
