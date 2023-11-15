@@ -1,0 +1,59 @@
+<div class="modal">
+  <form [formGroup]="projectCreateForm" (ngSubmit)="projectCreation()">
+    <div class="form">
+
+      <div class="form-row header-row">
+        <mat-form-field class="form-field header-width" id="projectNameFormField" appearance="outline"
+          subscriptSizing="dynamic">
+          <input matInput id="name" class="form-control header-input" formControlName="name"
+            placeholder="Nombre del proyecto" i18n-placeholder="@@projectnameplaceholder">
+          <mat-error *ngIf="projectCreateForm.get('name')!.invalid" i18n="@@nonemptyprojectname">
+            El nombre de proyecto no puede ser vacío
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@description">Descripción</label>
+        </div>
+        <div class="right-field space-between">
+          <mat-form-field class="form-field full-width select-team" appearance="outline" subscriptSizing="dynamic">
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+              placeholder="Descripción del proyecto" i18n-placeholder="@@projectdescriptionplaceholder"
+              formControlName="description"></textarea>
+          </mat-form-field>
+          <mat-error *ngIf="projectCreateForm.get('description')!.invalid" i18n="@@nonemptyprojectdescription">
+            La descripción del proyecto no puede ser vacía
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@team">Equipo</label>
+        </div>
+        <div class="right-field space-between">
+          <mat-form-field class="form-field full-width select-team" appearance="outline" subscriptSizing="dynamic">
+            <mat-select placeholder="Seleccionar equipo" i18n-placeholder="@@selectteam" formControlName="team">
+              <mat-option *ngFor="let team of allTeams" [value]="team">
+                {{team.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="projectCreateForm.get('team')!.invalid" i18n="@@nonemptyteamselect">
+            Debe seleccionar un equipo
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button" [disabled]="!projectCreateForm.valid" color="primary"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+
+    </div>
+  </form>
+</div>
