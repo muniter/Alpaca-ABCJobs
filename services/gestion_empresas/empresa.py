@@ -437,13 +437,13 @@ class EmpresaService:
     def vacante_preseleccion(
         self, id_empresa: int, id_vacante: int, data: VacantePreseleccionDTO
     ) -> Union[VacanteDTO, ErrorBuilder]:
-        error = ErrorBuilder()
-        vacante = self.vacante_repository.get_by_id(
-            id=id_vacante, id_empresa=id_empresa
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
         )
-        if not vacante:
-            error.add("global", "Vacancy not found")
-            return error
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
+
+        error = ErrorBuilder()
 
         candidato = self.vacante_repository.get_candidato_by_id(data.id_candidate)
         if not candidato:
@@ -467,18 +467,17 @@ class EmpresaService:
         id_vacante: int,
         data: List[VacanteResultadoPruebaTecnicaDTO],
     ):
-        vacante = self.vacante_repository.get_by_id(
-            id=id_vacante, id_empresa=id_empresa
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
         )
-        error = ErrorBuilder()
-        if not vacante:
-            error.add("global", "Vacancy not found")
-            return error
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
 
         preseleccion = vacante.preseleccion
         indexed = {p.id_candidato: p for p in preseleccion}
         ids = indexed.keys()
 
+        error = ErrorBuilder()
         for result in data:
             if result.id_candidate not in ids:
                 error.add(
@@ -501,17 +500,32 @@ class EmpresaService:
         id_vacante: int,
         data: VacanteSetFechaEntrevistaDTO,
     ) -> Union[VacanteDTO, ErrorBuilder]:
-        vacante = self.vacante_repository.get_by_id(
-            id=id_vacante, id_empresa=id_empresa
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
         )
-        error = ErrorBuilder()
-        if not vacante:
-            error.add("global", "Vacancy not found")
-            return error
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
 
         vacante.fecha_entrevista = data.interview_date
         self.vacante_repository.update(vacante)
         return vacante.build_dto()
+
+    def vacante_get_use(
+        self, id_empresa: int, id_vacante: int, use: str
+    ) -> Union[Vacante, ErrorBuilder]:
+        error = ErrorBuilder()
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        if not vacante:
+            error.add("global", "Vacancy not found")
+            return error
+
+        if use == "edit" and not vacante.abierta:
+            error.add("global", "Vacancy is closed, can't be edited")
+            return error
+
+        return vacante
 
     def vacante_seleccionar(
         self,
@@ -519,17 +533,12 @@ class EmpresaService:
         id_vacante: int,
         data: VacanteSelecconarCandidatoDTO,
     ) -> Union[VacanteDTO, ErrorBuilder]:
-        vacante = self.vacante_repository.get_by_id(
-            id=id_vacante, id_empresa=id_empresa
-        )
         error = ErrorBuilder()
-        if not vacante:
-            error.add("global", "Vacancy not found")
-            return error
-
-        if not vacante.abierta:
-            error.add("global", "Vacancy is closed")
-            return error
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
+        )
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
 
         vc = next(
             (c for c in vacante.preseleccion if c.id_candidato == data.id_candidate),
@@ -542,7 +551,9 @@ class EmpresaService:
         candidato = vc.candidato
 
         if candidato.persona.empleado:
-            error.add("id_candidate", "Candidate is already an employee, can't be hired")
+            error.add(
+                "id_candidate", "Candidate is already an employee, can't be hired"
+            )
             return error
 
         # Close vacante, create an employee record associated with the candidate
