@@ -1,7 +1,9 @@
+import datetime
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
+    EmpleadoEvaluacionDesempenoCreateDTO,
     EquipoCreateDTO,
     VacanteCreateDTO,
     VacantePreseleccionDTO,
@@ -107,8 +109,6 @@ def crear_vacante(id_equipo: int | None = None, n_candidatos: int = 0):
         )
 
     return result, data, usuario
-
-
 
 
 def test_ping():
@@ -645,6 +645,22 @@ def test_vacante_fecha_entrevista_endpoint():
     assert result["interview_date"] is not None
 
 
+def vacante_con_candidato_seleccionado():
+    vacante, _, _ = crear_vacante(n_candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+    candidato = vacante.preselection[0]
+
+    # Correct assignment
+    result = empresa_service.vacante_seleccionar(
+        id_empresa=vacante.company.id,
+        id_vacante=vacante.id,
+        data=VacanteSelecconarCandidatoDTO(id_candidate=candidato.id_candidate),
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    return result, candidato
+
+
 def test_vacante_seleccionar():
     vacante, _, _ = crear_vacante(n_candidatos=3)
     assert not isinstance(vacante, ErrorBuilder)
@@ -717,3 +733,132 @@ def test_vacante_seleccionar_endpoint():
     assert result is not None
     assert result["id"] == vacante.id
     assert result["open"] is False
+
+
+def test_empleado_list_contratados():
+    vacante, candidato = vacante_con_candidato_seleccionado()
+    result = empresa_service.get_all_empleados(
+        id_empresa=vacante.company.id,
+        contratado_abc=True,
+    )
+    assert not isinstance(result, ErrorBuilder)
+
+    found = next(
+        (
+            empleado
+            for empleado in result
+            if empleado.id_persona == candidato.id_persona
+        ),
+        None,
+    )
+    assert found is not None
+
+    # Not contratados
+    result = empresa_service.get_all_empleados(
+        id_empresa=vacante.company.id,
+        contratado_abc=False,
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    found = next(
+        (
+            empleado
+            for empleado in result
+            if empleado.id_persona == candidato.id_persona
+        ),
+        None,
+    )
+    assert found is None
+
+
+def test_empleado_evaluacion_desempeno():
+    vacante, candidato = vacante_con_candidato_seleccionado()
+    query = select(Empleado).where(Empleado.id_persona == candidato.id_persona)
+    empleado = session.execute(query).scalar_one_or_none()
+    assert empleado is not None
+
+    date = datetime.date(
+        year=faker.random_int(2000, 2020),
+        month=faker.random_int(1, 12),
+        day=1,
+    )
+    data = EmpleadoEvaluacionDesempenoCreateDTO(
+        date=date,
+        result=faker.random_int(0, 100),
+    )
+
+    result = empresa_service.empleado_evaluacion_desempeno(
+        id_empresa=vacante.company.id,
+        id_empleado=empleado.id,
+        data=data,
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    assert result.id == empleado.id
+    assert len(result.evaluations) == 1
+    assert result.evaluations[0].date == data.date
+    assert result.evaluations[0].result == data.result
+
+    # Another evaluation on the same date is an error
+    result = empresa_service.empleado_evaluacion_desempeno(
+        id_empresa=vacante.company.id,
+        id_empleado=empleado.id,
+        data=data,
+    )
+
+    assert isinstance(result, ErrorBuilder)
+    assert "already exists" in result.serialize()["date"]
+
+    # Non existent employee
+    result = empresa_service.empleado_evaluacion_desempeno(
+        id_empresa=vacante.company.id,
+        id_empleado=999999,
+        data=data,
+    )
+    assert isinstance(result, ErrorBuilder)
+
+    # Employee that hasn't been hired
+    empleados = empleado_repository.get_all(id_empresa=vacante.company.id, contratado_abc=False)
+    assert len(empleados) > 0
+    first = empleados[0]
+
+    result = empresa_service.empleado_evaluacion_desempeno(
+        id_empresa=vacante.company.id,
+        id_empleado=first.id,
+        data=data,
+    )
+    assert isinstance(result, ErrorBuilder)
+    assert "not hired" in result.serialize()["global"]
+
+
+def test_endpoint_empleado_evaluacion_desempeno():
+    _, candidato = vacante_con_candidato_seleccionado()
+    query = select(Empleado).where(Empleado.id_persona == candidato.id_persona)
+    empleado = session.execute(query).scalar_one_or_none()
+    assert empleado is not None
+
+    token = create_token_from_usuario(empleado.empresa.usuario)
+
+    date = datetime.date(
+        year=faker.random_int(2000, 2020),
+        month=faker.random_int(1, 12),
+        day=1,
+    )
+    data = EmpleadoEvaluacionDesempenoCreateDTO(
+        date=date,
+        result=faker.random_int(0, 100),
+    )
+
+    result = client.post(
+        f"/employee/{empleado.id}/evaluation",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert result.status_code == 200
+    result = result.json()["data"]
+    assert result is not None
+    assert result["id"] == empleado.id
+    assert len(result["evaluations"]) == 1
+    assert result["evaluations"][0]["date"] == data.date.isoformat()
+    assert result["evaluations"][0]["result"] == data.result

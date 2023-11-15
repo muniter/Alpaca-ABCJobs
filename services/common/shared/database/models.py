@@ -43,6 +43,7 @@ from ..api_models.gestion_candidatos import (
 from ..api_models.gestion_empresas import (
     CandidatoPreseleccionadoVacanteDTO,
     EmpleadoDTO,
+    EmpleadoEvaluacionDesempenoDTO,
     EmpleadoPersonalityDTO,
     EmpresaDTO,
     EquipoDTO,
@@ -70,6 +71,7 @@ class Empresa(Base):
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
 
+    usuario: Mapped["Usuario"] = relationship("Usuario", back_populates="empresa")
     proyectos: Mapped[List["Proyecto"]] = relationship(
         "Proyecto", back_populates="empresa"
     )
@@ -365,7 +367,8 @@ class Usuario(Base):
         ForeignKey("candidato.id"), nullable=True, unique=True
     )
 
-    candidato: Mapped[Optional[Candidato]] = relationship(back_populates="usuario")
+    candidato: Mapped[Optional[Candidato]] = relationship("Candidato", back_populates="usuario")
+    empresa: Mapped[Optional[Empresa]] = relationship("Empresa", back_populates="usuario")
     # JSON config column
     config: Mapped[dict] = mapped_column(JSON, nullable=False, default={})
 
@@ -434,14 +437,42 @@ class Empleado(Base):
 
     fecha_creacion: Mapped[Date] = mapped_column(Date, nullable=False, default="now()")
 
+    evaluaciones_desempeno: Mapped[List["EvaluacionDesempeno"]] = relationship(
+        "EvaluacionDesempeno", back_populates="empleado"
+    )
+
     def build_dto(self) -> EmpleadoDTO:
         return EmpleadoDTO(
             id=self.id,
+            id_persona=self.id_persona,
             name=(" ".join([self.persona.nombres, self.persona.apellidos])).strip(),
             title=self.cargo,
             company=self.empresa.build_dto(),
             personality=self.personalidad.build_dto(),
             skills=[r.build_dto() for r in self.roles_habilidades],
+            evaluations=[e.build_dto() for e in self.evaluaciones_desempeno],
+        )
+
+
+class EvaluacionDesempeno(Base):
+    __tablename__ = "evaluacion_desempeno"
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    id_empleado: Mapped[int] = mapped_column(
+        ForeignKey("empleado.id"), nullable=False, unique=False
+    )
+    fecha: Mapped[date] = mapped_column(Date, nullable=False)
+    puntaje: Mapped[int] = mapped_column(nullable=False)
+    empleado: Mapped["Empleado"] = relationship(
+        "Empleado", back_populates="evaluaciones_desempeno"
+    )
+
+    __table_args__ = (UniqueConstraint("id_empleado", "fecha"),)
+
+    def build_dto(self) -> EmpleadoEvaluacionDesempenoDTO:
+        return EmpleadoEvaluacionDesempenoDTO(
+            id=self.id,
+            date=self.fecha,
+            result=self.puntaje,
         )
 
 
