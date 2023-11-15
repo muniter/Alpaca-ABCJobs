@@ -160,7 +160,7 @@ def seed_empresa(email: str):
     vacantes = []
     logger.info(f"Seeding vacantes")
     for _ in range(faker.random_int(min=2, max=4)):
-        vacante = empresa_service.crear_vacante(
+        vacante = empresa_service.vacante_crear(
             id_empresa=id_empresa,
             data=VacanteCreateDTO(
                 team_id=faker.random_element(elements=equipos).id,
