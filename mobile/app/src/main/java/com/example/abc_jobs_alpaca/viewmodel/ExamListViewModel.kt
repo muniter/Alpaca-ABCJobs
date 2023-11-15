@@ -68,7 +68,7 @@ class ExamListViewModel(private val abcJobsRepository: ABCJobsRepository): ViewM
         }
     }
 
-    suspend fun allExamsResult(
+    fun allExamsResult(
         exams: MutableLiveData<List<ExamItem>?>,
         examsResult: MutableLiveData<List<ExamItemExtend>?>
     ) {
