@@ -1,0 +1,25 @@
+<div class="modal">
+  <form [formGroup]="form">
+    <h2 class="name">{{employee.name}}</h2>
+    <p class="title" style="text-align: center">{{ period }}</p>
+    <div style="text-align: center">
+      <mat-error>{{ getErrorMessage('global') }}</mat-error>
+    </div>
+    <div class="form-row header-row"
+      style="display: flex; justify-content: space-between; align-items: center; padding: 0 10px">
+      <label i18n="@@evaluacion_percent">Evaluación (%)</label>
+      <mat-form-field class="form-field header-width" appearance="outline">
+        <input matInput id="result" name="result" formControlName="result" placeholder="Ingrese el porcentaje"
+          i18n-placeholder="@@evaluacion_percent_placeholder" type="number" value="">
+        <mat-error *ngIf="getErrorMessage('result')">{{ getErrorMessage('result') }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="buttons" style="display: flex; justify-content: flex-end">
+      <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()" i18n="@@cancel">Cancelar
+      </app-abc-button>
+      <app-abc-button type="submit" class="small-button" (click)="onSave()" color="primary" i18n="@@save">Guardar
+      </app-abc-button>
+    </div>
+  </form>
+
+</div>

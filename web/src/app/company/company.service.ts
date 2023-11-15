@@ -13,7 +13,7 @@ import { VacancyRequest, VacancyResponse } from './vacancy';
   providedIn: 'root'
 })
 export class CompanyService {
-  private backCompanyUrl = environment.baseUrl + 'empresas';
+  private backCompanyUrl = environment.baseUrl + 'empresas';;
   private backUsersUrl = environment.baseUrl + 'usuarios';
   private backCandidatosUtilsUrl = environment.baseUrl + 'candidatos/utils';
   private backUtilsUrl = environment.baseUrl + 'empresas/utils';
@@ -35,23 +35,26 @@ export class CompanyService {
   getPersonalities(): Observable<PersonalityResponse> {
     return this.http.get<PersonalityResponse>(`${this.backUtilsUrl}/personalities`)
   }
-  
-  getEmployees(token: string){
-    const headers = this.getHeader(token);
-    return this.http.get<EmployeesListResponse>(`${this.backCompanyUrl}/employee`, { headers })
+
+  getEmployees(token: string, hired: boolean|undefined = undefined){
+    const options = { headers: this.getHeader(token), params: {} };
+    if (hired !== undefined) {
+      options.params = { hired_abc: hired ? 'true' : 'false' };
+    }
+    return this.http.get<EmployeesListResponse>(`${this.backCompanyUrl}/employee`, options)
   }
-  
+
   postEmployee(token: string, request: EmployeeCreationRequest){
     const headers = this.getHeader(token)
 
     return this.http.post<EmployeeResponse>(`${this.backCompanyUrl}/employee`, request, { headers })
   }
-  
+
   getTeams(token: string){
     const headers = this.getHeader(token);
     return this.http.get<TeamsListResponse>(`${this.backCompanyUrl}/team`, { headers })
   }
-  
+
   postTeam(token: string, request: TeamCreateRequest){
     const headers = this.getHeader(token);
     return this.http.post<TeamCreateResponse>(`${this.backCompanyUrl}/team`, request, { headers })
@@ -65,6 +68,11 @@ export class CompanyService {
   preselectCandidate(token: string, vacancyId: number, request: VacancyRequest){
     const headers = this.getHeader(token);
     return this.http.post<VacancyResponse>(`${this.backCompanyUrl}/vacancy/${vacancyId}/preselect`, request, { headers })
+  }
+
+  postEmployeeEvaluation(token: string, employeeId: number, body: { result: number, date: string }){
+    const headers = this.getHeader(token);
+    return this.http.post<EmployeeResponse>(`${this.backCompanyUrl}/employee/${employeeId}/evaluation`, body, { headers })
   }
 
   getHeader(token: string) {

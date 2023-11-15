@@ -24,6 +24,8 @@ import { CompanySearchCandidatesComponent } from './company-search-candidates/co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
+import { CompanyHiredComponent } from './company-hired/company-hired.component';
+import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/company-hired-evaluation.component';
 
 @NgModule({
   imports: [
@@ -54,7 +56,9 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateTeamComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
   ],
   exports: [
     CompanyLoginComponent,
@@ -67,7 +71,9 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateTeamComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
   ]
 })
 export class CompanyModule { }

@@ -8,6 +8,7 @@ import { CompanyPeopleComponent } from './company-people/company-people.componen
 import { CompanyTeamsProjectsComponent } from './company-teams-projects/company-teams-projects.component';
 import { CompanySearchCandidatesComponent } from './company-search-candidates/company-search-candidates.component';
 import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
+import { CompanyHiredComponent } from './company-hired/company-hired.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: `${AppRoutesEnum.companySearchCandidatesParams}/:userToken`,
         component: CompanySearchParamsComponent
+      },
+      {
+        path: `${AppRoutesEnum.companyHired}/:userToken`,
+        component: CompanyHiredComponent
       }
     ]
   },
