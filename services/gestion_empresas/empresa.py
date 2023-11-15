@@ -16,7 +16,8 @@ from common.shared.api_models.gestion_empresas import (
     VacanteDTO,
     VacantePreseleccionDTO,
     VacanteResultadoPruebaTecnicaDTO,
-    VacanteSetFechaEntrevista,
+    VacanteSelecconarCandidatoDTO,
+    VacanteSetFechaEntrevistaDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -498,7 +499,7 @@ class EmpresaService:
         self,
         id_empresa: int,
         id_vacante: int,
-        data: VacanteSetFechaEntrevista,
+        data: VacanteSetFechaEntrevistaDTO,
     ) -> Union[VacanteDTO, ErrorBuilder]:
         vacante = self.vacante_repository.get_by_id(
             id=id_vacante, id_empresa=id_empresa
@@ -510,6 +511,60 @@ class EmpresaService:
 
         vacante.fecha_entrevista = data.interview_date
         self.vacante_repository.update(vacante)
+        return vacante.build_dto()
+
+    def vacante_seleccionar(
+        self,
+        id_empresa: int,
+        id_vacante: int,
+        data: VacanteSelecconarCandidatoDTO,
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        error = ErrorBuilder()
+        if not vacante:
+            error.add("global", "Vacancy not found")
+            return error
+
+        if not vacante.abierta:
+            error.add("global", "Vacancy is closed")
+            return error
+
+        vc = next(
+            (c for c in vacante.preseleccion if c.id_candidato == data.id_candidate),
+            None,
+        )
+        if not vc:
+            error.add("id_candidate", "Candidate not preselected")
+            return error
+
+        candidato = vc.candidato
+
+        if candidato.persona.empleado:
+            error.add("id_candidate", "Candidate is already an employee, can't be hired")
+            return error
+
+        # Close vacante, create an employee record associated with the candidate
+        vacante.abierta = False
+
+        empleado = Empleado()
+        empleado.id_empresa = id_empresa
+        empleado.cargo = vacante.name
+        empleado.id_persona = candidato.id_persona
+        empleado.personalidad_id = 1
+        empleado.contratado_abc = True
+
+        session = self.repository.session
+        session.begin_nested()
+        try:
+            self.empleado_repository.crear(empleado)
+            self.vacante_repository.update(vacante)
+            self.repository.session.commit()
+        except Exception as e:
+            self.repository.session.rollback()
+            raise e
+
         return vacante.build_dto()
 
 

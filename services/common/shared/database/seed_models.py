@@ -18,7 +18,7 @@ from common.shared.api_models.gestion_empresas import (
     EquipoCreateDTO,
     VacanteCreateDTO,
     VacantePreseleccionDTO,
-    VacanteSetFechaEntrevista,
+    VacanteSetFechaEntrevistaDTO,
 )
 from common.shared.api_models.gestion_proyectos import ProyectoCreateDTO
 from common.shared.api_models.shared import ErrorBuilder
@@ -193,7 +193,7 @@ def seed_empresa(email: str):
             result = empresa_service.vacante_set_fecha_entrevista(
                 id_empresa=id_empresa,
                 id_vacante=vacante.id,
-                data=VacanteSetFechaEntrevista(
+                data=VacanteSetFechaEntrevistaDTO(
                     interview_date=faker.date_between(start_date="+1d", end_date="+5d")
                 ),
             )

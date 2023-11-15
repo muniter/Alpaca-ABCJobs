@@ -204,6 +204,9 @@ class Persona(Base):
     candidato: Mapped[Optional[Candidato]] = relationship(
         Candidato, back_populates="persona", uselist=False
     )
+    empleado: Mapped[Optional["Empleado"]] = relationship(
+        "Empleado", back_populates="persona", uselist=False
+    )
 
 
 datos_laborales_roles = Table(
@@ -413,8 +416,9 @@ class Empleado(Base):
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=True
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="empleado")
+    persona: Mapped["Persona"] = relationship("Persona", back_populates="empleado")
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
+    contratado_abc: Mapped[bool] = mapped_column(nullable=False, default=False)
     id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
     empresa: Mapped["Empresa"] = relationship("Empresa", backref="empleados")
     personalidad_id: Mapped[int] = mapped_column(
@@ -614,6 +618,7 @@ class Vacante(Base):
 
     id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
+    abierta: Mapped[bool] = mapped_column(nullable=False, default=True)
     id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
     empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
     descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
@@ -628,6 +633,7 @@ class Vacante(Base):
         return VacanteDTO(
             id=self.id,
             name=self.name,
+            open=self.abierta,
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),

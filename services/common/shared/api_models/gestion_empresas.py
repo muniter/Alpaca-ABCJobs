@@ -78,6 +78,7 @@ class CandidatoPreseleccionadoVacanteDTO(CandidatoPersonalInformationDTO):
 class VacanteDTO(BaseModel):
     id: int
     name: str
+    open: bool
     description: Optional[str]
     company: EmpresaDTO
     team: EquipoDTO
@@ -105,5 +106,9 @@ class VacanteResultadoPruebaTecnicaDTO(BaseModel):
     result: Annotated[int, Field(ge=0, le=100)]
 
 
-class VacanteSetFechaEntrevista(BaseModel):
+class VacanteSetFechaEntrevistaDTO(BaseModel):
     interview_date: datetime
+
+
+class VacanteSelecconarCandidatoDTO(BaseModel):
+    id_candidate: int
