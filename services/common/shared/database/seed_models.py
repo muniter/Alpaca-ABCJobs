@@ -1,3 +1,4 @@
+from typing import TypeVar
 from sqlalchemy import select, text
 
 from common.shared.api_models.gestion_candidatos import (
@@ -16,6 +17,8 @@ from common.shared.api_models.gestion_empresas import (
     EmpresaCreateDTO,
     EquipoCreateDTO,
     VacanteCreateDTO,
+    VacantePreseleccionDTO,
+    VacanteSetFechaEntrevista,
 )
 from common.shared.api_models.gestion_proyectos import ProyectoCreateDTO
 from common.shared.api_models.shared import ErrorBuilder
@@ -99,6 +102,8 @@ def seed_empresa(email: str):
     id_empresa = empresa.empresa.id
     skills = roles_habilidades_repository.get()
 
+    candidatos = candidate_service.repository.get_all()
+
     # Empleados
     empleados = []
     logger.info(f"Seeding empleados")
@@ -159,7 +164,7 @@ def seed_empresa(email: str):
     # Vacantes
     vacantes = []
     logger.info(f"Seeding vacantes")
-    for _ in range(faker.random_int(min=2, max=4)):
+    for _ in range(faker.random_int(min=2, max=5)):
         vacante = empresa_service.vacante_crear(
             id_empresa=id_empresa,
             data=VacanteCreateDTO(
@@ -169,6 +174,31 @@ def seed_empresa(email: str):
             ),
         )
         assert not isinstance(vacante, ErrorBuilder)
+        # Preseleccionar candidatos
+        preseleccionados = unique_random_choice(
+            candidatos, faker.random_int(min=2, max=4)
+        )
+        for pre in preseleccionados:
+            result = empresa_service.vacante_preseleccion(
+                id_empresa=id_empresa,
+                id_vacante=vacante.id,
+                data=VacantePreseleccionDTO(
+                    id_candidate=pre.id,
+                ),
+            )
+            assert not isinstance(result, ErrorBuilder)
+
+        # Colocar fecha de entrevista
+        if faker.boolean():
+            result = empresa_service.vacante_set_fecha_entrevista(
+                id_empresa=id_empresa,
+                id_vacante=vacante.id,
+                data=VacanteSetFechaEntrevista(
+                    interview_date=faker.date_between(start_date="+1d", end_date="+5d")
+                ),
+            )
+            assert not isinstance(result, ErrorBuilder)
+
         vacantes.append(vacante)
 
 
@@ -229,7 +259,7 @@ def seed_candidato(email: str):
                 skills=[
                     role.id
                     for role in unique_random_choice(
-                        roles_habilidades, faker.random_int(min=1, max=5)
+                        roles_habilidades, faker.random_int(min=1, max=2)
                     )
                 ],
             )
@@ -240,7 +270,7 @@ def seed_candidato(email: str):
     tipos = datos_academicos_service.repository.get_tipos()
     if faker.boolean():
         logger.debug(f"Seeding datos academicos {id_candidato}")
-        for _ in range(faker.random_int(min=1, max=4)):
+        for _ in range(faker.random_int(min=1, max=3)):
             data = CandidatoDatosAcademicosCreateDTO(
                 institution="University " + faker.company(),
                 title=faker.job(),
@@ -258,7 +288,7 @@ def seed_candidato(email: str):
     # Conocimientos tecnicos
     if faker.boolean():
         logger.debug(f"Seeding conocimientos tecnicos {id_candidato}")
-        for _ in range(faker.random_int(min=1, max=3)):
+        for _ in range(faker.random_int(min=1, max=5)):
             data = CandidatoConocimientoTecnicoCreateDTO(
                 type=faker.random_element(elements=conocimientos).id,
                 description=faker.text(max_nb_chars=200),
@@ -292,7 +322,11 @@ def seed_candidato(email: str):
             assert not isinstance(result, ErrorBuilder)
 
 
-def unique_random_choice(elements, length):
+# Generic
+T = TypeVar("T")
+
+
+def unique_random_choice(elements: list[T], length: int) -> list[T]:
     result = []
     max_attempts = length + 10
     while len(result) < length:
