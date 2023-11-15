@@ -131,6 +131,14 @@ class EquipoRepository:
         )
         return self.session.execute(query).scalar_one_or_none()
 
+    def get_by_nombre(self, nombre: str, id_empresa: int) -> Union[Equipo, None]:
+        query = (
+            select(Equipo)
+            .where(Equipo.nombre == nombre)
+            .where(Equipo.id_empresa == id_empresa)
+        )
+        return self.session.execute(query).scalar_one_or_none()
+
     def get_all(self, id_empresa: int) -> List[Equipo]:
         query = select(Equipo).where(Equipo.id_empresa == id_empresa)
         return list(self.session.execute(query).scalars().all())
@@ -346,7 +354,14 @@ class EmpresaService:
         empresa = self.repository.get_by_id(id_empresa)
         if not empresa:
             error = ErrorBuilder()
-            error.add("global", "Empresa no encontrada")
+            error.add("global", "Company not found")
+            return error
+
+        if self.equipo_repository.get_by_nombre(
+            nombre=data.name, id_empresa=id_empresa
+        ):
+            error = ErrorBuilder()
+            error.add("name", "Name of team already exists")
             return error
 
         equipo = Equipo(id_empresa=id_empresa)

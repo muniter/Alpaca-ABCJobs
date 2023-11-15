@@ -219,6 +219,11 @@ def test_service_crear_equipo():
     assert result.name == data.name
     assert len(result.employees) == len(data.employees)
 
+    # Don't accept duplicate names
+    result = empresa_service.crear_equipo(id_empresa=id_empresa, data=data)
+    assert isinstance(result, ErrorBuilder)
+    assert "already exists" in result.serialize()["name"]
+
 
 def test_endpoint_crear_equipo():
     usuario, token = crear_usuario_empresa()
