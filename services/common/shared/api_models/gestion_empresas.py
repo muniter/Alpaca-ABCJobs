@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import BaseModel, StringConstraints, Field
 from typing import Annotated, List, Optional
 
@@ -37,13 +37,26 @@ class EmpleadoPersonalityDTO(BaseModel):
     name: str
 
 
+class EmpleadoEvaluacionDesempenoCreateDTO(BaseModel):
+    date: date
+    result: Annotated[int, Field(ge=0, le=100)]
+
+
+class EmpleadoEvaluacionDesempenoDTO(BaseModel):
+    id: int
+    date: date
+    result: Annotated[int, Field(ge=0, le=100)]
+
+
 class EmpleadoDTO(BaseModel):
     id: int
+    id_persona: int
     name: str
     title: str
     company: EmpresaDTO
     personality: EmpleadoPersonalityDTO
     skills: List[RolHabilidadDTO]
+    evaluations: List[EmpleadoEvaluacionDesempenoDTO]
 
 
 class EmpleadoCreateDTO(BaseModel):
@@ -78,6 +91,7 @@ class CandidatoPreseleccionadoVacanteDTO(CandidatoPersonalInformationDTO):
 class VacanteDTO(BaseModel):
     id: int
     name: str
+    open: bool
     description: Optional[str]
     company: EmpresaDTO
     team: EquipoDTO
@@ -105,5 +119,9 @@ class VacanteResultadoPruebaTecnicaDTO(BaseModel):
     result: Annotated[int, Field(ge=0, le=100)]
 
 
-class VacanteSetFechaEntrevista(BaseModel):
+class VacanteSetFechaEntrevistaDTO(BaseModel):
     interview_date: datetime
+
+
+class VacanteSelecconarCandidatoDTO(BaseModel):
+    id_candidate: int

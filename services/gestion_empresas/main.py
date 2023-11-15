@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from fastapi import APIRouter, FastAPI, status, Depends
 from common.shared.api_models.gestion_usuarios import UsuarioEmpresaDTO
 from common.shared.jwt import get_request_user_empresa
@@ -8,6 +8,7 @@ from common.shared.config import configuration
 from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpleadoDTO,
+    EmpleadoEvaluacionDesempenoCreateDTO,
     EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
@@ -17,7 +18,8 @@ from common.shared.api_models.gestion_empresas import (
     VacanteDTO,
     VacantePreseleccionDTO,
     VacanteResultadoPruebaTecnicaDTO,
-    VacanteSetFechaEntrevista,
+    VacanteSelecconarCandidatoDTO,
+    VacanteSetFechaEntrevistaDTO,
 )
 from common.shared.api_models.shared import (
     APIResponse,
@@ -71,10 +73,13 @@ def crear_employee(
     status_code=status.HTTP_200_OK,
 )
 def get_all_empleados(
+    hired_abc: Union[bool, None] = None,
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.get_all_empleados(id_empresa=user.id_empresa)
+    result = service.get_all_empleados(
+        id_empresa=user.id_empresa, contratado_abc=hired_abc
+    )
     return APIResponse(result)
 
 
@@ -89,6 +94,23 @@ def get_empleado(
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.get_empleado_by_id(id_empresa=user.id_empresa, id_empleado=id)
+    return APIResponse(result)
+
+
+@router.post(
+    "/employee/{id}/evaluation",
+    response_model=APIResponseModel(EmpleadoDTO),
+    status_code=status.HTTP_200_OK,
+)
+def employee_evaluation(
+    id: int,
+    data: EmpleadoEvaluacionDesempenoCreateDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.empleado_evaluacion_desempeno(
+        id_empresa=user.id_empresa, id_empleado=id, data=data
+    )
     return APIResponse(result)
 
 
@@ -215,11 +237,28 @@ def test_result_vacancy(
 )
 def vacancy_interview_date(
     id: int,
-    data: VacanteSetFechaEntrevista,
+    data: VacanteSetFechaEntrevistaDTO,
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.vacante_set_fecha_entrevista(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/select",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def vacancy_select(
+    id: int,
+    data: VacanteSelecconarCandidatoDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.vacante_seleccionar(
         id_empresa=user.id_empresa, id_vacante=id, data=data
     )
     return APIResponse(result)
