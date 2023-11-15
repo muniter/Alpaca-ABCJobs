@@ -5,6 +5,7 @@ from common.shared.api_models.gestion_empresas import (
     VacanteCreateDTO,
     VacantePreseleccionDTO,
     VacanteResultadoPruebaTecnicaDTO,
+    VacanteSetFechaEntrevista,
 )
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
@@ -336,7 +337,9 @@ def crear_vacante(id_equipo: int | None = None, candidatos: int = 0):
                 ),
             )
             assert not isinstance(res, ErrorBuilder)
-        result = empresa_service.vacante_get_by_id(id_empresa=id_empresa, id_vacante=result.id)
+        result = empresa_service.vacante_get_by_id(
+            id_empresa=id_empresa, id_vacante=result.id
+        )
 
     return result, data, usuario
 
@@ -568,3 +571,52 @@ def test_resultado_prueba_tecnica_vacante_endpoint():
 
     for pre in result["preselection"]:
         assert pre["result"] is not None
+
+
+def test_vacante_fecha_entrevista():
+    vacante, _, _ = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+    assert vacante.interview_date is None
+
+    data = VacanteSetFechaEntrevista(
+        interview_date=faker.date_time_this_year(),
+    )
+    result = empresa_service.vacante_set_fecha_entrevista(
+        id_empresa=vacante.company.id, id_vacante=vacante.id, data=data
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    assert result.id == vacante.id
+    assert result.interview_date is not None
+
+    # Non existent
+    result = empresa_service.vacante_set_fecha_entrevista(
+        id_empresa=vacante.company.id,
+        id_vacante=999999,
+        data=data,
+    )
+
+    assert isinstance(result, ErrorBuilder)
+    assert result.serialize()["global"] is not None
+
+
+def test_vacante_fecha_entrevista_endpoint():
+    vacante, _, usuario = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+
+    token = create_token_from_usuario(usuario)
+
+    data = VacanteSetFechaEntrevista(
+        interview_date=faker.date_time_this_year(),
+    )
+
+    response = client.post(
+        f"/vacancy/{vacante.id}/interivew-date",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert result["id"] == vacante.id
+    assert result["interview_date"] is not None

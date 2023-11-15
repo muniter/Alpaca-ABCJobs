@@ -16,6 +16,7 @@ from common.shared.api_models.gestion_empresas import (
     VacanteDTO,
     VacantePreseleccionDTO,
     VacanteResultadoPruebaTecnicaDTO,
+    VacanteSetFechaEntrevista,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -476,6 +477,24 @@ class EmpresaService:
 
         self.vacante_repository.update(vacante)
 
+        return vacante.build_dto()
+
+    def vacante_set_fecha_entrevista(
+        self,
+        id_empresa: int,
+        id_vacante: int,
+        data: VacanteSetFechaEntrevista,
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = self.vacante_repository.get_by_id(
+            id=id_vacante, id_empresa=id_empresa
+        )
+        error = ErrorBuilder()
+        if not vacante:
+            error.add("global", "Vacancy not found")
+            return error
+
+        vacante.fecha_entrevista = data.interview_date
+        self.vacante_repository.update(vacante)
         return vacante.build_dto()
 
 

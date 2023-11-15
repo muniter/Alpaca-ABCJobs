@@ -17,6 +17,7 @@ from common.shared.api_models.gestion_empresas import (
     VacanteDTO,
     VacantePreseleccionDTO,
     VacanteResultadoPruebaTecnicaDTO,
+    VacanteSetFechaEntrevista,
 )
 from common.shared.api_models.shared import (
     APIResponse,
@@ -202,6 +203,23 @@ def test_result_vacancy(
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.vacante_resultado_prueba_tecnica(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/interivew-date",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def vacancy_interview_date(
+    id: int,
+    data: VacanteSetFechaEntrevista,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.vacante_set_fecha_entrevista(
         id_empresa=user.id_empresa, id_vacante=id, data=data
     )
     return APIResponse(result)

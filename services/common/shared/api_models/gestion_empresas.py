@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, StringConstraints, Field
 from typing import Annotated, List, Optional
 
@@ -81,6 +82,7 @@ class VacanteDTO(BaseModel):
     company: EmpresaDTO
     team: EquipoDTO
     preselection: List[CandidatoPreseleccionadoVacanteDTO]
+    interview_date: Optional[datetime] = None
 
 
 class VacanteCreateDTO(BaseModel):
@@ -101,3 +103,7 @@ class VacantePreseleccionDTO(BaseModel):
 class VacanteResultadoPruebaTecnicaDTO(BaseModel):
     id_candidate: int
     result: Annotated[int, Field(ge=0, le=100)]
+
+
+class VacanteSetFechaEntrevista(BaseModel):
+    interview_date: datetime

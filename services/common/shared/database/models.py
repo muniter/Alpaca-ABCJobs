@@ -6,6 +6,7 @@ from sqlalchemy import (
     Identity,
     JSON,
     Date,
+    DateTime,
     Column,
     Table,
     PrimaryKeyConstraint,
@@ -16,7 +17,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
-from datetime import date
+from datetime import date, datetime
 
 from common.shared.api_models.gestion_proyectos import ProyectoDTO
 
@@ -621,6 +622,7 @@ class Vacante(Base):
     preseleccion: Mapped[List[VacanteCandidato]] = relationship(
         back_populates="vacante"
     )
+    fecha_entrevista: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
     def build_dto(self) -> VacanteDTO:
         return VacanteDTO(
@@ -630,4 +632,5 @@ class Vacante(Base):
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
             preselection=[vc.build_dto() for vc in self.preseleccion],
+            interview_date=self.fecha_entrevista,
         )
