@@ -8,12 +8,14 @@ import { SkillResponse } from '../shared/skill';
 import { PersonalityResponse } from '../shared/Personality';
 import { TeamCreateRequest, TeamCreateResponse, TeamsListResponse } from './Team';
 import { VacancyRequest, VacancyResponse } from './vacancy';
+import { ProjectCreateRequest, ProjectCreateResponse, ProjectsListResponse } from './Project';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
   private backCompanyUrl = environment.baseUrl + 'empresas';
+  private backProjectUrl = environment.baseUrl + 'proyectos';
   private backUsersUrl = environment.baseUrl + 'usuarios';
   private backCandidatosUtilsUrl = environment.baseUrl + 'candidatos/utils';
   private backUtilsUrl = environment.baseUrl + 'empresas/utils';
@@ -52,9 +54,19 @@ export class CompanyService {
     return this.http.get<TeamsListResponse>(`${this.backCompanyUrl}/team`, { headers })
   }
   
+  getProjects(token: string){
+    const headers = this.getHeader(token);
+    return this.http.get<ProjectsListResponse>(`${this.backProjectUrl}/project`, { headers })
+  }
+  
   postTeam(token: string, request: TeamCreateRequest){
     const headers = this.getHeader(token);
     return this.http.post<TeamCreateResponse>(`${this.backCompanyUrl}/team`, request, { headers })
+  }
+  
+  postProject(token: string, request: ProjectCreateRequest){
+    const headers = this.getHeader(token);
+    return this.http.post<ProjectCreateResponse>(`${this.backProjectUrl}/project`, request, { headers })
   }
 
   getVacancies(token: string): Observable<VacancyResponse> {

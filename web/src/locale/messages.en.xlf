@@ -138,6 +138,10 @@
           <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
@@ -172,6 +176,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
           <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
@@ -521,7 +529,7 @@
         <target>Personal Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;personalInfoDisabled&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">19,23</context>
+          <context context-type="linenumber">19,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebirthdate" datatype="html">
@@ -1028,7 +1036,7 @@
           <context context-type="linenumber">78,80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="description" datatype="html">
+      <trans-unit id="labordescription" datatype="html">
         <source> Descripción de labores </source>
         <target>Job description</target>
         <context-group purpose="location">
@@ -1284,6 +1292,70 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.ts</context>
           <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projectnameplaceholder" datatype="html">
+        <source>Nombre del proyecto</source>
+        <target>Project name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyprojectname" datatype="html">
+        <source> El nombre de proyecto no puede ser vacío </source>
+        <target> Project name can not be empty </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>Descripción</source>
+        <target> Description </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projectdescriptionplaceholder" datatype="html">
+        <source>Descripción del proyecto</source>
+        <target> Project description </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyprojectdescription" datatype="html">
+        <source> La descripción del proyecto no puede ser vacía </source>
+        <target> Project description can not be empty </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">26,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="team" datatype="html">
+        <source>Equipo</source>
+        <target>Team</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectteam" datatype="html">
+        <source>Seleccionar equipo</source>
+        <target>Choose team</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nonemptyteamselect" datatype="html">
+        <source> Debe seleccionar un equipo </source>
+        <target>You must choose a team</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">44,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="teamnameplaceholder" datatype="html">
@@ -1586,7 +1658,23 @@
         <target>New Team</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projects" datatype="html">
+        <source>Proyectos</source>
+        <target>Projects</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createproject" datatype="html">
+        <source>Crear Proyecto</source>
+        <target>New Project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-teams-projects/company-teams-projects.component.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menutechtests" datatype="html">

@@ -69,13 +69,13 @@ textarea {
     text-align: right;
 }
 
-.personal-info-title{
-display: flex;
-align-items: center;
+.personal-info-title {
+    display: flex;
+    align-items: center;
 }
 
-.edit-icon{
-    
+.edit-icon {
+
     transform: scale(1.5);
 }
 

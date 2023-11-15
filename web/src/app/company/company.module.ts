@@ -24,6 +24,8 @@ import { CompanySearchCandidatesComponent } from './company-search-candidates/co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,7 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     MatAutocompleteModule,
     MatSelectModule,
     SharedModule,
+    DragScrollModule,
     NgxPaginationModule
   ],
   declarations: [
@@ -52,6 +55,7 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent
@@ -65,6 +69,7 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent
