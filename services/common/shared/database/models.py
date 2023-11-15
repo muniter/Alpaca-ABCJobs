@@ -43,6 +43,7 @@ from ..api_models.gestion_candidatos import (
 from ..api_models.gestion_empresas import (
     CandidatoPreseleccionadoVacanteDTO,
     EmpleadoDTO,
+    EmpleadoEquipoDTO,
     EmpleadoEvaluacionDesempenoDTO,
     EmpleadoPersonalityDTO,
     EmpresaDTO,
@@ -367,8 +368,12 @@ class Usuario(Base):
         ForeignKey("candidato.id"), nullable=True, unique=True
     )
 
-    candidato: Mapped[Optional[Candidato]] = relationship("Candidato", back_populates="usuario")
-    empresa: Mapped[Optional[Empresa]] = relationship("Empresa", back_populates="usuario")
+    candidato: Mapped[Optional[Candidato]] = relationship(
+        "Candidato", back_populates="usuario"
+    )
+    empresa: Mapped[Optional[Empresa]] = relationship(
+        "Empresa", back_populates="usuario"
+    )
     # JSON config column
     config: Mapped[dict] = mapped_column(JSON, nullable=False, default={})
 
@@ -411,6 +416,14 @@ empleado_roles = Table(
     PrimaryKeyConstraint("id_empleado", "id_rol"),
 )
 
+empleado_equipo = Table(
+    "empleado_equipo",
+    Base.metadata,
+    Column("id_empleado", ForeignKey("empleado.id")),
+    Column("id_equipo", ForeignKey("equipo.id")),
+    PrimaryKeyConstraint("id_empleado", "id_equipo"),
+)
+
 
 class Empleado(Base):
     __tablename__ = "empleado"
@@ -441,6 +454,10 @@ class Empleado(Base):
         "EvaluacionDesempeno", back_populates="empleado"
     )
 
+    equipos: Mapped[List["Equipo"]] = relationship(
+        "Equipo", secondary=empleado_equipo, viewonly=True
+    )
+
     def build_dto(self) -> EmpleadoDTO:
         return EmpleadoDTO(
             id=self.id,
@@ -451,6 +468,7 @@ class Empleado(Base):
             personality=self.personalidad.build_dto(),
             skills=[r.build_dto() for r in self.roles_habilidades],
             evaluations=[e.build_dto() for e in self.evaluaciones_desempeno],
+            teams=[e.build_simple_dto() for e in self.equipos],
         )
 
 
@@ -476,15 +494,6 @@ class EvaluacionDesempeno(Base):
         )
 
 
-empleado_equipo = Table(
-    "empleado_equipo",
-    Base.metadata,
-    Column("id_empleado", ForeignKey("empleado.id")),
-    Column("id_equipo", ForeignKey("equipo.id")),
-    PrimaryKeyConstraint("id_empleado", "id_equipo"),
-)
-
-
 class Equipo(Base):
     __tablename__ = "equipo"
 
@@ -501,6 +510,12 @@ class Equipo(Base):
             name=self.nombre,
             company=self.empresa.build_dto(),
             employees=[e.build_dto() for e in self.empleados],
+        )
+
+    def build_simple_dto(self) -> EmpleadoEquipoDTO:
+        return EmpleadoEquipoDTO(
+            id=self.id,
+            name=self.nombre,
         )
 
 
@@ -658,7 +673,9 @@ class Vacante(Base):
     preseleccion: Mapped[List[VacanteCandidato]] = relationship(
         back_populates="vacante"
     )
-    fecha_entrevista: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    fecha_entrevista: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, nullable=True
+    )
 
     def build_dto(self) -> VacanteDTO:
         return VacanteDTO(
