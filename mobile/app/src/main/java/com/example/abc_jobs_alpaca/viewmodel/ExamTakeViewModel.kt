@@ -20,7 +20,7 @@ class ExamTakeViewModel(
     val token = tokenLiveData
     val question = MutableLiveData<Question?>()
     val answers = MutableLiveData<List<Answer>?>()
-    private val idResult = MutableLiveData<Int>()
+    val idResult = MutableLiveData<Int>()
 
     fun onTokenUpdated(token: String?) {tokenLiveData.value = token}
 
