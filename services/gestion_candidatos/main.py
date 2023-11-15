@@ -12,6 +12,7 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoDatosLaboralesCreateDTO,
     CandidatoDatosLaboralesDTO,
     CandidatoDatosLaboralesTipoDTO,
+    CandidatoEntrevistaDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
     CandidatoSearchDTO,
@@ -41,6 +42,7 @@ from .candidato import (
     DatosAcademicosRepository,
     DatosAcademicosService,
     DatosLaboralesService,
+    EntrevistaRepository,
     LenguajeRepository,
     RolesHabilidadesRepository,
     get_candidato_service,
@@ -50,6 +52,7 @@ from .candidato import (
     get_datos_academicos_repository,
     get_datos_academicos_service,
     get_datos_laborales_service,
+    get_entrevista_repository,
     get_lenguaje_repository,
     get_roles_habilidades_repository,
     get_candidato_search_service,
@@ -354,6 +357,18 @@ def delete_academic_info(
 ):
     result = service.delete(id, user.id_candidato)
     return APIResponse(result or {})
+
+
+@router.get(
+    "/interviews",
+    response_model=APIResponseModel(List[CandidatoEntrevistaDTO]),
+    status_code=status.HTTP_200_OK,
+)
+def get_all_interviews(
+    user: UsuarioCandidatoDTO = Depends(get_request_user_candidato),
+    repository: EntrevistaRepository = Depends(get_entrevista_repository),
+):
+    return APIResponse(repository.get_entrevistas(user.id_candidato))
 
 
 @utils_router.get(

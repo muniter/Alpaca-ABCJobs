@@ -4,6 +4,8 @@ from common.shared.api_models.gestion_empresas import (
     EquipoCreateDTO,
     VacanteCreateDTO,
     VacantePreseleccionDTO,
+    VacanteResultadoPruebaTecnicaDTO,
+    VacanteSetFechaEntrevista,
 )
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
@@ -217,6 +219,11 @@ def test_service_crear_equipo():
     assert result.name == data.name
     assert len(result.employees) == len(data.employees)
 
+    # Don't accept duplicate names
+    result = empresa_service.crear_equipo(id_empresa=id_empresa, data=data)
+    assert isinstance(result, ErrorBuilder)
+    assert "already exists" in result.serialize()["name"]
+
 
 def test_endpoint_crear_equipo():
     usuario, token = crear_usuario_empresa()
@@ -316,14 +323,29 @@ def crear_vacante_dto(id_equipo: int):
     )
 
 
-def crear_vacante(id_equipo: int | None = None):
+def crear_vacante(id_equipo: int | None = None, candidatos: int = 0):
     usuario, _ = usuario_empresa_existente()
     id_empresa = usuario.id_empresa
     assert id_empresa
     equipos = equipo_repository.get_all(id_empresa=id_empresa)
     equipo = equipos[0]
     data = crear_vacante_dto(id_equipo=id_equipo or equipo.id)
-    result = empresa_service.crear_vacante(id_empresa=id_empresa, data=data)
+    result = empresa_service.vacante_crear(id_empresa=id_empresa, data=data)
+    if candidatos > 0:
+        assert not isinstance(result, ErrorBuilder)
+        for i in range(1, candidatos + 1):
+            res = empresa_service.vacante_preseleccion(
+                id_empresa=id_empresa,
+                id_vacante=result.id,
+                data=VacantePreseleccionDTO(
+                    id_candidate=i,
+                ),
+            )
+            assert not isinstance(res, ErrorBuilder)
+        result = empresa_service.vacante_get_by_id(
+            id_empresa=id_empresa, id_vacante=result.id
+        )
+
     return result, data, usuario
 
 
@@ -345,7 +367,7 @@ def test_service_get_vacante():
     vacante, _, _ = crear_vacante()
     assert not isinstance(vacante, ErrorBuilder)
     # Get
-    result = empresa_service.get_vacante_by_id(
+    result = empresa_service.vacante_get_by_id(
         id_empresa=vacante.company.id, id_vacante=vacante.id
     )
     assert not isinstance(result, ErrorBuilder)
@@ -354,13 +376,13 @@ def test_service_get_vacante():
     assert result.description == vacante.description
 
     # Get non existent
-    result = empresa_service.get_vacante_by_id(
+    result = empresa_service.vacante_get_by_id(
         id_empresa=vacante.company.id, id_vacante=999999
     )
     assert isinstance(result, ErrorBuilder)
 
     # Get All
-    result = empresa_service.get_all_vacantes(id_empresa=vacante.company.id)
+    result = empresa_service.vacante_get_all(id_empresa=vacante.company.id)
     assert not isinstance(result, ErrorBuilder)
     assert vacante.id in [v.id for v in result]
 
@@ -408,7 +430,7 @@ def test_endpoint_crear_vacante():
 def test_preselecionar_vacante():
     vacante, _, _ = crear_vacante()
     assert not isinstance(vacante, ErrorBuilder)
-    result = empresa_service.preselecionar_vacante(
+    result = empresa_service.vacante_preseleccion(
         id_empresa=vacante.company.id,
         id_vacante=vacante.id,
         data=VacantePreseleccionDTO(
@@ -423,7 +445,7 @@ def test_preselecionar_vacante():
     assert 1 in [c.id_candidate for c in result.preselection]
 
     # Try again is an error
-    result = empresa_service.preselecionar_vacante(
+    result = empresa_service.vacante_preseleccion(
         id_empresa=vacante.company.id,
         id_vacante=vacante.id,
         data=VacantePreseleccionDTO(
@@ -434,7 +456,7 @@ def test_preselecionar_vacante():
     assert result.serialize()["id_candidate"] is not None
 
     # If candidate doesn't exist
-    result = empresa_service.preselecionar_vacante(
+    result = empresa_service.vacante_preseleccion(
         id_empresa=vacante.company.id,
         id_vacante=vacante.id,
         data=VacantePreseleccionDTO(
@@ -445,7 +467,7 @@ def test_preselecionar_vacante():
     assert result.serialize()["id_candidate"] is not None
 
     # If the vacancy doesn't exist
-    result = empresa_service.preselecionar_vacante(
+    result = empresa_service.vacante_preseleccion(
         id_empresa=vacante.company.id,
         id_vacante=999999,
         data=VacantePreseleccionDTO(
@@ -475,3 +497,131 @@ def test_preselecionar_vacante_endpoint():
     assert result["id"] == vacante.id
     assert result["preselection"] is not None
     assert 1 in [c["id_candidate"] for c in result["preselection"]]
+
+
+def test_resultado_prueba_tecnica_vacante():
+    vacante, _, _ = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+    assert len(vacante.preselection) > 0
+
+    resultados = []
+    for pre in vacante.preselection:
+        resultados.append(
+            VacanteResultadoPruebaTecnicaDTO(
+                id_candidate=pre.id_candidate,
+                result=faker.random_int(0, 100),
+            )
+        )
+
+    assert len(resultados) > 0
+
+    result = empresa_service.vacante_resultado_prueba_tecnica(
+        id_empresa=vacante.company.id,
+        id_vacante=vacante.id,
+        data=resultados,
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    assert result.id == vacante.id
+
+    for pre in result.preselection:
+        assert pre.result is not None
+
+    # Errors with unknown id
+    result = empresa_service.vacante_resultado_prueba_tecnica(
+        id_empresa=vacante.company.id,
+        id_vacante=999999,
+        data=resultados,
+    )
+
+    assert isinstance(result, ErrorBuilder)
+    assert result.serialize()["global"] is not None
+
+    # Errors with unknown candidate id
+    bad_result = [VacanteResultadoPruebaTecnicaDTO(id_candidate=999999, result=1)]
+    result = empresa_service.vacante_resultado_prueba_tecnica(
+        id_empresa=vacante.company.id,
+        id_vacante=vacante.id,
+        data=bad_result,
+    )
+
+    assert isinstance(result, ErrorBuilder)
+    assert result.serialize()["global"] is not None
+
+
+def test_resultado_prueba_tecnica_vacante_endpoint():
+    vacante, _, usuario = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+
+    token = create_token_from_usuario(usuario)
+
+    resultados = []
+    for pre in vacante.preselection:
+        resultados.append(
+            VacanteResultadoPruebaTecnicaDTO(
+                id_candidate=pre.id_candidate,
+                result=faker.random_int(0, 100),
+            )
+        )
+
+    response = client.post(
+        f"/vacancy/{vacante.id}/test-result",
+        json=[r.model_dump(mode="json") for r in resultados],
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert result["id"] == vacante.id
+
+    for pre in result["preselection"]:
+        assert pre["result"] is not None
+
+
+def test_vacante_fecha_entrevista():
+    vacante, _, _ = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+    assert vacante.interview_date is None
+
+    data = VacanteSetFechaEntrevista(
+        interview_date=faker.date_time_this_year(),
+    )
+    result = empresa_service.vacante_set_fecha_entrevista(
+        id_empresa=vacante.company.id, id_vacante=vacante.id, data=data
+    )
+
+    assert not isinstance(result, ErrorBuilder)
+    assert result.id == vacante.id
+    assert result.interview_date is not None
+
+    # Non existent
+    result = empresa_service.vacante_set_fecha_entrevista(
+        id_empresa=vacante.company.id,
+        id_vacante=999999,
+        data=data,
+    )
+
+    assert isinstance(result, ErrorBuilder)
+    assert result.serialize()["global"] is not None
+
+
+def test_vacante_fecha_entrevista_endpoint():
+    vacante, _, usuario = crear_vacante(candidatos=3)
+    assert not isinstance(vacante, ErrorBuilder)
+
+    token = create_token_from_usuario(usuario)
+
+    data = VacanteSetFechaEntrevista(
+        interview_date=faker.date_time_this_year(),
+    )
+
+    response = client.post(
+        f"/vacancy/{vacante.id}/interivew-date",
+        json=data.model_dump(mode="json"),
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    result = response.json()["data"]
+    assert result["id"] == vacante.id
+    assert result["interview_date"] is not None

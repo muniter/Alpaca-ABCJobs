@@ -14,6 +14,7 @@ from common.shared.api_models.gestion_candidatos import (
     CandidatoDatosAcademicosDTO,
     CandidatoDatosLaboralesCreateDTO,
     CandidatoDatosLaboralesDTO,
+    CandidatoEntrevistaDTO,
     CandidatoPersonalInformationDTO,
     CandidatoPersonalInformationUpdateDTO,
     CandidatoSearchDTO,
@@ -35,6 +36,8 @@ from common.shared.database.models import (
     Lenguaje,
     Persona,
     RolesHabilidades,
+    Vacante,
+    VacanteCandidato,
     datos_laborales_roles,
 )
 from common.shared.database.db import get_db_session_dependency
@@ -136,6 +139,37 @@ class DatosLaboralesRepository:
         self.session.commit()
 
 
+class EntrevistaRepository:
+    session: Session
+
+    def __init__(self, session):
+        self.session = session
+
+    def get_entrevistas(self, id_candidato: int) -> List[CandidatoEntrevistaDTO]:
+        result: List[CandidatoEntrevistaDTO] = []
+        query = (
+            select(VacanteCandidato)
+            .join(Vacante)
+            .where(VacanteCandidato.id_candidato == id_candidato)
+            .where(Vacante.fecha_entrevista.isnot(None))
+        )
+        qresult = self.session.execute(query).scalars().all()
+
+        for vc in qresult:
+            result.append(
+                CandidatoEntrevistaDTO(
+                    id_vacancy=vc.id_vacante,
+                    name=vc.vacante.name,
+                    company=vc.vacante.empresa.nombre,
+                    interview_date=vc.vacante.fecha_entrevista,
+                    completed=vc.puntaje is not None,
+                    result=vc.puntaje,
+                )
+            )
+
+        return result
+
+
 class RolesHabilidadesRepository:
     session: Session
 
@@ -214,6 +248,9 @@ class CandidatoRepository:
     def get_by_id(self, id: int) -> Union[Candidato, None]:
         query = select(Candidato).where(Candidato.id == id)
         return self.session.execute(query).scalar_one_or_none()
+
+    def get_all(self) -> List[Candidato]:
+        return list(self.session.execute(select(Candidato)).scalars().all())
 
     def get_by_email(self, email: str) -> Union[Candidato, None]:
         query = (
@@ -979,6 +1016,12 @@ def get_conocimientos_tecnicos_service(
     session: Session = Depends(get_db_session_dependency),
 ) -> ConocimientoTecnicosService:
     return ConocimientoTecnicosService(session=session)
+
+
+def get_entrevista_repository(
+    session: Session = Depends(get_db_session_dependency),
+) -> EntrevistaRepository:
+    return EntrevistaRepository(session)
 
 
 def get_candidato_search_service(

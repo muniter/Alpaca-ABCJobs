@@ -63,8 +63,9 @@ def seed():
             session.commit()
             logger.info("Seeding examenes done")
 
+        logger.info("Seeding candidatos")
+        seed_candidatos(count=50)
+
         logger.info("Seeding empresas")
         seed_empresas(count=2)
 
-        logger.info("Seeding candidatos")
-        seed_candidatos(count=50)
