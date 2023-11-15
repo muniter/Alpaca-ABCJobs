@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.format.Time
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,9 @@ class PreferencesFragment : Fragment(), View.OnClickListener {
         tokenLiveData.observe(viewLifecycleOwner) { it ->
             viewModel.onTokenUpdated(it)
         }
+
+        val isCompany = sharedPreferences.getBoolean("isCompany", false)
+        Log.d("PreferencesFragment_Company", "isCompany: $isCompany")
 
         val btn: Button = binding.root.findViewById(R.id.preferencesButton)
         btn.setOnClickListener(this)

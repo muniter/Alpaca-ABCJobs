@@ -72,6 +72,9 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        val isCompany = sharedPreferences.getBoolean("isCompany", false)
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
@@ -82,6 +85,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_exam_list
             ), drawerLayout
         )
+        if (isCompany) {
+            navView.menu.findItem(R.id.nav_personal_info).isVisible = false
+            navView.menu.findItem(R.id.nav_exam_list).isVisible = false
+            navView.menu.findItem(R.id.nav_academic_info).isVisible = false
+            navView.menu.findItem(R.id.nav_technical_info).isVisible = false
+            navView.menu.findItem(R.id.nav_work_info).isVisible = false
+        }
+        else {
+            // TODO: Uncomment this when the feature is implemented
+        }
+        navView.menu.findItem(R.id.nav_home).isVisible = true
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

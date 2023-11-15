@@ -177,8 +177,20 @@ class ABCJobsService constructor(context: Context){
                 )
             }
             if (response.getBoolean("success")) {
-                val userLoginResponse = deserializeLoginCandidate(response)
-                Result.success(userLoginResponse)
+                val data = response.optJSONObject("data")
+                val usuario = data?.optJSONObject("usuario")
+                val idEmpresa = usuario?.optInt("id_empresa")
+                val idCandidato = usuario?.optInt("id_candidato")
+                if(idCandidato != 0){
+                    val userLoginResponse = deserializeLoginCandidate(response)
+                    Result.success(userLoginResponse)}
+                else if(idEmpresa != 0){
+                    val userLoginResponse = deserializeLoginCompany(response)
+                    Result.success(userLoginResponse)
+                }else{
+                    val userLoginResponseError = deserializeLoginCandidateError(response)
+                    Result.failure(userLoginResponseError)
+                }
             } else {
                 val userLoginResponseError = deserializeLoginCandidateError(response)
                 Result.failure(userLoginResponseError);
