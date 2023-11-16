@@ -1,0 +1,56 @@
+.modal {
+    padding: 2rem;
+}
+
+.form-row {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.form-row-label {
+    font-size: 1.2rem;
+}
+
+.header-row {
+    display: flex;
+    justify-content: center;
+}
+
+.header-width {
+    width: 80%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.left-label {
+    width: 30%;
+}
+
+.right-field {
+    width: 70%;
+}
+
+.header-input {
+    color: var(--contrastCompanyColor) !important;
+    text-align: center;
+    font-weight: bold !important;
+    font-size: x-large !important;
+}
+
+.small-button {
+    width: 20%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.error {
+    color: #f44336;
+    font-size: smaller;
+}

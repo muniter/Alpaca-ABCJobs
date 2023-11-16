@@ -26,6 +26,8 @@ import { CompanySearchParamsComponent } from './company-search-params/company-se
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
+import { CompanyPositionsComponent } from './company-positions/company-positions.component';
+import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
 
 @NgModule({
   imports: [
@@ -58,7 +60,9 @@ import { CompanyCreateProjectComponent } from './company-create-project/company-
     CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -72,7 +76,9 @@ import { CompanyCreateProjectComponent } from './company-create-project/company-
     CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent
   ]
 })
 export class CompanyModule { }
