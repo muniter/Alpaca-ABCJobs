@@ -26,6 +26,10 @@ import { CompanySearchParamsComponent } from './company-search-params/company-se
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
 import { CompanyHiredComponent } from './company-hired/company-hired.component';
 import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/company-hired-evaluation.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
+import { CompanyPositionsComponent } from './company-positions/company-positions.component';
+import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
 
 @NgModule({
   imports: [
@@ -43,6 +47,7 @@ import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/comp
     MatAutocompleteModule,
     MatSelectModule,
     SharedModule,
+    DragScrollModule,
     NgxPaginationModule
   ],
   declarations: [
@@ -54,11 +59,14 @@ import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
     CompanyHiredComponent,
     CompanyHiredEvaluationComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent,
   ],
   exports: [
     CompanyLoginComponent,
@@ -69,11 +77,14 @@ import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
     CompanyHiredComponent,
     CompanyHiredEvaluationComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent,
   ]
 })
 export class CompanyModule { }

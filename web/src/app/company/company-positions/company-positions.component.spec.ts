@@ -3,24 +3,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CompanyPeopleComponent } from './company-people.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { CompanyPositionsComponent } from './company-positions.component';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EMPTY, of } from 'rxjs';
-import { TeamsListResponse, Team } from '../Team';
-import { Company } from '../company';
-import { CompanyService } from '../company.service';
-import { Employee, EmployeesListResponse } from '../Employee';
-import { Personality } from 'src/app/shared/Personality';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CompanyService } from '../company.service';
+import { EMPTY, of } from 'rxjs';
+import { Position, PositionsListResponse } from '../Position';
+import { Company } from '../company';
+import { Team } from '../Team';
 
-describe('CompanyPeopleComponent', () => {
-  let component: CompanyPeopleComponent;
-  let fixture: ComponentFixture<CompanyPeopleComponent>;
+describe('CompanyPositionsComponent', () => {
+  let component: CompanyPositionsComponent;
+  let fixture: ComponentFixture<CompanyPositionsComponent>;
 
   let companyService: CompanyService;
 
@@ -31,21 +30,20 @@ describe('CompanyPeopleComponent', () => {
         FormsModule,
         MatDialogModule,
         MatChipsModule],
-      declarations: [CompanyPeopleComponent],
+      declarations: [ CompanyPositionsComponent ],
       providers: [DatePipe, {
         provide: ActivatedRoute,
         useValue: { snapshot: { params: { 'userToken': '123' } } }
       }]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompanyPeopleComponent);
+    fixture = TestBed.createComponent(CompanyPositionsComponent);
 
     companyService = TestBed.inject(CompanyService)
-    spyOn(companyService, 'getEmployees').and.returnValue(of(new EmployeesListResponse(true, [new Employee(1, "", "", new Personality(1, ""), []),
-    new Employee(2, "", "", new Personality(2, ""), [])])));
+    spyOn(companyService, 'getPositions').and.returnValue(of(new PositionsListResponse(true, [new Position(1, "", "", false, new Company("", ""), new Team(1, "", new Company("",""), []), [])])))
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -54,14 +52,14 @@ describe('CompanyPeopleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain employees', () => {
-    expect(component.employees.length).toBe(2);
+  it('should contain positions', () => {
+    expect(component.positions.length).toBe(1);
   });
 
   it('should open create modal', () => {
     const openDialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue({ afterClosed: () => EMPTY } as any)
 
-    component.openAddModal()
+    component.openAddPositionModal()
 
     expect(openDialogSpy).toHaveBeenCalledTimes(1)
   });
