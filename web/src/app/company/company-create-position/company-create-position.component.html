@@ -1,0 +1,59 @@
+<div class="modal">
+  <form [formGroup]="positionCreateForm" (ngSubmit)="positionCreation()">
+    <div class="form">
+
+      <div class="form-row header-row">
+        <mat-form-field class="form-field header-width" id="positionNameFormField" appearance="outline"
+          subscriptSizing="dynamic">
+          <input matInput id="name" class="form-control header-input" formControlName="name"
+            placeholder="Nombre de la vacante" i18n-placeholder="@@positionnameplaceholder">
+          <mat-error *ngIf="positionCreateForm.get('name')!.invalid" i18n="@@nonemptyopenpositionname">
+            El nombre de la vacante no puede ser vacío
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@description">Descripción</label>
+        </div>
+        <div class="right-field space-between">
+          <mat-form-field class="form-field full-width select-team" appearance="outline" subscriptSizing="dynamic">
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+              placeholder="Descripción de las tareas a ejercer" i18n-placeholder="@@positiondescriptionplaceholder"
+              formControlName="description"></textarea>
+          </mat-form-field>
+          <mat-error *ngIf="positionCreateForm.get('description')!.invalid" i18n="@@nonemptypositiondescription">
+            La descripción de la vacante no puede ser vacía
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@team">Equipo</label>
+        </div>
+        <div class="right-field space-between">
+          <mat-form-field class="form-field full-width select-team" appearance="outline" subscriptSizing="dynamic">
+            <mat-select placeholder="Seleccionar equipo" i18n-placeholder="@@selectteam" formControlName="team">
+              <mat-option *ngFor="let team of allTeams" [value]="team">
+                {{team.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error *ngIf="positionCreateForm.get('team')!.invalid" i18n="@@nonemptyteamselect">
+            Debe seleccionar un equipo
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button" [disabled]="!positionCreateForm.valid" color="primary"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+
+    </div>
+  </form>
+</div>
