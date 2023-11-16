@@ -48,6 +48,11 @@ class EmpleadoEvaluacionDesempenoDTO(BaseModel):
     result: Annotated[int, Field(ge=0, le=100)]
 
 
+class EmpleadoEquipoDTO(BaseModel):
+    id: int
+    name: str
+
+
 class EmpleadoDTO(BaseModel):
     id: int
     id_persona: int
@@ -57,6 +62,7 @@ class EmpleadoDTO(BaseModel):
     personality: EmpleadoPersonalityDTO
     skills: List[RolHabilidadDTO]
     evaluations: List[EmpleadoEvaluacionDesempenoDTO]
+    teams: List[EmpleadoEquipoDTO]
 
 
 class EmpleadoCreateDTO(BaseModel):

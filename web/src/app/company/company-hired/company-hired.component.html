@@ -1,0 +1,28 @@
+<div class="company-theme company-home-body">
+  <app-company-header [username]="'Perfil'"></app-company-header>
+
+  <div class="hired-container">
+    <app-login-logon-container>
+      <h2 i18n="@@hired_title">Personal</h2>
+      <div class="cards">
+        <div *ngFor="let employee of employees | paginate: { itemsPerPage: 4, currentPage: page}" class="card">
+          <div class="icon-div">
+            <mat-icon [inline]="true">account_circle</mat-icon>
+          </div>
+          <div class="person-info">
+            <h2>{{employee.name}}</h2>
+            <p>{{employee.title}}</p>
+            <p>{{ employeeTeam(employee) }}</p>
+            <button *ngIf="evaluacionPendiente(employee)" class="evaluacion" (click)="evaluacionModal(employee)">
+              EVALUACIÓN PENDIENTE
+            </button>
+            <p *ngIf="!evaluacionPendiente(employee)" class="evaluacion">
+              Evaluation: {{ currentMonthEvaluation(employee) }}%
+            </p>
+          </div>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </app-login-logon-container>
+  </div>
+</div>
