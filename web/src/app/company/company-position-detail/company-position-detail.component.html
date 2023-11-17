@@ -1,0 +1,42 @@
+<div class="modal">
+  <form [formGroup]="positionGradeForm" (ngSubmit)="saveScores()">
+    <div class="form">
+
+      <div class="form-row">
+        <div class="left-label">
+          <H2> Candidatos preseleccionados </H2>
+        </div>
+        <div class="right-field space-between">
+          <H2> Puntaje de entrevista </H2>
+        </div>
+      </div>
+
+      <div [formArrayName]="'formArray'">
+        <div class="form-row" *ngFor="let preselected of position.preselection; let i = index">
+          <div class="full-width form-row" [formGroupName]="i">
+            <div class="left-label">
+              <label class="form-row-label" i18n="@@description">{{preselected.names + " " +
+                preselected.last_names}}</label>
+            </div>
+            <div class="right-field space-between">
+              <mat-form-field class="form-field full-width select-team" appearance="outline" subscriptSizing="dynamic">
+                <input matInput formControlName="grade" placeholder="Puntaje obtenido"
+                  i18n-placeholder="@@candidatescoreplaceholder">
+              </mat-form-field>
+              <mat-error *ngIf="isInvalid(i)" i18n="@@invalidcandidatescore">El puntaje debe ser un número entero entre
+                0 y 100</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@close">Cerrar</app-abc-button>
+        <app-abc-button class="small-button" color="primary" i18n="@@closeposition">Cerrar Vacante</app-abc-button>
+        <app-abc-button class="small-button" color="primary" i18n="@@setinterview">Agendar Entrevista</app-abc-button>
+        <app-abc-button type="submit" class="small-button" color="primary" [disabled]="!positionGradeForm.valid" i18n="@@save">Guardar</app-abc-button>
+      </div>
+    </div>
+  </form>
+</div>

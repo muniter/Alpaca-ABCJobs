@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyLoginComponent } from './company-login/company-login.component';
@@ -28,6 +27,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
 import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
 import { CompanyPositionsComponent } from './company-positions/company-positions.component';
 import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
+import { CompanyPositionDetailComponent } from './company-position-detail/company-position-detail.component';
 
 @NgModule({
   imports: [
@@ -62,7 +62,8 @@ import { CompanyCreatePositionComponent } from './company-create-position/compan
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
     CompanyPositionsComponent,
-    CompanyCreatePositionComponent
+    CompanyCreatePositionComponent,
+    CompanyPositionDetailComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -78,7 +79,8 @@ import { CompanyCreatePositionComponent } from './company-create-position/compan
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
     CompanyPositionsComponent,
-    CompanyCreatePositionComponent
+    CompanyCreatePositionComponent,
+    CompanyPositionDetailComponent
   ]
 })
 export class CompanyModule { }

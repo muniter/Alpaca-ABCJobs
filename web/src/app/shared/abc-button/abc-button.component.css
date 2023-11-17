@@ -2,3 +2,7 @@ button{
     width: 100%;
     height: 3.5rem !important;
 }
+
+.bordered {
+    border: solid 3px var(--darkColor);
+}

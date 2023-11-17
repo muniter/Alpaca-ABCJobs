@@ -6,6 +6,7 @@ import { CompanyService } from '../company.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CompanyCreateTeamComponent } from '../company-create-team/company-create-team.component';
 import { CompanyCreatePositionComponent } from '../company-create-position/company-create-position.component';
+import { CompanyPositionDetailComponent } from '../company-position-detail/company-position-detail.component';
 
 @Component({
   selector: 'app-company-positions',
@@ -15,7 +16,9 @@ import { CompanyCreatePositionComponent } from '../company-create-position/compa
 export class CompanyPositionsComponent implements OnInit {
 
   dialogConfig = new MatDialogConfig();
-  modalPositionDialog: MatDialogRef<CompanyCreatePositionComponent, any> | undefined;
+  modalPositionCreateDialog: MatDialogRef<CompanyCreatePositionComponent, any> | undefined;
+  modalPositionDetailDialog: MatDialogRef<CompanyPositionDetailComponent, any> | undefined;
+
   positions!: Position[]
   token: string;
 
@@ -52,8 +55,21 @@ export class CompanyPositionsComponent implements OnInit {
       token: this.token
     }
 
-    this.modalPositionDialog = this.matDialog.open(CompanyCreatePositionComponent, this.dialogConfig);
+    this.modalPositionCreateDialog = this.matDialog.open(CompanyCreatePositionComponent, this.dialogConfig);
 
-    this.modalPositionDialog.afterClosed().subscribe(x => this.loadPositions())
+    this.modalPositionCreateDialog.afterClosed().subscribe(x => this.loadPositions())
+  }
+
+  public openPositionDetailModal(position: Position) {
+
+    this.dialogConfig.width = "45%";
+    this.dialogConfig.data = {
+      token: this.token,
+      position: position
+    }
+
+    this.modalPositionDetailDialog = this.matDialog.open(CompanyPositionDetailComponent, this.dialogConfig);
+
+    this.modalPositionDetailDialog.afterClosed().subscribe(x => this.loadPositions())
   }
 }

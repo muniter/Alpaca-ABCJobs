@@ -1,4 +1,4 @@
 <button mat-flat-button [type]="type" [color]="color" [disabled]="disabled"
-        [routerLink]="routerLink" [class]="class">
+        [routerLink]="routerLink" [class]="class" [ngClass]="{bordered: color=='basic'}">
 <ng-content></ng-content>
 </button>

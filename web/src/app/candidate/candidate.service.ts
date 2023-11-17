@@ -25,7 +25,7 @@ export class CandidateService {
   userSignUp(candidate: CandidateFormRegister): Observable<any> {
     let candidateServiceSchema = new CandidateServiceSchema(
       candidate.names,
-      candidate.lastnames,
+      candidate.last_names,
       candidate.email,
       candidate.password
     );
