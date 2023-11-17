@@ -33,6 +33,7 @@ class ABCJobsService constructor(context: Context){
         private var EXAM_RESULTS_PATH = "/exam-result"
         private var EXAM_ACTION_START = "/start"
         private var EXAM_ACTION_ANSWER = "/answer"
+        private var INTERVIEWS_PATH = "/interviews"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -721,5 +722,15 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
+
+    suspend fun getAllInterviews(token: String): Result<InterviewsResponse> {
+        return try {
+            val response = fetchInfo(token, EVALUATIONS_PATH, INTERVIEWS_PATH)
+            Result.success(deserializeInterviews(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
 }

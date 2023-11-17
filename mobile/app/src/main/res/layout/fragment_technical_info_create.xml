@@ -15,6 +15,7 @@
             type="com.example.abc_jobs_alpaca.viewmodel.TechnicalInfoCreateViewModel" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
