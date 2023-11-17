@@ -165,6 +165,13 @@ class EquipoRepository:
         self.session.refresh(data)
         return data
 
+    def update(self, data: Equipo) -> Equipo:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
 
 class VacanteRepository:
     session: Session
@@ -556,6 +563,11 @@ class EmpresaService:
         if isinstance(vacante, ErrorBuilder):
             return vacante
 
+        equipo = self.equipo_repository.get_by_id(
+            id=vacante.id_equipo, id_empresa=id_empresa
+        )
+        assert equipo is not None
+
         vc = next(
             (c for c in vacante.preseleccion if c.id_candidato == data.id_candidate),
             None,
@@ -581,12 +593,14 @@ class EmpresaService:
         empleado.id_persona = candidato.id_persona
         empleado.personalidad_id = 1
         empleado.contratado_abc = True
+        equipo.empleados.append(empleado)
 
         session = self.repository.session
         session.begin_nested()
         try:
             self.empleado_repository.crear(empleado)
             self.vacante_repository.update(vacante)
+            self.equipo_repository.update(equipo)
             self.repository.session.commit()
         except Exception as e:
             self.repository.session.rollback()

@@ -17,7 +17,7 @@ import { TechnicalTestRoutingModule } from './technical-test/technical-test-rout
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,13 @@
+.small-button {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.5rem;
+    border: solid black 2px;
+    border-radius: 2px;
+}
+
+.name {
+    text-align: center;
+    color: var(--contrastCompanyColor);
+    font-size: 2rem;
+}

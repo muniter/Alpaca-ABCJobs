@@ -135,7 +135,7 @@ def seed_empresa(email: str):
         equipo = empresa_service.crear_equipo(
             id_empresa=id_empresa,
             data=EquipoCreateDTO(
-                name=faker.color_name(),
+                name="Team: " + faker.color_name(),
                 employees=[e.id for e in emp],
             ),
         )

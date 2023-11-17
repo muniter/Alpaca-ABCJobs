@@ -39,9 +39,12 @@ export class CompanyService {
     return this.http.get<PersonalityResponse>(`${this.backUtilsUrl}/personalities`)
   }
 
-  getEmployees(token: string) {
-    const headers = this.getHeader(token);
-    return this.http.get<EmployeesListResponse>(`${this.backCompanyUrl}/employee`, { headers })
+  getEmployees(token: string, hired: boolean|undefined = undefined) {
+    const options = { headers: this.getHeader(token), params: {} };
+    if (hired !== undefined) {
+      options.params = { hired_abc: hired ? 'true' : 'false' };
+    }
+    return this.http.get<EmployeesListResponse>(`${this.backCompanyUrl}/employee`, options)
   }
 
   postEmployee(token: string, request: EmployeeCreationRequest) {
@@ -92,8 +95,12 @@ export class CompanyService {
 
   saveScores(token: string, vacancyId: number, request: SaveScoresRequest) {
     const headers = this.getHeader(token);
-    
     return this.http.post<any>(`${this.backCompanyUrl}/vacancy/${vacancyId}/test-result`, JSON.stringify(request.scores), { headers })
+  }
+
+  postEmployeeEvaluation(token: string, employeeId: number, body: { result: number, date: string }){
+    const headers = this.getHeader(token);
+    return this.http.post<EmployeeResponse>(`${this.backCompanyUrl}/employee/${employeeId}/evaluation`, body, { headers })
   }
 
   getHeader(token: string) {

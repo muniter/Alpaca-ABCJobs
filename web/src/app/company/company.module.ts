@@ -23,6 +23,8 @@ import { CompanySearchCandidatesComponent } from './company-search-candidates/co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
+import { CompanyHiredComponent } from './company-hired/company-hired.component';
+import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/company-hired-evaluation.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
 import { CompanyPositionsComponent } from './company-positions/company-positions.component';
@@ -61,6 +63,8 @@ import { CompanyPositionDetailComponent } from './company-position-detail/compan
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
     CompanyPositionDetailComponent
@@ -78,6 +82,8 @@ import { CompanyPositionDetailComponent } from './company-position-detail/compan
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
     CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
     CompanyPositionDetailComponent

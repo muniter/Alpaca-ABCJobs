@@ -4,10 +4,10 @@
     <body>
       <trans-unit id="academicinfo" datatype="html">
         <source>Información Académica <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;academicInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <target>Academic Information  <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;academicInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <target>Academic Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;academicInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">5,8</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="collegedegree" datatype="html">
@@ -15,7 +15,7 @@
         <target>Academic Level</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">21,23</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="collegedegreeplaceholder" datatype="html">
@@ -31,7 +31,7 @@
         <target>Degree earned</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">41,43</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="careerobtainedplaceholder" datatype="html">
@@ -47,7 +47,7 @@
         <target>School</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">58,60</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="schoolplaceholder" datatype="html">
@@ -63,7 +63,7 @@
         <target>Study frame</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">75,77</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="careerstartplaceholder" datatype="html">
@@ -87,7 +87,7 @@
         <target>In progress</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">98,100</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="achievement" datatype="html">
@@ -95,7 +95,7 @@
         <target>Achievements</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.html</context>
-          <context context-type="linenumber">113,115</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="achievementplaceholder" datatype="html">
@@ -154,6 +154,10 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -198,6 +202,10 @@
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
           <context context-type="linenumber">41</context>
         </context-group>
@@ -211,13 +219,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcollegedegree" datatype="html">
-        <source>Revise el campo de nivel académico: 
-                              <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the academic level field: 
-                              <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo de nivel académico: <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the academic level field: <x id="PH" equiv-text="this.careers.at(index).get(&apos;collegeDegree&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">148,149</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycareer" datatype="html">
@@ -237,13 +243,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcareer" datatype="html">
-        <source>Revise el campo título obtenido: 
-                                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the title obtained field: 
-                                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo título obtenido: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the title obtained field: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerTitle&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">160,161</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyschool" datatype="html">
@@ -263,13 +267,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorschool" datatype="html">
-        <source>Revise el campo institución educativa: 
-        <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the field educational institution: 
-        <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo institución educativa: <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the field educational institution: <x id="PH" equiv-text="this.careers.at(index).get(&apos;school&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">172,173</context>
+          <context context-type="linenumber">172</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycareerstart" datatype="html">
@@ -281,13 +283,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcareerstart" datatype="html">
-        <source>Revise el campo año de inicio: 
-                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the start year field.: 
-                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo año de inicio: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the start year field.: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">180,181</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nongreaterthancareerend" datatype="html">
@@ -299,18 +299,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcareerend" datatype="html">
-        <source>Revise el campo año de finalización: 
-                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the year of completion field: 
-                 <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo año de finalización: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the year of completion field: <x id="PH" equiv-text="this.careers.at(index).get(&apos;careerEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">188,189</context>
+          <context context-type="linenumber">188</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyachievement" datatype="html">
         <source>Los logros no puede ser solo espacios en blanco</source>
-        <target>Achievements can't just be blanks</target>
+        <target>Achievements can&apos;t just be blanks</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
           <context context-type="linenumber">194</context>
@@ -325,13 +323,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorachievement" datatype="html">
-        <source>Revise el campo logros: 
-                   <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the achievements field: 
-                   <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>           
+        <source>Revise el campo logros: <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the achievements field: <x id="PH" equiv-text="this.careers.at(index).get(&apos;achievement&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-education/candidate-education.component.ts</context>
-          <context context-type="linenumber">199,200</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="globalmessage" datatype="html">
@@ -487,17 +483,15 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcandidatelogin" datatype="html">
-        <source> inicio de sesión fallido: 
-                                 <x id="PH" equiv-text="this.candidateLoginForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target> failed login: 
-                                 <x id="PH" equiv-text="this.candidateLoginForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source> inicio de sesión fallido: <x id="PH" equiv-text="this.candidateLoginForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target> failed login: <x id="PH" equiv-text="this.candidateLoginForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">40,41</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-login/candidate-login.component.ts</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptypassword" datatype="html">
@@ -595,13 +589,13 @@
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
           <context context-type="linenumber">125</context>
         </context-group>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="minagevalidation" datatype="html">
         <source>Su edad no puede ser menor a 18 años.</source>
         <target>You must be at least 18 years old.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invaliddatevalidation" datatype="html">
@@ -609,7 +603,7 @@
         <target>Invalid date.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthaddress" datatype="html">
@@ -617,7 +611,7 @@
         <target>Address must be between 5 and 255 characters long</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyaddress" datatype="html">
@@ -625,7 +619,7 @@
         <target>Direction can not contain only whitespaces</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidformatmobile" datatype="html">
@@ -633,7 +627,7 @@
         <target>Mobile phone must be only numbers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthmobile" datatype="html">
@@ -641,7 +635,7 @@
         <target>Mobile phone must contain between 2 and 15 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptybio" datatype="html">
@@ -649,7 +643,7 @@
         <target>Bio can not contain only whitespaces</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthbio" datatype="html">
@@ -657,7 +651,7 @@
         <target>Bio must contain between 10 and 255 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.ts</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidateregister" datatype="html">
@@ -709,11 +703,11 @@
         <target> I accept the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;"/>terms and conditions of ABC Jobs<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.html</context>
-          <context context-type="linenumber">48,49</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-register/company-register.component.html</context>
-          <context context-type="linenumber">40,41</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="register" datatype="html">
@@ -753,18 +747,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatenames" datatype="html">
-        <source>Revisar nombres: 
-                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;names&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check names: 
-                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;names&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revisar nombres: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;names&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check names: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;names&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">66,67</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidatelastname" datatype="html">
         <source>El apellido del candidato no puede ser vacío</source>
-        <target>Candidate's last name cannot be empty</target>
+        <target>Candidate&apos;s last name cannot be empty</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -772,20 +764,18 @@
       </trans-unit>
       <trans-unit id="invalidlengthcandidatelastname" datatype="html">
         <source>El apellido del candidato debe tener entre 2 y 100 caracteres</source>
-        <target>Candidate's last name must be between 2 and 100 characters</target>
+        <target>Candidate&apos;s last name must be between 2 and 100 characters</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatelastnames" datatype="html">
-        <source>Revisar apellidos: 
-                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check lastnames: 
-                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revisar apellidos: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check lastnames: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">78,79</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycantidateemail" datatype="html">
@@ -813,13 +803,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidateemail" datatype="html">
-        <source>Revisar correo electrónico: 
-                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check email: 
-                             <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revisar correo electrónico: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check email: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;email&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">92,93</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="invalidlengthpassword" datatype="html">
@@ -835,13 +823,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatepass" datatype="html">
-        <source>Revisar password: 
-                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check password: 
-                         <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revisar password: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check password: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;password&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
-          <context context-type="linenumber">105,106</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptypasswordconfirm" datatype="html">
@@ -885,7 +871,7 @@
         <target>Technical knowledge <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm();&quot; *ngIf=&quot;technicalInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
-          <context context-type="linenumber">5,8</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="techtestnotfound" datatype="html">
@@ -909,7 +895,7 @@
         <target>Additional info</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
-          <context context-type="linenumber">40,42</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="moreinfotechplaceholder" datatype="html">
@@ -937,13 +923,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrortech" datatype="html">
-        <source>Revise el campo de tecnología: 
-                              <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Review the technology field: 
-                              <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo de tecnología: <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Review the technology field: <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;tech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
-          <context context-type="linenumber">118,119</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptymoreinfotech" datatype="html">
@@ -963,13 +947,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrormoreinfotech" datatype="html">
-        <source>Revise el campo de información adicional: 
-                                 <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the additional information field: 
-                                 <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo de información adicional: <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the additional information field: <x id="PH" equiv-text="this.knowledge.at(index).get(&apos;moreInfoTech&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.ts</context>
-          <context context-type="linenumber">128,129</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="okupdatetechnicalinfo" datatype="html">
@@ -982,10 +964,10 @@
       </trans-unit>
       <trans-unit id="workinfo" datatype="html">
         <source>Información Laboral <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <target>Work Information  <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
+        <target>Work Information <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;workInfoDisabled&quot;&gt;"/> edit <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">5,10</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="role" datatype="html">
@@ -993,7 +975,7 @@
         <target>Role</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">21,23</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="roleplaceholder" datatype="html">
@@ -1009,7 +991,7 @@
         <target>Company</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="companyplaceholder" datatype="html">
@@ -1025,7 +1007,7 @@
         <target>Range</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">55,57</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="jobsstartplaceholder" datatype="html">
@@ -1049,7 +1031,7 @@
         <target>In progress</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">78,80</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="labordescription" datatype="html">
@@ -1057,7 +1039,7 @@
         <target>Job description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">93,95</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="descriptionplaceholder" datatype="html">
@@ -1101,13 +1083,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorjob" datatype="html">
-        <source>Revise el campo cargo: 
-                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the position field: 
-                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo cargo: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the position field: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;role&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">169,170</context>
+          <context context-type="linenumber">169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptycompany" datatype="html">
@@ -1127,13 +1107,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorcompany" datatype="html">
-        <source>Revise el campo compañia: 
-                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the company field: 
-                    <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo compañia: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the company field: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;company&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">181,182</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyjobstart" datatype="html">
@@ -1145,13 +1123,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorjobstart" datatype="html">
-        <source>Revise el campo año de inicio: 
-                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the start year field: 
-                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo año de inicio: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the start year field: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobStart&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">189,190</context>
+          <context context-type="linenumber">189</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nongreaterthanjobend" datatype="html">
@@ -1163,18 +1139,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorjobend" datatype="html">
-        <source>Revise el campo año de finalización: 
-                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the Year Ended field: 
-                 <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo año de finalización: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the Year Ended field: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;jobEnd&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">197,198</context>
+          <context context-type="linenumber">197</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptdescription" datatype="html">
         <source>La descripción no puede ser solo espacios en blanco</source>
-        <target>Description can't be just whitespace</target>
+        <target>Description can&apos;t be just whitespace</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
           <context context-type="linenumber">204</context>
@@ -1189,13 +1163,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrordescription" datatype="html">
-        <source>Revise el campo logros: 
-                   <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Check the achievements field: 
-                   <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Revise el campo logros: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Check the achievements field: <x id="PH" equiv-text="this.jobs.at(index).get(&apos;description&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.ts</context>
-          <context context-type="linenumber">209,210</context>
+          <context context-type="linenumber">209</context>
         </context-group>
       </trans-unit>
       <trans-unit id="errordeletejob" datatype="html">
@@ -1435,7 +1407,7 @@
         <target> Team name can not be empty </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="selectmember" datatype="html">
@@ -1451,7 +1423,7 @@
         <target> A member can not be selected more than once. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">28,30</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
@@ -1569,6 +1541,7 @@
       <trans-unit id="1032417194825684724" datatype="html">
         <source>no seleccionados</source>
         <target>not selected</target>
+        <note priority="1" from="description">@techsnotfound</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-candidates/company-search-candidates.component.html</context>
           <context context-type="linenumber">8</context>
@@ -1581,7 +1554,6 @@
           <context context-type="sourcefile">src/app/company/company-search-candidates/company-search-candidates.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-        <note priority="1" from="description">@techsnotfound</note>
       </trans-unit>
       <trans-unit id="roles" datatype="html">
         <source>Roles</source>
@@ -1696,13 +1668,11 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responseerrorvacancy" datatype="html">
-        <source>Mensaje: 
-                 <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
-        <target>Message: 
-                 <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
+        <source>Mensaje: <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <target>Message: <x id="PH" equiv-text="this.preselectCandidateForm.get(&apos;vacancy&apos;)?.getError(&apos;responseMessageError&apos;)"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.ts</context>
-          <context context-type="linenumber">68,69</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="okpreselectcandidate" datatype="html">
@@ -1838,7 +1808,7 @@
         <target>Soon we will have new exams available</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
-          <context context-type="linenumber">18,20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="techtestcompletedquizzestitle" datatype="html">
@@ -1851,10 +1821,10 @@
       </trans-unit>
       <trans-unit id="techtestnocompletedquizzes" datatype="html">
         <source> No has completado ningún examen, ¡¡¡ comienza ahora !!! </source>
-        <target>You haven't completed any exams, start now!!!</target>
+        <target>You haven&apos;t completed any exams, start now!!!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/technical-test/technical-test-candidate/technical-test-candidate.component.html</context>
-          <context context-type="linenumber">43,45</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="techtestcompletedquiz" datatype="html">
@@ -1938,22 +1908,67 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorgetuserconfig" datatype="html">
-        <source>Token invalido, inicie sesión nuevamente: 
-                      <x id="PH" equiv-text="exception.error.detail"/></source>
-        <target>Invalid token, log in again: 
-                      <x id="PH" equiv-text="exception.error.detail"/></target>
+        <source>Token invalido, inicie sesión nuevamente: <x id="PH" equiv-text="exception.error.detail"/></source>
+        <target>Invalid token, log in again: <x id="PH" equiv-text="exception.error.detail"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.ts</context>
           <context context-type="linenumber">91,92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorsetuserconfig" datatype="html">
-        <source>Error al guardar la configuración: 
-                      <x id="PH" equiv-text="exception.error.detail"/></source>
-        <target>Error saving settings: 
-                      <x id="PH" equiv-text="exception.error.detail"/></target>
+        <source>Error al guardar la configuración: <x id="PH" equiv-text="exception.error.detail"/></source>
+        <target>Error saving settings: <x id="PH" equiv-text="exception.error.detail"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="evaluacion_percent" datatype="html">
+        <source>Evaluación (%)</source>
+        <target state="new">Evaluation (%)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hired_title" datatype="html">
+        <source>Personal</source>
+        <target state="new">Hirings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired/company-hired.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="evaluacion_percent_placeholder" datatype="html">
+        <source>Ingrese el porcentaje</source>
+        <target state="new">Write the percentage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hired_error_required" datatype="html">
+        <source>Este campo es requerido</source>
+        <target state="new">This field is required</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hired_error_min" datatype="html">
+        <source>El valor mínimo es <x id="PH" equiv-text="errors[&apos;min&apos;].min"/></source>
+        <target state="new">The minimum value is <x id="PH" equiv-text="errors[&apos;min&apos;].min"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hired_error_max" datatype="html">
+        <source>El valor máximo es <x id="PH" equiv-text="errors[&apos;max&apos;].max"/></source>
+        <target state="new">The maximum value is <x id="PH" equiv-text="errors[&apos;max&apos;].max"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="linenumber">58</context>
           <context context-type="linenumber">108,109</context>
         </context-group>
       </trans-unit>

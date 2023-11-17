@@ -67,7 +67,7 @@ def crear_equipo_dto(id_empresa: int, numero_empleados: int):
 
     empleados = empleado_repository.get_all(id_empresa=id_empresa)
     return EquipoCreateDTO(
-        name=faker.name(),
+        name="Team " + faker.color(),
         employees=[empleado.id for empleado in empleados][:numero_empleados],
     )
 
@@ -77,7 +77,7 @@ def crear_vacante(id_equipo: int | None = None, n_candidatos: int = 0):
     id_empresa = usuario.id_empresa
     assert id_empresa
     equipos = equipo_repository.get_all(id_empresa=id_empresa)
-    equipo = equipos[0]
+    equipo = faker.random_element(equipos)
     data = crear_vacante_dto(id_equipo=id_equipo or equipo.id)
     result = empresa_service.vacante_crear(id_empresa=id_empresa, data=data)
 
@@ -362,7 +362,7 @@ def test_endpoint_utils_personalities():
 def crear_vacante_dto(id_equipo: int):
     return VacanteCreateDTO(
         team_id=id_equipo,
-        name=faker.name(),
+        name=faker.job(),
         description=faker.text(),
     )
 
@@ -703,6 +703,9 @@ def test_vacante_seleccionar():
     # Check that the candidate is now an employee
     session.refresh(candidato)
     assert candidato.persona.empleado is not None
+    # Check the candidate belong to the team that posted the vacancy
+    assert len(candidato.persona.empleado.equipos) == 1
+    assert candidato.persona.empleado.equipos[0].id == vacante.team.id
 
     # Attempting to select again is an error Vacancy is closed
     result = empresa_service.vacante_seleccionar(
