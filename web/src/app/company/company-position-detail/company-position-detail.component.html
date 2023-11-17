@@ -15,7 +15,7 @@
         <div class="form-row" *ngFor="let preselected of position.preselection; let i = index">
           <div class="full-width form-row" [formGroupName]="i">
             <div class="left-label">
-              <label class="form-row-label" i18n="@@description">{{preselected.names + " " +
+              <label class="form-row-label">{{preselected.names + " " +
                 preselected.last_names}}</label>
             </div>
             <div class="right-field space-between">
