@@ -48,8 +48,6 @@ export class CompanyPositionDetailComponent implements OnInit {
   }
 
   saveScores() {
-    console.log(this.positionGradeForm);
-
     const scores: Score[] = []
 
     const controlArray = this.positionGradeForm.get('formArray') as FormArray;
@@ -63,10 +61,7 @@ export class CompanyPositionDetailComponent implements OnInit {
       }
 
     });
-
-    console.log("scores")
-    console.log(scores)
-
+    
     this.companyService.saveScores(this.data.token, this.position.id, new SaveScoresRequest(scores)).subscribe({
       error: (error) => {
         console.log("Error: " + error)
