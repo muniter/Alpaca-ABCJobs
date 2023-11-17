@@ -1,4 +1,4 @@
-import { Candidate } from "../candidate/candidate";
+import { Candidate, PreselectedCandidate } from "../candidate/candidate";
 import { Team } from "./Team";
 import { Company } from "./company";
 
@@ -9,7 +9,7 @@ export class Position {
     open: boolean;
     company: Company;
     team: Team;
-    preselection: Candidate[];
+    preselection: PreselectedCandidate[];
 
     public constructor(
         id: number,
@@ -18,7 +18,7 @@ export class Position {
         open: boolean,
         company: Company,
         team: Team,
-        preselection: Candidate[]
+        preselection: PreselectedCandidate[]
     ) {
         this.id = id;
         this.name = name;

@@ -1,6 +1,7 @@
 app-team-project-card {
     width: calc(20% - 1rem);
     padding: 0.5rem !important;
+    cursor: pointer;
 }
 
 .positions-container {
@@ -21,7 +22,3 @@ h2 {
     width: 100%;
     flex-wrap: wrap;
 }
-
-.add-card{
-    cursor: pointer;
-}   

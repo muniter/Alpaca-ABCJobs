@@ -9,7 +9,7 @@
           (click)="openAddPositionModal()" />
 
         <app-team-project-card *ngFor="let position of positions" type="position" [title]="position.name"
-          [subtitle]="position.team.name" />
+          [subtitle]="position.team.name" (click)="openPositionDetailModal(position)"/>
       </div>
     </app-login-logon-container>
   </div>

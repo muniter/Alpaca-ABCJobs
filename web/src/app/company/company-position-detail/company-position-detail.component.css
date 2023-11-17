@@ -1,3 +1,15 @@
+h2 {
+	font-size: 2rem;
+	font-weight: 400;
+	text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+label {
+    font-size: 1.3rem;
+}
+
 .modal {
     padding: 2rem;
 }
@@ -13,32 +25,16 @@
     font-size: 1.2rem;
 }
 
-.header-row {
-    display: flex;
-    justify-content: center;
-}
-
-.header-width {
-    width: 80%;
-}
-
 .full-width {
     width: 100%;
 }
 
 .left-label {
-    width: 30%;
+    width: 65%;
 }
 
 .right-field {
-    width: 70%;
-}
-
-.header-input {
-    color: var(--contrastCompanyColor) !important;
-    text-align: center;
-    font-weight: bold !important;
-    font-size: x-large !important;
+    width: 35%;
 }
 
 .small-button {

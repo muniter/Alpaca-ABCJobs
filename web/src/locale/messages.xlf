@@ -135,12 +135,12 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -182,12 +182,16 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/user/user-settings/user-settings.component.html</context>
@@ -492,7 +496,7 @@
         <source>Información Personal <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;edit-icon&quot; (click)=&quot;enableForm()&quot; *ngIf=&quot;personalInfoDisabled&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">19,22</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebirthdate" datatype="html">
@@ -1157,7 +1161,7 @@
         <source> El nombre de la vacante no puede ser vacío </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="description" datatype="html">
@@ -1182,7 +1186,7 @@
         <source> La descripción de la vacante no puede ser vacía </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
-          <context context-type="linenumber">26,28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="team" datatype="html">
@@ -1211,11 +1215,11 @@
         <source> Debe seleccionar un equipo </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
-          <context context-type="linenumber">44,46</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">44,46</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectnameplaceholder" datatype="html">
@@ -1229,7 +1233,7 @@
         <source> El nombre de proyecto no puede ser vacío </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectdescriptionplaceholder" datatype="html">
@@ -1243,7 +1247,7 @@
         <source> La descripción del proyecto no puede ser vacía </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">26,28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="teamnameplaceholder" datatype="html">
@@ -1714,43 +1718,78 @@
       <trans-unit id="evaluacion_percent" datatype="html">
         <source>Evaluación (%)</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hired_title" datatype="html">
         <source>Personal</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired/company-hired.component.html</context>
+          <context context-type="sourcefile">src/app/company/company-hired/company-hired.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="evaluacion_percent_placeholder" datatype="html">
         <source>Ingrese el porcentaje</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hired_error_max" datatype="html">
         <source>El valor máximo es <x id="PH" equiv-text="errors[&apos;max&apos;].max"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hired_error_min" datatype="html">
         <source>El valor mínimo es <x id="PH" equiv-text="errors[&apos;min&apos;].min"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
           <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hired_error_required" datatype="html">
         <source>Este campo es requerido</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
+          <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.ts</context>
           <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatescoreplaceholder" datatype="html">
+        <source>Puntaje obtenido</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>Cerrar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="closeposition" datatype="html">
+        <source>Cerrar Vacante</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="invalidcandidatescore" datatype="html">
+        <source>El puntaje debe ser un número entero entre 0 y 100</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="setinterview" datatype="html">
+        <source>Agendar Entrevista</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
     </body>

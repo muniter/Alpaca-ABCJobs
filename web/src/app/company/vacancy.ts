@@ -33,3 +33,26 @@ export class VacancyRequest {
     this.id_candidate = id_candidate;
   }
 }
+
+export class SaveScoresRequest {
+  scores: Score[];
+
+  public constructor(
+    scores: Score[]
+  ) {
+    this.scores = scores;
+  }
+}
+
+export class Score {
+  id_candidate: number | null;
+  result: number | null;
+
+  public constructor(
+    id_candidate: number | null,
+    result: number | null
+  ) {
+    this.id_candidate = id_candidate;
+    this.result = result;
+  }
+}
