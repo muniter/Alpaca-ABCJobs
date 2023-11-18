@@ -30,6 +30,7 @@ import { CompanyCreateProjectComponent } from './company-create-project/company-
 import { CompanyPositionsComponent } from './company-positions/company-positions.component';
 import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
 import { CompanyPositionDetailComponent } from './company-position-detail/company-position-detail.component';
+import { CompanyPositionCloseComponent } from './company-position-close/company-position-close.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { CompanyPositionDetailComponent } from './company-position-detail/compan
     CompanyHiredEvaluationComponent,
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
-    CompanyPositionDetailComponent
+    CompanyPositionDetailComponent,
+    CompanyPositionCloseComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -86,7 +88,8 @@ import { CompanyPositionDetailComponent } from './company-position-detail/compan
     CompanyHiredEvaluationComponent,
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
-    CompanyPositionDetailComponent
+    CompanyPositionDetailComponent,
+    CompanyPositionCloseComponent
   ]
 })
 export class CompanyModule { }

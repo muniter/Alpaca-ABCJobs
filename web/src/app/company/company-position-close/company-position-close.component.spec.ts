@@ -3,13 +3,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CompanyPositionDetailComponent } from './company-position-detail.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CompanyPositionCloseComponent } from './company-position-close.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { CompanyService } from '../company.service';
+import { PreselectedCandidate } from 'src/app/candidate/candidate';
 import { Position } from '../Position';
-import { Company } from '../company';
 import { Team } from '../Team';
+import { Company } from '../company';
+import { CompanyService } from '../company.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -17,12 +18,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PreselectedCandidate } from 'src/app/candidate/candidate';
+import { MatSelectModule } from '@angular/material/select';
 import { of } from 'rxjs';
 
-describe('CompanyPositionDetailComponent', () => {
-  let component: CompanyPositionDetailComponent;
-  let fixture: ComponentFixture<CompanyPositionDetailComponent>;
+describe('CompanyPositionCloseComponent', () => {
+  let component: CompanyPositionCloseComponent;
+  let fixture: ComponentFixture<CompanyPositionCloseComponent>;
   let companyService: CompanyService;
 
   const dialogMock = {
@@ -35,19 +36,19 @@ describe('CompanyPositionDetailComponent', () => {
         HttpClientTestingModule,
         MatFormFieldModule,
         RouterModule,
+        MatSelectModule,
         MatAutocompleteModule,
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatDialogModule,
         SharedModule
       ],
-      declarations: [ CompanyPositionDetailComponent ],
+      declarations: [CompanyPositionCloseComponent],
       providers: [
         {
           provide: MAT_DIALOG_DATA,
-          useValue: { token: "123abc", position: new Position(1, "", "", true, new Company("", ""), new Team( 1, "", new Company("",""), []), [new PreselectedCandidate(1,1,"pepe","","",23)]) }
+          useValue: { token: "123abc", position: new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("", ""), []), [new PreselectedCandidate(1, 1, "pepe", "", "", 23), new PreselectedCandidate(2, 2, "lala", "", "", 32)]) }
         },
         {
           provide: MatDialogRef,
@@ -59,11 +60,11 @@ describe('CompanyPositionDetailComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompanyPositionDetailComponent);
+    fixture = TestBed.createComponent(CompanyPositionCloseComponent);
 
     companyService = TestBed.inject(CompanyService)
     component = fixture.componentInstance;
@@ -74,16 +75,20 @@ describe('CompanyPositionDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should close', () => {
-    component.onCancel()
-  });
+  it('should call service on position close', () => {
 
-  it('should save scores', () => {
-    let companyServiceSpy = spyOn(companyService, 'saveScores').and.returnValue(of(true));
+    const candidate = component.closePositionForm.controls['candidate'];
 
-    component.saveScores()
+    candidate.setValue(new PreselectedCandidate(1, 1, "", "", "", 32))
+
+    let companyServiceSpy = spyOn(companyService, 'selectCandidate').and.returnValue(of({ success: true }));
+
+    component.selectCandidate();
 
     expect(companyServiceSpy).toHaveBeenCalledTimes(1);
+  });
 
+  it('should close', () => {
+    component.onCancel()
   });
 });

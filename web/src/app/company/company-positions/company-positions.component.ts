@@ -44,7 +44,7 @@ export class CompanyPositionsComponent implements OnInit {
   loadPositions() {
     this.positions = []
     this.companyService.getPositions(this.token).subscribe({
-      next: (response) => this.positions = response.data
+      next: (response) => this.positions = response.data.filter(x => x.open)
     })
   }
 

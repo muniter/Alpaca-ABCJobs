@@ -56,3 +56,13 @@ export class Score {
     this.result = result;
   }
 }
+
+export class SelectCandidateRequest {
+  id_candidate: number | null;
+
+  public constructor(
+    id_candidate: number | null
+  ) {
+    this.id_candidate = id_candidate;
+  }
+}
