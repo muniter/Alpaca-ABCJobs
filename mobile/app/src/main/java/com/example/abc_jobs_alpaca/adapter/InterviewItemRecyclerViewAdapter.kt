@@ -5,39 +5,33 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.abc_jobs_alpaca.databinding.FragmentInterviewsBinding
+import com.example.abc_jobs_alpaca.databinding.FragmentItemInterviewBinding
+import com.example.abc_jobs_alpaca.model.models.InterviewItem
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
+
 class InterviewItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<InterviewItem>
 ) : RecyclerView.Adapter<InterviewItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentInterviewsBinding.inflate(
+            FragmentItemInterviewBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = item.id_vacancy.toString()
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentInterviewsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: FragmentItemInterviewBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content
 
