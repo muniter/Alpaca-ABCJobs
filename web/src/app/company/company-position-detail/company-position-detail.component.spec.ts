@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CompanyPositionDetailComponent } from './company-position-detail.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../company.service';
 import { Position } from '../Position';
@@ -40,6 +40,7 @@ describe('CompanyPositionDetailComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        MatDialogModule,
         SharedModule
       ],
       declarations: [ CompanyPositionDetailComponent ],

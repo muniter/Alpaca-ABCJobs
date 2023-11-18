@@ -43,7 +43,7 @@ describe('CompanyPositionsComponent', () => {
     fixture = TestBed.createComponent(CompanyPositionsComponent);
 
     companyService = TestBed.inject(CompanyService)
-    spyOn(companyService, 'getPositions').and.returnValue(of(new PositionsListResponse(true, [new Position(1, "", "", false, new Company("", ""), new Team(1, "", new Company("",""), []), [])])))
+    spyOn(companyService, 'getPositions').and.returnValue(of(new PositionsListResponse(true, [new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("",""), []), [])])))
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -60,6 +60,14 @@ describe('CompanyPositionsComponent', () => {
     const openDialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue({ afterClosed: () => EMPTY } as any)
 
     component.openAddPositionModal()
+
+    expect(openDialogSpy).toHaveBeenCalledTimes(1)
+  });
+
+  it('should open detail modal', () => {
+    const openDialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue({ afterClosed: () => EMPTY } as any)
+
+    component.openPositionDetailModal(new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("",""), []), []))
 
     expect(openDialogSpy).toHaveBeenCalledTimes(1)
   });
