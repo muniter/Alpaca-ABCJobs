@@ -2,25 +2,24 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil.setContentView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.abc_jobs_alpaca.R
-import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.adapter.VacancyItemRecyclerViewAdapter
-import com.example.abc_jobs_alpaca.model.models.TeamItem
-import com.example.abc_jobs_alpaca.model.models.VacancyItem
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
-import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 import com.example.abc_jobs_alpaca.viewmodel.VacancyViewModel
 import kotlinx.coroutines.launch
 
@@ -70,21 +69,25 @@ class VacancyFragment : Fragment() {
                 }
                 viewModel.vacancyList.observe(viewLifecycleOwner) { vacancyList ->
                     adapter = vacancyList?.let {
-                        VacancyItemRecyclerViewAdapter(it)
-                        /*VacancyItemRecyclerViewAdapter(it) { clickedItem ->
-                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@AcademicInfoFragment)
-                            confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
-                        }*/
+                        VacancyItemRecyclerViewAdapter(it) { clickedItem ->
+                            Log.i("item", clickedItem.id.toString())
+                            val bundle = bundleOf("vacancyId" to clickedItem.id)
+                            findNavController().navigate(R.id.action_nav_vacancy_list_to_shortlistedCandidatesFragment, bundle)
+                        }
                     }
                     view.adapter = adapter
                 }
-                /*val listVacancies = listOf<VacancyItem>(
-                    VacancyItem("programador", "descripcion", TeamItem("equipo"))
-                )
-                adapter = VacancyItemRecyclerViewAdapter(listVacancies)*/
             }
         }
         return view
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (!hidden) {
+            lifecycleScope.launch { viewModel.loadVacancyItems() }
+        }
     }
 
     companion object {

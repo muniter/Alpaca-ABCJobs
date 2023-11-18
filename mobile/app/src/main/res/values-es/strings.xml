@@ -133,4 +133,5 @@
     <string name="take_exam_title">Tomar examen</string>
     <string name="vacancies">Vacantes</string>
     <string name="menu_vacancy">Vacantes</string>
+    <string name="shortlisted_candidates">Candidatos preseleccionados</string>
 </resources>

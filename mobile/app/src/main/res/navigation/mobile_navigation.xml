@@ -106,5 +106,19 @@
         android:id="@+id/nav_vacancy"
         android:name="com.example.abc_jobs_alpaca.view.VacancyFragment"
         android:label="@string/menu_vacancy"
-        tools:layout="@layout/fragment_vacancy_list" />
+        tools:layout="@layout/fragment_vacancy_list" >
+        <action
+            android:id="@+id/action_nav_vacancy_list_to_shortlistedCandidatesFragment"
+            app:destination="@id/shortlistedCandidatesFragment" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/shortlistedCandidatesFragment"
+        android:name="com.example.abc_jobs_alpaca.view.ShortlistedCandidatesFragment"
+        android:label="@string/shortlisted_candidates"
+        tools:layout="@layout/fragment_shortlisted_candidates_list" >
+        <argument
+            android:name="vacancyId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

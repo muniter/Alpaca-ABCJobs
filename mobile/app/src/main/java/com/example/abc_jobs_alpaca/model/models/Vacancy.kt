@@ -3,6 +3,7 @@ package com.example.abc_jobs_alpaca.model.models
 import org.json.JSONObject
 
 data class VacancyItem(
+    val id: Int,
     val name: String,
     val description: String,
     val team: TeamItem
@@ -22,6 +23,7 @@ fun deserializeVacancies(response: JSONObject): VacancyResponse {
         for (i in 0 until dataObject.length()) {
             val vacancyObject = dataObject.optJSONObject(i)
             if (vacancyObject != null) {
+                val id = vacancyObject.optInt("id")
                 val name = vacancyObject.optString("name")
                 val description = vacancyObject.optString("description")
                 val teamObject = vacancyObject.optJSONObject("team")
@@ -32,7 +34,7 @@ fun deserializeVacancies(response: JSONObject): VacancyResponse {
                 } else {
                     TeamItem(0, "")
                 }
-                vacancies.add(VacancyItem(name, description, team))
+                vacancies.add(VacancyItem(id, name, description, team))
             }
         }
     }

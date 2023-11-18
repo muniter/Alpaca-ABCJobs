@@ -9,7 +9,8 @@ import com.example.abc_jobs_alpaca.databinding.FragmentVacancyItemBinding
 import com.example.abc_jobs_alpaca.model.models.VacancyItem
 
 class VacancyItemRecyclerViewAdapter(
-    private val values: List<VacancyItem>
+    private val values: List<VacancyItem>,
+    private val onItemClick : (VacancyItem) -> Unit
 ) : RecyclerView.Adapter<VacancyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +30,11 @@ class VacancyItemRecyclerViewAdapter(
         holder.nameView.text = item.name
         holder.descriptionView.text = item.description
         holder.teamNameView.text = item.team.name
+
+        val itemView = holder.itemView
+        itemView.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int = values.size

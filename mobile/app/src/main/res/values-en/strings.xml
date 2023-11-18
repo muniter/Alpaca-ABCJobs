@@ -133,4 +133,5 @@
     <string name="take_exam_title">Tomar examen</string>
     <string name="vacancies">Vacancies</string>
     <string name="menu_vacancy">Vacancies</string>
+    <string name="shortlisted_candidates">Shortlisted Candidates</string>
 </resources>
