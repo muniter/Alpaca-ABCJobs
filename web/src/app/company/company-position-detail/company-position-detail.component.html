@@ -4,10 +4,10 @@
 
       <div class="form-row">
         <div class="left-label">
-          <H2> Candidatos preseleccionados </H2>
+          <H2 i18n="@@preselectedpeople"> Candidatos preseleccionados </H2>
         </div>
         <div class="right-field space-between">
-          <H2> Puntaje de entrevista </H2>
+          <H2 i18n="@@interviewscore"> Puntaje de entrevista </H2>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
       <div class="buttons">
         <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
           i18n="@@close">Cerrar</app-abc-button>
-        <app-abc-button class="small-button" color="primary" i18n="@@closeposition">Cerrar Vacante</app-abc-button>
+        <app-abc-button class="small-button" color="primary" (click)="openPositionCloseModal(position)" i18n="@@closeposition">Cerrar Vacante</app-abc-button>
         <app-abc-button class="small-button" color="primary" i18n="@@setinterview">Agendar Entrevista</app-abc-button>
         <app-abc-button type="submit" class="small-button" color="primary" [disabled]="!positionGradeForm.valid" i18n="@@save">Guardar</app-abc-button>
       </div>

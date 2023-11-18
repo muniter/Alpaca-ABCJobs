@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Position } from '../Position';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from '../company.service';
 import { SaveScoresRequest, Score } from '../vacancy';
+import { CompanyPositionCloseComponent } from '../company-position-close/company-position-close.component';
 
 @Component({
   selector: 'app-company-position-detail',
@@ -12,16 +13,22 @@ import { SaveScoresRequest, Score } from '../vacancy';
 })
 export class CompanyPositionDetailComponent implements OnInit {
 
+  dialogConfig = new MatDialogConfig();
+  modalPositionCloseDialog: MatDialogRef<CompanyPositionCloseComponent, any> | undefined;
+  
   positionGradeForm!: FormGroup;
   position: Position;
+  token: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     public dialogRef: MatDialogRef<CompanyPositionDetailComponent>,
     private companyService: CompanyService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public matDialog: MatDialog
   ) {
-    this.position = data.position
+      this.position = data.position
+      this.token = data.token
   }
 
   ngOnInit() {
@@ -69,6 +76,18 @@ export class CompanyPositionDetailComponent implements OnInit {
     })
 
     this.dialogRef.close();
+  }
+
+  openPositionCloseModal(position: Position){
+    this.dialogConfig.width = "45%";
+    this.dialogConfig.data = {
+      token: this.token,
+      position: position
+    }
+
+    this.modalPositionCloseDialog = this.matDialog.open(CompanyPositionCloseComponent, this.dialogConfig);
+
+    this.modalPositionCloseDialog.afterClosed().subscribe(x => this.dialogRef.close())
   }
 
   onCancel() {
