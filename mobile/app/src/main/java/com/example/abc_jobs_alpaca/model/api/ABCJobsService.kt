@@ -17,6 +17,7 @@ class ABCJobsService constructor(context: Context){
     companion object{
         private var BASEURL = "https://api.abc.muniter.link"
         private var CANDIDATES_PATH = "/candidatos"
+        private var COMPANIES_PATH = "/empresas"
         private var USERS_PATH = "/usuarios"
         private var CREATE_PATH = "/crear"
         private var LOGIN_PATH = "/login"
@@ -34,6 +35,7 @@ class ABCJobsService constructor(context: Context){
         private var EXAM_ACTION_START = "/start"
         private var EXAM_ACTION_ANSWER = "/answer"
         private var INTERVIEWS_PATH = "/interviews"
+        private var VACANCY_PATH = "/vacancy"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -732,5 +734,13 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
+    suspend fun getAllVacancies(token: String): Result<VacancyResponse> {
+        return try {
+            val response = fetchInfo(token, COMPANIES_PATH, VACANCY_PATH)
+            Result.success(deserializeVacancies(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
 }

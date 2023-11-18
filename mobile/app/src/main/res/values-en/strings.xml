@@ -131,5 +131,6 @@
     <string name="option4_label">Option 4</string>
     <string name="submit_button_label">Send</string>
     <string name="take_exam_title">Tomar examen</string>
-
+    <string name="vacancies">Vacancies</string>
+    <string name="menu_vacancy">Vacancies</string>
 </resources>

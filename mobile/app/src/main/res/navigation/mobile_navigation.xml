@@ -102,4 +102,9 @@
             android:id="@+id/action_examTakeFragment_to_nav_exam_list"
             app:destination="@id/nav_exam_list" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_vacancy"
+        android:name="com.example.abc_jobs_alpaca.view.VacancyFragment"
+        android:label="@string/menu_vacancy"
+        tools:layout="@layout/fragment_vacancy_list" />
 </navigation>
