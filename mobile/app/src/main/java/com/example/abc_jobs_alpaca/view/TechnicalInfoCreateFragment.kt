@@ -120,7 +120,7 @@ class TechnicalInfoCreateFragment : Fragment(),
         ) { text ->
             validateAndShowTypeTechnicalItemError(text, labelTypeTechnicalItemError)
         }
-
+        (activity as MainActivity).hideButton();
         return view
     }
 

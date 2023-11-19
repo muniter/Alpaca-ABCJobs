@@ -475,22 +475,6 @@
                             android:layout_weight="1">
 
                             <com.google.android.material.button.MaterialButton
-                                android:id="@+id/button_save_personal_info"
-                                android:layout_width="124dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:background="@drawable/button_rounded_black"
-                                android:enabled="false"
-                                android:fontFamily="@font/font_roboto"
-                                android:saveEnabled="false"
-                                android:text="@string/save_personal_info"
-                                app:backgroundTint="@null" />
-
-                            <android.widget.Space
-                                android:layout_width="10dp"
-                                android:layout_height="wrap_content" />
-
-                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/button_cancel_personal_info"
                                 android:layout_width="124dp"
                                 android:layout_height="wrap_content"
@@ -503,6 +487,22 @@
                                 android:textColor="@color/accent"
                                 android:textColorLink="@color/accent"
                                 app:backgroundTint="@color/accent" />
+
+                            <android.widget.Space
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/button_save_personal_info"
+                                android:layout_width="124dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/button_rounded_black"
+                                android:enabled="false"
+                                android:fontFamily="@font/font_roboto"
+                                android:saveEnabled="false"
+                                android:text="@string/save_personal_info"
+                                app:backgroundTint="@null" />
 
                         </TableRow>
                     </TableLayout>

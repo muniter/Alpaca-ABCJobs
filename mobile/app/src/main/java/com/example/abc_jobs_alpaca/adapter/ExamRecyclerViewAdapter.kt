@@ -36,10 +36,13 @@ class ExamRecyclerViewAdapter(
                 holder.btnStartExam.visibility = android.view.View.VISIBLE
             }
 
-            if(item.result == null)
-                holder.numberOfQuestions.text = "0"
+            if(!item.completed)
+                holder.numberOfQuestions.text = ""
             else
-                holder.numberOfQuestions.text = (item.result * 100 / item.exam.number_of_questions).toString()
+            {
+                var resultInt = item.result.toString().toInt()
+                holder.numberOfQuestions.text = (resultInt * 100 / item.exam.number_of_questions).toString()
+            }
         }
 
         holder.btnStartExam.setOnClickListener {
