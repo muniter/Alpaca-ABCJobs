@@ -34,6 +34,7 @@ class ABCJobsService constructor(context: Context){
         private var EXAM_ACTION_START = "/start"
         private var EXAM_ACTION_ANSWER = "/answer"
         private var INTERVIEWS_PATH = "/interviews"
+        private var TEAM_PATH = "/team"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -727,6 +728,16 @@ class ABCJobsService constructor(context: Context){
         return try {
             val response = fetchInfo(token, CANDIDATES_PATH, INTERVIEWS_PATH)
             Result.success(deserializeInterviews(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
+    suspend fun getAllTeams(token: String): Result<TeamsResponse> {
+        return try {
+            val response = fetchInfo(token, CANDIDATES_PATH, TEAM_PATH)
+            Result.success(deserializeTeams(response))
         } catch (e: Exception) {
             Result.failure(e)
         }
