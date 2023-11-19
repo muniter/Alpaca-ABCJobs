@@ -73,12 +73,13 @@ class InterviewItemFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 viewModel.interviewsInfoList.observe(viewLifecycleOwner) { interviewsInfoList ->
-                    val dateFormat = sharedPreferences.getString("dateFormat", "")
+                    val dateFormat = sharedPreferences.getString("dateFormat", "")!!
+                    val timeFormat = sharedPreferences.getString("timeFormat", "")!!
                     adapter = interviewsInfoList?.let {
-                        dateFormat?.let { it1 ->
                             InterviewItemRecyclerViewAdapter(
                                 it,
-                                it1,
+                                dateFormat,
+                                timeFormat,
                                 pendingMessage,
                                 completeMessage,
                                 noResuls
@@ -88,7 +89,6 @@ class InterviewItemFragment : Fragment() {
                     view.adapter = adapter
                 }
             }
-        }
         (activity as MainActivity).unhideButton();
         return view
     }

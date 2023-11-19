@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.adapter
 
+import android.text.format.Time
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,26 +8,22 @@ import android.widget.TextView
 
 import com.example.abc_jobs_alpaca.databinding.FragmentItemInterviewBinding
 import com.example.abc_jobs_alpaca.model.models.InterviewItem
-import com.example.abc_jobs_alpaca.view.PreferencesFragment.Companion.DATE_FORMAT_1
-import com.example.abc_jobs_alpaca.view.PreferencesFragment.Companion.DATE_FORMAT_2
-import com.example.abc_jobs_alpaca.view.PreferencesFragment.Companion.DATE_FORMAT_3
-import com.example.abc_jobs_alpaca.view.PreferencesFragment.Companion.DATE_FORMAT_4
 import java.text.SimpleDateFormat
 
+import com.example.abc_jobs_alpaca.utils.DateUtils.dateFormatted
+import com.example.abc_jobs_alpaca.utils.DateUtils.timeFormatted
+import java.util.Date
 
 class InterviewItemRecyclerViewAdapter(
     private val values: List<InterviewItem>,
     private val dateFormat: String,
+    private val timeFormat: String,
     private val pendingMessage: String,
     private val completedMessage: String,
     private val noResult: String
 ) : RecyclerView.Adapter<InterviewItemRecyclerViewAdapter.ViewHolder>() {
 
-    private val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private val newFormat1 = SimpleDateFormat("dd/MM/yyyy HH:mm")
-    private val newFormat2 = SimpleDateFormat("dd-MM-yyyy HH:mm")
-    private val newFormat3 = SimpleDateFormat("MM/dd/yyyy HH:mm")
-    private val newFormat4 = SimpleDateFormat("MM-dd-yyyy HH:mm")
+    private val originalDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,28 +49,28 @@ class InterviewItemRecyclerViewAdapter(
             holder.stateView.text = pendingMessage
             holder.stateView.setTextColor(0xFFFF0000.toInt())
         }
-
-        //val date = originalFormat.parse(item.interview_date)
-        //val newDate = when (dateFormat) {
-        //    DATE_FORMAT_1 -> newFormat1.format(date).toString()
-        //    DATE_FORMAT_2 -> newFormat2.format(date).toString()
-        //    DATE_FORMAT_3 -> newFormat3.format(date).toString()
-        //    DATE_FORMAT_4 -> newFormat4.format(date).toString()
-        //    else -> newFormat1.format(date)
-        //}
-
-        //holder.dateView.text = newDate
-
-        holder.dateView.text = item.interview_date
-
+        val (dateString, timeString) = dateAndTimeFormat(item)
+        holder.dateView.text = "$dateString $timeString"
 
         if (item.result != null) {
             holder.resultView.text = item.result.toString()
         } else {
             holder.resultView.text = noResult
         }
+    }
 
+    private fun dateAndTimeFormat(item: InterviewItem): Pair<String, String> {
+        val dateHour = originalDateFormat.parse(item.interview_date)
+        val date = Date(dateHour.time)
+        val hours = Date(dateHour.time).hours
+        val minutes = Date(dateHour.time).minutes
+        val time = Time()
+        time.hour = hours
+        time.minute = minutes
 
+        val dateString = dateFormatted(date, dateFormat)
+        val timeString = timeFormatted(time, timeFormat)
+        return Pair(dateString, timeString)
     }
 
     override fun getItemCount(): Int = values.size
