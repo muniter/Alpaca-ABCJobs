@@ -9,7 +9,6 @@ data class InterviewsResponse(
 
 data class InterviewItem(
     val id_vacancy: Int,
-    //val name_vacancy: String,
     val name: String,
     val company: String,
     val interview_date: String,

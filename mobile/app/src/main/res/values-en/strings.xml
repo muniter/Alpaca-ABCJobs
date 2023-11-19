@@ -131,5 +131,9 @@
     <string name="option4_label">Option 4</string>
     <string name="submit_button_label">Send</string>
     <string name="take_exam_title">Tomar examen</string>
+    <string name="interview_list_title">Entrevistas</string>
+    <string name="exams_title">Lista de exámenes</string>
+    <string name="exam_title">Tomar examen</string>
+    <string name="result_interview_label">Resultado:</string>
 
 </resources>

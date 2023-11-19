@@ -41,6 +41,9 @@ class InterviewItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val pendingMessage = "Pendiente"
+        val completeMessage = "Completado"
+        val noResuls = "No registra resultados"
         val view = inflater.inflate(R.layout.fragment_item_interview_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
 
@@ -57,6 +60,11 @@ class InterviewItemFragment : Fragment() {
         val token = sharedPreferences.getString("token", null)
         tokenLiveData.value = token
 
+        tokenLiveData.observe(viewLifecycleOwner) { token ->
+            viewModel.onTokenUpdated(token)
+            lifecycleScope.launch { viewModel.loadInterviewsItemsInfo() }
+        }
+
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -65,7 +73,18 @@ class InterviewItemFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 viewModel.interviewsInfoList.observe(viewLifecycleOwner) { interviewsInfoList ->
-                    adapter = interviewsInfoList?.let { InterviewItemRecyclerViewAdapter(it) }
+                    val dateFormat = sharedPreferences.getString("dateFormat", "")
+                    adapter = interviewsInfoList?.let {
+                        dateFormat?.let { it1 ->
+                            InterviewItemRecyclerViewAdapter(
+                                it,
+                                it1,
+                                pendingMessage,
+                                completeMessage,
+                                noResuls
+                            )
+                        }
+                    }
                     view.adapter = adapter
                 }
             }
