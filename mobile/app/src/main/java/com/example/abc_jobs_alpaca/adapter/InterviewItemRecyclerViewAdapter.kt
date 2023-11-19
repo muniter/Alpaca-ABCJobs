@@ -25,7 +25,6 @@ class InterviewItemRecyclerViewAdapter(
 
     private val originalDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -52,7 +51,7 @@ class InterviewItemRecyclerViewAdapter(
         val (dateString, timeString) = dateAndTimeFormat(item)
         holder.dateView.text = "$dateString $timeString"
 
-        if (item.result != null) {
+        if (item.result == "null") {
             holder.resultView.text = item.result.toString()
         } else {
             holder.resultView.text = noResult
@@ -83,13 +82,6 @@ class InterviewItemRecyclerViewAdapter(
         val dateView: TextView = binding.dateInterviewText
         val resultView : TextView = binding.resultInterviewText
 
-    }
-
-    companion object {
-        val DATE_FORMAT_1 = "dd/MM/yyyy"
-        val DATE_FORMAT_2 = "dd-MM-yyyy"
-        val DATE_FORMAT_3 = "MM/dd/yyyy"
-        val DATE_FORMAT_4 = "MM-dd-yyyy"
     }
 
 }
