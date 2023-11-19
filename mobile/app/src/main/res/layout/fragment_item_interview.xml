@@ -100,8 +100,8 @@
                     android:id="@+id/stateInteriewLabel"
                     android:layout_width="89dp"
                     android:layout_height="wrap_content"
-                    android:text="Estado:      "
-                    tools:text="Estado:      " />
+                    android:text="@string/state_label"
+                    tools:text="@string/state_label" />
 
                 <TextView
                     android:id="@+id/stateInterviewText"
@@ -134,8 +134,8 @@
                     android:layout_width="51dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Vacante:    "
-                    tools:text=  "Vacante:    " />
+                    android:text="@string/vacancy_label"
+                    tools:text=  "@string/vacancy_label" />
 
                 <TextView
                     android:id="@+id/vacancyNameText"
@@ -155,8 +155,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hora:       "
-                    tools:text="Hora:       " />
+                    android:text="@string/hour_label"
+                    tools:text="@string/hour_label"/>
 
                 <TextView
                     android:id="@+id/dateInterviewText"

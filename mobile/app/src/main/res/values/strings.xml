@@ -135,5 +135,11 @@
     <string name="exams_title">Lista de exámenes</string>
     <string name="exam_title">Tomar examen</string>
     <string name="result_interview_label">Resultado:</string>
+    <string name="state_label">Estado:</string>
+    <string name="vacancy_label">Vacante:</string>
+    <string name="hour_label">Hora:</string>
+    <string name="pending_message">Pendiente</string>
+    <string name="completed_message">Completado</string>
+    <string name="noresults_messages">No registra resultados</string>
 
 </resources>
