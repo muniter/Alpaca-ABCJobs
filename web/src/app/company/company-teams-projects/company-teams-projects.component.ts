@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Team } from '../Team';
+import { Project } from '../Project';
 import { CompanyService } from '../company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CompanyCreateTeamComponent } from '../company-create-team/company-create-team.component';
+import { CompanyCreateProjectComponent } from '../company-create-project/company-create-project.component';
 
 @Component({
   selector: 'app-company-teams-projects',
@@ -14,9 +16,11 @@ import { CompanyCreateTeamComponent } from '../company-create-team/company-creat
 export class CompanyTeamsProjectsComponent implements OnInit {
 
   dialogConfig = new MatDialogConfig();
-  modalDialog: MatDialogRef<CompanyCreateTeamComponent, any> | undefined;
+  modalTeamDialog: MatDialogRef<CompanyCreateTeamComponent, any> | undefined;
+  modalProjectDialog: MatDialogRef<CompanyCreateProjectComponent, any> | undefined;
 
   teams!: Team[]
+  projects!: Project[]
   token: string;
 
   constructor(
@@ -35,8 +39,8 @@ export class CompanyTeamsProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.loadTeams();
+    this.loadProjects();
   }
-
 
   private loadTeams() {
     this.teams = [];
@@ -48,6 +52,16 @@ export class CompanyTeamsProjectsComponent implements OnInit {
     });
   }
 
+  private loadProjects() {
+    this.projects = [];
+
+    this.companyService.getProjects(this.token).subscribe({
+      next: (response) => {
+        this.projects = response.data;
+      }
+    });
+  }
+
   public openAddTeamModal() {
 
     this.dialogConfig.width = "45%";
@@ -55,8 +69,20 @@ export class CompanyTeamsProjectsComponent implements OnInit {
       token: this.token
     }
 
-    this.modalDialog = this.matDialog.open(CompanyCreateTeamComponent, this.dialogConfig);
+    this.modalTeamDialog = this.matDialog.open(CompanyCreateTeamComponent, this.dialogConfig);
 
-    this.modalDialog.afterClosed().subscribe(x => this.loadTeams())
+    this.modalTeamDialog.afterClosed().subscribe(x => this.loadTeams())
+  }
+
+  public openAddProjectModal() {
+
+    this.dialogConfig.width = "45%";
+    this.dialogConfig.data = {
+      token: this.token
+    }
+
+    this.modalProjectDialog = this.matDialog.open(CompanyCreateProjectComponent, this.dialogConfig);
+
+    this.modalProjectDialog.afterClosed().subscribe(x => this.loadProjects())
   }
 }

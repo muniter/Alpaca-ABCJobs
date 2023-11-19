@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyLoginComponent } from './company-login/company-login.component';
@@ -24,6 +23,14 @@ import { CompanySearchCandidatesComponent } from './company-search-candidates/co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CompanySearchParamsComponent } from './company-search-params/company-search-params.component';
 import { CompanySearchPreselectComponent } from './company-search-preselect/company-search-preselect.component';
+import { CompanyHiredComponent } from './company-hired/company-hired.component';
+import { CompanyHiredEvaluationComponent } from './company-hired-evaluation/company-hired-evaluation.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { CompanyCreateProjectComponent } from './company-create-project/company-create-project.component';
+import { CompanyPositionsComponent } from './company-positions/company-positions.component';
+import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
+import { CompanyPositionDetailComponent } from './company-position-detail/company-position-detail.component';
+import { CompanyPositionCloseComponent } from './company-position-close/company-position-close.component';
 
 @NgModule({
   imports: [
@@ -41,6 +48,7 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     MatAutocompleteModule,
     MatSelectModule,
     SharedModule,
+    DragScrollModule,
     NgxPaginationModule
   ],
   declarations: [
@@ -52,9 +60,16 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent,
+    CompanyPositionDetailComponent,
+    CompanyPositionCloseComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -65,9 +80,16 @@ import { CompanySearchPreselectComponent } from './company-search-preselect/comp
     CompanyCreateEmployeeComponent,
     CompanyTeamsProjectsComponent,
     CompanyCreateTeamComponent,
+    CompanyCreateProjectComponent,
     CompanySearchCandidatesComponent,
     CompanySearchParamsComponent,
-    CompanySearchPreselectComponent
+    CompanySearchPreselectComponent,
+    CompanyHiredComponent,
+    CompanyHiredEvaluationComponent,
+    CompanyPositionsComponent,
+    CompanyCreatePositionComponent,
+    CompanyPositionDetailComponent,
+    CompanyPositionCloseComponent
   ]
 })
 export class CompanyModule { }

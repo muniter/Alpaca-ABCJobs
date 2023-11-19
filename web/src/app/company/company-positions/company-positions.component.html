@@ -1,0 +1,16 @@
+<div class="company-theme company-home-body">
+  <app-company-header [username]="'Perfil'"></app-company-header>
+
+  <div class="positions-container">
+    <app-login-logon-container>
+      <H2 i18n="@@positions">Vacantes</H2>
+      <div class="cards-container">
+        <app-team-project-card class="add-card" type=add title="Crear Vacante" i18n-title="@@createposition"
+          (click)="openAddPositionModal()" />
+
+        <app-team-project-card *ngFor="let position of positions" type="position" [title]="position.name"
+          [subtitle]="position.team.name" (click)="openPositionDetailModal(position)"/>
+      </div>
+    </app-login-logon-container>
+  </div>
+</div>

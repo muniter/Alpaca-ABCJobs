@@ -1,12 +1,14 @@
 from typing import List, Union
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
+import datetime
 
 from fastapi import Depends
 from common.shared.api_models.gestion_candidatos import RolHabilidadDTO
 from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpleadoDTO,
+    EmpleadoEvaluacionDesempenoCreateDTO,
     EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
@@ -15,6 +17,9 @@ from common.shared.api_models.gestion_empresas import (
     VacanteCreateDTO,
     VacanteDTO,
     VacantePreseleccionDTO,
+    VacanteResultadoPruebaTecnicaDTO,
+    VacanteSelecconarCandidatoDTO,
+    VacanteSetFechaEntrevistaDTO,
 )
 from common.shared.api_models.gestion_usuarios import (
     UsuarioLoginResponseDTO,
@@ -25,11 +30,13 @@ from common.shared.database.models import (
     Empleado,
     Empresa,
     Equipo,
+    EvaluacionDesempeno,
     Persona,
     Candidato,
     Personalidad,
     RolesHabilidades,
     Vacante,
+    VacanteCandidato,
 )
 from common.shared.database.db import get_db_session_dependency
 from common.shared.api_models.shared import ErrorBuilder, ErrorResponse
@@ -101,11 +108,22 @@ class EmpleadoRepository:
         )
         return self.session.execute(query).scalar_one_or_none()
 
-    def get_all(self, id_empresa: int) -> List[Empleado]:
+    def get_all(
+        self, id_empresa: int, contratado_abc: bool | None = None
+    ) -> List[Empleado]:
         query = select(Empleado).where(Empleado.id_empresa == id_empresa)
+        if contratado_abc is not None:
+            query = query.where(Empleado.contratado_abc == contratado_abc)
         return list(self.session.execute(query).scalars().all())
 
     def crear(self, data: Empleado) -> Empleado:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def update(self, data: Empleado) -> Empleado:
         self.session.add(data)
         self.session.commit()
         # Refresh
@@ -128,11 +146,26 @@ class EquipoRepository:
         )
         return self.session.execute(query).scalar_one_or_none()
 
+    def get_by_nombre(self, nombre: str, id_empresa: int) -> Union[Equipo, None]:
+        query = (
+            select(Equipo)
+            .where(Equipo.nombre == nombre)
+            .where(Equipo.id_empresa == id_empresa)
+        )
+        return self.session.execute(query).scalar_one_or_none()
+
     def get_all(self, id_empresa: int) -> List[Equipo]:
         query = select(Equipo).where(Equipo.id_empresa == id_empresa)
         return list(self.session.execute(query).scalars().all())
 
     def crear(self, data: Equipo) -> Equipo:
+        self.session.add(data)
+        self.session.commit()
+        # Refresh
+        self.session.refresh(data)
+        return data
+
+    def update(self, data: Equipo) -> Equipo:
         self.session.add(data)
         self.session.commit()
         # Refresh
@@ -292,7 +325,7 @@ class EmpresaService:
         return empleado
 
     def get_all_empleados(
-        self, id_empresa: int
+        self, id_empresa: int, contratado_abc: bool | None = None
     ) -> Union[List[EmpleadoDTO], ErrorBuilder]:
         empresa = self.repository.get_by_id(id_empresa)
         if not empresa:
@@ -300,7 +333,9 @@ class EmpresaService:
             error.add("global", "Empresa no encontrada")
             return error
 
-        empleados = self.empleado_repository.get_all(id_empresa=id_empresa)
+        empleados = self.empleado_repository.get_all(
+            id_empresa=id_empresa, contratado_abc=contratado_abc
+        )
         return [e.build_dto() for e in empleados]
 
     def get_empleado_by_id(
@@ -343,7 +378,14 @@ class EmpresaService:
         empresa = self.repository.get_by_id(id_empresa)
         if not empresa:
             error = ErrorBuilder()
-            error.add("global", "Empresa no encontrada")
+            error.add("global", "Company not found")
+            return error
+
+        if self.equipo_repository.get_by_nombre(
+            nombre=data.name, id_empresa=id_empresa
+        ):
+            error = ErrorBuilder()
+            error.add("name", "Name of team already exists")
             return error
 
         equipo = Equipo(id_empresa=id_empresa)
@@ -377,7 +419,7 @@ class EmpresaService:
 
         return equipo
 
-    def get_vacante_by_id(
+    def vacante_get_by_id(
         self, id_empresa: int, id_vacante: int
     ) -> Union[VacanteDTO, ErrorBuilder]:
         vacante = self.vacante_repository.get_by_id(
@@ -390,11 +432,11 @@ class EmpresaService:
 
         return vacante.build_dto()
 
-    def get_all_vacantes(self, id_empresa: int) -> List[VacanteDTO]:
+    def vacante_get_all(self, id_empresa: int) -> List[VacanteDTO]:
         vacantes = self.vacante_repository.get_all(id_empresa=id_empresa)
         return [v.build_dto() for v in vacantes]
 
-    def crear_vacante(
+    def vacante_crear(
         self, id_empresa: int, data: VacanteCreateDTO
     ) -> Union[VacanteDTO, ErrorBuilder]:
         vacante = Vacante()
@@ -415,9 +457,85 @@ class EmpresaService:
 
         return vacante.build_dto()
 
-    def preselecionar_vacante(
-            self, id_empresa: int, id_vacante: int, data: VacantePreseleccionDTO
+    def vacante_preseleccion(
+        self, id_empresa: int, id_vacante: int, data: VacantePreseleccionDTO
     ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
+        )
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
+
+        error = ErrorBuilder()
+
+        candidato = self.vacante_repository.get_candidato_by_id(data.id_candidate)
+        if not candidato:
+            error.add("id_candidate", "Candidate not found")
+            return error
+
+        if candidato.id in [c.id_candidato for c in vacante.preseleccion]:
+            error.add("id_candidate", "Candidate already preselected")
+            return error
+
+        vacante.preseleccion.append(
+            VacanteCandidato(id_vacante=id_vacante, id_candidato=candidato.id)
+        )
+        vacante = self.vacante_repository.update(vacante)
+
+        return vacante.build_dto()
+
+    def vacante_resultado_prueba_tecnica(
+        self,
+        id_empresa: int,
+        id_vacante: int,
+        data: List[VacanteResultadoPruebaTecnicaDTO],
+    ):
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
+        )
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
+
+        preseleccion = vacante.preseleccion
+        indexed = {p.id_candidato: p for p in preseleccion}
+        ids = indexed.keys()
+
+        error = ErrorBuilder()
+        for result in data:
+            if result.id_candidate not in ids:
+                error.add(
+                    "global",
+                    f"Candidate with id: {result.id_candidate} not preselected",
+                )
+                return error
+
+        for result in data:
+            vc = indexed[result.id_candidate]
+            vc.puntaje = result.result
+
+        self.vacante_repository.update(vacante)
+
+        return vacante.build_dto()
+
+    def vacante_set_fecha_entrevista(
+        self,
+        id_empresa: int,
+        id_vacante: int,
+        data: VacanteSetFechaEntrevistaDTO,
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
+        )
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
+
+        vacante.fecha_entrevista = data.interview_date
+        self.vacante_repository.update(vacante)
+        return vacante.build_dto()
+
+    def vacante_get_use(
+        self, id_empresa: int, id_vacante: int, use: str
+    ) -> Union[Vacante, ErrorBuilder]:
         error = ErrorBuilder()
         vacante = self.vacante_repository.get_by_id(
             id=id_vacante, id_empresa=id_empresa
@@ -426,19 +544,107 @@ class EmpresaService:
             error.add("global", "Vacancy not found")
             return error
 
-        candidato = self.vacante_repository.get_candidato_by_id(data.id_candidate)
-        if not candidato:
-            error.add("id_candidate", "Candidate not found")
+        if use == "edit" and not vacante.abierta:
+            error.add("global", "Vacancy is closed, can't be edited")
             return error
 
-        if candidato.id in [c.id for c in vacante.preseleccion]:
-            error.add("id_candidate", "Candidate already preselected")
+        return vacante
+
+    def vacante_seleccionar(
+        self,
+        id_empresa: int,
+        id_vacante: int,
+        data: VacanteSelecconarCandidatoDTO,
+    ) -> Union[VacanteDTO, ErrorBuilder]:
+        error = ErrorBuilder()
+        vacante = self.vacante_get_use(
+            id_empresa=id_empresa, id_vacante=id_vacante, use="edit"
+        )
+        if isinstance(vacante, ErrorBuilder):
+            return vacante
+
+        equipo = self.equipo_repository.get_by_id(
+            id=vacante.id_equipo, id_empresa=id_empresa
+        )
+        assert equipo is not None
+
+        vc = next(
+            (c for c in vacante.preseleccion if c.id_candidato == data.id_candidate),
+            None,
+        )
+        if not vc:
+            error.add("id_candidate", "Candidate not preselected")
             return error
 
-        vacante.preseleccion.append(candidato)
-        vacante = self.vacante_repository.update(vacante)
+        candidato = vc.candidato
+
+        if candidato.persona.empleado:
+            error.add(
+                "id_candidate", "Candidate is already an employee, can't be hired"
+            )
+            return error
+
+        # Close vacante, create an employee record associated with the candidate
+        vacante.abierta = False
+
+        empleado = Empleado()
+        empleado.id_empresa = id_empresa
+        empleado.cargo = vacante.name
+        empleado.id_persona = candidato.id_persona
+        empleado.personalidad_id = 1
+        empleado.contratado_abc = True
+        equipo.empleados.append(empleado)
+
+        session = self.repository.session
+        session.begin_nested()
+        try:
+            self.empleado_repository.crear(empleado)
+            self.vacante_repository.update(vacante)
+            self.equipo_repository.update(equipo)
+            self.repository.session.commit()
+        except Exception as e:
+            self.repository.session.rollback()
+            raise e
 
         return vacante.build_dto()
+
+    def empleado_evaluacion_desempeno(
+        self,
+        id_empresa: int,
+        id_empleado: int,
+        data: EmpleadoEvaluacionDesempenoCreateDTO,
+    ) -> Union[EmpleadoDTO, ErrorBuilder]:
+        empleado = self.empleado_repository.get_by_id(
+            id=id_empleado, id_empresa=id_empresa
+        )
+        error = ErrorBuilder()
+        if not empleado:
+            error.add("global", "Employee not found")
+            return error
+
+        if not empleado.contratado_abc:
+            error.add("global", "Employee was not hired using ABC Jobs")
+            return error
+
+        for evaluacion in empleado.evaluaciones_desempeno:
+            if (
+                evaluacion.fecha.year == data.date.year
+                and evaluacion.fecha.month == data.date.month
+            ):
+                error.add("date", "Evaluation already exists for this year and month")
+                return error
+
+        date = datetime.date(year=data.date.year, month=data.date.month, day=1)
+        empleado.evaluaciones_desempeno.append(
+            EvaluacionDesempeno(
+                id_empleado=id_empleado,
+                fecha=date,
+                puntaje=data.result,
+            )
+        )
+
+        empleado = self.empleado_repository.update(empleado)
+        return empleado.build_dto()
 
 
 def get_empresa_repository(

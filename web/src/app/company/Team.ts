@@ -20,6 +20,13 @@ export class Team {
     }
 }
 
+export class TeamShort {
+  public constructor(
+    public id: number,
+    public name: string,
+  ) {}
+}
+
 export class TeamsListResponse {
     success: boolean;
     data: Team[];

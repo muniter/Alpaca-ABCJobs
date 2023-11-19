@@ -1,8 +1,11 @@
-from fastapi.applications import Optional
-from pydantic import BaseModel, StringConstraints
-from typing import Annotated, List
+from datetime import datetime, date
+from pydantic import BaseModel, StringConstraints, Field
+from typing import Annotated, List, Optional
 
-from common.shared.api_models.gestion_candidatos import CandidatoDTO, CandidatoPersonalInformationDTO, RolHabilidadDTO
+from common.shared.api_models.gestion_candidatos import (
+    CandidatoPersonalInformationDTO,
+    RolHabilidadDTO,
+)
 
 
 class EmpresaCreateDTO(BaseModel):
@@ -34,13 +37,32 @@ class EmpleadoPersonalityDTO(BaseModel):
     name: str
 
 
+class EmpleadoEvaluacionDesempenoCreateDTO(BaseModel):
+    date: date
+    result: Annotated[int, Field(ge=0, le=100)]
+
+
+class EmpleadoEvaluacionDesempenoDTO(BaseModel):
+    id: int
+    date: date
+    result: Annotated[int, Field(ge=0, le=100)]
+
+
+class EmpleadoEquipoDTO(BaseModel):
+    id: int
+    name: str
+
+
 class EmpleadoDTO(BaseModel):
     id: int
+    id_persona: int
     name: str
     title: str
     company: EmpresaDTO
     personality: EmpleadoPersonalityDTO
     skills: List[RolHabilidadDTO]
+    evaluations: List[EmpleadoEvaluacionDesempenoDTO]
+    teams: List[EmpleadoEquipoDTO]
 
 
 class EmpleadoCreateDTO(BaseModel):
@@ -68,13 +90,19 @@ class EquipoCreateDTO(BaseModel):
     employees: List[int]
 
 
+class CandidatoPreseleccionadoVacanteDTO(CandidatoPersonalInformationDTO):
+    result: Optional[int] = None
+
+
 class VacanteDTO(BaseModel):
     id: int
     name: str
+    open: bool
     description: Optional[str]
     company: EmpresaDTO
     team: EquipoDTO
-    preselection: List[CandidatoPersonalInformationDTO]
+    preselection: List[CandidatoPreseleccionadoVacanteDTO]
+    interview_date: Optional[datetime] = None
 
 
 class VacanteCreateDTO(BaseModel):
@@ -83,9 +111,23 @@ class VacanteCreateDTO(BaseModel):
         str, StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
     ]
     description: Annotated[
-        Optional[str], StringConstraints(max_length=255, min_length=2, strip_whitespace=True)
+        Optional[str],
+        StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
     ]
 
 
 class VacantePreseleccionDTO(BaseModel):
+    id_candidate: int
+
+
+class VacanteResultadoPruebaTecnicaDTO(BaseModel):
+    id_candidate: int
+    result: Annotated[int, Field(ge=0, le=100)]
+
+
+class VacanteSetFechaEntrevistaDTO(BaseModel):
+    interview_date: datetime
+
+
+class VacanteSelecconarCandidatoDTO(BaseModel):
     id_candidate: int

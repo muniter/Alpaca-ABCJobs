@@ -1,0 +1,33 @@
+<div class="modal">
+  <form [formGroup]="closePositionForm" (ngSubmit)="selectCandidate()">
+    <div class="form">
+      <div class="form-row">
+        <div class="left-label">
+          <H2 i18n="@@selectedcandidate"> Candidato Seleccionado </H2>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field full-width" appearance="outline" subscriptSizing="dynamic">
+          <mat-select placeholder="Seleccionar candidato" i18n-placeholder="@@selectcandidate"
+            formControlName="candidate">
+            <mat-option *ngFor="let candidate of position.preselection" [value]="candidate">
+              {{candidate.names + " " + candidate.last_names}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="closePositionForm.get('candidate')!.invalid" i18n="@@nonemptycandidateselect">
+          Debe seleccionar un candidato
+        </mat-error>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button" [disabled]="!closePositionForm.valid" color="primary"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+
+    </div>
+  </form>
+</div>
