@@ -120,6 +120,27 @@
     <string name="address_validation_error">Address must be between 5 and 255 characters long.</string>
     <string name="phone_validation_error">Phone number must be between 2 and 15 characters long.</string>
     <string name="bio_validation_error">Bio number must be between 10 and 255 characters long.</string>
-    <string name="birthdate_validation_error">Debe ingresar una fecha válida y su edad debe ser mayor a 18 años.</string>
+    <string name="birthdate_validation_error">It must be a valid date</string>
+    <string name="exam_list_title">Exams</string>
+    <string name="rating_label">Level of knowledge</string>
+    <string name="option1_label">Option 1</string>
+    <string name="question_label">Question</string>
+    <string name="leave_button_label">Leave</string>
+    <string name="option2_label">Option 2</string>
+    <string name="option3_label">Option 3</string>
+    <string name="option4_label">Option 4</string>
+    <string name="submit_button_label">Send</string>
+    <string name="take_exam_title">Take Exam</string>
+    <string name="interview_list_title">Interviews</string>
+    <string name="exams_title">Exam List</string>
+    <string name="exam_title">Take Exam</string>
+    <string name="result_interview_label">Result:</string>
+    <string name="state_label">Status:</string>
+    <string name="vacancy_label">Vacancy:</string>
+    <string name="hour_label">Time:</string>
+    <string name="pending_message">Pending</string>
+    <string name="completed_message">Completed</string>
+    <string name="noresults_messages">No Results Recorded</string>
+
 
 </resources>

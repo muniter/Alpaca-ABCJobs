@@ -93,7 +93,7 @@ class PersonalInfoViewModel(
         val response = abcJobsRepository.postPersonalInfo(token, personalInfoRequest)
 
         response.onSuccess { it ->
-            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Guardao"))
+            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Guardado"))
         }
     }
 

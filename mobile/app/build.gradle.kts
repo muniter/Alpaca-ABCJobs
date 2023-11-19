@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android" )
     id("jacoco")
     kotlin("kapt") version "1.9.10"
+    id("androidx.navigation.safeargs")
 }
 //apply(from = "../jacoco.gradle.kts")
 
@@ -57,8 +58,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation("androidx.media3:media3-common:1.1.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
@@ -79,4 +80,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.1.1")
     androidTestImplementation("androidx.test:rules:1.1.1")
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
+    //implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
 }

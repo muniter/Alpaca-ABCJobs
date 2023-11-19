@@ -24,5 +24,16 @@
             android:id="@+id/nav_work_info"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/work_info_title" />
+
+        <item
+            android:id="@+id/nav_exam_list"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/exam_list_title" />
+
+        <item
+            android:id="@+id/nav_interview_list"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/interview_list_title" />
+
     </group>
 </menu>

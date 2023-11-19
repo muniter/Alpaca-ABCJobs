@@ -20,7 +20,8 @@ data class UserData(
 data class User(
     val id: Int,
     val email: String,
-    val idCandidato: Int
+    val idCandidato: Int? = null,
+    val idEmpresa: Int? = null
 )
 
 fun deserializeLoginCandidate(json: JSONObject): UserLoginResponse {
@@ -34,10 +35,30 @@ fun deserializeLoginCandidate(json: JSONObject): UserLoginResponse {
         val email = usuarioObject.optString("email")
         val idCandidato = usuarioObject.optInt("id_candidato")
 
-        val user = User(id, email, idCandidato)
+        val user = User(id, email, idCandidato, null)
         UserData(user, token)
     } else {
-        UserData(User(0, "", 0), token)
+        UserData(User(0, "", 0, null), token)
+    }
+
+    return UserLoginResponse(success, userDataResponse)
+}
+
+fun deserializeLoginCompany(json: JSONObject): UserLoginResponse {
+    val success = json.optBoolean("success", false)
+    val dataObject = json.optJSONObject("data")
+    val usuarioObject = dataObject?.optJSONObject("usuario")
+    val token = dataObject?.optString("token", "")
+
+    val userDataResponse = if (usuarioObject != null) {
+        val id = usuarioObject.optInt("id")
+        val email = usuarioObject.optString("email")
+        val idEmpresa = usuarioObject.optInt("id_empresa")
+
+        val user = User(id, email, null, idEmpresa)
+        UserData(user, token)
+    } else {
+        UserData(User(0, "", null, 0), token)
     }
 
     return UserLoginResponse(success, userDataResponse)
@@ -60,7 +81,6 @@ fun deserializeLoginCandidateError(response: JSONObject):Exception {
 }
 
 
-
 fun serializeLoginUser(candidate: UserLoginRequest): JSONObject {
     var json: JSONObject = JSONObject()
 
@@ -69,3 +89,4 @@ fun serializeLoginUser(candidate: UserLoginRequest): JSONObject {
 
     return json
 }
+

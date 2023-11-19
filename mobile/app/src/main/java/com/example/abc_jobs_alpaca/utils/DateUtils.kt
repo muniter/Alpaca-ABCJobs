@@ -1,50 +1,56 @@
 package com.example.abc_jobs_alpaca.utils
 
+import android.text.format.Time
+import com.example.abc_jobs_alpaca.view.PreferencesFragment
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
 object DateUtils {
 
-    // TODO: Hacer refactor con lo que esta en el Preferences Fragment
-    fun formatTo24Hour(time: String): String {
-        val parts = time.split(":")
-        if (parts.size == 2) {
-            val hour = parts[0]
-            val minute = parts[1]
-            return "$hour:$minute"
+    private const val DATE_FORMAT_1 = "dd/MM/yyyy"
+    private const val DATE_FORMAT_2 = "dd-MM-yyyy"
+    private const val DATE_FORMAT_3 = "yyyy/MM/dd"
+    private const val DATE_FORMAT_4 = "yyyy-MM-dd"
+    private const val TIME_FORMAT_2 = "24h"
+
+
+    fun dateFormatted(date: Date, dateFormat: String): String {
+        val dateString: String;
+        when (dateFormat) {
+            DATE_FORMAT_1 -> dateString =
+                SimpleDateFormat(DATE_FORMAT_1, Locale.getDefault()).format(date)
+
+            DATE_FORMAT_2 -> dateString =
+                SimpleDateFormat(DATE_FORMAT_2, Locale.getDefault()).format(date)
+
+            DATE_FORMAT_3 -> dateString =
+                SimpleDateFormat(DATE_FORMAT_3, Locale.getDefault()).format(date)
+
+            DATE_FORMAT_4 -> dateString =
+                SimpleDateFormat(DATE_FORMAT_4, Locale.getDefault()).format(date)
+
+            else -> dateString = ""
         }
-        return time
+        return dateString
     }
 
-    fun formatTo12Hour(time: String): String {
-        val parts = time.split(":")
-        if (parts.size == 2) {
-            val hour = parts[0].toInt()
-            val minute = parts[1]
-            val amPm = if (hour < 12) "AM" else "PM"
-            val hour12 = if (hour == 0) 12 else if (hour <= 12) hour else hour - 12
-            return "$hour12:$minute $amPm"
+    fun timeFormatted(time: Time, timeFormat: String): String {
+        val timeString: String
+        val formatPattern = if (timeFormat == TIME_FORMAT_2) {
+            "HH:mm"
+        } else {
+            "hh:mm a"
         }
-        return time
-    }
 
-    fun formatToDDMMYYYY(date: String): String {
-        val parts = date.split("/")
-        if (parts.size == 3) {
-            val day = parts[0]
-            val month = parts[1]
-            val year = parts[2]
-            return "$day/$month/$year"
-        }
-        return date
-    }
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, time.hour)
+        calendar.set(Calendar.MINUTE, time.minute)
 
-    fun formatToMMDDYYYY(date: String): String {
-        val parts = date.split("/")
-        if (parts.size == 3) {
-            val day = parts[0]
-            val month = parts[1]
-            val year = parts[2]
-            return "$month/$day/$year"
-        }
-        return date
+        timeString = SimpleDateFormat(formatPattern, Locale.getDefault()).format(calendar.time)
+
+        return timeString
     }
 }
 

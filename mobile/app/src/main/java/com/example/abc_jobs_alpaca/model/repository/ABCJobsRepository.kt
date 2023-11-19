@@ -2,7 +2,6 @@ package com.example.abc_jobs_alpaca.model.repository
 
 
 import android.app.Application
-import android.util.Log
 import com.example.abc_jobs_alpaca.model.api.ABCJobsService
 import com.example.abc_jobs_alpaca.model.api.ABCJobsServiceUtils
 import com.example.abc_jobs_alpaca.model.models.*
@@ -88,6 +87,27 @@ class ABCJobsRepository(private val applicationContext: Application) {
 
     suspend fun getCountries(): Result<CountriesResponse> {
         return ABCJobsService.getInstance(applicationContext).getCountries()
+    }
+
+    suspend fun getAllExams(token: String): Result<ExamsResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAllExams(token)
+    }
+
+    suspend fun getAllExamsResult(token: String): Result<ExamsExtendResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAllExamsResults(token)
+    }
+
+    suspend fun postExamStart(token: String, examId: Int): Result<ExamStartResponse>{
+        return ABCJobsService.getInstance(applicationContext).postStartExam(token, examId)
+    }
+
+    suspend fun postAnswerQuestion(token: String, idResult: Int, answerQuestionRequest: Answer): Result<AnswerQuestionResponse>{
+        val answerQuestionJson = serializeAnswer(answerQuestionRequest)
+        return ABCJobsService.getInstance(applicationContext).postAnswerQuestion(token, idResult ,answerQuestionJson)
+    }
+
+    suspend fun getAllInterviews(token: String): Result<InterviewsResponse>{
+        return ABCJobsService.getInstance(applicationContext).getAllInterviews(token)
     }
 
 }

@@ -28,6 +28,12 @@ class ABCJobsService constructor(context: Context){
         private var UTILS_PATH = "/utils"
         private var COUNTRIES_PATH = "/countries"
         private var TITLE_TYPES_PATH = "/title-types"
+        private var EVALUATIONS_PATH = "/evaluaciones"
+        private var EXAMS_PATH = "/exam"
+        private var EXAM_RESULTS_PATH = "/exam-result"
+        private var EXAM_ACTION_START = "/start"
+        private var EXAM_ACTION_ANSWER = "/answer"
+        private var INTERVIEWS_PATH = "/interviews"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -172,8 +178,20 @@ class ABCJobsService constructor(context: Context){
                 )
             }
             if (response.getBoolean("success")) {
-                val userLoginResponse = deserializeLoginCandidate(response)
-                Result.success(userLoginResponse)
+                val data = response.optJSONObject("data")
+                val usuario = data?.optJSONObject("usuario")
+                val idEmpresa = usuario?.optInt("id_empresa")
+                val idCandidato = usuario?.optInt("id_candidato")
+                if(idCandidato != 0){
+                    val userLoginResponse = deserializeLoginCandidate(response)
+                    Result.success(userLoginResponse)}
+                else if(idEmpresa != 0){
+                    val userLoginResponse = deserializeLoginCompany(response)
+                    Result.success(userLoginResponse)
+                }else{
+                    val userLoginResponseError = deserializeLoginCandidateError(response)
+                    Result.failure(userLoginResponseError)
+                }
             } else {
                 val userLoginResponseError = deserializeLoginCandidateError(response)
                 Result.failure(userLoginResponseError);
@@ -613,5 +631,106 @@ class ABCJobsService constructor(context: Context){
             Result.failure(e)
         }
     }
+
+
+    suspend fun getAllExams(token: String): Result<ExamsResponse> {
+        return try {
+            val response = fetchInfo(token, EVALUATIONS_PATH, EXAMS_PATH)
+            Result.success(deserializeExams(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAllExamsResults(token: String): Result<ExamsExtendResponse> {
+        return try {
+            val response = fetchInfo(token, EVALUATIONS_PATH, EXAM_RESULTS_PATH)
+            Result.success(deserializeExamsResult(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postStartExam(token: String, examId: Int): Result<ExamStartResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        EVALUATIONS_PATH,
+                        "$EXAM_RESULTS_PATH/$examId$EXAM_ACTION_START",
+                        JSONObject(),
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val examStartError = deserializeExamStartError(jsonError)
+                                    cont.resumeWithException(examStartError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val examStart = deserializeExamStart(response)
+                Result.success(examStart)
+            } else {
+                val examStartError = deserializeExamStartError(response)
+                Result.failure(examStartError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postAnswerQuestion(token: String, idResult: Int, answer: JSONObject): Result<AnswerQuestionResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestWithToken(token,
+                        Request.Method.POST,
+                        EVALUATIONS_PATH,
+                        "$EXAM_RESULTS_PATH/$idResult$EXAM_ACTION_ANSWER",
+                        answer,
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val answerQuestionError = deserializeAnswerQuestionError(jsonError)
+                                    cont.resumeWithException(answerQuestionError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val answerQuestion = deserializeAnswerQuestion(response)
+                Result.success(answerQuestion)
+            } else {
+                val answerQuestionError = deserializeAnswerQuestionError(response)
+                Result.failure(answerQuestionError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAllInterviews(token: String): Result<InterviewsResponse> {
+        return try {
+            val response = fetchInfo(token, CANDIDATES_PATH, INTERVIEWS_PATH)
+            Result.success(deserializeInterviews(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
 }

@@ -94,6 +94,13 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
                 MessageEvent(MessageType.SUCCESS, it)
             })
 
+            val user = response.data?.usuario
+            if(user?.idEmpresa != null){
+                saveUserFlagInSharedPreferences(true)
+            }else{
+                saveUserFlagInSharedPreferences(false)
+            }
+
             val token = response.data?.token
             token?.let { saveTokenInSharedPreferences(it) }
 
@@ -115,6 +122,13 @@ class LoginViewModel(private val application: Application, private val abcJobsRe
         val sharedPreferences = application.getSharedPreferences("AppPreferences", 0)
         val editor = sharedPreferences.edit()
         editor.putString("token", token)
+        editor.apply()
+    }
+
+    private fun saveUserFlagInSharedPreferences(isCompany: Boolean) {
+        val sharedPreferences = application.getSharedPreferences("AppPreferences", 0)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isCompany", isCompany)
         editor.apply()
     }
 
