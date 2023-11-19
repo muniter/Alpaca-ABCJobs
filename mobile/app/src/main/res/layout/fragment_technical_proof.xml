@@ -35,9 +35,9 @@
             app:layout_constraintTop_toBottomOf="@+id/technical_proof_candidate_image"
             android:textAlignment="textStart"
             android:textColor="@color/accent"
-            android:lineHeight="@dimen/label_primary_line_height"
             android:textSize="@dimen/label_title_text_size"
             android:textStyle="bold"
+            android:hint="@string/technical_proof_name_placeholder"
             android:text="@={viewModel.shortlistedCandidateItem.fullName}" />
         <TextView
             android:id="@+id/technical_proof_candidate_location"
@@ -46,8 +46,8 @@
             app:layout_constraintTop_toBottomOf="@+id/technical_proof_candidate_image"
             android:textAlignment="textStart"
             android:textColor="@color/black"
-            android:lineHeight="@dimen/label_primary_line_height"
             android:textSize="@dimen/label_primary_text_size"
+            android:hint="@string/technical_proof_location_placeholder"
             android:text="@={viewModel.shortlistedCandidateItem.country}" />
         <TextView
             android:id="@+id/technical_proof_result_label"
@@ -58,17 +58,15 @@
             app:layout_constraintTop_toBottomOf="@+id/technical_proof_candidate_image"
             android:textAlignment="textStart"
             android:textColor="@color/black"
-            android:lineHeight="@dimen/label_secondary_line_height"
             android:textSize="@dimen/label_secondary_text_size"
             android:text="@string/technical_proof_result_instructions" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/technical_proof_result_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
             android:background="@drawable/border_field"
-            android:hint="@string/technical_proof_result_placeholder"
             android:importantForAutofill="no"
             android:inputType="text"
             android:textAlignment="textStart"
@@ -76,6 +74,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/accent"
             android:textSize="@dimen/form_field_input"
+            android:hint="@string/technical_proof_result_placeholder"
             android:text="@={viewModel.shortlistedCandidateItem.resultString}"
             tools:ignore="TouchTargetSizeCheck" />
 

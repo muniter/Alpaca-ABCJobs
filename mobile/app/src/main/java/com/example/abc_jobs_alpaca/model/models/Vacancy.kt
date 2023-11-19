@@ -125,3 +125,8 @@ fun deserializeVacancy(response: JSONObject): VacancyResponse {
 
     return VacancyResponse(success, vacancy)
 }
+
+fun deserializeVacancyError(response: JSONObject): Exception {
+    val error = response.optString("errors")
+    return Exception(error)
+}

@@ -78,6 +78,8 @@ class ShortlistedCandidatesFragment : Fragment() {
                     adapter = shortlistedCandidateList?.let {
                         ShortlistedCandidateItemRecyclerViewAdapter(it) { clickedItem ->
                             val bundle = bundleOf(
+                                "vacancyId" to vacancyId,
+                                "candidateId" to clickedItem.idCandidate,
                                 "fullName" to clickedItem.fullName,
                                 "country" to clickedItem.country,
                                 "city" to clickedItem.city,

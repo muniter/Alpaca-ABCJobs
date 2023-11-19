@@ -147,4 +147,7 @@
     <string name="technical_proof_label">Registrar resultado prueba</string>
     <string name="technical_proof_result_placeholder">Ingrese el porcentaje</string>
     <string name="technical_proof_result_instructions">Resultado de la prueba técnica (0 - 100%)</string>
+    <string name="technical_proof_name_placeholder">Nombre</string>
+    <string name="technical_proof_location_placeholder">Localización</string>
+    <string name="technical_proof_saved">Guardado exitosamente</string>
 </resources>

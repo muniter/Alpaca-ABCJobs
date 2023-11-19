@@ -130,6 +130,16 @@
         android:name="com.example.abc_jobs_alpaca.view.TechnicalProofFragment"
         android:label="@string/technical_proof_label"
         tools:layout="@layout/fragment_technical_proof" >
+        <action
+            android:id="@+id/action_nav_technical_proof_to_shortlistedCandidatesFragment"
+            app:destination="@id/shortlistedCandidatesFragment" >
+        </action>
+        <argument
+            android:name="vacancyId"
+            app:argType="integer" />
+        <argument
+            android:name="candidateId"
+            app:argType="integer" />
         <argument
             android:name="fullName"
             app:argType="string" />
