@@ -144,4 +144,7 @@
     <string name="vacancy_placeholder_name">vacante</string>
     <string name="vacancy_placeholder_description">descripción</string>
     <string name="vacancy_placeholder_team">equipo</string>
+    <string name="technical_proof_label">Registrar resultado prueba</string>
+    <string name="technical_proof_result_placeholder">Ingrese el porcentaje</string>
+    <string name="technical_proof_result_instructions">Resultado de la prueba técnica (0 - 100%)</string>
 </resources>

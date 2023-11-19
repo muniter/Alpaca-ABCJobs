@@ -1,19 +1,21 @@
 package com.example.abc_jobs_alpaca.model.models
-data class ShortlistedCandidateItem(
-    val idCandidate: Int,
-    val idPersona: Int,
-    val names: String,
-    val lastNames: String,
-    val fullName: String,
-    val email: String,
-    val birthDate: String,
-    val countryCode: Int,
-    val country: String,
-    val city: String,
-    val address: String,
-    val phone: String,
-    val biography: String,
-    val languages: List<Language>,
-    val result: Int
-)
+data class ShortlistedCandidateItem (
+    var idCandidate: Int,
+    var idPersona: Int,
+    var names: String,
+    var lastNames: String,
+    var fullName: String,
+    var email: String,
+    var birthDate: String,
+    var countryCode: Int,
+    var country: String,
+    var city: String,
+    var address: String,
+    var phone: String,
+    var biography: String,
+    var languages: List<Language>,
+    var result: Int
+) {
+    var resultString = result.toString()
+}
 

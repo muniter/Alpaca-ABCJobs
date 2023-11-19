@@ -2,18 +2,20 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.ShortlistedCandidateItemRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
@@ -74,7 +76,15 @@ class ShortlistedCandidatesFragment : Fragment() {
                         )
                     }
                     adapter = shortlistedCandidateList?.let {
-                        ShortlistedCandidateItemRecyclerViewAdapter(it)
+                        ShortlistedCandidateItemRecyclerViewAdapter(it) { clickedItem ->
+                            val bundle = bundleOf(
+                                "fullName" to clickedItem.fullName,
+                                "country" to clickedItem.country,
+                                "city" to clickedItem.city,
+                                "result" to clickedItem.result
+                            )
+                            findNavController().navigate(R.id.action_nav_shortlisted_candidates_to_technicalProofFragment, bundle)
+                        }
                     }
                     view.adapter = adapter
                 }

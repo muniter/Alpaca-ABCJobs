@@ -120,5 +120,27 @@
         <argument
             android:name="vacancyId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_nav_shortlisted_candidates_to_technicalProofFragment"
+            app:destination="@id/technicalProofFragment" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/technicalProofFragment"
+        android:name="com.example.abc_jobs_alpaca.view.TechnicalProofFragment"
+        android:label="@string/technical_proof_label"
+        tools:layout="@layout/fragment_technical_proof" >
+        <argument
+            android:name="fullName"
+            app:argType="string" />
+        <argument
+            android:name="country"
+            app:argType="string" />
+        <argument
+            android:name="city"
+            app:argType="string" />
+        <argument
+            android:name="result"
+            app:argType="integer" />
     </fragment>
 </navigation>

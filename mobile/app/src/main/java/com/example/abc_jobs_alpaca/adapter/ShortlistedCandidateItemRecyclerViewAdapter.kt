@@ -1,18 +1,19 @@
 package com.example.abc_jobs_alpaca.adapter
 
+import android.content.Context
 import android.graphics.Color
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.abc_jobs_alpaca.R
-
 import com.example.abc_jobs_alpaca.databinding.FragmentShortlistedCandidateItemBinding
 import com.example.abc_jobs_alpaca.model.models.ShortlistedCandidateItem
-import android.content.Context
 
 class ShortlistedCandidateItemRecyclerViewAdapter(
-    private val values: List<ShortlistedCandidateItem>
+    private val values: List<ShortlistedCandidateItem>,
+    private val onItemClick : (ShortlistedCandidateItem) -> Unit
 ) : RecyclerView.Adapter<ShortlistedCandidateItemRecyclerViewAdapter.ViewHolder>() {
     lateinit var context: Context
 
@@ -39,6 +40,11 @@ class ShortlistedCandidateItemRecyclerViewAdapter(
         holder.nameView.text = item.fullName
         holder.locationView.text = "${item.city}, ${item.country}"
         holder.resultValueView.text = "${item.result.toString()} %"
+
+        val buttonView = holder.buttonResultSet
+        buttonView.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -49,6 +55,7 @@ class ShortlistedCandidateItemRecyclerViewAdapter(
         val nameView: TextView = binding.shortlistedName
         val locationView: TextView = binding.shortlistedLocation
         val resultValueView: TextView = binding.shortlistedResultValue
+        val buttonResultSet: Button = binding.shortlistedResultSet
     }
 
 }
