@@ -2,12 +2,11 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -56,8 +55,8 @@ class VacancyFragment : Fragment() {
         val token = sharedPreferences.getString("token", null)
         tokenLiveData.value = token
 
-        tokenLiveData.observe(viewLifecycleOwner) { token ->
-            viewModel.onTokenUpdated(token)
+        tokenLiveData.observe(viewLifecycleOwner) { tokenReceived ->
+            viewModel.onTokenUpdated(tokenReceived)
             lifecycleScope.launch { viewModel.loadVacancyItems() }
         }
 
@@ -68,9 +67,13 @@ class VacancyFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 viewModel.vacancyList.observe(viewLifecycleOwner) { vacancyList ->
+                    if(vacancyList?.size == 0) {
+                        showToast(
+                            getString(R.string.toast_message_data_not_found)
+                        )
+                    }
                     adapter = vacancyList?.let {
                         VacancyItemRecyclerViewAdapter(it) { clickedItem ->
-                            Log.i("item", clickedItem.id.toString())
                             val bundle = bundleOf("vacancyId" to clickedItem.id)
                             findNavController().navigate(R.id.action_nav_vacancy_list_to_shortlistedCandidatesFragment, bundle)
                         }
@@ -90,12 +93,15 @@ class VacancyFragment : Fragment() {
         }
     }
 
+    private fun showToast(message: String) {
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             VacancyFragment().apply {

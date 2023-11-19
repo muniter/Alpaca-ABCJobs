@@ -7,4 +7,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_body_border">5dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="label_primary_text_size">18sp</dimen>
+    <dimen name="label_primary_line_height">20sp</dimen>
+    <dimen name="label_secondary_text_size">16sp</dimen>
+    <dimen name="label_secondary_line_height">20sp</dimen>
+    <dimen name="label_status_text_size">14sp</dimen>
+    <dimen name="label_status_line_height">18sp</dimen>
 </resources>

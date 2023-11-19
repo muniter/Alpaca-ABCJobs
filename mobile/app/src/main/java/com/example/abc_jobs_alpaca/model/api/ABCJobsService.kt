@@ -734,10 +734,21 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
-    suspend fun getAllVacancies(token: String): Result<VacancyResponse> {
+    suspend fun getAllVacancies(token: String): Result<VacanciesResponse> {
         return try {
             val response = fetchInfo(token, COMPANIES_PATH, VACANCY_PATH)
             Result.success(deserializeVacancies(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getVacancy(token: String, vacancyId: Int): Result<VacancyResponse> {
+        return try {
+            val response = fetchInfo(
+                token, COMPANIES_PATH,"$VACANCY_PATH/$vacancyId"
+            )
+            Result.success(deserializeVacancy(response))
         } catch (e: Exception) {
             Result.failure(e)
         }

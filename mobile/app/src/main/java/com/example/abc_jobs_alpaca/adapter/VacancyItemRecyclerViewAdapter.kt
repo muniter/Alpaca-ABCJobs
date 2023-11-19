@@ -3,6 +3,7 @@ package com.example.abc_jobs_alpaca.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.example.abc_jobs_alpaca.databinding.FragmentVacancyItemBinding
@@ -31,8 +32,8 @@ class VacancyItemRecyclerViewAdapter(
         holder.descriptionView.text = item.description
         holder.teamNameView.text = item.team.name
 
-        val itemView = holder.itemView
-        itemView.setOnClickListener {
+        val vacancyItemView = holder.vacancyItemView
+        vacancyItemView.setOnClickListener {
             onItemClick(item)
         }
     }
@@ -44,6 +45,7 @@ class VacancyItemRecyclerViewAdapter(
         val nameView: TextView = binding.vacancyName
         val descriptionView: TextView = binding.vacancyDescription
         val teamNameView: TextView = binding.vacancyTeamName
+        val vacancyItemView: LinearLayout = binding.vacancyItem
     }
 
 }

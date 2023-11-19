@@ -110,8 +110,12 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getAllInterviews(token)
     }
 
-    suspend fun getVacancies(token: String): Result<VacancyResponse>{
+    suspend fun getVacancies(token: String): Result<VacanciesResponse>{
         return ABCJobsService.getInstance(applicationContext).getAllVacancies(token)
+    }
+
+    suspend fun getVacancy(token: String, vacancyId: Int): Result<VacancyResponse>{
+        return ABCJobsService.getInstance(applicationContext).getVacancy(token,vacancyId)
     }
 
 }

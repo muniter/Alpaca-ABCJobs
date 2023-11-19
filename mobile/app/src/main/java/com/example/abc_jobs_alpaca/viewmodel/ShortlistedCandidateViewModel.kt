@@ -3,18 +3,18 @@ package com.example.abc_jobs_alpaca.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.abc_jobs_alpaca.model.models.VacancyItem
+import com.example.abc_jobs_alpaca.model.models.ShortlistedCandidateItem
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 
-class VacancyViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewModel() {
+class ShortlistedCandidateViewModel(private val abcJobsRepository: ABCJobsRepository, private val vacancyId: Int) : ViewModel() {
 
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
-    private val _vacancyList = MutableLiveData<List<VacancyItem>?>()
-    val vacancyList: MutableLiveData<List<VacancyItem>?> get() = _vacancyList
+    private val _shorlistedCandidateList = MutableLiveData<List<ShortlistedCandidateItem>?>()
+    val shorlistedCandidateList: MutableLiveData<List<ShortlistedCandidateItem>?> get() = _shorlistedCandidateList
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is vacancy Fragment"
+        value = "This is shortlistedCandidate Fragment"
     }
     val text: LiveData<String> = _text
     fun onTokenUpdated(token: String?) {
@@ -31,13 +31,13 @@ class VacancyViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewM
         navigationListener = listener
     }
 
-    suspend fun loadVacancyItems() {
+    suspend fun loadShortlistedCandidateItems() {
         try {
-            if (token.value != null) {
-                abcJobsRepository.getVacancies(token.value!!)
+            if (token?.value != null) {
+                abcJobsRepository.getVacancy(token.value!!,vacancyId)
                     .onSuccess { response ->
                         if (response.success) {
-                            _vacancyList.value = response.data
+                            _shorlistedCandidateList.value = response.data?.preselection
                             navigationListener?.navigateToNextScreen()
                         }
                     }
