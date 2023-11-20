@@ -1,4 +1,4 @@
-INSERT INTO conocimiento_tecnico_tipo (nombre)
+INSERT INTO conocimiento_tecnico_tipo (id, nombre)
 VALUES
   (1, 'Java'),
   (2, 'Python'),
