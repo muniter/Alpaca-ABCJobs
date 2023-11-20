@@ -6,6 +6,7 @@ from sqlalchemy import (
     Identity,
     JSON,
     Date,
+    DateTime,
     Column,
     Table,
     PrimaryKeyConstraint,
@@ -16,7 +17,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
-from datetime import date
+from datetime import date, datetime
 
 from common.shared.api_models.gestion_proyectos import ProyectoDTO
 
@@ -40,7 +41,10 @@ from ..api_models.gestion_candidatos import (
     RolHabilidadDTO,
 )
 from ..api_models.gestion_empresas import (
+    CandidatoPreseleccionadoVacanteDTO,
     EmpleadoDTO,
+    EmpleadoEquipoDTO,
+    EmpleadoEvaluacionDesempenoDTO,
     EmpleadoPersonalityDTO,
     EmpresaDTO,
     EquipoDTO,
@@ -68,6 +72,7 @@ class Empresa(Base):
     nombre: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
 
+    usuario: Mapped["Usuario"] = relationship("Usuario", back_populates="empresa")
     proyectos: Mapped[List["Proyecto"]] = relationship(
         "Proyecto", back_populates="empresa"
     )
@@ -93,6 +98,9 @@ class Candidato(Base):
     )
     persona: Mapped["Persona"] = relationship("Persona", back_populates="candidato")
     usuario: Mapped["Usuario"] = relationship(back_populates="candidato")
+    vacantes: Mapped[List["VacanteCandidato"]] = relationship(
+        back_populates="candidato"
+    )
 
     def build_dto(self) -> CandidatoDTO:
         return CandidatoDTO(
@@ -198,6 +206,9 @@ class Persona(Base):
     )
     candidato: Mapped[Optional[Candidato]] = relationship(
         Candidato, back_populates="persona", uselist=False
+    )
+    empleado: Mapped[Optional["Empleado"]] = relationship(
+        "Empleado", back_populates="persona", uselist=False
     )
 
 
@@ -357,7 +368,12 @@ class Usuario(Base):
         ForeignKey("candidato.id"), nullable=True, unique=True
     )
 
-    candidato: Mapped[Optional[Candidato]] = relationship(back_populates="usuario")
+    candidato: Mapped[Optional[Candidato]] = relationship(
+        "Candidato", back_populates="usuario"
+    )
+    empresa: Mapped[Optional[Empresa]] = relationship(
+        "Empresa", back_populates="usuario"
+    )
     # JSON config column
     config: Mapped[dict] = mapped_column(JSON, nullable=False, default={})
 
@@ -400,6 +416,14 @@ empleado_roles = Table(
     PrimaryKeyConstraint("id_empleado", "id_rol"),
 )
 
+empleado_equipo = Table(
+    "empleado_equipo",
+    Base.metadata,
+    Column("id_empleado", ForeignKey("empleado.id")),
+    Column("id_equipo", ForeignKey("equipo.id")),
+    PrimaryKeyConstraint("id_empleado", "id_equipo"),
+)
+
 
 class Empleado(Base):
     __tablename__ = "empleado"
@@ -408,8 +432,9 @@ class Empleado(Base):
     id_persona: Mapped[int] = mapped_column(
         ForeignKey("persona.id"), nullable=False, unique=True
     )
-    persona: Mapped["Persona"] = relationship("Persona", backref="empleado")
+    persona: Mapped["Persona"] = relationship("Persona", back_populates="empleado")
     cargo: Mapped[str] = mapped_column(String(255), nullable=False)
+    contratado_abc: Mapped[bool] = mapped_column(nullable=False, default=False)
     id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
     empresa: Mapped["Empresa"] = relationship("Empresa", backref="empleados")
     personalidad_id: Mapped[int] = mapped_column(
@@ -425,24 +450,48 @@ class Empleado(Base):
 
     fecha_creacion: Mapped[Date] = mapped_column(Date, nullable=False, default="now()")
 
+    evaluaciones_desempeno: Mapped[List["EvaluacionDesempeno"]] = relationship(
+        "EvaluacionDesempeno", back_populates="empleado"
+    )
+
+    equipos: Mapped[List["Equipo"]] = relationship(
+        "Equipo", secondary=empleado_equipo, viewonly=True
+    )
+
     def build_dto(self) -> EmpleadoDTO:
         return EmpleadoDTO(
             id=self.id,
+            id_persona=self.id_persona,
             name=(" ".join([self.persona.nombres, self.persona.apellidos])).strip(),
             title=self.cargo,
             company=self.empresa.build_dto(),
             personality=self.personalidad.build_dto(),
             skills=[r.build_dto() for r in self.roles_habilidades],
+            evaluations=[e.build_dto() for e in self.evaluaciones_desempeno],
+            teams=[e.build_simple_dto() for e in self.equipos],
         )
 
 
-empleado_equipo = Table(
-    "empleado_equipo",
-    Base.metadata,
-    Column("id_empleado", ForeignKey("empleado.id")),
-    Column("id_equipo", ForeignKey("equipo.id")),
-    PrimaryKeyConstraint("id_empleado", "id_equipo"),
-)
+class EvaluacionDesempeno(Base):
+    __tablename__ = "evaluacion_desempeno"
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    id_empleado: Mapped[int] = mapped_column(
+        ForeignKey("empleado.id"), nullable=False, unique=False
+    )
+    fecha: Mapped[date] = mapped_column(Date, nullable=False)
+    puntaje: Mapped[int] = mapped_column(nullable=False)
+    empleado: Mapped["Empleado"] = relationship(
+        "Empleado", back_populates="evaluaciones_desempeno"
+    )
+
+    __table_args__ = (UniqueConstraint("id_empleado", "fecha"),)
+
+    def build_dto(self) -> EmpleadoEvaluacionDesempenoDTO:
+        return EmpleadoEvaluacionDesempenoDTO(
+            id=self.id,
+            date=self.fecha,
+            result=self.puntaje,
+        )
 
 
 class Equipo(Base):
@@ -461,6 +510,12 @@ class Equipo(Base):
             name=self.nombre,
             company=self.empresa.build_dto(),
             employees=[e.build_dto() for e in self.empleados],
+        )
+
+    def build_simple_dto(self) -> EmpleadoEquipoDTO:
+        return EmpleadoEquipoDTO(
+            id=self.id,
+            name=self.nombre,
         )
 
 
@@ -582,13 +637,26 @@ class Proyecto(Base):
         )
 
 
-vacante_candidato = Table(
-    "vacante_candidato",
-    Base.metadata,
-    Column("id_vacante", ForeignKey("vacante.id")),
-    Column("id_candidato", ForeignKey("candidato.id")),
-    PrimaryKeyConstraint("id_vacante", "id_candidato"),
-)
+class VacanteCandidato(Base):
+    __tablename__ = "vacante_candidato"
+    id_vacante: Mapped[int] = mapped_column(ForeignKey("vacante.id"), nullable=False)
+    id_candidato: Mapped[int] = mapped_column(
+        ForeignKey("candidato.id"), nullable=False
+    )
+    vacante: Mapped["Vacante"] = relationship("Vacante", back_populates="preseleccion")
+    candidato: Mapped["Candidato"] = relationship(
+        "Candidato", back_populates="vacantes"
+    )
+    puntaje: Mapped[int] = mapped_column(nullable=True)
+
+    __table_args__ = (PrimaryKeyConstraint("id_vacante", "id_candidato"),)
+
+    def build_dto(self) -> CandidatoPreseleccionadoVacanteDTO:
+        dto = self.candidato.build_detail_dto()
+        return CandidatoPreseleccionadoVacanteDTO(
+            **dto.model_dump(),
+            result=self.puntaje,
+        )
 
 
 class Vacante(Base):
@@ -596,21 +664,27 @@ class Vacante(Base):
 
     id: Mapped[int] = mapped_column(Identity(), primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
+    abierta: Mapped[bool] = mapped_column(nullable=False, default=True)
     id_empresa: Mapped[int] = mapped_column(ForeignKey("empresa.id"), nullable=False)
     empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
     descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
     equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
-    preseleccion: Mapped[List[Candidato]] = relationship(
-        "Candidato", secondary=vacante_candidato
+    preseleccion: Mapped[List[VacanteCandidato]] = relationship(
+        back_populates="vacante"
+    )
+    fecha_entrevista: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, nullable=True
     )
 
     def build_dto(self) -> VacanteDTO:
         return VacanteDTO(
             id=self.id,
             name=self.name,
+            open=self.abierta,
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
-            preselection=[cand.build_detail_dto() for cand in self.preseleccion],
+            preselection=[vc.build_dto() for vc in self.preseleccion],
+            interview_date=self.fecha_entrevista,
         )

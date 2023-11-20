@@ -1,5 +1,5 @@
 from typing import List, Union
-from fastapi import APIRouter, FastAPI, Response, status, Depends
+from fastapi import APIRouter, FastAPI, status, Depends
 from common.shared.api_models.gestion_usuarios import UsuarioEmpresaDTO
 from common.shared.jwt import get_request_user_empresa
 from common.shared.logger import logger
@@ -8,6 +8,7 @@ from common.shared.config import configuration
 from common.shared.api_models.gestion_empresas import (
     EmpleadoCreateDTO,
     EmpleadoDTO,
+    EmpleadoEvaluacionDesempenoCreateDTO,
     EmpleadoPersonalityDTO,
     EmpresaCreateResponseDTO,
     EmpresaCreateDTO,
@@ -16,12 +17,14 @@ from common.shared.api_models.gestion_empresas import (
     VacanteCreateDTO,
     VacanteDTO,
     VacantePreseleccionDTO,
+    VacanteResultadoPruebaTecnicaDTO,
+    VacanteSelecconarCandidatoDTO,
+    VacanteSetFechaEntrevistaDTO,
 )
 from common.shared.api_models.shared import (
     APIResponse,
     APIResponseModel,
 )
-from common.shared.database.db import recreate_all
 from .empresa import (
     EmpresaService,
     UtilsRepository,
@@ -70,10 +73,13 @@ def crear_employee(
     status_code=status.HTTP_200_OK,
 )
 def get_all_empleados(
+    hired_abc: Union[bool, None] = None,
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.get_all_empleados(id_empresa=user.id_empresa)
+    result = service.get_all_empleados(
+        id_empresa=user.id_empresa, contratado_abc=hired_abc
+    )
     return APIResponse(result)
 
 
@@ -88,6 +94,23 @@ def get_empleado(
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
     result = service.get_empleado_by_id(id_empresa=user.id_empresa, id_empleado=id)
+    return APIResponse(result)
+
+
+@router.post(
+    "/employee/{id}/evaluation",
+    response_model=APIResponseModel(EmpleadoDTO),
+    status_code=status.HTTP_200_OK,
+)
+def employee_evaluation(
+    id: int,
+    data: EmpleadoEvaluacionDesempenoCreateDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.empleado_evaluacion_desempeno(
+        id_empresa=user.id_empresa, id_empleado=id, data=data
+    )
     return APIResponse(result)
 
 
@@ -141,7 +164,7 @@ def get_all_vacancies(
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.get_all_vacantes(id_empresa=user.id_empresa)
+    result = service.vacante_get_all(id_empresa=user.id_empresa)
     return APIResponse(result)
 
 
@@ -155,7 +178,7 @@ def get_vacancy(
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.get_vacante_by_id(id_empresa=user.id_empresa, id_vacante=id)
+    result = service.vacante_get_by_id(id_empresa=user.id_empresa, id_vacante=id)
     return APIResponse(result)
 
 
@@ -169,7 +192,7 @@ def crear_vacancy(
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.crear_vacante(id_empresa=user.id_empresa, data=data)
+    result = service.vacante_crear(id_empresa=user.id_empresa, data=data)
     return APIResponse(result)
 
 
@@ -184,7 +207,58 @@ def preselect_vacancy(
     service: EmpresaService = Depends(get_empresa_service),
     user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
 ):
-    result = service.preselecionar_vacante(
+    result = service.vacante_preseleccion(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/test-result",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def test_result_vacancy(
+    id: int,
+    data: List[VacanteResultadoPruebaTecnicaDTO],
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.vacante_resultado_prueba_tecnica(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/interivew-date",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def vacancy_interview_date(
+    id: int,
+    data: VacanteSetFechaEntrevistaDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.vacante_set_fecha_entrevista(
+        id_empresa=user.id_empresa, id_vacante=id, data=data
+    )
+    return APIResponse(result)
+
+
+@router.post(
+    "/vacancy/{id}/select",
+    response_model=APIResponseModel(VacanteDTO),
+    status_code=status.HTTP_200_OK,
+)
+def vacancy_select(
+    id: int,
+    data: VacanteSelecconarCandidatoDTO,
+    service: EmpresaService = Depends(get_empresa_service),
+    user: UsuarioEmpresaDTO = Depends(get_request_user_empresa),
+):
+    result = service.vacante_seleccionar(
         id_empresa=user.id_empresa, id_vacante=id, data=data
     )
     return APIResponse(result)

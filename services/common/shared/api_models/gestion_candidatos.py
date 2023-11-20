@@ -1,6 +1,6 @@
 from pydantic import BaseModel, StringConstraints
 from typing import Annotated, Optional, List
-from datetime import date
+from datetime import date, datetime
 
 
 class CandidatoCreateDTO(BaseModel):
@@ -220,3 +220,12 @@ class CandidatoSearchResultDTO(CandidatoDTO):
     technical_info_types_related: List["CandidatoConocimientoTecnicoTipoDTO"]
     languages: List["LenguajeDTO"]
     languages_related: List["LenguajeDTO"]
+
+
+class CandidatoEntrevistaDTO(BaseModel):
+    id_vacancy: int
+    name: str
+    company: str
+    interview_date: Optional[datetime]
+    completed: bool
+    result: Optional[int] = None

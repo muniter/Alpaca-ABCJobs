@@ -1,0 +1,53 @@
+H2 {
+    color: var(--contrastCompanyColor);
+    margin: 0rem;
+}
+
+.icon-div {
+    font-size: 11rem;
+    margin-right: 0.5rem;
+    display: flex;
+}
+
+.hired-container {
+    padding: 0% 10%;
+    height: 90%;
+}
+
+btn, .evaluacion {
+  /* Reset button */
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--contrastCompanyColor);
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    max-width: 100%;
+    min-width: 45%;
+    margin: 1rem;
+    border: solid black 3px;
+    border-radius: 1rem;
+}
+
+.person-info{
+    display: flex;
+    align-items: safe start;
+    flex-direction: column;
+    justify-content: center;
+}
+
+:host ::ng-deep mat-chip {
+    padding: 0.1rem !important;
+    height: auto !important;
+}
+

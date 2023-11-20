@@ -21,7 +21,6 @@ class InterviewViewModel( private val abcJobsRepository: ABCJobsRepository): Vie
                 abcJobsRepository.getAllInterviews(token.value!!)
                     .onSuccess { response ->
                         if (response.success) {
-
                             _interviewsInfoList.value = response.data
                         }
                     }

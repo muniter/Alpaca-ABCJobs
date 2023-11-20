@@ -15,7 +15,7 @@ data class ExamItemExtend(
     val id: Int,
     val exam: ExamItem,
     val id_candidato: Int,
-    val result: Int,
+    val result: Any?,
     val completed: Boolean
 )
 
@@ -44,7 +44,7 @@ data class ExamStartData(
     val id_result: Int,
     val id_exam: Int,
     val next_question: Question?,
-    val result: Any?
+    val result: Any? = null
 )
 
 data class Question(
@@ -98,7 +98,7 @@ fun deserializeExamsResult(response: JSONObject): ExamsExtendResponse {
             if (examObject != null) {
                 val id = examObject.optInt("id")
                 val id_candidato = examObject.optInt("id_candidato")
-                val result = examObject.optInt("result")
+                val result = examObject.opt("result")
                 val completed = examObject.optBoolean("completed")
                 val exam = examObject.optJSONObject("exam")
                 val id_exam = exam?.optInt("id")
@@ -133,7 +133,7 @@ fun deserializeExamStart(response: JSONObject): ExamStartResponse {
         next_question.optJSONArray("answers")
     )
 
-    val examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result!!)
+    val examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result)
 
     return ExamStartResponse(success, examStartData)
 }
@@ -145,12 +145,12 @@ fun deserializeAnswerQuestion(response: JSONObject): AnswerQuestionResponse {
     val id_result = dataObject?.optInt("id_result")
     val id_exam = dataObject?.optInt("id_exam")
     val next_question = dataObject?.optJSONObject("next_question")
-    val result = dataObject?.opt("result")
+    val result = dataObject.opt("result")
 
     val examStartData: ExamStartData
 
     if(next_question == null){
-        examStartData = ExamStartData(id_result!!, id_exam!!, null, result!!)
+        examStartData = ExamStartData(id_result!!, id_exam!!, null, result)
         return AnswerQuestionResponse(success, examStartData)
     }else{
         val question = Question(
@@ -160,7 +160,7 @@ fun deserializeAnswerQuestion(response: JSONObject): AnswerQuestionResponse {
             next_question?.optInt("difficulty")!!,
             next_question?.optJSONArray("answers")!!
         )
-        examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result!!)
+        examStartData = ExamStartData(id_result!!, id_exam!!, question!!, result)
     }
 
     return AnswerQuestionResponse(success, examStartData)

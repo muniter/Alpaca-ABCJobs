@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CompanyService } from '../company.service';
 import { Employee, EmployeesListResponse } from '../Employee';
 import { Personality } from 'src/app/shared/Personality';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Team } from '../Team';
 import { Company } from '../company';
 
@@ -104,6 +104,20 @@ describe('CompanyCreateTeamComponent', () => {
     component.selectedEmployees.push(baseEmployee)
 
     let companyServiceSpy = spyOn(companyService, 'postTeam').and.returnValue(of({ success: true, data: new Team(1, "", new Company("", ""), []) }));
+
+    component.teamCreation();
+
+    expect(companyServiceSpy).toHaveBeenCalledTimes(1);
+  })
+
+  it('should handle error creating team', () => {
+    const name = component.teamCreateForm.controls['name'];
+    name.setValue("Equipo A")
+
+    let baseEmployee = new Employee(1, "Pepe", "cajero", new Personality(1, "tranqui"), [])
+    component.selectedEmployees.push(baseEmployee)
+
+    let companyServiceSpy = spyOn(companyService, 'postTeam').and.returnValue(throwError("err"));
 
     component.teamCreation();
 

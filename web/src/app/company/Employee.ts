@@ -1,26 +1,25 @@
 import { Personality } from "../shared/Personality";
 import { Skill } from "../shared/skill";
+import { TeamShort } from "./Team";
 
 export class Employee {
-    id: number;
-    name: string;
-    title: string;
-    personality: Personality;
-    skills: Skill[]
-
     public constructor(
-        id: number,
-        name: string,
-        title: string,
-        personality: Personality,
-        skills: Skill[]
-    ) {
-        this.id = id
-        this.name = name
-        this.title = title
-        this.personality = personality
-        this.skills = skills
-    }
+        public id: number,
+        public name: string,
+        public title: string,
+        public personality: Personality,
+        public skills: Skill[] = [],
+        public evaluations: EmployeeEvaluation[] = [],
+        public teams: TeamShort[] = [],
+    ) {}
+}
+
+export class EmployeeEvaluation {
+  public constructor(
+    public id: number,
+    public date: string,
+    public result: number,
+  ) {}
 }
 
 export class EmployeeResponse {

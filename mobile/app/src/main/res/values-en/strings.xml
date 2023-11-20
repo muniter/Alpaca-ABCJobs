@@ -138,7 +138,7 @@
     <string name="option3_label">Option 3</string>
     <string name="option4_label">Option 4</string>
     <string name="submit_button_label">Send</string>
-    <string name="take_exam_title">Tomar examen</string>
+    <string name="take_exam_title">Take Exam</string>
     <string name="vacancies">Vacancies</string>
     <string name="menu_vacancy">Vacancies</string>
     <string name="shortlisted_candidates">Shortlisted Candidates</string>
@@ -149,4 +149,14 @@
     <string name="technical_proof_name_placeholder">Name</string>
     <string name="technical_proof_location_placeholder">Location</string>
     <string name="technical_proof_saved">Saved successfully</string>
+    <string name="interview_list_title">Interviews</string>
+    <string name="exams_title">Exam List</string>
+    <string name="exam_title">Take Exam</string>
+    <string name="result_interview_label">Result:</string>
+    <string name="state_label">Status:</string>
+    <string name="vacancy_label">Vacancy:</string>
+    <string name="hour_label">Time:</string>
+    <string name="pending_message">Pending</string>
+    <string name="completed_message">Completed</string>
+    <string name="noresults_messages">No Results Recorded</string>
 </resources>

@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/academicInfoCreateFragment"
         android:name="com.example.abc_jobs_alpaca.view.AcademicInfoCreateFragment"
-        android:label="Creación de información académica"
+        android:label="@string/create_academic_info_title"
         tools:layout="@layout/fragment_academic_info_create" >
         <action
             android:id="@+id/action_academicInfoCreateFragment_to_nav_academic_info"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/nav_technical_info"
         android:name="com.example.abc_jobs_alpaca.view.TechnicalInfoFragment"
-        android:label="Información técnica"
+        android:label="@string/technical_info_title"
         tools:layout="@layout/fragment_item_technical_list" >
         <action
             android:id="@+id/action_nav_technical_info_to_technicalInfoCreateFragment"
@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/technicalInfoCreateFragment"
         android:name="com.example.abc_jobs_alpaca.view.TechnicalInfoCreateFragment"
-        android:label="Creación de Información técnica" >
+        android:label="@string/create_technical_info_title" >
         <action
             android:id="@+id/action_technicalInfoCreateFragment_to_nav_technical_info"
             app:destination="@id/nav_technical_info" />
@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/nav_work_info"
         android:name="com.example.abc_jobs_alpaca.view.WorkInfoFragment"
-        android:label="Información laboral"
+        android:label="@string/work_info_title"
         tools:layout="@layout/fragment_item_work_list" >
         <action
             android:id="@+id/action_nav_work_info_to_workInfoCreateFragment"
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/workInfoCreateFragment"
         android:name="com.example.abc_jobs_alpaca.view.WorkInfoCreateFragment"
-        android:label="Creación de Información laboral"
+        android:label="@string/create_work_info_title"
         tools:layout="@layout/fragment_work_info_create">
         <action
             android:id="@+id/action_workInfoCreateFragment_to_nav_work_info"
@@ -82,7 +82,7 @@
     <fragment
         android:id="@+id/nav_exam_list"
         android:name="com.example.abc_jobs_alpaca.view.ExamFragment"
-        android:label="Lista de exámenes"
+        android:label="@string/exams_title"
         tools:layout="@layout/fragment_exam_list" >
         <action
             android:id="@+id/action_nav_exam_list_to_examTakeFragment"
@@ -92,7 +92,7 @@
     <fragment
         android:id="@+id/examTakeFragment"
         android:name="com.example.abc_jobs_alpaca.view.ExamTakeFragment"
-        android:label="Tomar examen"
+        android:label="@string/exam_title"
         tools:layout="@layout/fragment_exam_take">
         <argument
             android:name="examId"
@@ -153,4 +153,9 @@
             android:name="result"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_interview_list"
+        android:name="com.example.abc_jobs_alpaca.view.InterviewItemFragment"
+        android:label="@string/interview_list_title"
+        tools:layout="@layout/fragment_item_interview_list" />
 </navigation>

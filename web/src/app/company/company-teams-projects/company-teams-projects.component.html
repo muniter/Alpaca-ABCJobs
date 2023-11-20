@@ -1,17 +1,38 @@
 <div class="company-theme company-home-body">
   <app-company-header [username]="'Perfil'"></app-company-header>
+  <div class="company-teams-container">
+    <div class="teams-container">
+      <app-login-logon-container>
+        <H2 i18n="@@teams">Equipos</H2>
 
-  <div class="teams-container">
-    <app-login-logon-container>
-      <H2 i18n="@@teams">Equipos</H2>
+        <div class="team-cards">
+          <drag-scroll [drag-scroll-y-disabled]="true">
+            <app-team-project-card drag-scroll-item class="add-card" type=add title="Crear Equipo"
+              i18n-title="@@createteam" (click)="openAddTeamModal()" />
 
-      <div class="team-cards">
-        <app-team-project-card class="add-card" type=add title="Crear Equipo" i18n-title="@@createteam" (click)="openAddTeamModal()"/>
+            <app-team-project-card drag-scroll-item *ngFor="let team of teams" type="team" [title]="team.name"
+              [subtitle]="team.employees.length + ' members'" />
+          </drag-scroll>
+        </div>
 
-        <app-team-project-card *ngFor="let team of teams" type="team" [title]="team.name"
-          [subtitle]="team.employees.length + ' members'" />
-      </div>
+      </app-login-logon-container>
+    </div>
 
-    </app-login-logon-container>
+    <div class="projects-container">
+      <app-login-logon-container>
+        <H2 i18n="@@projects">Proyectos</H2>
+
+        <div class="project-cards">
+          <drag-scroll [drag-scroll-y-disabled]="true">
+            <app-team-project-card drag-scroll-item class="add-card" type=add title="Crear Proyecto"
+              i18n-title="@@createproject" (click)="openAddProjectModal()" />
+
+            <app-team-project-card drag-scroll-item *ngFor="let project of projects" type="project" [title]="project.name"
+              [subtitle]="project.team.name" />
+          </drag-scroll>
+        </div>
+
+      </app-login-logon-container>
+    </div>
   </div>
 </div>

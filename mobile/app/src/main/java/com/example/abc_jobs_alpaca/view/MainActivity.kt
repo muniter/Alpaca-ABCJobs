@@ -83,7 +83,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_technical_info,
                 R.id.nav_work_info,
                 R.id.nav_exam_list,
-                R.id.nav_vacancy
+                R.id.nav_vacancy,
+                R.id.nav_interview_list
             ), drawerLayout
         )
         if (isCompany) {
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity() {
             navView.menu.findItem(R.id.nav_academic_info).isVisible = false
             navView.menu.findItem(R.id.nav_technical_info).isVisible = false
             navView.menu.findItem(R.id.nav_work_info).isVisible = false
+            navView.menu.findItem(R.id.nav_interview_list).isVisible = false
         }
         else {
             navView.menu.findItem(R.id.nav_vacancy).isVisible = false

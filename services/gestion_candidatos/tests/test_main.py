@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+from sqlalchemy import select
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoBatchSetDTO,
     CandidatoConocimientoTecnicoCreateDTO,
@@ -9,13 +10,15 @@ from common.shared.api_models.gestion_candidatos import (
 )
 from common.shared.api_models.shared import ErrorBuilder
 from common.shared.database.db import get_db_session
-from common.shared.database.models import Candidato
+from common.shared.database.models import Candidato, Vacante, VacanteCandidato
 from common.shared.tests.helpers import crear_usuario_candidato, crear_usuario_empresa
+from datetime import datetime
 from gestion_candidatos.candidato import (
     CandidatoService,
     ConocimientoTecnicosService,
     DatosAcademicosService,
     DatosLaboralesService,
+    EntrevistaRepository,
     RolesHabilidadesRepository,
 )
 from gestion_candidatos.main import app
@@ -30,6 +33,7 @@ roles_habilidades_repository = RolesHabilidadesRepository(session)
 datos_laborales_service = DatosLaboralesService(session)
 datos_academicos_service = DatosAcademicosService(session)
 conocimientos_tecnico_service = ConocimientoTecnicosService(session)
+entrevista_repository = EntrevistaRepository(session)
 
 
 def crear_candidato() -> Candidato:
@@ -799,3 +803,23 @@ def test_invalid_country():
     result = candidate_service.update_informacion_personal(candidato.id, data)
     assert isinstance(result, ErrorBuilder)
     assert "country_code" in result.serialize()
+
+
+def candidato_pre_seleccionado_con_entrevista():
+    query = (
+        select(VacanteCandidato).limit(1)
+    )
+    res = session.execute(query).scalars().all()
+    assert len(res) > 0
+    vc = res[0]
+    vc.vacante.fecha_entrevista = datetime.now()
+    session.add(vc)
+    return vc.candidato, vc.vacante
+
+
+def test_candidato_repository():
+    candidato, vacante = candidato_pre_seleccionado_con_entrevista()
+    entrevistas = entrevista_repository.get_entrevistas(candidato.id)
+    assert len(entrevistas) > 0
+    assert vacante.id in [e.id_vacancy for e in entrevistas]
+    print(entrevistas)

@@ -22,6 +22,8 @@ import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentPreferencesBinding
 import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.utils.DateUtils.dateFormatted
+import com.example.abc_jobs_alpaca.utils.DateUtils.timeFormatted
 import com.example.abc_jobs_alpaca.viewmodel.PreferencesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,17 +40,6 @@ class PreferencesFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentPreferencesBinding
     private lateinit var viewModel: PreferencesViewModel
     private val tokenLiveData = MutableLiveData<String?>()
-
-    companion object {
-        fun newInstance() = PreferencesFragment()
-        const val DATE_FORMAT_1 = "dd/MM/yyyy"
-        const val DATE_FORMAT_2 = "dd-MM-yyyy"
-        const val DATE_FORMAT_3 = "yyyy/MM/dd"
-        const val DATE_FORMAT_4 = "yyyy-MM-dd"
-        const val TIME_FORMAT_1 = "12h"
-        const val TIME_FORMAT_2 = "24h"
-
-    }
 
     @SuppressLint("MissingInflatedId", "SetTextI18n", "SuspiciousIndentation")
     override fun onCreateView(
@@ -161,64 +152,21 @@ class PreferencesFragment : Fragment(), View.OnClickListener {
         languageView.text = "$currentLanguage"
 
         var currentDate = Date()
-        var xx = dateFormatted(currentDate)
+        var dateFormat = sharedPreferences.getString("dateFormat", "")!!
+        var xx = dateFormatted(currentDate, dateFormat)
         dateFormatView.text = "$xx"
 
         var currentTime = Time()
+        var timeFormat = sharedPreferences.getString("timeFormat", "")!!
         currentTime.setToNow()
-        var yy = timeFormatted(currentTime)
+        var yy = timeFormatted(currentTime, timeFormat)
         timeFormatView.text = "$yy"
 
         return binding.root
     }
 
 
-    private fun dateFormatted(date: Date): String {
-        val dateString: String;
-        var sharedPreferences =
-            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        var dateFormat = sharedPreferences.getString("dateFormat", "")
-        when (dateFormat) {
-            DATE_FORMAT_1 -> dateString =
-                SimpleDateFormat(DATE_FORMAT_1, Locale.getDefault()).format(date)
 
-            DATE_FORMAT_2 -> dateString =
-                SimpleDateFormat(DATE_FORMAT_2, Locale.getDefault()).format(date)
-
-            DATE_FORMAT_3 -> dateString =
-                SimpleDateFormat(DATE_FORMAT_3, Locale.getDefault()).format(date)
-
-            DATE_FORMAT_4 -> dateString =
-                SimpleDateFormat(DATE_FORMAT_4, Locale.getDefault()).format(date)
-
-            else -> dateString = ""
-        }
-        return dateString
-    }
-
-    private fun timeFormatted(time: Time): String {
-        val timeString: String
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val timeFormat = sharedPreferences.getString(
-            "timeFormat",
-            TIME_FORMAT_1
-        ) // Obtiene la preferencia de formato de hora
-
-        val formatPattern = if (timeFormat == TIME_FORMAT_2) {
-            "HH:mm" // Formato de 24 horas
-        } else {
-            "hh:mm a" // Formato de 12 horas con AM/PM
-        }
-
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, time.hour)
-        calendar.set(Calendar.MINUTE, time.minute)
-
-        timeString = SimpleDateFormat(formatPattern, Locale.getDefault()).format(calendar.time)
-
-        return timeString
-    }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

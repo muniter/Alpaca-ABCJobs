@@ -9,12 +9,11 @@ data class InterviewsResponse(
 
 data class InterviewItem(
     val id_vacancy: Int,
-    //val name_vacancy: String,
     val name: String,
     val company: String,
     val interview_date: String,
     val completed: Boolean,
-    val result: Int
+    val result: Any? = null
 )
 
 
@@ -28,13 +27,11 @@ fun deserializeInterviews(json: JSONObject): InterviewsResponse {
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.optJSONObject(i)
             val id_vacancy = dataObject?.optInt("id_vacancy") ?: 0
-            //val name_vacancy = dataObject?.optString("name_vacancy") ?: ""
             val name = dataObject?.optString("name") ?: ""
             val company = dataObject?.optString("company") ?: ""
             val interview_date = dataObject?.optString("interview_date") ?: ""
             val completed = dataObject?.optBoolean("completed") ?: false
-            val result = dataObject?.optInt("result") ?: 0
-
+            val result = dataObject?.opt("result")
             val vacancyItem = InterviewItem(id_vacancy, name, company, interview_date, completed, result)
             data.add(vacancyItem)
         }

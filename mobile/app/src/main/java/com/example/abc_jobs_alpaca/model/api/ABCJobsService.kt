@@ -819,7 +819,7 @@ class ABCJobsService constructor(context: Context){
 
     suspend fun getAllInterviews(token: String): Result<InterviewsResponse> {
         return try {
-            val response = fetchInfo(token, EVALUATIONS_PATH, INTERVIEWS_PATH)
+            val response = fetchInfo(token, CANDIDATES_PATH, INTERVIEWS_PATH)
             Result.success(deserializeInterviews(response))
         } catch (e: Exception) {
             Result.failure(e)

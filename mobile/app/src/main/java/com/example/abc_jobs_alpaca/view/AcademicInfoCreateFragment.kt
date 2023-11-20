@@ -201,7 +201,7 @@ class AcademicInfoCreateFragment : Fragment(),
         }
 
         disableButton(view.findViewById(R.id.academicInfoSaveButton)!!)
-
+        (activity as MainActivity).hideButton();
         return view
     }
 

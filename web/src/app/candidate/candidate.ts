@@ -5,13 +5,25 @@ import { Skill } from "../shared/skill";
 
 export class Candidate {
   names: string;
-  lastnames: string;
+  last_names: string;
   email: string;
 
-  public constructor(names: string, lastnames: string, email: string) {
+  public constructor(names: string, last_names: string, email: string) {
     this.names = names;
-    this.lastnames = lastnames;
+    this.last_names = last_names;
     this.email = email;
+  }
+}
+
+export class PreselectedCandidate extends Candidate {
+  id_candidate: number;
+  result: number;
+
+  public constructor(id: number, id_candidate: number, names: string, last_names: string, email: string, result: number) 
+  {
+    super(names, last_names, email);
+    this.id_candidate = id_candidate
+    this.result = result
   }
 }
 
@@ -23,14 +35,14 @@ export class CandidateFormRegister extends Candidate {
 
   public constructor(
     names: string,
-    lastnames: string,
+    last_names: string,
     email: string,
     password: string,
     passwordConfirm: string,
     termsCheck: boolean,
     termsCheck2: boolean
   ) {
-    super(names, lastnames, email);
+    super(names, last_names, email);
     this.password = password;
     this.passwordConfirm = passwordConfirm;
     this.termsCheck = termsCheck;

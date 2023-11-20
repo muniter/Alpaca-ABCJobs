@@ -31,16 +31,15 @@ class InterviewItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val pendingMessage = getString(R.string.pending_message)
+        val completeMessage = getString(R.string.completed_message)
+        val noResults = getString(R.string.noresults_messages)
         val view = inflater.inflate(R.layout.fragment_item_interview_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
 
@@ -57,7 +56,11 @@ class InterviewItemFragment : Fragment() {
         val token = sharedPreferences.getString("token", null)
         tokenLiveData.value = token
 
-        // Set the adapter
+        tokenLiveData.observe(viewLifecycleOwner) { token ->
+            viewModel.onTokenUpdated(token)
+            lifecycleScope.launch { viewModel.loadInterviewsItemsInfo() }
+        }
+
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
@@ -65,11 +68,22 @@ class InterviewItemFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 viewModel.interviewsInfoList.observe(viewLifecycleOwner) { interviewsInfoList ->
-                    adapter = interviewsInfoList?.let { InterviewItemRecyclerViewAdapter(it) }
+                    val dateFormat = sharedPreferences.getString("dateFormat", "")!!
+                    val timeFormat = sharedPreferences.getString("timeFormat", "")!!
+                    adapter = interviewsInfoList?.let {
+                            InterviewItemRecyclerViewAdapter(
+                                it,
+                                dateFormat,
+                                timeFormat,
+                                pendingMessage,
+                                completeMessage,
+                                noResults
+                            )
+                        }
+                    }
                     view.adapter = adapter
                 }
             }
-        }
         (activity as MainActivity).unhideButton();
         return view
     }
@@ -80,19 +94,5 @@ class InterviewItemFragment : Fragment() {
         if (!hidden) {
             lifecycleScope.launch { viewModel.loadInterviewsItemsInfo() }
         }
-    }
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            InterviewItemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }
