@@ -34,6 +34,7 @@ from common.shared.database.models import (
     DatosAcademicosTipo,
     DatosLaborales,
     ExamenResultado,
+    ExamenTecnico,
     Lenguaje,
     Persona,
     RolesHabilidades,
@@ -430,8 +431,14 @@ class ConocimientoTecnicosRepository:
 
     def build_dto(self, data: ConocimientoTecnicos) -> CandidatoConocimientoTecnicoDTO:
         assert data.persona.candidato
-        query = select(ExamenResultado).where(
-            ExamenResultado.id_candidato == data.persona.candidato.id
+        query = (
+            select(ExamenResultado)
+            .join(ExamenTecnico)
+            .where(
+                ExamenTecnico.id_conocimiento_tecnico_tipo == data.id_tipo,
+                ExamenResultado.id_candidato == data.persona.candidato.id,
+                ExamenResultado.completado.is_(True),
+            )
         )
         exresult = self.session.execute(query).scalars().one_or_none()
         if exresult:
@@ -479,7 +486,9 @@ class ConocimientoTecnicosService:
             return []
 
         conocimientos = self.repository.get_all_from_id_persona(candidato.id_persona)
-        return [self.repository.build_dto(conocimiento) for conocimiento in conocimientos]
+        return [
+            self.repository.build_dto(conocimiento) for conocimiento in conocimientos
+        ]
 
     def get_by_id(self, id: int, id_candidato: int):
         result = self.validate_permissions(id_candidato, id)
