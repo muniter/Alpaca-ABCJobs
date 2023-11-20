@@ -443,6 +443,7 @@ class EmpresaService:
         vacante.name = data.name
         vacante.descripcion = data.description
         vacante.id_empresa = id_empresa
+        vacante.country_code = data.country_code
         equipo = self.equipo_repository.get_by_id(
             id=data.team_id, id_empresa=id_empresa
         )

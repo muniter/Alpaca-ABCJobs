@@ -669,6 +669,10 @@ class Vacante(Base):
     empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
     descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
+    country_code: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("countries.num_code"), nullable=True
+    )
+    pais: Mapped[Optional[Country]] = relationship("Country", backref="vacantes")
     equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
     preseleccion: Mapped[List[VacanteCandidato]] = relationship(
         back_populates="vacante"
@@ -685,6 +689,7 @@ class Vacante(Base):
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
+            country=self.pais.build_dto() if self.pais else None,
             preselection=[vc.build_dto() for vc in self.preseleccion],
             interview_date=self.fecha_entrevista,
         )

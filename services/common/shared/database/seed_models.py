@@ -104,6 +104,10 @@ def seed_empresa(email: str):
 
     candidatos = candidate_service.repository.get_all()
 
+    countries = candidate_service.country_repository.get_all()
+    pre_countries = ["US", "CO", "EC", "AF"]
+    countries = list(filter(lambda c: c.alpha_2_code in pre_countries, countries))
+
     # Empleados
     empleados = []
     logger.info(f"Seeding empleados")
@@ -171,6 +175,7 @@ def seed_empresa(email: str):
                 team_id=faker.random_element(elements=equipos).id,
                 name=tech_job(),
                 description=faker.sentence(),
+                country_code=faker.random_element(elements=countries).num_code,
             ),
         )
         assert not isinstance(vacante, ErrorBuilder)
