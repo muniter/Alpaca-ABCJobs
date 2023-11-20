@@ -78,7 +78,7 @@ def test_service_get_examen():
     result = examen_service.get_examen(id_examen=1, id_candidato=1)
     assert not isinstance(result, ErrorBuilder)
     assert result.id == 1
-    assert result.skill.name == "Python Developer"
+    assert result.skill.name == "Python"
 
 
 def test_endpoint_get_examen():
@@ -86,7 +86,7 @@ def test_endpoint_get_examen():
     response = client.get("/exam/1", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
     assert response.json()["data"]["id"] == 1
-    assert response.json()["data"]["skill"]["name"] == "Python Developer"
+    assert response.json()["data"]["skill"]["name"] == "Python"
 
 
 def test_service_start_examen():

@@ -178,6 +178,7 @@ class CandidatoConocimientoTecnicoDTOBase(BaseModel):
 class CandidatoConocimientoTecnicoDTO(CandidatoConocimientoTecnicoDTOBase):
     id: int
     id_persona: int
+    score: Optional[int] = None
     type: CandidatoConocimientoTecnicoTipoDTO
 
 
