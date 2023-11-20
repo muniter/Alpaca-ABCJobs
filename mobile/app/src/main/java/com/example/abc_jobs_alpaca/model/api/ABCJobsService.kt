@@ -17,6 +17,7 @@ class ABCJobsService constructor(context: Context){
     companion object{
         private var BASEURL = "https://api.abc.muniter.link"
         private var CANDIDATES_PATH = "/candidatos"
+        private var COMPANIES_PATH = "/empresas"
         private var USERS_PATH = "/usuarios"
         private var CREATE_PATH = "/crear"
         private var LOGIN_PATH = "/login"
@@ -736,7 +737,7 @@ class ABCJobsService constructor(context: Context){
 
     suspend fun getAllTeams(token: String): Result<TeamsResponse> {
         return try {
-            val response = fetchInfo(token, CANDIDATES_PATH, TEAM_PATH)
+            val response = fetchInfo(token, COMPANIES_PATH , TEAM_PATH)
             Result.success(deserializeTeams(response))
         } catch (e: Exception) {
             Result.failure(e)

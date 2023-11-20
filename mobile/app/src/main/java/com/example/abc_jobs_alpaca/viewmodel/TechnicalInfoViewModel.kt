@@ -41,7 +41,7 @@ class TechnicalInfoViewModel (private val abcJobsRepository: ABCJobsRepository) 
                             Log.d("TechnicalInfoViewModel", "loadTechnicalItemsInfo: $response")
                             if (response.success) {
                                 _technicalInfoList.value = response.data
-                                navigationListener?.navigateToNextScreen()
+                                //navigationListener?.navigateToNextScreen()
                             }
                         }
                         .onFailure {

@@ -107,4 +107,9 @@
         android:name="com.example.abc_jobs_alpaca.view.InterviewItemFragment"
         android:label="@string/interview_list_title"
         tools:layout="@layout/fragment_item_interview_list" />
+    <fragment
+        android:id="@+id/nav_team_list"
+        android:name="com.example.abc_jobs_alpaca.view.TeamsFragment"
+        android:label="@string/team_list_title"
+        tools:layout="@layout/fragment_item_team_list" />
 </navigation>

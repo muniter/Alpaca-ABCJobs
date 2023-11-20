@@ -141,6 +141,7 @@
     <string name="pending_message">Pending</string>
     <string name="completed_message">Completed</string>
     <string name="noresults_messages">No Results Recorded</string>
+    <string name="team_list_title">Equipos</string>
 
 
 </resources>

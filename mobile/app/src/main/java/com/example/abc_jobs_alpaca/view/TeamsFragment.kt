@@ -2,7 +2,6 @@ package com.example.abc_jobs_alpaca.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,18 +14,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
-import com.example.abc_jobs_alpaca.adapter.AcademicInfoItemRecyclerViewAdapter
+import com.example.abc_jobs_alpaca.adapter.TeamRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
+import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent
 import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
+import com.example.abc_jobs_alpaca.viewmodel.TeamListViewModel
 import kotlinx.coroutines.launch
 
-class AcademicInfoFragment : Fragment(),
-    ConfirmDialogFragment.ConfirmDialogListener {
+class TeamsFragment : Fragment() {
 
     private var columnCount = 1
     private val tokenLiveData = MutableLiveData<String?>()
-    private lateinit var viewModel: AcademicInfoViewModel
+    private lateinit var viewModel: TeamListViewModel
     private lateinit var repository: ABCJobsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,17 +40,17 @@ class AcademicInfoFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_item_academic_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_item_team_list, container, false)
         repository = ABCJobsRepository(requireActivity().application)
 
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return AcademicInfoViewModel(
+                return TeamListViewModel(
                     ABCJobsRepository(activity!!.application)
                 ) as T
             }
-        })[AcademicInfoViewModel::class.java]
+        })[TeamListViewModel::class.java]
 
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
@@ -59,25 +58,24 @@ class AcademicInfoFragment : Fragment(),
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            lifecycleScope.launch { viewModel.loadAcademicItemsInfo() }
+            lifecycleScope.launch {
+                viewModel.loadTeams()
+            }
         }
 
+        // Set the adapter
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.academicInfoList.observe(viewLifecycleOwner) { academicInfoList ->
-                    adapter = academicInfoList?.let {
-                        AcademicInfoItemRecyclerViewAdapter(it) { clickedItem ->
-                            val confirmDialogFragment = ConfirmDialogFragment(clickedItem.id, this@AcademicInfoFragment)
-                            confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
-                        }
-                    }
+                viewModel.teamList.observe(viewLifecycleOwner) { teamList ->
+                    adapter = TeamRecyclerViewAdapter(teamList ?: emptyList())
                     view.adapter = adapter
                 }
             }
+
         }
         (activity as MainActivity).unhideButton();
         return view
@@ -87,29 +85,11 @@ class AcademicInfoFragment : Fragment(),
         super.onHiddenChanged(hidden)
 
         if (!hidden) {
-            lifecycleScope.launch { viewModel.loadAcademicItemsInfo() }
-        }
-    }
-
-
-    override fun onConfirmDelete(id: Int){
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("token", null)
-        if (token != null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                val result = repository.deleteAcademicInfo(token, id)
-                if (result.isSuccess) {
-                    viewModel.loadAcademicItemsInfo()
-                }
-                else {
-                    Log.d("AcademicInfoFragment", "deleteAcademicItem: ${result.exceptionOrNull()}")
-                }
-            }
+            lifecycleScope.launch { viewModel.loadTeams() }
         }
     }
 
     companion object {
         const val ARG_COLUMN_COUNT = "column-count"
-
     }
 }
