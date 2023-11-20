@@ -346,11 +346,12 @@ class ConocimientoTecnicos(Base):
     )
     descripcion: Mapped[str] = mapped_column(String(500), nullable=True)
 
-    def build_dto(self) -> CandidatoConocimientoTecnicoDTO:
+    def build_dto(self, resultado: int | None = None) -> CandidatoConocimientoTecnicoDTO:
         return CandidatoConocimientoTecnicoDTO(
             id=self.id,
             id_persona=self.id_persona,
             type=self.tipo.build_dto(),
+            score=resultado,
             description=self.descripcion,
         )
 

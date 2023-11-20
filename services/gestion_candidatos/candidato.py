@@ -33,6 +33,7 @@ from common.shared.database.models import (
     DatosAcademicos,
     DatosAcademicosTipo,
     DatosLaborales,
+    ExamenResultado,
     Lenguaje,
     Persona,
     RolesHabilidades,
@@ -427,6 +428,17 @@ class ConocimientoTecnicosRepository:
         self.session.refresh(data)
         return data
 
+    def build_dto(self, data: ConocimientoTecnicos) -> CandidatoConocimientoTecnicoDTO:
+        assert data.persona.candidato
+        query = select(ExamenResultado).where(
+            ExamenResultado.id_candidato == data.persona.candidato.id
+        )
+        exresult = self.session.execute(query).scalars().one_or_none()
+        if exresult:
+            return data.build_dto(exresult.resultado)
+
+        return data.build_dto()
+
     def update(self, data: ConocimientoTecnicos) -> ConocimientoTecnicos:
         self.session.commit()
         # Refresh
@@ -467,7 +479,7 @@ class ConocimientoTecnicosService:
             return []
 
         conocimientos = self.repository.get_all_from_id_persona(candidato.id_persona)
-        return [conocimientos.build_dto() for conocimientos in conocimientos]
+        return [self.repository.build_dto(conocimiento) for conocimiento in conocimientos]
 
     def get_by_id(self, id: int, id_candidato: int):
         result = self.validate_permissions(id_candidato, id)
@@ -476,7 +488,7 @@ class ConocimientoTecnicosService:
 
         datos_academicos = self.repository.get_by_id(id)
         assert datos_academicos is not None
-        return datos_academicos.build_dto()
+        return self.repository.build_dto(datos_academicos)
 
     def crear(self, id_candidato: int, data: CandidatoConocimientoTecnicoCreateDTO):
         candidato = self.candidato_repository.get_by_id(id_candidato)
@@ -490,7 +502,7 @@ class ConocimientoTecnicosService:
             return result
 
         result = self.repository.create(result)
-        return result.build_dto()
+        return self.repository.build_dto(result)
 
     def batch_set(
         self, id_candidato: int, data: CandidatoConocimientoTecnicoBatchSetDTO
@@ -534,7 +546,7 @@ class ConocimientoTecnicosService:
             return result
 
         result = self.repository.update(result)
-        return result.build_dto()
+        return self.repository.build_dto(result)
 
     def delete(self, id: int, id_candidato: int):
         result = self.validate_permissions(id_candidato, id)
