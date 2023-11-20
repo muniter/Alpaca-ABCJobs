@@ -53,6 +53,14 @@
     <string name="toast_message_network_error">Network error</string>
     <string name="toast_message_generic_error">Request error</string>
     <string name="toast_message_registration_failed">Registration failed, Email already registered</string>
+    <string name="shortlisted_placeholder_result">result</string>
+    <string name="shortlisted_placeholder_name">name</string>
+    <string name="shortlisted_placeholder_location">location</string>
+    <string name="shortlisted_label_evaluated">Evaluated</string>
+    <string name="shortlisted_label_pending">Pending</string>
+    <string name="vacancy_placeholder_name">vacant</string>
+    <string name="vacancy_placeholder_description">description</string>
+    <string name="vacancy_placeholder_team">team</string>
     <string name="network_error">Network error</string>
     <string name="successful_toast_message">Account created successfully</string>
     <string name="successful_login_toast_message">Login successful</string>
@@ -131,6 +139,16 @@
     <string name="option4_label">Option 4</string>
     <string name="submit_button_label">Send</string>
     <string name="take_exam_title">Take Exam</string>
+    <string name="vacancies">Vacancies</string>
+    <string name="menu_vacancy">Vacancies</string>
+    <string name="shortlisted_candidates">Shortlisted Candidates</string>
+    <string name="toast_message_data_not_found">No records</string>
+    <string name="technical_proof_label">Register test results</string>
+    <string name="technical_proof_result_placeholder">Enter percent</string>
+    <string name="technical_proof_result_instructions">Technical test result (0 - 100%)</string>
+    <string name="technical_proof_name_placeholder">Name</string>
+    <string name="technical_proof_location_placeholder">Location</string>
+    <string name="technical_proof_saved">Saved successfully</string>
     <string name="interview_list_title">Interviews</string>
     <string name="exams_title">Exam List</string>
     <string name="exam_title">Take Exam</string>
@@ -141,6 +159,4 @@
     <string name="pending_message">Pending</string>
     <string name="completed_message">Completed</string>
     <string name="noresults_messages">No Results Recorded</string>
-
-
 </resources>

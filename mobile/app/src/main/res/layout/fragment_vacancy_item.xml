@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_centerInParent="false"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/vacancy_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/vacancy_texts"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/vacancy_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:lineHeight="@dimen/label_primary_line_height"
+                    android:textSize="@dimen/label_primary_text_size"
+                    android:textStyle="bold"
+                    android:text="@string/vacancy_placeholder_name"/>
+                <TextView
+                    android:id="@+id/vacancy_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:lineHeight="@dimen/label_primary_line_height"
+                    android:textSize="@dimen/label_primary_text_size"
+                    android:text="@string/vacancy_placeholder_description"/>
+                <TextView
+                    android:id="@+id/vacancy_team_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray"
+                    android:lineHeight="@dimen/label_primary_line_height"
+                    android:textSize="@dimen/label_primary_text_size"
+                    android:text="@string/vacancy_placeholder_team"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/shortlisted_candidate_image"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/arrow_right" />
+        </LinearLayout>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
+</layout>

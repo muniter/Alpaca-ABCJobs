@@ -7,7 +7,69 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.abc_jobs_alpaca.model.models.*
+import com.example.abc_jobs_alpaca.model.models.AcademicInfoItemDeleteResponse
+import com.example.abc_jobs_alpaca.model.models.AcademicInfoItemResponse
+import com.example.abc_jobs_alpaca.model.models.AcademicInfoResponse
+import com.example.abc_jobs_alpaca.model.models.AcademicInfoTypeResponse
+import com.example.abc_jobs_alpaca.model.models.AnswerQuestionResponse
+import com.example.abc_jobs_alpaca.model.models.ConfigData
+import com.example.abc_jobs_alpaca.model.models.CountriesResponse
+import com.example.abc_jobs_alpaca.model.models.ExamStartResponse
+import com.example.abc_jobs_alpaca.model.models.ExamsExtendResponse
+import com.example.abc_jobs_alpaca.model.models.ExamsResponse
+import com.example.abc_jobs_alpaca.model.models.InterviewsResponse
+import com.example.abc_jobs_alpaca.model.models.PersonalInfoResponse
+import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemDeleteResponse
+import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemResponse
+import com.example.abc_jobs_alpaca.model.models.TechnicalInfoResponse
+import com.example.abc_jobs_alpaca.model.models.UserDateFormat
+import com.example.abc_jobs_alpaca.model.models.UserLanguageApp
+import com.example.abc_jobs_alpaca.model.models.UserLoginResponse
+import com.example.abc_jobs_alpaca.model.models.UserRegisterResponse
+import com.example.abc_jobs_alpaca.model.models.UserTimeFormat
+import com.example.abc_jobs_alpaca.model.models.VacanciesResponse
+import com.example.abc_jobs_alpaca.model.models.VacancyResponse
+import com.example.abc_jobs_alpaca.model.models.WorkInfoItemDeleteResponse
+import com.example.abc_jobs_alpaca.model.models.WorkInfoItemResponse
+import com.example.abc_jobs_alpaca.model.models.WorkInfoResponse
+import com.example.abc_jobs_alpaca.model.models.deserializeAcademicInfo
+import com.example.abc_jobs_alpaca.model.models.deserializeAcademicInfoError
+import com.example.abc_jobs_alpaca.model.models.deserializeAcademicInfoItem
+import com.example.abc_jobs_alpaca.model.models.deserializeAcademicInfoItemDelete
+import com.example.abc_jobs_alpaca.model.models.deserializeAcademicInfoItemDeleteError
+import com.example.abc_jobs_alpaca.model.models.deserializeAnswerQuestion
+import com.example.abc_jobs_alpaca.model.models.deserializeAnswerQuestionError
+import com.example.abc_jobs_alpaca.model.models.deserializeCandidate
+import com.example.abc_jobs_alpaca.model.models.deserializeCandidateError
+import com.example.abc_jobs_alpaca.model.models.deserializeCountries
+import com.example.abc_jobs_alpaca.model.models.deserializeCountriesError
+import com.example.abc_jobs_alpaca.model.models.deserializeExamStart
+import com.example.abc_jobs_alpaca.model.models.deserializeExamStartError
+import com.example.abc_jobs_alpaca.model.models.deserializeExams
+import com.example.abc_jobs_alpaca.model.models.deserializeExamsResult
+import com.example.abc_jobs_alpaca.model.models.deserializeInterviews
+import com.example.abc_jobs_alpaca.model.models.deserializeLoginCandidate
+import com.example.abc_jobs_alpaca.model.models.deserializeLoginCandidateError
+import com.example.abc_jobs_alpaca.model.models.deserializeLoginCompany
+import com.example.abc_jobs_alpaca.model.models.deserializePersonalInfo
+import com.example.abc_jobs_alpaca.model.models.deserializePersonalInfoError
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfo
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItem
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItemDelete
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItemDeleteError
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItemError
+import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalProofError
+import com.example.abc_jobs_alpaca.model.models.deserializeTypesTitles
+import com.example.abc_jobs_alpaca.model.models.deserializeTypesTitlesError
+import com.example.abc_jobs_alpaca.model.models.deserializeVacancies
+import com.example.abc_jobs_alpaca.model.models.deserializeVacancy
+import com.example.abc_jobs_alpaca.model.models.deserializeVacancyError
+import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfo
+import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItem
+import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemDelete
+import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemDeleteError
+import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemError
+import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -17,6 +79,7 @@ class ABCJobsService constructor(context: Context){
     companion object{
         private var BASEURL = "https://api.abc.muniter.link"
         private var CANDIDATES_PATH = "/candidatos"
+        private var COMPANIES_PATH = "/empresas"
         private var USERS_PATH = "/usuarios"
         private var CREATE_PATH = "/crear"
         private var LOGIN_PATH = "/login"
@@ -34,6 +97,8 @@ class ABCJobsService constructor(context: Context){
         private var EXAM_ACTION_START = "/start"
         private var EXAM_ACTION_ANSWER = "/answer"
         private var INTERVIEWS_PATH = "/interviews"
+        private var VACANCY_PATH = "/vacancy"
+        private var TEST_RESULT_PATH = "/test-result"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){
@@ -98,6 +163,35 @@ class ABCJobsService constructor(context: Context){
         path: String,
         action: String,
         body: JSONObject,
+        responseListener: Response.Listener<String>,
+        errorListener: Response.ErrorListener,
+    ): StringRequest {
+        return object : StringRequest(
+            method, BASEURL+path+action, responseListener, errorListener
+        ) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=utf-8"
+            }
+
+            override fun getBody(): ByteArray {
+                Log.d("Sending body", body.toString())
+                return body.toString().toByteArray()
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+        }
+    }
+
+    private fun requestArrayWithToken(
+        token: String,
+        method: Int,
+        path: String,
+        action: String,
+        body: JSONArray,
         responseListener: Response.Listener<String>,
         errorListener: Response.ErrorListener,
     ): StringRequest {
@@ -732,5 +826,60 @@ class ABCJobsService constructor(context: Context){
         }
     }
 
+    suspend fun getAllVacancies(token: String): Result<VacanciesResponse> {
+        return try {
+            val response = fetchInfo(token, COMPANIES_PATH, VACANCY_PATH)
+            Result.success(deserializeVacancies(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getVacancy(token: String, vacancyId: Int): Result<VacancyResponse> {
+        return try {
+            val response = fetchInfo(
+                token, COMPANIES_PATH,"$VACANCY_PATH/$vacancyId"
+            )
+            Result.success(deserializeVacancy(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postTestResult(token: String, vacancyId: Int, requestJson: JSONArray) : Result<VacancyResponse> {
+        return try {
+            val response = suspendCoroutine<JSONObject> { cont ->
+                requestQueue.add(
+                    requestArrayWithToken(token,
+                        Request.Method.POST,
+                        COMPANIES_PATH,
+                        "$VACANCY_PATH/$vacancyId$TEST_RESULT_PATH",
+                        requestJson,
+                        { response -> cont.resume(JSONObject(response))},
+                        { volleyError ->
+                            if (volleyError.networkResponse != null) {
+                                val errorData = String(volleyError.networkResponse.data, Charsets.UTF_8)
+                                val jsonError = JSONObject(errorData)
+
+                                if (!jsonError.optBoolean("success")) {
+                                    val testResultError = deserializeTechnicalProofError(jsonError)
+                                    cont.resumeWithException(testResultError)
+                                }
+                            } else {
+                                cont.resumeWithException(volleyError)}})
+                )
+            }
+            if (response.getBoolean("success")) {
+                val vacancyResponse = deserializeVacancy(response)
+                Result.success(vacancyResponse)
+            } else {
+                val vacancyError = deserializeVacancyError(response)
+                Result.failure(vacancyError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
+            Result.failure(e)
+        }
+    }
 
 }

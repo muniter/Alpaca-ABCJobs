@@ -53,6 +53,14 @@
     <string name="toast_message_network_error">Error de red: %s</string>
     <string name="toast_message_generic_error">Error en la solicitud</string>
     <string name="toast_message_registration_failed">No se logró completar el registro. Email registrado</string>
+    <string name="shortlisted_placeholder_result">resultado</string>
+    <string name="shortlisted_placeholder_name">nombre</string>
+    <string name="shortlisted_placeholder_location">ubicacion</string>
+    <string name="shortlisted_label_evaluated">Evaluado</string>
+    <string name="shortlisted_label_pending">Pendiente</string>
+    <string name="vacancy_placeholder_name">vacante</string>
+    <string name="vacancy_placeholder_description">descripción</string>
+    <string name="vacancy_placeholder_team">equipo</string>
     <string name="network_error">Error de red: %s</string>
     <string name="successful_toast_message">Cuenta creada exitosamente</string>
     <string name="successful_login_toast_message">Inicio de sesión exitoso</string>
@@ -131,6 +139,16 @@
     <string name="option4_label">Opción 4</string>
     <string name="submit_button_label">Enviar</string>
     <string name="take_exam_title">Tomar examen</string>
+    <string name="vacancies">Vacantes</string>
+    <string name="menu_vacancy">Vacantes</string>
+    <string name="shortlisted_candidates">Candidatos preseleccionados</string>
+    <string name="toast_message_data_not_found">Sin registros</string>
+    <string name="technical_proof_label">Registrar resultado prueba</string>
+    <string name="technical_proof_result_placeholder">Ingrese el porcentaje</string>
+    <string name="technical_proof_result_instructions">Resultado de la prueba técnica (0 - 100%)</string>
+    <string name="technical_proof_name_placeholder">Nombre</string>
+    <string name="technical_proof_location_placeholder">Localización</string>
+    <string name="technical_proof_saved">Guardado exitosamente</string>
     <string name="interview_list_title">Entrevistas</string>
     <string name="exams_title">Lista de exámenes</string>
     <string name="exam_title">Tomar examen</string>
@@ -141,5 +159,4 @@
     <string name="pending_message">Pendiente</string>
     <string name="completed_message">Completado</string>
     <string name="noresults_messages">No registra resultados</string>
-
 </resources>
