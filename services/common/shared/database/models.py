@@ -522,12 +522,12 @@ class Equipo(Base):
 class ExamenTecnico(Base):
     __tablename__ = "examen_tecnico"
     id: Mapped[int] = mapped_column(Identity(), primary_key=True)
-    id_rol_habilidad: Mapped[int] = mapped_column(
-        ForeignKey("roles_habilidades.id"), nullable=False
+    id_conocimiento_tecnico_tipo: Mapped[int] = mapped_column(
+        ForeignKey("conocimiento_tecnico_tipo.id"), nullable=False
     )
 
-    rol_habilidad: Mapped["RolesHabilidades"] = relationship(
-        "RolesHabilidades", backref="examen_tecnico"
+    conociemiento_tecnico_tipo: Mapped["ConocimientoTecnicoTipo"] = relationship(
+        "ConocimientoTecnicoTipo", backref="examen_tecnico"
     )
 
     preguntas: Mapped[List["ExamenPregunta"]] = relationship(
@@ -538,7 +538,7 @@ class ExamenTecnico(Base):
         return ExamenDTO(
             id=self.id,
             completed=completed,
-            skill=self.rol_habilidad.build_dto(),
+            skill=self.conociemiento_tecnico_tipo.build_dto(),
             number_of_questions=3,
         )
 
