@@ -363,6 +363,7 @@ def crear_vacante_dto(id_equipo: int):
     return VacanteCreateDTO(
         team_id=id_equipo,
         name=faker.job(),
+        country_code=4,
         description=faker.text(),
     )
 
@@ -373,6 +374,9 @@ def test_service_crear_vacante():
     assert result.name == data.name
     assert result.description == data.description
     assert result.team.id == data.team_id
+    if data.country_code is not None:
+        assert result.country
+        assert result.country.num_code == data.country_code
 
 
 def test_service_crear_vacante_error():
