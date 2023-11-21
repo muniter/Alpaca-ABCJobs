@@ -1,13 +1,12 @@
-from pydantic import BaseModel, StringConstraints
-from typing import Annotated, Optional, List
-from datetime import date
+from pydantic import BaseModel
+from typing import Optional, List
 
-from common.shared.api_models.gestion_candidatos import RolHabilidadDTO
+from common.shared.api_models.gestion_candidatos import CandidatoConocimientoTecnicoTipoDTO
 
 
 class ExamenDTO(BaseModel):
     id: int
-    skill: RolHabilidadDTO
+    skill: CandidatoConocimientoTecnicoTipoDTO
     completed: Optional[bool]
     number_of_questions: int
 

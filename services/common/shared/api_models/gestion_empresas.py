@@ -4,6 +4,7 @@ from typing import Annotated, List, Optional
 
 from common.shared.api_models.gestion_candidatos import (
     CandidatoPersonalInformationDTO,
+    CountryDTO,
     RolHabilidadDTO,
 )
 
@@ -99,6 +100,7 @@ class VacanteDTO(BaseModel):
     name: str
     open: bool
     description: Optional[str]
+    country: Optional[CountryDTO] = None
     company: EmpresaDTO
     team: EquipoDTO
     preselection: List[CandidatoPreseleccionadoVacanteDTO]
@@ -114,6 +116,7 @@ class VacanteCreateDTO(BaseModel):
         Optional[str],
         StringConstraints(max_length=255, min_length=2, strip_whitespace=True),
     ]
+    country_code: Optional[int] = None
 
 
 class VacantePreseleccionDTO(BaseModel):

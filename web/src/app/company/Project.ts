@@ -1,3 +1,4 @@
+import { Country } from "../shared/Country";
 import { Team } from "./Team";
 
 export class Project {

@@ -1,5 +1,5 @@
 -- Python
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (1, 39);
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (1, 2);
 
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
 (1, 1, 'What does the "len()" function in Python do?', 1),
@@ -37,7 +37,7 @@ INSERT INTO examen_respuesta (id, respuesta, id_examen_pregunta, correcta) VALUE
 
 
 -- Software Engineer
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (2, 1);
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (2, 3);
 
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
 (7, 2, 'What is the primary function of a software engineer?', 1),
@@ -75,7 +75,7 @@ INSERT INTO examen_respuesta (id, respuesta, id_examen_pregunta, correcta) VALUE
 
 
 -- Java
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (3, 38);
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (3, 1);
 
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
 (13, 3, 'What is the JVM and why is it important?', 1),
@@ -113,7 +113,7 @@ INSERT INTO examen_respuesta (id, respuesta, id_examen_pregunta, correcta) VALUE
 
 -- Javascrist
 
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (4, 101);
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (4, 4);
 
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
 (19, 4, 'Explain the difference between "==" and "===", and when should you use each?', 1),
@@ -153,7 +153,7 @@ INSERT INTO examen_respuesta (id, respuesta, id_examen_pregunta, correcta) VALUE
 -- HTML/CSS
 
 -- Insert into examen_tecnico table
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (5, 107);
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (5, 15);
 
 -- Insert into examen_pregunta table
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
@@ -192,7 +192,8 @@ INSERT INTO examen_respuesta (id, respuesta, id_examen_pregunta, correcta) VALUE
 (120, 'CSS specificity is decided by the order of the CSS rules in the stylesheet.', 30, FALSE);
 
 
-INSERT INTO examen_tecnico (id, id_rol_habilidad) VALUES (6, 109);
+-- Angular
+INSERT INTO examen_tecnico (id, id_conocimiento_tecnico_tipo) VALUES (6, 16);
 
 INSERT INTO examen_pregunta (id, id_examen_tecnico, pregunta, dificultad) VALUES
 (31, 6, 'What is the core concept of Angular.js?', 1),

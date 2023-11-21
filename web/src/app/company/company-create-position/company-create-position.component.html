@@ -47,6 +47,21 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@country">País</label>
+        </div>
+        <div class="right-field space-between">
+          <mat-form-field class="form-field full-width select-country" appearance="outline" subscriptSizing="dynamic">
+            <mat-select placeholder="Seleccionar país" i18n-placeholder="@@selectcountry" formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{country.en_short_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="buttons">
         <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
           i18n="@@cancel">Cancelar</app-abc-button>

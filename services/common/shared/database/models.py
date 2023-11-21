@@ -346,11 +346,12 @@ class ConocimientoTecnicos(Base):
     )
     descripcion: Mapped[str] = mapped_column(String(500), nullable=True)
 
-    def build_dto(self) -> CandidatoConocimientoTecnicoDTO:
+    def build_dto(self, resultado: int | None = None) -> CandidatoConocimientoTecnicoDTO:
         return CandidatoConocimientoTecnicoDTO(
             id=self.id,
             id_persona=self.id_persona,
             type=self.tipo.build_dto(),
+            score=resultado,
             description=self.descripcion,
         )
 
@@ -522,12 +523,12 @@ class Equipo(Base):
 class ExamenTecnico(Base):
     __tablename__ = "examen_tecnico"
     id: Mapped[int] = mapped_column(Identity(), primary_key=True)
-    id_rol_habilidad: Mapped[int] = mapped_column(
-        ForeignKey("roles_habilidades.id"), nullable=False
+    id_conocimiento_tecnico_tipo: Mapped[int] = mapped_column(
+        ForeignKey("conocimiento_tecnico_tipo.id"), nullable=False
     )
 
-    rol_habilidad: Mapped["RolesHabilidades"] = relationship(
-        "RolesHabilidades", backref="examen_tecnico"
+    conociemiento_tecnico_tipo: Mapped["ConocimientoTecnicoTipo"] = relationship(
+        "ConocimientoTecnicoTipo", backref="examen_tecnico"
     )
 
     preguntas: Mapped[List["ExamenPregunta"]] = relationship(
@@ -538,7 +539,7 @@ class ExamenTecnico(Base):
         return ExamenDTO(
             id=self.id,
             completed=completed,
-            skill=self.rol_habilidad.build_dto(),
+            skill=self.conociemiento_tecnico_tipo.build_dto(),
             number_of_questions=3,
         )
 
@@ -669,6 +670,10 @@ class Vacante(Base):
     empresa: Mapped[Empresa] = relationship("Empresa", back_populates="vacantes")
     descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     id_equipo: Mapped[int] = mapped_column(ForeignKey("equipo.id"), nullable=False)
+    country_code: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("countries.num_code"), nullable=True
+    )
+    pais: Mapped[Optional[Country]] = relationship("Country", backref="vacantes")
     equipo: Mapped[Equipo] = relationship("Equipo", back_populates="vacantes")
     preseleccion: Mapped[List[VacanteCandidato]] = relationship(
         back_populates="vacante"
@@ -685,6 +690,7 @@ class Vacante(Base):
             description=self.descripcion,
             company=self.empresa.build_dto(),
             team=self.equipo.build_dto(),
+            country=self.pais.build_dto() if self.pais else None,
             preselection=[vc.build_dto() for vc in self.preseleccion],
             interview_date=self.fecha_entrevista,
         )

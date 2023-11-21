@@ -8,8 +8,8 @@
         <app-team-project-card class="add-card" type=add title="Crear Vacante" i18n-title="@@createposition"
           (click)="openAddPositionModal()" />
 
-        <app-team-project-card *ngFor="let position of positions" type="position" [title]="position.name"
-          [subtitle]="position.team.name" (click)="openPositionDetailModal(position)"/>
+        <app-team-project-card *ngFor="let position of positions" type="position" [title]="position.name" i18n-country="@@placeholdernullcountry"
+          [subtitle]="position.team.name" [country]="position.country?.en_short_name ?? 'World'" (click)="openPositionDetailModal(position)"/>
       </div>
     </app-login-logon-container>
   </div>

@@ -1,6 +1,4 @@
 from typing import TypeVar
-from sqlalchemy import select, text
-
 from common.shared.api_models.gestion_candidatos import (
     CandidatoConocimientoTecnicoCreateDTO,
     CandidatoCreateDTO,
@@ -104,6 +102,10 @@ def seed_empresa(email: str):
 
     candidatos = candidate_service.repository.get_all()
 
+    countries = candidate_service.country_repository.get_all()
+    pre_countries = ["US", "CO", "EC", "AF"]
+    countries = list(filter(lambda c: c.alpha_2_code in pre_countries, countries))
+
     # Empleados
     empleados = []
     logger.info(f"Seeding empleados")
@@ -128,7 +130,7 @@ def seed_empresa(email: str):
     # Equipos
     equipos = []
     logger.info(f"Seeding equipos")
-    for _ in range(faker.random_int(min=3, max=6)):
+    for _ in range(faker.random_int(min=1, max=4)):
         emp = unique_random_choice(
             elements=empleados, length=faker.random_int(min=2, max=5)
         )
@@ -171,6 +173,7 @@ def seed_empresa(email: str):
                 team_id=faker.random_element(elements=equipos).id,
                 name=tech_job(),
                 description=faker.sentence(),
+                country_code=faker.random_element(elements=countries).num_code,
             ),
         )
         assert not isinstance(vacante, ErrorBuilder)
