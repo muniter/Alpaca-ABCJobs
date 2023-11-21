@@ -35,4 +35,5 @@ jobs:
 
     - name: Upload Playwright Report
       working-directory: test
+      if: github.ref == 'refs/heads/master'
       run: aws s3 sync --delete playwright-report s3://abc-jobs-artifacts/test_reports/functional_web
