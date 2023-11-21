@@ -10,6 +10,7 @@ import { TeamCreateRequest, TeamCreateResponse, TeamsListResponse } from './Team
 import { SaveScoresRequest, SelectCandidateRequest, VacancyRequest, VacancyResponse } from './vacancy';
 import { ProjectCreateRequest, ProjectCreateResponse, ProjectsListResponse } from './Project';
 import { PositionCreateRequest, PositionCreateResponse, PositionsListResponse } from './Position';
+import { CountryResponse } from '../shared/Country';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class CompanyService {
   private backUsersUrl = environment.baseUrl + 'usuarios';
   private backCandidatosUtilsUrl = environment.baseUrl + 'candidatos/utils';
   private backUtilsUrl = environment.baseUrl + 'empresas/utils';
+  private candUtilsUrl = environment.baseUrl + 'candidatos/utils';
 
   constructor(private http: HttpClient) { }
 
@@ -108,6 +110,11 @@ export class CompanyService {
     console.log(request)
     return this.http.post<any>(`${this.backCompanyUrl}/vacancy/${positionId}/select`, request, { headers })
   }
+
+  getCountries(): Observable<CountryResponse> {
+    return this.http.get<CountryResponse>(`${this.candUtilsUrl}/countries`)
+  }
+
 
   getHeader(token: string) {
     return {

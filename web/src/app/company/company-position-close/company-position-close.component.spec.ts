@@ -48,7 +48,7 @@ describe('CompanyPositionCloseComponent', () => {
       providers: [
         {
           provide: MAT_DIALOG_DATA,
-          useValue: { token: "123abc", position: new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("", ""), []), [new PreselectedCandidate(1, 1, "pepe", "", "", 23), new PreselectedCandidate(2, 2, "lala", "", "", 32)]) }
+          useValue: { token: "123abc", position: new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("", ""), []), null, [new PreselectedCandidate(1, 1, "pepe", "", "", 23), new PreselectedCandidate(2, 2, "lala", "", "", 32)]) }
         },
         {
           provide: MatDialogRef,

@@ -139,7 +139,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
@@ -191,7 +191,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
@@ -2061,6 +2061,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
           <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="country" datatype="html">
+        <source>País</source>
+        <target>Country</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectcountry" datatype="html">
+        <source>Seleccionar país</source>
+        <target>Choose country</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
     </body>

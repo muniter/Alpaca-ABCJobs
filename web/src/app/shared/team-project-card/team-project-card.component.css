@@ -1,5 +1,6 @@
 p {
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 h2 { 
@@ -8,6 +9,7 @@ h2 {
     overflow: hidden;
     display: block;
     text-align: center;
+    margin-bottom: 0.3rem;
 }
 
 .card-container {
@@ -28,11 +30,17 @@ h2 {
     color: var(--contrastCompanyColor);
 }
 
+.country {
+    color: var(--grayColor);
+    display: flex;
+}
+
 .card-info{
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .header-img {

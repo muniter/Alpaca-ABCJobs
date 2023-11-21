@@ -9,6 +9,7 @@ export class TeamProjectCardComponent implements OnInit {
 
   @Input() title: string = "";
   @Input() subtitle: string = "";
+  @Input() country: string | undefined = "";
   @Input() type: string = ""; //add //team //project
   
   constructor() { }
