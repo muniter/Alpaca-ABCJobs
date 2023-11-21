@@ -80,5 +80,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.1.1")
     androidTestImplementation("androidx.test:rules:1.1.1")
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
-    //implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

@@ -106,6 +106,11 @@ data class SkillInfoTypeResponse(
     val data: List<SkillInfoType>?
 )
 
+data class Personality(
+    val id: Int,
+    val name: String
+)
+
 fun deserializeSkillInfoTypes(response: JSONObject): SkillInfoTypeResponse {
     val success = response.optBoolean("success", false)
     val data = response.optJSONArray("data")

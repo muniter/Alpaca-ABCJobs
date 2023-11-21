@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -83,8 +84,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_technical_info,
                 R.id.nav_work_info,
                 R.id.nav_exam_list,
-                R.id.nav_vacancy,
-                R.id.nav_interview_list
+                R.id.nav_interview_list,
+                R.id.nav_team_list,
+                R.id.nav_vacancy
             ), drawerLayout
         )
         if (isCompany) {
@@ -96,6 +98,7 @@ class MainActivity : AppCompatActivity() {
             navView.menu.findItem(R.id.nav_interview_list).isVisible = false
         }
         else {
+            navView.menu.findItem(R.id.nav_team_list).isVisible = false
             navView.menu.findItem(R.id.nav_vacancy).isVisible = false
         }
         navView.menu.findItem(R.id.nav_home).isVisible = true

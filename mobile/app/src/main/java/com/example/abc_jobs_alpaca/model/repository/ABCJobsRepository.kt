@@ -21,6 +21,7 @@ import com.example.abc_jobs_alpaca.model.models.InterviewsResponse
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoRequest
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoResponse
 import com.example.abc_jobs_alpaca.model.models.SkillInfoTypeResponse
+import com.example.abc_jobs_alpaca.model.models.TeamsResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemDeleteResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoRequest
@@ -151,6 +152,9 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).getAllInterviews(token)
     }
 
+    suspend fun getAllTeams(token: String): Result<TeamsResponse> {
+        return ABCJobsService.getInstance(applicationContext).getAllTeams(token)
+    }
     suspend fun getVacancies(token: String): Result<VacanciesResponse>{
         return ABCJobsService.getInstance(applicationContext).getAllVacancies(token)
     }

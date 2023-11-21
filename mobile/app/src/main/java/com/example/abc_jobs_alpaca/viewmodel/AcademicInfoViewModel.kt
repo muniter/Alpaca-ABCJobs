@@ -38,16 +38,11 @@ class AcademicInfoViewModel(private val abcJobsRepository: ABCJobsRepository) : 
                 abcJobsRepository.getAcademicInfo(token.value!!)
                     .onSuccess { response ->
                         if (response.success) {
-                            Log.d(
-                                "AcademicInfoViewModel",
-                                "loadAcademicItemsInfo: ${response.data}"
-                            )
                             _academicInfoList.value = response.data
-                            navigationListener?.navigateToNextScreen()
                         }
                     }
                     .onFailure {
-                        //TODO: something
+                        _academicInfoList.value = null
                     }
             } else {
                 //TODO: message

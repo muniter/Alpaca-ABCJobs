@@ -39,11 +39,10 @@ class WorkInfoViewModel(private val abcJobsRepository: ABCJobsRepository) : View
                         Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $response")
                         if (response.success) {
                             _workInfoList.value = response.data
-                            navigationListener?.navigateToNextScreen()
                         }
                     }
                     .onFailure {
-                        Log.d("WorkInfoViewModel", "loadWorkItemsInfo: $it")
+                        _workInfoList.value = null
                     }
             } else {
                 //TODO: message

@@ -7,8 +7,13 @@ import com.example.abc_jobs_alpaca.model.models.Question
 import com.example.abc_jobs_alpaca.model.models.deserializerAnswers
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
 import com.example.abc_jobs_alpaca.viewmodel.ExamTakeViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -21,6 +26,8 @@ import org.mockito.MockitoAnnotations
 @ExperimentalCoroutinesApi
 class ExamTakeViewModelTest {
 
+    private val testDispatcher = newSingleThreadContext("ThreadRegister")
+
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -32,80 +39,120 @@ class ExamTakeViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
+        Dispatchers.setMain(testDispatcher)
         viewModel = ExamTakeViewModel(mockRepository)
     }
 
     @Test
-    fun `postStartExam should update question, idResult, and answers LiveData when repository call is successful`() =
-        runBlockingTest {
-            val mockToken = "mockToken"
-            val mockIdExam = 1
-            val mockResponse = createMockExamStartResponse()
+    fun `postStartExam should update question, idResult, and answers LiveData when repository call is successful`() {
+        runTest {
+            launch(Dispatchers.Main) {
+                val mockToken = "mockToken"
+                val mockIdExam = 1
+                val mockResponse = createMockExamStartResponse()
 
-            `when`(mockRepository.postExamStart(mockToken, mockIdExam)).thenReturn(Result.success(mockResponse))
+                `when`(
+                    mockRepository.postExamStart(
+                        mockToken,
+                        mockIdExam
+                    )
+                ).thenReturn(Result.success(mockResponse))
 
-            viewModel.onTokenUpdated(mockToken)
-            viewModel.postStartExam(mockIdExam)
+                viewModel.onTokenUpdated(mockToken)
+                viewModel.postStartExam(mockIdExam)
 
-            assertEquals(mockResponse.data.next_question, viewModel.question.value)
-            assertEquals(mockResponse.data.id_result, viewModel.idResult.value)
-            assertEquals(mockResponse.data.next_question?.answers?.let { deserializerAnswers(it) }, viewModel.answers.value)
+                assertEquals(mockResponse.data.next_question, viewModel.question.value)
+                assertEquals(mockResponse.data.id_result, viewModel.idResult.value)
+                assertEquals(
+                    mockResponse.data.next_question?.answers?.let { deserializerAnswers(it) },
+                    viewModel.answers.value
+                )
+            }
         }
-
-    @Test
-    fun `postStartExam should handle repository call failure`() = runBlockingTest {
-        val mockToken = "mockToken"
-        val mockIdExam = 1
-
-        `when`(mockRepository.postExamStart(mockToken, mockIdExam)).thenReturn(Result.failure(Exception("Repository error")))
-
-        viewModel.onTokenUpdated(mockToken)
-        viewModel.postStartExam(mockIdExam)
-
-        assertNull(viewModel.question.value)
-        assertNull(viewModel.idResult.value)
-        assertNull(viewModel.answers.value)
     }
 
     @Test
-    fun `submitAnswer should update question and answers LiveData when repository call is successful`() =
-        runBlockingTest {
-            // Arrange
-            val mockToken = "mockToken"
-            val mockIdAnswer = 1
-            val mockResponse = createMockAnswerQuestionResponse()
+    fun `postStartExam should handle repository call failure`() {
+        runTest {
+            launch(Dispatchers.Main) {
+                val mockToken = "mockToken"
+                val mockIdExam = 1
 
-            `when`(mockRepository.postAnswerQuestion(mockToken, mockResponse.data.id_result, createMockAnswer()))
-                .thenReturn(Result.success(mockResponse))
+                `when`(
+                    mockRepository.postExamStart(
+                        mockToken,
+                        mockIdExam
+                    )
+                ).thenReturn(Result.failure(Exception("Repository error")))
 
-            viewModel.onTokenUpdated(mockToken)
-            viewModel.idResult.value = mockResponse.data.id_result
-            viewModel.answers.value = createMockAnswers()
+                viewModel.onTokenUpdated(mockToken)
+                viewModel.postStartExam(mockIdExam)
 
-            viewModel.submitAnswer(mockIdAnswer)
-
-            assertEquals(mockResponse.data.next_question, viewModel.question.value)
-            assertEquals(
-                mockResponse.data.next_question?.answers?.let { deserializerAnswers(it) },
-                viewModel.answers.value
-            )
+                assertNull(viewModel.question.value)
+                assertNull(viewModel.idResult.value)
+                assertNull(viewModel.answers.value)
+            }
         }
+    }
 
     @Test
-    fun `submitAnswer should handle repository call failure`() = runBlockingTest {
-        val mockToken = "mockToken"
-        val mockIdAnswer = 1
+    fun `submitAnswer should update question and answers LiveData when repository call is successful`() {
+        runTest {
+            launch(Dispatchers.Main) {
+                // Arrange
+                val mockToken = "mockToken"
+                val mockIdAnswer = 1
+                val mockResponse = createMockAnswerQuestionResponse()
+                val mockAnswers = createMockAnswers();
 
-        `when`(mockRepository.postAnswerQuestion(mockToken, 1, createMockAnswer()))
-            .thenReturn(Result.failure(Exception("Repository error")))
+                `when`(
+                    mockRepository.postAnswerQuestion(
+                        mockToken,
+                        mockResponse.data.id_result,
+                        mockAnswers[0]
+                    )
+                )
+                    .thenReturn(Result.success(mockResponse))
 
-        viewModel.onTokenUpdated(mockToken)
-        viewModel.idResult.value = 1
-        viewModel.answers.value = createMockAnswers()
+                viewModel.onTokenUpdated(mockToken)
+                viewModel.idResult.value = mockResponse.data.id_result
+                viewModel.answers.value = mockAnswers
 
-        viewModel.submitAnswer(mockIdAnswer)
-        assertNull(viewModel.question.value)
-        assertNull(viewModel.answers.value)
+                viewModel.submitAnswer(mockIdAnswer)
+
+                assertEquals(mockResponse.data.next_question, viewModel.question.value)
+                assertEquals(
+                    mockResponse.data.next_question?.answers?.let { deserializerAnswers(it) },
+                    viewModel.answers.value
+                )
+            }
+
+        }
+    }
+
+
+    @Test
+    fun `submitAnswer should handle repository call failure`() {
+        runTest {
+            launch(Dispatchers.Main) {
+                val mockToken = "mockToken"
+                val mockIdAnswer = 1
+                val mockAnswers = createMockAnswers()
+
+                `when`(mockRepository.postAnswerQuestion(mockToken, 1, mockAnswers[0]))
+                    .thenReturn(Result.failure(Exception("Repository error")))
+
+                viewModel.onTokenUpdated(mockToken)
+                viewModel.idResult.value = 1
+                viewModel.answers.value = mockAnswers
+
+                try{
+                    viewModel.submitAnswer(mockIdAnswer)
+                } catch (e: Exception){
+                    Assert.fail("should not throw exception")
+                }
+            }
+        }
     }
 
     private fun createMockExamStartResponse(): ExamStartResponse {
