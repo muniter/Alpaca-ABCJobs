@@ -19,6 +19,7 @@ import com.example.abc_jobs_alpaca.model.models.ExamsExtendResponse
 import com.example.abc_jobs_alpaca.model.models.ExamsResponse
 import com.example.abc_jobs_alpaca.model.models.InterviewsResponse
 import com.example.abc_jobs_alpaca.model.models.PersonalInfoResponse
+import com.example.abc_jobs_alpaca.model.models.TeamsResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemDeleteResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoItemResponse
 import com.example.abc_jobs_alpaca.model.models.TechnicalInfoResponse
@@ -53,6 +54,7 @@ import com.example.abc_jobs_alpaca.model.models.deserializeLoginCandidateError
 import com.example.abc_jobs_alpaca.model.models.deserializeLoginCompany
 import com.example.abc_jobs_alpaca.model.models.deserializePersonalInfo
 import com.example.abc_jobs_alpaca.model.models.deserializePersonalInfoError
+import com.example.abc_jobs_alpaca.model.models.deserializeTeams
 import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfo
 import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItem
 import com.example.abc_jobs_alpaca.model.models.deserializeTechnicalInfoItemDelete
