@@ -40,6 +40,11 @@ test('vista personal y crear personal', async ({ page }) => {
 
   await page.getByText('Seleccionar tipo de').click();
   await page.getByRole('option', { name: 'The Inspector (ISTJ)' }).locator('span').click();
+
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Add Employee').first().isVisible();
+  await page.getByText('People').first().first().isVisible();
 })
 
 test('vista equipo y crear equipo', async ({ page }) => {
@@ -49,6 +54,10 @@ test('vista equipo y crear equipo', async ({ page }) => {
   await page.getByTitle('Crear Equipo').locator('mat-icon').click();
   await expect(page.getByPlaceholder('Nombre del equipo')).toBeVisible();
   await page.getByRole('button', { name: 'Cancelar' }).click();
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Teams and projects').first().isVisible();
+  await page.getByText('New Team').first().isVisible();
 })
 
 test('vista proyecto y crear proyecto', async ({ page }) => {
@@ -58,6 +67,10 @@ test('vista proyecto y crear proyecto', async ({ page }) => {
   await page.getByTitle('Crear Proyecto').locator('mat-icon').click();
   await expect(page.getByPlaceholder('Nombre del proyecto')).toBeVisible();
   await page.getByRole('button', { name: 'Cancelar' }).click();
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Teams and projects').first().isVisible();
+  await page.getByText('New Project').first().isVisible();
 })
 
 test('vista de vacantes y crear vacante', async ({ page }) => {
@@ -68,6 +81,10 @@ test('vista de vacantes y crear vacante', async ({ page }) => {
   await expect(page.getByPlaceholder('Nombre de la vacante')).toBeVisible();
   await expect(page.getByText('Seleccionar equipo')).toBeVisible();
   await page.getByRole('button', { name: 'Cancelar' }).click();
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Positions').first().isVisible();
+  await page.getByText('New Position').first().isVisible();
 });
 
 test('vista de acciones vacantes', async ({ page }) => {
@@ -79,6 +96,14 @@ test('vista de acciones vacantes', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Cerrar Vacante' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Agendar Entrevista' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Guardar' })).toBeVisible();
+
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.locator('app-team-project-card').nth(1).click();
+  await expect(page.getByRole('button', { name: 'Close', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Close position' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Schedule Interview' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Save' })).toBeVisible();
 });
 
 
@@ -91,6 +116,9 @@ test('vista de busqueda de candidatos', async ({ page }) => {
   await page.getByRole('option', { name: 'Afghanistan' }).click();
   await page.getByRole('button', { name: 'Buscar' }).click();
 
+  await page.getByText('País').first().isVisible();
+  await page.getByText('Tecnologías').first().isVisible();
+
   // At least one candidate is visible
   await expect(page.getByText('Afghanistan').first()).toBeVisible();
 
@@ -100,10 +128,22 @@ test('vista de busqueda de candidatos', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Cancelar' })).toBeVisible();
   await expect(page.locator('app-abc-button').filter({ hasText: 'Guardar' })).toBeVisible();
   await page.getByRole('button', { name: 'Cancelar' }).click();
+
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Candidates').first().click();
+  await page.getByRole('button', { name: 'SEARCH' }).click();
+  await page.waitForTimeout(1000);
+  await page.getByText('Country').first().isVisible();
+  await page.getByText('Technologies').first().isVisible();
 });
 
 test('vista contrataciones', async ({ page }) => {
   await loginEmpresa(page);
   await page.getByText('Contrataciones').click();
   await expect(page.getByRole('heading', { name: 'Personal', exact: true })).toBeVisible();
+
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await page.getByText('Hirings').first().isVisible();
 });
