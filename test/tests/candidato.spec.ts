@@ -20,16 +20,22 @@ test('vista perfil', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Información Académica' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Información Laboral' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Conocimientos Técnicos' })).toBeVisible();
+
+  // i18n
+  await page.goto(page.url().replace('/es/', '/en/'));
+  await expect(page.getByRole('heading', { name: 'Personal Information' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Academic Information' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Work Information' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Technical knowledge' })).toBeVisible();
 })
 
 test('vista perfil editar información personal', async ({ page }) => {
   await loginCandidato(page);
   await page.getByText('Perfil').click();
-  const headingLocator = page.getByRole('heading', { name: 'Información Personal' })
+  const child = page.getByRole('heading', { name: 'Información Personal' })
   await page.getByRole('heading', { name: 'Información Personal' }).locator('mat-icon').click();
-  // After the heading there's a form select it
-  // await expect(page.getByRole('button', { name: 'Guardar' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: 'Cancelar' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Guardar' }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancelar' }).first()).toBeVisible();
 });
 
 
@@ -37,18 +43,18 @@ test('vista perfil editar información académica', async ({ page }) => {
   await loginCandidato(page);
   await page.getByText('Perfil').click();
   await page.getByRole('heading', { name: 'Información Académica' }).locator('mat-icon').click();
-  // await expect(page.getByRole('button', { name: 'Guardar' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: 'Cancelar' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: 'AÑADIR OTRO' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Guardar' }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancelar' }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'AÑADIR OTRO' }).first()).toBeVisible();
 });
 
 test('vista perfil editar información laboral', async ({ page }) => {
   await loginCandidato(page);
   await page.getByText('Perfil').click();
   await page.getByRole('heading', { name: 'Información Laboral' }).locator('mat-icon').click();
-  // await expect(page.getByRole('button', { name: 'Guardar' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: 'Cancelar' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: 'AÑADIR OTRO' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Guardar' }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cancelar' }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'AÑADIR OTRO' }).first()).toBeVisible();
 });
 
 
