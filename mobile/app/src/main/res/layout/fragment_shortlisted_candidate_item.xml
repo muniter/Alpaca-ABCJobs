@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints">
 
             <LinearLayout
                 android:id="@+id/shortlisted_candidate"
