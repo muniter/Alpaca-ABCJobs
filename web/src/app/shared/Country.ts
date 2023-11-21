@@ -1,16 +1,16 @@
 export class Country {
     num_code: Number;
-    alpha_2_code: String;
-    alpha_3_code: String;
-    en_short_name: String;
-    nationality: String;
+    alpha_2_code: string;
+    alpha_3_code: string;
+    en_short_name: string;
+    nationality: string;
 
     public constructor(
         num_code: Number,
-        alpha_2_code: String,
-        alpha_3_code: String,
-        en_short_name: String,
-        nationality: String
+        alpha_2_code: string,
+        alpha_3_code: string,
+        en_short_name: string,
+        nationality: string
     ) {
         this.num_code = num_code
         this.alpha_2_code = alpha_2_code

@@ -91,7 +91,7 @@ describe('CompanyCreatePositionComponent', () => {
     description.setValue("desc")
     team.setValue(new Team(1, "team", new Company("name", "email"), []))
 
-    let companyServiceSpy = spyOn(companyService, 'postPosition').and.returnValue(of({ success: true, data: new Position(1, "", "", false, new Company("", ""), new Team(1, "", new Company("",""), []), []) }));
+    let companyServiceSpy = spyOn(companyService, 'postPosition').and.returnValue(of({ success: true, data: new Position(1, "", "", false, new Company("", ""), new Team(1, "", new Company("",""), []), null, []) }));
 
     component.positionCreation();
 

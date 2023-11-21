@@ -5,6 +5,7 @@ import { Team } from '../Team';
 import { CompanyCreateEmployeeComponent } from '../company-create-employee/company-create-employee.component';
 import { CompanyService } from '../company.service';
 import { PositionCreateRequest } from '../Position';
+import { Country } from 'src/app/shared/Country';
 
 @Component({
   selector: 'app-company-create-position',
@@ -15,6 +16,7 @@ export class CompanyCreatePositionComponent implements OnInit {
 
   positionCreateForm!: FormGroup;
   allTeams!: Team[]
+  countries!: Country[]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -27,6 +29,7 @@ export class CompanyCreatePositionComponent implements OnInit {
       name: ["", [Validators.required]],
       description: ["", [Validators.required]],
       team: ["", [Validators.required]],
+      country: ["", []],
     });
     
     this.allTeams = []
@@ -35,13 +38,21 @@ export class CompanyCreatePositionComponent implements OnInit {
         this.allTeams = response.data
       }
     })
+    
+    this.countries = []
+    this.companyService.getCountries().subscribe({
+      next: (response) => {
+        this.countries = response.data
+      }
+    })
   }
 
   positionCreation() {
     let positionCreationRequest = new PositionCreateRequest(
       this.positionCreateForm.get('name')?.value,
       this.positionCreateForm.get('description')?.value,
-      this.positionCreateForm.get('team')?.value.id
+      this.positionCreateForm.get('team')?.value.id,
+      this.positionCreateForm.get('country')?.value?.num_code
     )
 
     this.companyService.postPosition(this.data.token, positionCreationRequest).subscribe({

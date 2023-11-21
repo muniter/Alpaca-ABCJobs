@@ -1,4 +1,5 @@
 import { Candidate, PreselectedCandidate } from "../candidate/candidate";
+import { Country } from "../shared/Country";
 import { Team } from "./Team";
 import { Company } from "./company";
 
@@ -9,6 +10,7 @@ export class Position {
     open: boolean;
     company: Company;
     team: Team;
+    country: Country | null;
     preselection: PreselectedCandidate[];
 
     public constructor(
@@ -18,6 +20,7 @@ export class Position {
         open: boolean,
         company: Company,
         team: Team,
+        country: Country | null,
         preselection: PreselectedCandidate[]
     ) {
         this.id = id;
@@ -26,6 +29,7 @@ export class Position {
         this.open = open;
         this.company = company;
         this.team = team;
+        this.country = country;
         this.preselection = preselection
     }
 }
@@ -47,15 +51,18 @@ export class PositionCreateRequest {
     name: string;
     description: string;
     team_id: Number;
+    country_code: Number | null;
 
     public constructor(
         name: string,
         description: string,
-        team_id: Number
+        team_id: Number,
+        country_code: Number | null
     ) {
         this.name = name
         this.description = description
         this.team_id = team_id
+        this.country_code = country_code
     }
 }
 
