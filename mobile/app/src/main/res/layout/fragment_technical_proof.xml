@@ -77,6 +77,13 @@
             android:hint="@string/technical_proof_result_placeholder"
             android:text="@={viewModel.shortlistedCandidateItem.resultString}"
             tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/technical_proof_result_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/error_message"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/technical_proof_divider"
