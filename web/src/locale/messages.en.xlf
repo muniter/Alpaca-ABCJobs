@@ -158,6 +158,10 @@
           <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
@@ -203,7 +207,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-close/company-position-close.component.html</context>
@@ -212,6 +216,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
           <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
@@ -1732,12 +1740,16 @@
         <target>Technical tests</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/candidate-header/candidate-header.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="hometab" datatype="html">
         <source>Home</source>
         <target>Home</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/candidate-header/candidate-header.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/company-header/company-header.component.html</context>
           <context context-type="linenumber">7</context>
@@ -2077,6 +2089,62 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-position/company-create-position.component.html</context>
           <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="scheduledinterviews" datatype="html">
+        <source>Entrevistas Programadas</source>
+        <target>Scheduled interviews</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-interviews/candidate-interviews.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="finishedinterviews" datatype="html">
+        <source>Entrevistas Realizadas</source>
+        <target>Finished Interviews</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-interviews/candidate-interviews.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="date" datatype="html">
+        <source>Fecha</source>
+        <target>Date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="datevalidationscheduleinterview" datatype="html">
+        <source> Debe seleccionar una fecha válida </source>
+        <target> You must choose a valid date </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hour" datatype="html">
+        <source>Hora</source>
+        <target>Time</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="interviewresult" datatype="html">
+        <source>Resultado: <x id="INTERPOLATION" equiv-text="{{interview?.result}}"/>%</source>
+        <target>Result: <x id="INTERPOLATION" equiv-text="{{interview?.result}}"/>%</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/interview-card/interview-card.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="interviews" datatype="html">
+        <source>Entrevistas</source>
+        <target>Interviews</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/candidate-header/candidate-header.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
     </body>

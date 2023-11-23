@@ -1,0 +1,53 @@
+h2 {
+	font-size: 2rem;
+	font-weight: 400;
+	text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+label {
+    font-size: 1.3rem;
+}
+
+.modal {
+    padding: 2rem;
+}
+
+.form-row {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.form-row-label {
+    font-size: 1.2rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.left-label {
+    width: 45%;
+}
+
+.right-field {
+    width: 55%;
+}
+
+.small-button {
+    width: 30%;
+    margin-left: 0.5rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.error {
+    color: #f44336;
+    font-size: smaller;
+}

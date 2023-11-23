@@ -14,6 +14,7 @@ import { CandidateHeaderComponent } from './candidate-header/candidate-header.co
 import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { PersonCardComponent } from './person-card/person-card.component';
 import { TeamProjectCardComponent } from './team-project-card/team-project-card.component';
+import { InterviewCardComponent } from './interview-card/interview-card.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { TeamProjectCardComponent } from './team-project-card/team-project-card.
     CandidateHeaderComponent,
     CompanyHeaderComponent,
     PersonCardComponent,
-    TeamProjectCardComponent
+    TeamProjectCardComponent,
+    InterviewCardComponent
   ],
   exports: [
     AbcButtonComponent,
@@ -43,7 +45,8 @@ import { TeamProjectCardComponent } from './team-project-card/team-project-card.
     CandidateHeaderComponent,
     CompanyHeaderComponent,
     PersonCardComponent,
-    TeamProjectCardComponent
+    TeamProjectCardComponent,
+    InterviewCardComponent
   ]
 })
 export class SharedModule { }

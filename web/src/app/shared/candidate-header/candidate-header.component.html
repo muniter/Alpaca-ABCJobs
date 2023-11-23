@@ -1,10 +1,13 @@
 <mat-toolbar color="primary">
   <div class="center-vertical">
-    <div class="logo-div" >
+    <div class="logo-div" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateHome+'/'+token">
       <img class="logo-img" src="../../../assets/logo.png" >
     </div>
-    <button mat-button>Home</button>
-    <button mat-button (click)="openTest()" i18n="@@menutechtests">Pruebas Técnicas</button>
+
+    <span class="tab-label" i18n="@@hometab" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateHome+'/'+token">Home</span>
+    <span class="tab-label" i18n="@@menutechtests" [routerLink]="'/'+appRoutes.technicalTest+'/'+appRoutes.technicalTestCandidate+'/'+token">Pruebas Técnicas</span>
+    <span class="tab-label" i18n="@@interviews" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateInterviews+'/'+token">Entrevistas</span>
+
   </div>
   <span class="example-spacer"></span>
   <span flex></span>

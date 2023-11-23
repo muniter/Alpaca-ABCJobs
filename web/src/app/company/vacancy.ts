@@ -66,3 +66,13 @@ export class SelectCandidateRequest {
     this.id_candidate = id_candidate;
   }
 }
+
+export class ScheduleInterviewRequest {
+  interview_date: string;
+
+  public constructor(
+    interview_date: string
+  ) {
+    this.interview_date = interview_date;
+  }
+}

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CompanyPositionDetailComponent } from './company-position-detail.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../company.service';
 import { Position } from '../Position';
@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreselectedCandidate } from 'src/app/candidate/candidate';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 describe('CompanyPositionDetailComponent', () => {
   let component: CompanyPositionDetailComponent;
@@ -85,5 +85,21 @@ describe('CompanyPositionDetailComponent', () => {
 
     expect(companyServiceSpy).toHaveBeenCalledTimes(1);
 
+  });
+
+  it('should open PositionClose modal', () => {
+    const openDialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue({ afterClosed: () => EMPTY } as any)
+
+    component.openPositionCloseModal(new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("",""), []), null, []))
+
+    expect(openDialogSpy).toHaveBeenCalledTimes(1)
+  });
+
+  it('should open ScheduleInterview modal', () => {
+    const openDialogSpy = spyOn(TestBed.get(MatDialog), 'open').and.returnValue({ afterClosed: () => EMPTY } as any)
+
+    component.openScheduleInterviewModal(new Position(1, "", "", true, new Company("", ""), new Team(1, "", new Company("",""), []), null, []))
+
+    expect(openDialogSpy).toHaveBeenCalledTimes(1)
   });
 });

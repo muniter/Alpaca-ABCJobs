@@ -1,0 +1,31 @@
+<div class="candidate-theme candidate-home-body">
+  <app-candidate-header [username]="'Perfil'"></app-candidate-header>
+
+  <div class="interviews-container">
+    <div class="scheduled-interviews-container">
+      <app-login-logon-container>
+        <H2 i18n="@@scheduledinterviews">Entrevistas Programadas</H2>
+
+        <div class="interview-cards">
+          <drag-scroll [drag-scroll-y-disabled]="true">
+            <app-interview-card drag-scroll-item *ngFor="let interview of scheduledInterviews" [interview]="interview" />
+          </drag-scroll>
+        </div>
+
+      </app-login-logon-container>
+    </div>
+
+    <div class="finished-interviews-container">
+      <app-login-logon-container>
+        <H2 i18n="@@finishedinterviews">Entrevistas Realizadas</H2>
+
+        <div class="interview-cards">
+          <drag-scroll [drag-scroll-y-disabled]="true">
+            <app-interview-card drag-scroll-item *ngFor="let interview of finishedInterviews" [interview]="interview" />
+          </drag-scroll>
+        </div>
+
+      </app-login-logon-container>
+    </div>
+  </div>
+</div>

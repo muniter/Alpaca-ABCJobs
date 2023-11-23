@@ -1,0 +1,41 @@
+<div class="modal candidate-theme">
+  <form [formGroup]="scheduleInterviewForm" (ngSubmit)="scheduleInterview()">
+    <div class="form">
+
+      <div class="full-width form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@date">Fecha</label>
+        </div>
+
+        <mat-form-field class="form-field space-between right-field" appearance="outline" subscriptSizing="dynamic"
+          color="accent">
+          <input matInput (focus)="picker1.open()" [matDatepicker]="picker1" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+
+          <mat-error *ngIf="scheduleInterviewForm.get('date')!.invalid" i18n="@@datevalidationscheduleinterview">
+            Debe seleccionar una fecha válida
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="full-width form-row">
+        <div class="left-label">
+          <label class="form-row-label" i18n="@@hour">Hora</label>
+        </div>
+
+        <mat-form-field class="form-field space-between right-field" appearance="outline" subscriptSizing="dynamic"
+          color="accent">
+          <input matInput type="time" formControlName="hour" placeholder="start date">
+        </mat-form-field>
+      </div>
+
+      <div class="buttons">
+        <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
+          i18n="@@cancel">Cancelar</app-abc-button>
+        <app-abc-button type="submit" class="small-button" color="primary" [disabled]="!scheduleInterviewForm.valid"
+          i18n="@@save">Guardar</app-abc-button>
+      </div>
+    </div>
+  </form>
+</div>
