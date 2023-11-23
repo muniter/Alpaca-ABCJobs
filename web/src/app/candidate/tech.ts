@@ -3,18 +3,18 @@ import { Skill } from "../shared/skill";
 export class Tech {
   id: number;
   tech: Skill;
-  /* raiting: number; */
+  score: number;
   moreInfoTech: string;
 
   public constructor(
     id: number,
-    tech: Skill, 
-    /* raiting: number, */
+    tech: Skill,
+    score: number,
     moreInfoTech: string
-    ) {
+  ) {
     this.id = id;
     this.tech = tech
-    /* this.raiting = raiting */
+    this.score = score
     this.moreInfoTech = moreInfoTech;
   }
 }
@@ -22,18 +22,18 @@ export class Tech {
 export class TechServiceSchema {
   id: number;
   type: Skill;
-  /* raiting: number; */
+  score: number;
   description: string;
 
   public constructor(
     id: number,
     type: Skill,
-    /* raiting: number, */
+    score: number,
     description: string
   ) {
     this.id = id;
     this.type = type;
-    /* this.raiting = raiting; */
+    this.score = score;
     this.description = description;
   }
 }
@@ -56,8 +56,8 @@ export class TechRequestRow {
   description: string;
 
   public constructor(
-    type: number, 
-    description: string 
+    type: number,
+    description: string
   ) {
     this.type = type;
     this.description = description;
@@ -77,6 +77,6 @@ export class TechRequest {
 export const mapKeysTech: { [index: string]: string } = {
   "id": "id",
   "type": "tech",
-  "raiting": "raiting",
+  "score": "score",
   "description": "moreInfoTech",
 };

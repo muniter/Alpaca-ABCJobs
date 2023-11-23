@@ -18,7 +18,16 @@
             </div>
             <div class="know-label" *ngIf="technicalInfoDisabled">
               <p>{{ know.get('tech')?.value.name }}</p>
-              <span i18n="@@techtestnotfound">Prueba no disponible o no realizada</span>
+              <mat-icon *ngIf="know.value.score" aria-hidden="false" aria-label="Star result" fontIcon="star"
+                        [ngClass]="know.value.score > 0 ? 'star-result-complete' : 'star-result'" >
+              </mat-icon>
+              <mat-icon *ngIf="know.value.score" aria-hidden="false" aria-label="Star result" fontIcon="star"
+                        [ngClass]="know.value.score > 1 ? 'star-result-complete' : 'star-result'" >
+              </mat-icon>
+              <mat-icon *ngIf="know.value.score" aria-hidden="false" aria-label="Star result" fontIcon="star"
+                        [ngClass]="know.value.score > 2 ? 'star-result-complete' : 'star-result'" >
+              </mat-icon>
+              <span i18n="@@techtestnotfound" *ngIf="!know.value.score">Prueba no disponible o no realizada</span>
             </div>
             <div class="form-row" *ngIf="!technicalInfoDisabled">
               <mat-form-field id="techFormField-{{ item }}" class="form-field left-field" 
