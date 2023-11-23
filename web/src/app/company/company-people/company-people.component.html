@@ -9,9 +9,9 @@
 
         <app-person-card *ngFor="let employee of employees" [title]="employee.name" type=employee>
           <p> {{employee.title}} </p>
-          <mat-chip-listbox>
-            <mat-chip class="pequena" *ngFor="let skill of employee.skills">{{skill.name}}</mat-chip>
-          </mat-chip-listbox>
+          <mat-chip-set role="list">
+            <mat-chip role="listitem" class="pequena" *ngFor="let skill of employee.skills">{{skill.name}}</mat-chip>
+          </mat-chip-set>
           <p> {{employee.personality.name}} </p>
         </app-person-card>
       </div>

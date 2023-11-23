@@ -26,7 +26,7 @@
           [ngClass]="{ 'noempty': completedQuizzes.length > 0 }">
           <div *ngFor="let quiz of completedQuizzes; let i = index" class="quiz-item"
            drag-scroll-item>
-            <img src="../../../assets/rocket.png">
+            <img src="../../../assets/rocket.png" alt="exam_icon">
             <p>{{ quiz.exam.skill.name }}</p>
             <mat-icon aria-hidden="false" aria-label="Star result" fontIcon="star"
                       [ngClass]="quiz.result > 0 ? 'star-result-complete' : 'star-result'" >

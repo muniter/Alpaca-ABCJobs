@@ -20,7 +20,7 @@ btn, .evaluacion {
   border: none;
   font-size: 1rem;
   font-weight: bold;
-  color: var(--contrastCompanyColor);
+  color: var(--contrastCompanyColorSubtitles);
 }
 
 .cards {
