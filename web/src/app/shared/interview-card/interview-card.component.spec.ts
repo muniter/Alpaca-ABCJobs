@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { InterviewCardComponent } from './interview-card.component';
+import { CandidateInterview } from 'src/app/candidate/CandidateInterview';
 
 describe('InterviewCardComponent', () => {
   let component: InterviewCardComponent;
@@ -11,9 +12,9 @@ describe('InterviewCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InterviewCardComponent ]
+      declarations: [InterviewCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,6 +24,13 @@ describe('InterviewCardComponent', () => {
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should parse date', () => {
+    component.interview = new CandidateInterview(1, "", "", "", true, 1);
+    fixture.detectChanges();
+
     expect(component).toBeTruthy();
   });
 });

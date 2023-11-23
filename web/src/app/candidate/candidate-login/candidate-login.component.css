@@ -6,6 +6,19 @@
   margin-bottom: 1rem;
 }
 
+.top-margin{
+    margin-top: 0.4rem;
+}
+
+.bottom-margin{
+    margin-bottom: 0.4rem;
+}
+
+.inline-button {
+    display: inline-block;
+    width: 100%;
+}
+
 .full-width {
   width: 100%;
 }

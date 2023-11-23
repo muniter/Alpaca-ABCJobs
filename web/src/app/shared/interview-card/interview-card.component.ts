@@ -15,6 +15,7 @@ export class InterviewCardComponent implements OnInit {
   interviewMonthYear: string | undefined;
   interviewHour: string | undefined;
   companyName: string | undefined;
+  isFinished: boolean | undefined;
 
   constructor(
     @Inject(LOCALE_ID) public locale: string
@@ -25,6 +26,7 @@ export class InterviewCardComponent implements OnInit {
     if (this.interview) {
       let date = new Date(this.interview?.interview_date)
 
+      this.isFinished = date.valueOf() - Date.now().valueOf() < 0
       this.interviewDay =  formatDate(date, 'dd', this.locale)
       this.interviewMonthYear = formatDate(date, 'MMM yyyy', this.locale)
       this.interviewHour = formatDate(date, 'HH:mm', this.locale)
