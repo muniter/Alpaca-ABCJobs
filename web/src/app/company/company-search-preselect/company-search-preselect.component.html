@@ -3,10 +3,10 @@
     <fieldset>
       <div class="form-row">
         <div>
-          <label class="form-row-label" i18n="@@searchcandidatesvacancy">Vacante</label>
+          <label id="searchcandidateselectlabel" class="form-row-label" i18n="@@searchcandidatesvacancy">Vacante</label>
         </div>
         <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
-          <mat-select formControlName="vacancy">
+          <mat-select formControlName="vacancy" aria-labelledby="searchcandidateselectlabel">
             <mat-option *ngFor="let vacancy of vacancies" [value]="vacancy.id">
               {{vacancy.name}}
             </mat-option>
@@ -17,9 +17,9 @@
         </mat-form-field>
       </div>
       <div class="buttons">
-        <app-abc-button class="inline-button" color="basic" (click)="cancel()" 
+        <app-abc-button class="inline-button" color="basic" (click)="cancel()"
         i18n="@@cancel">Cancelar</app-abc-button>
-        <app-abc-button type="submit" color="primary" [disabled]="!preselectCandidateForm.valid" 
+        <app-abc-button type="submit" color="primary" [disabled]="!preselectCandidateForm.valid"
         i18n="@@save">Guardar</app-abc-button>
       </div>
     </fieldset>

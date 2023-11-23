@@ -29,7 +29,8 @@
 }
 
 :host ::ng-deep app-person-card h2 {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  font-weight: 400;
   margin: 0;
   margin-bottom: 0.5rem;
   padding: 0;

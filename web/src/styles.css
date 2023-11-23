@@ -14,6 +14,7 @@ body {
 :root {
     --contrastCandidateColor: #5885DD;
     --contrastCompanyColor: #3E9B73;
+    --contrastCompanyColorSubtitles: #276349;
     --darkColor: #191919;
     --lightColor: #E4E4E4;
     --mat-select-panel-background-color: #fff;
