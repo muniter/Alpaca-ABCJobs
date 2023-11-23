@@ -69,7 +69,7 @@ class ShortlistedCandidatesFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.shorlistedCandidateList.observe(viewLifecycleOwner) { shortlistedCandidateList ->
+                viewModel.shortlistedCandidateList.observe(viewLifecycleOwner) { shortlistedCandidateList ->
                     if(shortlistedCandidateList?.size == 0) {
                         showToast(
                             getString(R.string.toast_message_data_not_found)

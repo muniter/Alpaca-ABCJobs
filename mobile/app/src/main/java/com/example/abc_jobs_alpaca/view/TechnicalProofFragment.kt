@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -103,12 +104,13 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.technical_proof_save_button -> {
+                val errorView = view?.findViewById<TextView>(R.id.technical_proof_result_error)
                 val resultValue =
-                    view?.findViewById<TextInputEditText>(R.id.technical_proof_result_field)?.text?.toString()?.toInt()
+                    view?.findViewById<TextInputEditText>(R.id.technical_proof_result_field)?.text?.toString()?.toIntOrNull()
                 lifecycleScope.launch(Dispatchers.Main) {
-                    if (resultValue != null) {
+                    if (resultValue != null && resultValue.toString() != "" && resultValue in 1..100) {
                         var request: ArrayList<TechnicalProofRequest>? = ArrayList()
-                        request?.add(TechnicalProofRequest(candidateId,resultValue))
+                        request?.add(TechnicalProofRequest(candidateId,resultValue.toInt()))
                         if (request != null) {
                             viewModel.saveTechnicalProofResult(token, vacancyId, request)
                             showToast(
@@ -116,6 +118,9 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
                             )
                             backToShortlistedCandidatesList()
                         }
+                    } else {
+                        errorView?.setText(getString(R.string.technical_proof_error_result_null))
+                        errorView?.visibility = View.VISIBLE
                     }
                 }
             }
