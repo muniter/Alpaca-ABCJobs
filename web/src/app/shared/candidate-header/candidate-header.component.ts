@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
 import { UserSettingsComponent } from 'src/app/user/user-settings/user-settings.component';
@@ -11,7 +11,7 @@ import { UserSettingsComponent } from 'src/app/user/user-settings/user-settings.
 })
 export class CandidateHeaderComponent implements OnInit {
 
-  @Input() username: string = ""; 
+  @Input() username: string = "";
 
   appRoutes = AppRoutesEnum;
   token: string;
@@ -20,7 +20,7 @@ export class CandidateHeaderComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRouter: ActivatedRoute,
     private router: Router
-  ) { 
+  ) {
     this.token = "";
   }
 
@@ -34,7 +34,7 @@ export class CandidateHeaderComponent implements OnInit {
 
   openUserSettingsDialog() {
     this.dialog.open(UserSettingsComponent, {
-      data: { token: this.token, dialog: this.dialog, theme: 'candidate-theme' },
+      data: { token: this.token, dialog: this.dialog, theme: 'candidate-theme'},
       width: '40%'
     });
   }

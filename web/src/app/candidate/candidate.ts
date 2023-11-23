@@ -19,7 +19,7 @@ export class PreselectedCandidate extends Candidate {
   id_candidate: number;
   result: number;
 
-  public constructor(id: number, id_candidate: number, names: string, last_names: string, email: string, result: number) 
+  public constructor(id: number, id_candidate: number, names: string, last_names: string, email: string, result: number)
   {
     super(names, last_names, email);
     this.id_candidate = id_candidate
@@ -71,7 +71,7 @@ export class CandidateServiceSchema {
 
 export const mapKeys: { [index: string]: string } = {
   "nombres": "names",
-  "apellidos": "lastnames",
+  "apellidos": "last_names",
   "email": "email",
   "password": "password"
 };

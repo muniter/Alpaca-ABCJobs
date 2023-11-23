@@ -150,7 +150,7 @@ $roboto-typography: mat.define-typography-config(
 $candidate-theme: mat.define-light-theme((
   color: (
     primary: mat.define-palette($md-dark, 500),
-    accent: mat.define-palette($md-contrastcandidate, 500),
+    accent: mat.define-palette($md-contrastcandidate, 700),
   ),
   typography: $roboto-typography
 ));
@@ -158,12 +158,12 @@ $candidate-theme: mat.define-light-theme((
 $client-theme: mat.define-light-theme((
   color: (
     primary: mat.define-palette($md-dark, 500),
-    accent: mat.define-palette($md-contrastclient, 500),
+    accent: mat.define-palette($md-contrastclient, 700),
   ),
   typography: $roboto-typography
 ));
 
-$typo-theme: mat.define-light-theme(( 
+$typo-theme: mat.define-light-theme((
   typography: $roboto-typography));
 
 .client-theme{
