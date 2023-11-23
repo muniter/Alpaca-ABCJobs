@@ -20,6 +20,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { CandidateWorkComponent } from './candidate-work/candidate-work.component';
 import { CandidateSkillsComponent } from './candidate-skills/candidate-skills.component';
+import { CandidateInterviewsComponent } from './candidate-interviews/candidate-interviews.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   imports: [
@@ -40,6 +42,7 @@ import { CandidateSkillsComponent } from './candidate-skills/candidate-skills.co
     MatInputModule, 
     MatCheckboxModule,
     MatDividerModule,
+    DragScrollModule,
     MatDialogModule
   ],
   declarations: [
@@ -49,7 +52,8 @@ import { CandidateSkillsComponent } from './candidate-skills/candidate-skills.co
     CandidateProfileComponent,
     CandidateEducationComponent,
     CandidateWorkComponent,
-    CandidateSkillsComponent
+    CandidateSkillsComponent,
+    CandidateInterviewsComponent
   ],
   exports: [
     CandidateRegisterComponent,
@@ -58,7 +62,8 @@ import { CandidateSkillsComponent } from './candidate-skills/candidate-skills.co
     CandidateProfileComponent,
     CandidateEducationComponent,
     CandidateWorkComponent,
-    CandidateSkillsComponent
+    CandidateSkillsComponent,
+    CandidateInterviewsComponent
   ]
 })
 export class CandidateModule { }

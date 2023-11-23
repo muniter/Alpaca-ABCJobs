@@ -123,7 +123,7 @@
                 <input #skillInput formControlName="skills" [matChipInputFor]="chipGrid"
                   [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="addSkill($event, item)" placeholder="Seleccione"
-                  i18n-placeholder="@@skillsplaceholder"/>
+                  i18n-placeholder="@@skillsselectplaceholder"/>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, item)">
                   <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
                     {{skill}}

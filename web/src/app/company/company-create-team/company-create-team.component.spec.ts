@@ -17,7 +17,7 @@ import { CompanyService } from '../company.service';
 import { Employee, EmployeesListResponse } from '../Employee';
 import { Personality } from 'src/app/shared/Personality';
 import { of, throwError } from 'rxjs';
-import { Team } from '../Team';
+import { Team, TeamCreateResponse } from '../Team';
 import { Company } from '../company';
 
 describe('CompanyCreateTeamComponent', () => {
@@ -103,7 +103,7 @@ describe('CompanyCreateTeamComponent', () => {
     let baseEmployee = new Employee(1, "Pepe", "cajero", new Personality(1, "tranqui"), [])
     component.selectedEmployees.push(baseEmployee)
 
-    let companyServiceSpy = spyOn(companyService, 'postTeam').and.returnValue(of({ success: true, data: new Team(1, "", new Company("", ""), []) }));
+    let companyServiceSpy = spyOn(companyService, 'postTeam').and.returnValue(of(new TeamCreateResponse(true, new Team(1, "", new Company("", ""), []))));
 
     component.teamCreation();
 
