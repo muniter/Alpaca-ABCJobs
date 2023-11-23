@@ -41,7 +41,7 @@ fun deserializeVacancies(response: JSONObject): VacanciesResponse {
                     TeamItem(0, "")
                 }
                 /*val preselection = vacancyObject.optJSONArray("preselection")*/
-                var parsedShortlistedCandidates: MutableList<ShortlistedCandidateItem> = mutableListOf()
+                val parsedShortlistedCandidates: MutableList<ShortlistedCandidateItem> = mutableListOf()
                 vacancies.add(VacancyItem(id, name, description, team, parsedShortlistedCandidates))
             }
         }
@@ -53,7 +53,7 @@ fun deserializeVacancies(response: JSONObject): VacanciesResponse {
 fun deserializeVacancy(response: JSONObject): VacancyResponse {
     val success = response.optBoolean("success", false)
     val vacancyObject = response.optJSONObject("data")
-    var vacancy: VacancyItem? = null;
+    var vacancy: VacancyItem? = null
 
     if (vacancyObject != null) {
         val id = vacancyObject.optInt("id")
@@ -68,7 +68,7 @@ fun deserializeVacancy(response: JSONObject): VacancyResponse {
             TeamItem(0, "")
         }
         val preselection = vacancyObject.optJSONArray("preselection")
-        var parsedShortlistedCandidates: MutableList<ShortlistedCandidateItem> = mutableListOf()
+        val parsedShortlistedCandidates: MutableList<ShortlistedCandidateItem> = mutableListOf()
         if (preselection != null) {
             for (i in 0 until preselection.length()) {
                 val candidate = preselection.optJSONObject(i)
@@ -86,7 +86,7 @@ fun deserializeVacancy(response: JSONObject): VacancyResponse {
                 val phone = candidate.optString("phone")
                 val biography = candidate.optString("biography")
                 val languages = candidate.optJSONArray("languages")
-                var parsedLanguages: MutableList<Language> = mutableListOf()
+                val parsedLanguages: MutableList<Language> = mutableListOf()
                 if (languages != null) {
                     for (j in 0 until languages.length()) {
                         val language = languages.optJSONObject(j)

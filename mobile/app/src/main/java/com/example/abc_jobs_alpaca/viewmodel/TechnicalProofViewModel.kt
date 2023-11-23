@@ -29,8 +29,8 @@ class TechnicalProofViewModel(
 
     suspend fun saveTechnicalProofResult(token: String, vacancyId:Int, request: ArrayList<TechnicalProofRequest>) {
         val response = abcJobsRepository.postTestResult(token, vacancyId, request)
-        response.onSuccess { it ->
-            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Guardado"))
+        response.onSuccess {
+            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Ok"))
         }
     }
 

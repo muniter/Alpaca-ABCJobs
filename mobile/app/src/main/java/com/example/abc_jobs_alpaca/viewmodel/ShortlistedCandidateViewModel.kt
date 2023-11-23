@@ -10,8 +10,8 @@ class ShortlistedCandidateViewModel(private val abcJobsRepository: ABCJobsReposi
 
     private val tokenLiveData = MutableLiveData<String?>()
     val token = tokenLiveData
-    private val _shorlistedCandidateList = MutableLiveData<List<ShortlistedCandidateItem>?>()
-    val shorlistedCandidateList: MutableLiveData<List<ShortlistedCandidateItem>?> get() = _shorlistedCandidateList
+    private val _shortlistedCandidateList = MutableLiveData<List<ShortlistedCandidateItem>?>()
+    val shortlistedCandidateList: MutableLiveData<List<ShortlistedCandidateItem>?> get() = _shortlistedCandidateList
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is shortlistedCandidate Fragment"
@@ -33,11 +33,11 @@ class ShortlistedCandidateViewModel(private val abcJobsRepository: ABCJobsReposi
 
     suspend fun loadShortlistedCandidateItems() {
         try {
-            if (token?.value != null) {
+            if (token.value != null) {
                 abcJobsRepository.getVacancy(token.value!!,vacancyId)
                     .onSuccess { response ->
                         if (response.success) {
-                            _shorlistedCandidateList.value = response.data?.preselection
+                            _shortlistedCandidateList.value = response.data?.preselection
                             navigationListener?.navigateToNextScreen()
                         }
                     }
@@ -48,7 +48,7 @@ class ShortlistedCandidateViewModel(private val abcJobsRepository: ABCJobsReposi
                 //TODO: message
             }
         } catch (e: Exception) {
-
+            //TODO: exception
         }
 
     }
