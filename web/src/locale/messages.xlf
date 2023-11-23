@@ -1925,7 +1925,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebioplaceholder" datatype="html">
-        <source>Brebe biografía</source>
+        <source>Breve biografía</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
           <context context-type="linenumber">135</context>
