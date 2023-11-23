@@ -34,7 +34,7 @@
         <app-abc-button type="button" class="small-button" color="basic" (click)="onCancel()"
           i18n="@@close">Cerrar</app-abc-button>
         <app-abc-button class="small-button" color="primary" (click)="openPositionCloseModal(position)" i18n="@@closeposition">Cerrar Vacante</app-abc-button>
-        <app-abc-button class="small-button" color="primary" i18n="@@setinterview">Agendar Entrevista</app-abc-button>
+        <app-abc-button class="small-button" color="primary" (click)="openScheduleInterviewModal(position)" i18n="@@setinterview">Agendar Entrevista</app-abc-button>
         <app-abc-button type="submit" class="small-button" color="primary" [disabled]="!positionGradeForm.valid" i18n="@@save">Guardar</app-abc-button>
       </div>
     </div>

@@ -31,6 +31,8 @@ import { CompanyPositionsComponent } from './company-positions/company-positions
 import { CompanyCreatePositionComponent } from './company-create-position/company-create-position.component';
 import { CompanyPositionDetailComponent } from './company-position-detail/company-position-detail.component';
 import { CompanyPositionCloseComponent } from './company-position-close/company-position-close.component';
+import { CompanyScheduleInterviewComponent } from './company-schedule-interview/company-schedule-interview.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -45,6 +47,7 @@ import { CompanyPositionCloseComponent } from './company-position-close/company-
     FormsModule,
     MatChipsModule,
     MatDialogModule,
+    MatDatepickerModule,
     MatAutocompleteModule,
     MatSelectModule,
     SharedModule,
@@ -69,7 +72,8 @@ import { CompanyPositionCloseComponent } from './company-position-close/company-
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
     CompanyPositionDetailComponent,
-    CompanyPositionCloseComponent
+    CompanyPositionCloseComponent,
+    CompanyScheduleInterviewComponent
   ],
   exports: [
     CompanyLoginComponent,
@@ -89,7 +93,8 @@ import { CompanyPositionCloseComponent } from './company-position-close/company-
     CompanyPositionsComponent,
     CompanyCreatePositionComponent,
     CompanyPositionDetailComponent,
-    CompanyPositionCloseComponent
+    CompanyPositionCloseComponent,
+    CompanyScheduleInterviewComponent
   ]
 })
 export class CompanyModule { }

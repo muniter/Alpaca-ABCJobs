@@ -4,19 +4,14 @@ mat-icon {
 }
 
 .logo-div {
-  background-color: var(--contrastCandidateColor);
-  border-radius: 50%;
+  height: 80%;
+  border-radius: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;  
-  /* margin-bottom: 1rem;
-  max-width: 30%; */
-}
-
-img.logo-img {
-  width: 40px;
-  height: 40px;
-  margin: 0.4rem; 
+  justify-content: center;
+  align-items: center;
+  background-color: var(--contrastCandidateColor);
+  margin-right: 2rem;
+  margin-left: 1rem;
 }
 
 .example-spacer {
@@ -27,10 +22,7 @@ img.logo-img {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.center-vertical span {
-  margin: 5px 30px;
+    height: 100%;
 }
 
 .user-name-icon {
@@ -39,4 +31,15 @@ img.logo-img {
 
 .user-name-label {
     margin-right: 0.5rem;
+}
+
+.logo-img {
+    max-height: 100%;
+    cursor: pointer;
+}
+
+.tab-label {
+    margin-right: 1rem;
+    font-weight: initial;
+    cursor: pointer;
 }

@@ -1,0 +1,8 @@
+<div class="card-container">
+  <H2>{{interviewDay}}</H2>
+  <H4>{{interviewMonthYear}}</H4>
+  <p *ngIf="!interview?.completed">{{interviewHour}}</p>
+  <p *ngIf="interview?.completed" i18n="@@interviewresult">Resultado: {{interview?.result}}%</p>
+  <p class="company-name">{{companyName}}</p>
+  <ng-content></ng-content>
+</div>
