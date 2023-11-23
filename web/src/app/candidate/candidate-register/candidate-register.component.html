@@ -14,9 +14,9 @@
 
         <mat-form-field class="form-field meddium-width" appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n="@@candidatelastname">Apellidos</mat-label>
-          <input matInput id="lastnames" class="form-control" formControlName="lastnames">
-          <mat-error *ngIf="candidateRegisterForm.get('lastnames')!.invalid">
-            {{ getErrorMessage('lastnames') }}
+          <input matInput id="last_names" class="form-control" formControlName="last_names">
+          <mat-error *ngIf="candidateRegisterForm.get('last_names')!.invalid">
+            {{ getErrorMessage('last_names') }}
           </mat-error>
         </mat-form-field>
 
@@ -54,7 +54,7 @@
               {{ getErrorMessage('termsCheck') }}
             </mat-error>
           </mat-form-field>
-  
+
         </div>
 
         <app-abc-button type="submit" [disabled]="!candidateRegisterForm.valid" class="inline-button" color="primary" i18n="@@register">REGISTRARSE</app-abc-button>

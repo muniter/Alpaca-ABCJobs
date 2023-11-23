@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <div class="center-vertical">
     <div class="logo-div" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">
-      <img class="logo-img" src="../../../assets/logo.png">
+      <img class="logo-img" src="../../../assets/logo.png" alt="logo">
     </div>
 
     <span class="tab-label" i18n="@@hometab" [routerLink]="'/'+appRoutes.company+'/'+appRoutes.companyHome+'/'+token">Home</span>
@@ -15,12 +15,12 @@
   <span flex></span>
   <div class="center-vertical user-name-icon">
     <span class="tab-label">{{username}}</span>
-    <button mat-icon-button class="user-icon-button">
+    <button mat-icon-button class="user-icon-button" aria-label="user account button">
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
   <div class="center-vertical user-settings-icon">
-    <button mat-icon-button class="user-icon-button">
+    <button mat-icon-button class="user-icon-button" aria-label="user account settings">
       <mat-icon>settings</mat-icon>
     </button>
   </div>

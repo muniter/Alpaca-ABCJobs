@@ -13,7 +13,8 @@
                 </div>
                 <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
-                  <mat-select formControlName="country_code">
+                  <mat-select formControlName="country_code" placeholder="Seleccione"
+                  i18n-placeholder="@@searchparamcountryplaceholder">
                     <mat-option *ngFor="let country of countries" [value]="country.num_code">
                       {{country.en_short_name}}
                     </mat-option>
@@ -35,7 +36,8 @@
                   </mat-chip-grid>
                   <input #techInput formControlName="technical_info_types" [matChipInputFor]="chipGridTech"
                     [matAutocomplete]="autoTech" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addTech($event)" />
+                    (matChipInputTokenEnd)="addTech($event)" placeholder="Seleccione"
+                    i18n-placeholder="@@searchparamtechsplaceholder"/>
                   <mat-autocomplete #autoTech="matAutocomplete" (optionSelected)="selectedTech($event)">
                     <mat-option *ngFor="let tech of filteredTechs | async" [value]="tech">
                       {{tech}}
@@ -58,7 +60,8 @@
                   </mat-chip-grid>
                   <input #languageInput formControlName="languages" [matChipInputFor]="chipGridLanguage"
                     [matAutocomplete]="autoLanguage" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addLanguage($event)" />
+                    (matChipInputTokenEnd)="addLanguage($event)" placeholder="Seleccione"
+                    i18n-placeholder="@@searchparamlangsplaceholder"/>
                   <mat-autocomplete #autoLanguage="matAutocomplete" (optionSelected)="selectedLanguage($event)">
                     <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
                       {{language}}
@@ -72,7 +75,8 @@
                 </div>
                 <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
-                  <mat-select formControlName="personality_code">
+                  <mat-select formControlName="personality_code" placeholder="Seleccione"
+                  i18n-placeholder="@@searchparampersonalityplaceholder">
                     <mat-option *ngFor="let personality of personalities" [value]="personality.id">
                       {{personality.name}}
                     </mat-option>
@@ -85,7 +89,8 @@
                 </div>
                 <mat-form-field class="form-field" appearance="outline"
                   subscriptSizing="dynamic">
-                  <mat-select formControlName="least_academic_level">
+                  <mat-select formControlName="least_academic_level" placeholder="Seleccione"
+                  i18n-placeholder="@@searchparamdegreesplaceholder">
                     <mat-option *ngFor="let collegeDegree of collegeDegrees" [value]="collegeDegree.id">
                       {{collegeDegree.name}}
                     </mat-option>
@@ -107,7 +112,8 @@
                   </mat-chip-grid>
                   <input #studyAreaInput formControlName="study_areas" [matChipInputFor]="chipGridStudyArea"
                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addStudyArea($event)" />
+                    (matChipInputTokenEnd)="addStudyArea($event)" placeholder="Digite"
+                    i18n-placeholder="@@searchparamstudyareaplaceholder"/>
                 </mat-form-field>
               </div>
               <div class="form-row">
@@ -125,7 +131,8 @@
                   </mat-chip-grid>
                   <input #roleInput formControlName="roles" [matChipInputFor]="chipGridRole"
                     [matAutocomplete]="autoRole" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="addRole($event)" />
+                    (matChipInputTokenEnd)="addRole($event)" placeholder="Seleccione"
+                    i18n-placeholder="@@searchparamskillsplaceholder"/>
                   <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="selectedRole($event)">
                     <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
                       {{role}}
@@ -142,7 +149,7 @@
           </fieldset>
         </form>
       </div>
-      <app-company-search-candidates [candidates]="candidates" *ngIf="!activeSearch">        
+      <app-company-search-candidates [candidates]="candidates" *ngIf="!activeSearch">
       </app-company-search-candidates>
       <div class="search-button" *ngIf="!activeSearch">
         <app-abc-button class="inline-button" color="primary" (click)="enableSearch()"

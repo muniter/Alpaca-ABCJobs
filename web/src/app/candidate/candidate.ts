@@ -70,7 +70,7 @@ export class CandidateServiceSchema {
 
 export const mapKeys: { [index: string]: string } = {
   "nombres": "names",
-  "apellidos": "lastnames",
+  "apellidos": "last_names",
   "email": "email",
   "password": "password"
 };

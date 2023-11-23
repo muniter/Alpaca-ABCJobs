@@ -108,7 +108,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">145</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
@@ -116,7 +116,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">148</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
@@ -163,7 +163,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-skills/candidate-skills.component.html</context>
@@ -171,7 +171,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">151</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-employee/company-create-employee.component.html</context>
@@ -526,35 +526,35 @@
         <source>Ciudad de residencia</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidateresidenceaddress" datatype="html">
         <source>Dirección de residencia</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatemobile" datatype="html">
         <source>Celular</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatelanguages" datatype="html">
         <source>Idiomas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatebio" datatype="html">
         <source>Bio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="minagevalidation" datatype="html">
@@ -717,7 +717,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="responsemessageerrorcandidatelastnames" datatype="html">
-        <source>Revisar apellidos: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;lastnames&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
+        <source>Revisar apellidos: <x id="PH" equiv-text="this.candidateRegisterForm.get(&apos;last_names&apos;)?.getError(&apos;responseMessageError&apos;)"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-register/candidate-register.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -974,7 +974,7 @@
         <source>AÑADIR OTRO</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyjob" datatype="html">
@@ -1447,56 +1447,56 @@
         <source>Tecnologías</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidateslanguages" datatype="html">
         <source>Idiomas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidatespersonality" datatype="html">
         <source>Personalidad</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidatescollegedegrees" datatype="html">
         <source>Nivel de estudio mínimo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidatesstudyareas" datatype="html">
         <source>Áreas de estudio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidatesroles" datatype="html">
         <source>Roles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search" datatype="html">
         <source>Buscar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatesearchstart" datatype="html">
         <source>BÚSQUEDA</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="searchcandidatesvacancy" datatype="html">
@@ -1890,7 +1890,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="interviewresult" datatype="html">
-        <source>Resultado: <x id="INTERPOLATION" equiv-text="{{interview?.result}}"/>%</source>
+        <source>Resultado: <x id="INTERPOLATION" equiv-text="{{interview?.result ? interview!.result + &apos;%&apos; : &apos;N/R&apos;}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/interview-card/interview-card.component.html</context>
           <context context-type="linenumber">5</context>
@@ -1908,6 +1908,111 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/candidate-header/candidate-header.component.html</context>
           <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="birthdateplaceholder" datatype="html">
+        <source>Seleccione una fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidateaddressplaceholder" datatype="html">
+        <source>Digite la dirección</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatebioplaceholder" datatype="html">
+        <source>Brebe biografía</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatecityplaceholder" datatype="html">
+        <source>Digite la ciudad</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatecountryplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatelanguageplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="candidatemobileplaceholder" datatype="html">
+        <source>Digite un número</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-profile/candidate-profile.component.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamcountryplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamdegreesplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamlangsplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparampersonalityplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamskillsplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamstudyareaplaceholder" datatype="html">
+        <source>Digite</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="searchparamtechsplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="skillsselectplaceholder" datatype="html">
+        <source>Seleccione</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/candidate/candidate-work/candidate-work.component.html</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
     </body>

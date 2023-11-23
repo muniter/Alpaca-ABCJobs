@@ -35,7 +35,7 @@ describe('CandidateRegisterComponent', () => {
         MatInputModule,
         MatCheckboxModule,
         RouterTestingModule,
-        BrowserAnimationsModule        
+        BrowserAnimationsModule
       ],
       declarations: [CandidateRegisterComponent]
     })
@@ -60,7 +60,7 @@ describe('CandidateRegisterComponent', () => {
     spyOn(component, 'candidateRegister').and.callThrough();
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
     component.candidateRegisterForm.controls['names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
-    component.candidateRegisterForm.controls['lastnames'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
+    component.candidateRegisterForm.controls['last_names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
     component.candidateRegisterForm.controls['email'].setValue(faker.internet.email());
     component.candidateRegisterForm.controls['password'].setValue(pass);
     component.candidateRegisterForm.controls['passwordConfirm'].setValue(pass);
@@ -91,7 +91,7 @@ describe('CandidateRegisterComponent', () => {
     spyOn(component, 'candidateRegister').and.callThrough();
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
     component.candidateRegisterForm.controls['names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
-    component.candidateRegisterForm.controls['lastnames'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
+    component.candidateRegisterForm.controls['last_names'].setValue(faker.lorem.word({ length: { min: 2, max: 50 } }));
     component.candidateRegisterForm.controls['email'].setValue(faker.internet.email());
     component.candidateRegisterForm.controls['password'].setValue(pass);
     component.candidateRegisterForm.controls['passwordConfirm'].setValue(pass);
@@ -109,7 +109,7 @@ describe('CandidateRegisterComponent', () => {
   it("should validate required fields", () => {
     spyOn(component, 'candidateRegister').and.callThrough();
     component.candidateRegisterForm.controls['names'].setValue("");
-    component.candidateRegisterForm.controls['lastnames'].setValue("");
+    component.candidateRegisterForm.controls['last_names'].setValue("");
     component.candidateRegisterForm.controls['email'].setValue("");
     component.candidateRegisterForm.controls['password'].setValue("");
     component.candidateRegisterForm.controls['passwordConfirm'].setValue("");
@@ -139,8 +139,8 @@ describe('CandidateRegisterComponent', () => {
     expect(names.hasError('isOnlyWhiteSpace')).toBeTruthy();
   });
 
-  it('lastnames field validity', () => {
-    const lastnames = component.candidateRegisterForm.controls['lastnames'];
+  it('last_names field validity', () => {
+    const lastnames = component.candidateRegisterForm.controls['last_names'];
     expect(lastnames.valid).toBeFalsy();
 
     lastnames.setValue('');
@@ -199,7 +199,7 @@ describe('CandidateRegisterComponent', () => {
 
     expect(errorMessage).toEqual("");
   });
-  
+
   it('termsCheck field validity', () => {
     const termsCheck = component.candidateRegisterForm.controls['termsCheck'];
     expect(termsCheck.valid).toBeFalsy();
