@@ -9,6 +9,12 @@ body {
     margin: 0;
     font-family: 'Roboto', serif;
     background-color: var(--lightColor);
+    background-image: url("assets/background.png");
+  }
+
+app-root {
+  position: relative;
+  opacity: 1
 }
 
 :root {
