@@ -3,7 +3,7 @@ p {
     margin-bottom: 0;
 }
 
-h2 { 
+h2 {
     text-overflow: ellipsis;
     width: 95%;
     overflow: hidden;
@@ -27,7 +27,7 @@ h2 {
 }
 
 .subtitle {
-    color: var(--contrastCompanyColor);
+    color: var(--contrastCompanyColorSubtitles);
 }
 
 .country {

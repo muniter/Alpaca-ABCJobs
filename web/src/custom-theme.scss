@@ -158,7 +158,7 @@ $candidate-theme: mat.define-light-theme((
 $client-theme: mat.define-light-theme((
   color: (
     primary: mat.define-palette($md-dark, 500),
-    accent: mat.define-palette($md-contrastclient, 700),
+    accent: mat.define-palette($md-contrastclient, 500),
   ),
   typography: $roboto-typography
 ));
