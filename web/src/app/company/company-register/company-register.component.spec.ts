@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, inject, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, inject, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -298,7 +298,7 @@ describe('CompanyRegisterComponent', () => {
     expect(errorMessage).toEqual("");
   });
 
-  it('should navigate on service success', waitForAsync(inject([CompanyService, HttpTestingController], (companyService: CompanyService, httpMock: HttpTestingController) => {
+  it('should navigate on service success', fakeAsync(inject([CompanyService, HttpTestingController], (companyService: CompanyService, httpMock: HttpTestingController) => {
 
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
 
@@ -333,6 +333,7 @@ describe('CompanyRegisterComponent', () => {
     component.registerCompany();
 
     expect(companySignUpSpy).toHaveBeenCalledTimes(1);
+    tick(3000);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
   })));
 
