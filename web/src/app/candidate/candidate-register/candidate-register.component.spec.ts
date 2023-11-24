@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -54,7 +54,7 @@ describe('CandidateRegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should register candidate", () => {
+  it("should register candidate", fakeAsync(() => {
     let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(of({ success: true }));
 
     spyOn(component, 'candidateRegister').and.callThrough();
@@ -69,11 +69,14 @@ describe('CandidateRegisterComponent', () => {
 
     component.candidateRegister(component.candidateRegisterForm.value);
     fixture.detectChanges();
+    let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     expect(component.candidateRegister).toHaveBeenCalled();
     expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
     expect(component.registerSucess).toBeTruthy();
-  });
+    tick(3000);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  }));
 
   it("should put error on exception registering candidate", () => {
     let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(throwError(() => ({
