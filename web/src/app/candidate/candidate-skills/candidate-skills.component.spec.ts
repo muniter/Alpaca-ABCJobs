@@ -76,8 +76,8 @@ describe('CandidateSkillsComponent', () => {
     skills = [skill1,skill2];
     skillResponse = new SkillResponse(true,skills);
 
-    techServiceSchema1 = new TechServiceSchema(1, skill1, faker.lorem.words({ min: 2, max: 4 }));
-    techServiceSchema2 = new TechServiceSchema(2, skill2, faker.lorem.words({ min: 2, max: 4 }));
+    techServiceSchema1 = new TechServiceSchema(1, skill1, 2, faker.lorem.words({ min: 2, max: 4 }));
+    techServiceSchema2 = new TechServiceSchema(2, skill2, 3, faker.lorem.words({ min: 2, max: 4 }));
     techResponse = new TechResponse(true, [techServiceSchema1,techServiceSchema2]);
 
     navigateSpy = spyOn(router, 'navigateByUrl').and.stub();

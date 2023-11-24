@@ -64,13 +64,15 @@ export class CandidateSkillsComponent implements OnInit {
           let techRow = new Tech(
             techService.id,
             this.skills[skillIndex],
-           /*  techService.raiting, */
+            techService.score,
             techService.description
           );
           this.technicalsInfo.push(techRow);
         });
+        console.log(this.technicalsInfo)
         this.technicalsInfo.forEach(tech => this.addTech());
         this.knowledge.setValue(this.technicalsInfo);
+        console.log(this.knowledge);
         this.disableForm();
       }
     })
@@ -98,7 +100,7 @@ export class CandidateSkillsComponent implements OnInit {
         {
           id: [],
           tech: ["",[Validators.required]],
-          /* raiting: [], */
+          score: [], 
           moreInfoTech: ["", [Validators.maxLength(500), SharedCustomValidators.spaceOnlyValidator]]
         }
       )
