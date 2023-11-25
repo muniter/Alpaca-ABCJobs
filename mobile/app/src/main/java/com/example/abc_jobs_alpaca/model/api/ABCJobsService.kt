@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.abc_jobs_alpaca.model.models.AcademicInfoItemDeleteResponse
@@ -14,6 +15,10 @@ import com.example.abc_jobs_alpaca.model.models.AcademicInfoTypeResponse
 import com.example.abc_jobs_alpaca.model.models.AnswerQuestionResponse
 import com.example.abc_jobs_alpaca.model.models.ConfigData
 import com.example.abc_jobs_alpaca.model.models.CountriesResponse
+import com.example.abc_jobs_alpaca.model.models.Employee
+import com.example.abc_jobs_alpaca.model.models.EmployeeResponse
+import com.example.abc_jobs_alpaca.model.models.EmployeesResponse
+import com.example.abc_jobs_alpaca.model.models.EvaluationEmployeeRequest
 import com.example.abc_jobs_alpaca.model.models.ExamStartResponse
 import com.example.abc_jobs_alpaca.model.models.ExamsExtendResponse
 import com.example.abc_jobs_alpaca.model.models.ExamsResponse
@@ -45,6 +50,10 @@ import com.example.abc_jobs_alpaca.model.models.deserializeCandidate
 import com.example.abc_jobs_alpaca.model.models.deserializeCandidateError
 import com.example.abc_jobs_alpaca.model.models.deserializeCountries
 import com.example.abc_jobs_alpaca.model.models.deserializeCountriesError
+import com.example.abc_jobs_alpaca.model.models.deserializeEmployeeError
+import com.example.abc_jobs_alpaca.model.models.deserializeEmployeeResponse
+import com.example.abc_jobs_alpaca.model.models.deserializeEmployeesError
+import com.example.abc_jobs_alpaca.model.models.deserializeEmployeesResponse
 import com.example.abc_jobs_alpaca.model.models.deserializeExamStart
 import com.example.abc_jobs_alpaca.model.models.deserializeExamStartError
 import com.example.abc_jobs_alpaca.model.models.deserializeExams
@@ -74,6 +83,7 @@ import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItem
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemDelete
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemDeleteError
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemError
+import com.example.abc_jobs_alpaca.model.models.serializeEvaluationEmployeeRequest
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -107,6 +117,9 @@ class ABCJobsService constructor(context: Context) {
         private var VACANCY_PATH = "/vacancy"
         private var TEST_RESULT_PATH = "/test-result"
         private var SELECT_CANDIDATE_PATH = "/select"
+        private var EMPLOYEE_PATH = "/employee"
+        private var HIRED_EMPLOYEES_PATH = "$EMPLOYEE_PATH?hired_abc=1"
+        private var EVALUATION_PATH = "/evaluation"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) =
@@ -1110,4 +1123,49 @@ class ABCJobsService constructor(context: Context) {
             Result.failure(e)
         }
     }
+
+    suspend fun getHiredEmployees(token: String): Result<EmployeesResponse> {
+        return try {
+            val response = fetchInfo(token, COMPANIES_PATH, HIRED_EMPLOYEES_PATH)
+            Result.success(deserializeEmployeesResponse(response))
+            Result.failure(deserializeEmployeesError(response))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postEvaluateEmployee(token: String, idEmployee: Int, requestBody: EvaluationEmployeeRequest): Result<EmployeeResponse>{
+        return try{
+            val response =
+                suspendCoroutine<JSONObject> { it ->
+                    requestQueue.add(
+                        requestWithToken(
+                            token,
+                            Request.Method.POST,
+                            COMPANIES_PATH,
+                            "$EMPLOYEE_PATH/$idEmployee$EVALUATION_PATH",
+                            serializeEvaluationEmployeeRequest(requestBody),
+                            {response -> it.resume(JSONObject(response))},
+                            {volleyError -> it.resumeWithException(volleyError)}
+                        )
+                    )
+                }
+            if(response.getBoolean("success"))
+            {
+                val employeeResponse = deserializeEmployeeResponse(response)
+                Result.success(employeeResponse)
+            }
+            else
+            {
+                val employeeResponseError = deserializeEmployeeError(response)
+                Result.failure(employeeResponseError)
+            }
+        }
+        catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
+
 }
