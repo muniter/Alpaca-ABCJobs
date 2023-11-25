@@ -147,7 +147,7 @@
     <string name="technical_proof_result_placeholder">Enter percent</string>
     <string name="technical_proof_result_instructions">Technical test result (0 - 100%)</string>
     <string name="technical_proof_name_placeholder">Name</string>
-    <string name="technical_proof_location_placeholder">Location</string>
+    <string name="technical_proof_location_placeholder">Not defined location</string>
     <string name="technical_proof_saved">Saved successfully</string>
     <string name="interview_list_title">Interviews</string>
     <string name="exams_title">Exam List</string>

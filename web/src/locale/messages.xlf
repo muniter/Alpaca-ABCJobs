@@ -144,7 +144,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
@@ -203,7 +203,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-preselect/company-search-preselect.component.html</context>
@@ -1872,7 +1872,7 @@
         <source> Debe seleccionar una fecha válida </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="finishedinterviews" datatype="html">
@@ -1886,7 +1886,7 @@
         <source>Hora</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="interviewresult" datatype="html">
@@ -2035,6 +2035,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-search-params/company-search-params.component.html</context>
           <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="scheduleinterviewdateplaceholder" datatype="html">
+        <source>Fecha programada</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="scheduleinterviewtimeplaceholder" datatype="html">
+        <source>Hora programada</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
     </body>

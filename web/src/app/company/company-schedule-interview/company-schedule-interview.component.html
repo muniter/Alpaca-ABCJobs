@@ -9,7 +9,8 @@
 
         <mat-form-field class="form-field space-between right-field" appearance="outline" subscriptSizing="dynamic"
           color="accent">
-          <input matInput (focus)="picker1.open()" [matDatepicker]="picker1" formControlName="date">
+          <input matInput (focus)="picker1.open()" [matDatepicker]="picker1" formControlName="date"
+          placeholder="Fecha programada" i18n-placeholder="@@scheduleinterviewdateplaceholder">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
 
@@ -26,7 +27,8 @@
 
         <mat-form-field class="form-field space-between right-field" appearance="outline" subscriptSizing="dynamic"
           color="accent">
-          <input matInput type="time" formControlName="hour" placeholder="start date">
+          <input matInput type="time" formControlName="hour"
+          placeholder="Hora programada" i18n-placeholder="@@scheduleinterviewtimeplaceholder">
         </mat-form-field>
       </div>
 

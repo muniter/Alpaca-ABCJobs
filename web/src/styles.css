@@ -19,6 +19,7 @@ app-root {
 
 :root {
     --contrastCandidateColor: #5885DD;
+    --contrastCandidateColorSubtitles: #285FC8;
     --contrastCompanyColor: #3E9B73;
     --contrastCompanyColorSubtitles: #276349;
     --darkColor: #191919;
