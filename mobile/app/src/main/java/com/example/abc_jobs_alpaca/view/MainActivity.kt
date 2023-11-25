@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         var selectedLanguage = Locale.getDefault().language;
-        val selectedDateFormat = sharedPreferences.getString("dateFormat", "DD/MM/YYYY")
+        val selectedDateFormat = sharedPreferences.getString("dateFormat", "dd/MM/YYYY")
         val selectedTimeFormat = sharedPreferences.getString("timeFormat", "24 horas")
 
         if (selectedLanguage != null

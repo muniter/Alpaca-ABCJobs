@@ -77,7 +77,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/button_rounded"
-                        android:enabled="true"
+                        android:enabled="false"
                         android:fontFamily="@font/font_roboto"
                         android:text="@string/register_button_text"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,7 +104,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/labelRepeatPassword2"
+                                android:id="@+id/labelName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
