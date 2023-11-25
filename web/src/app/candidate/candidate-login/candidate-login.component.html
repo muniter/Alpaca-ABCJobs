@@ -1,10 +1,10 @@
 <div class="candidate-login-body candidate-theme">
   <app-login-logon-container>
     <div class="logo-div" >
-      <img class="logo-img" src="../../../assets/logo.png">
+      <img class="logo-img" src="../../../assets/logo.png" alt="logo">
     </div>
     <form [formGroup]="candidateLoginForm" (ngSubmit)="candidateLogin(candidateLoginForm.value)" >
-      <div class="form"> 
+      <div class="form">
 
         <mat-form-field class="form-field full-width" id="candidateEmailFormField" appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n="@@email">Correo electrónico</mat-label>

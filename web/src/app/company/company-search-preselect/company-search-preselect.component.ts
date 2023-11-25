@@ -105,7 +105,7 @@ export class CompanySearchPreselectComponent implements OnInit {
         setTimeout(() => { 
           this.globalMessage = "";
           this.dialog.closeAll();
-        }, 3000);
+        }, 1000);
       }
     });
   }

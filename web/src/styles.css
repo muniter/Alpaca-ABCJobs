@@ -9,16 +9,28 @@ body {
     margin: 0;
     font-family: 'Roboto', serif;
     background-color: var(--lightColor);
+    background-image: url("assets/background.png");
+  }
+
+app-root {
+  position: relative;
+  opacity: 1
 }
 
 :root {
     --contrastCandidateColor: #5885DD;
     --contrastCompanyColor: #3E9B73;
+    --contrastCompanyColorSubtitles: #276349;
     --darkColor: #191919;
     --lightColor: #E4E4E4;
     --mat-select-panel-background-color: #fff;
     --deactiveColor: #fff;
-    --grayColor: #858585;
+    --grayColor: #636363;
+}
+
+.client-theme, .mat-mdc-form-field-error, .mdc-text-field--outlined.mdc-text-field--invalid {
+  --mdc-theme-error: #DF0D07;
+  --mdc-outlined-text-field-error-label-text-color: #DF0D07;
 }
 
 app-login-logon-container{

@@ -160,6 +160,7 @@
     <string name="completed_message">Completado</string>
     <string name="noresults_messages">No registra resultados</string>
     <string name="team_list_title">Equipos</string>
+    <string name="technical_proof_error_result_null">Debe ingresar un valor numérico entre 1 y 100</string>
     <string name="select_button_label">Seleccionar candidato</string>
 
 </resources>

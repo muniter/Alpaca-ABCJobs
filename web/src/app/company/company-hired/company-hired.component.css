@@ -20,6 +20,11 @@ btn, .evaluacion {
   border: none;
   font-size: 1rem;
   font-weight: bold;
+  cursor: pointer;
+  color: var(--contrastCompanyColorSubtitles);
+}
+
+.evaluacion:hover {
   color: var(--contrastCompanyColor);
 }
 

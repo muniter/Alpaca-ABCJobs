@@ -1,22 +1,26 @@
 <mat-toolbar color="primary">
   <div class="center-vertical">
-    <div class="logo-div" >
-      <img class="logo-img" src="../../../assets/logo.png" >
+    <div class="logo-div" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateHome+'/'+token">
+      <img class="logo-img" src="../../../assets/logo.png" alt="logo">
     </div>
-    <button mat-button>Home</button>
-    <button mat-button (click)="openTest()" i18n="@@menutechtests">Pruebas Técnicas</button>
+
+    <span class="tab-label" i18n="@@hometab" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateHome+'/'+token">Home</span>
+    <span class="tab-label" i18n="@@menutechtests" [routerLink]="'/'+appRoutes.technicalTest+'/'+appRoutes.technicalTestCandidate+'/'+token">Pruebas Técnicas</span>
+    <span class="tab-label" i18n="@@interviews" [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateInterviews+'/'+token">Entrevistas</span>
+
   </div>
   <span class="example-spacer"></span>
   <span flex></span>
   <div class="center-vertical user-name-icon"
     [routerLink]="'/'+appRoutes.candidate+'/'+appRoutes.candidateProfile+'/'+token">
     <span class="user-name-label">{{username}}</span>
-    <button mat-icon-button class="user-icon-button">
+    <button mat-icon-button class="user-icon-button" aria-label="user account button">
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
   <div class="center-vertical user-settings-icon">
-    <button mat-icon-button class="user-icon-button" (click)="openUserSettingsDialog()">
+    <button mat-icon-button class="user-icon-button" (click)="openUserSettingsDialog()"
+    aria-label="user settings">
       <mat-icon>settings</mat-icon>
     </button>
   </div>

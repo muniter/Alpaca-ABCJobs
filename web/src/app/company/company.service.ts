@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { SkillResponse } from '../shared/skill';
 import { PersonalityResponse } from '../shared/Personality';
 import { TeamCreateRequest, TeamCreateResponse, TeamsListResponse } from './Team';
-import { SaveScoresRequest, SelectCandidateRequest, VacancyRequest, VacancyResponse } from './vacancy';
+import { SaveScoresRequest, ScheduleInterviewRequest, SelectCandidateRequest, VacancyRequest, VacancyResponse } from './vacancy';
 import { ProjectCreateRequest, ProjectCreateResponse, ProjectsListResponse } from './Project';
 import { PositionCreateRequest, PositionCreateResponse, PositionsListResponse } from './Position';
 import { CountryResponse } from '../shared/Country';
@@ -107,7 +107,6 @@ export class CompanyService {
 
   selectCandidate(token: string, positionId: number, request: SelectCandidateRequest){
     const headers = this.getHeader(token);
-    console.log(request)
     return this.http.post<any>(`${this.backCompanyUrl}/vacancy/${positionId}/select`, request, { headers })
   }
 
@@ -115,6 +114,10 @@ export class CompanyService {
     return this.http.get<CountryResponse>(`${this.candUtilsUrl}/countries`)
   }
 
+  scheduleInterview(token: string, positionId: number, request: ScheduleInterviewRequest): Observable<any> {
+    const headers = this.getHeader(token);
+    return this.http.post<any>(`${this.backCompanyUrl}/vacancy/${positionId}/interivew-date`, request, { headers })
+  }
 
   getHeader(token: string) {
     return {

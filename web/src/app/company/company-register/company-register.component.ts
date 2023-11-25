@@ -20,6 +20,7 @@ export class CompanyRegisterComponent implements OnInit {
   };
 
   companyRegisterForm!: FormGroup;
+  registerSucess: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private companyService: CompanyService, private router: Router) {
   }
@@ -123,7 +124,12 @@ export class CompanyRegisterComponent implements OnInit {
 
     this.companyService.companySignUp(companyData).subscribe({
       error: (exception) => this.setErrorBack(exception),
-      complete: () => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}`)
+      complete: () => {
+        this.registerSucess = true
+          setTimeout(() => {
+            this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyLogin}`)
+          }, 2000);
+      }
     })
   }
 

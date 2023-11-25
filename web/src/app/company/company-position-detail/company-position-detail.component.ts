@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { CompanyService } from '../company.service';
 import { SaveScoresRequest, Score } from '../vacancy';
 import { CompanyPositionCloseComponent } from '../company-position-close/company-position-close.component';
+import { CompanyScheduleInterviewComponent } from '../company-schedule-interview/company-schedule-interview.component';
 
 @Component({
   selector: 'app-company-position-detail',
@@ -15,6 +16,7 @@ export class CompanyPositionDetailComponent implements OnInit {
 
   dialogConfig = new MatDialogConfig();
   modalPositionCloseDialog: MatDialogRef<CompanyPositionCloseComponent, any> | undefined;
+  modalScheduleInterviewDialog: MatDialogRef<CompanyScheduleInterviewComponent, any> | undefined;
   
   positionGradeForm!: FormGroup;
   position: Position;
@@ -88,6 +90,17 @@ export class CompanyPositionDetailComponent implements OnInit {
     this.modalPositionCloseDialog = this.matDialog.open(CompanyPositionCloseComponent, this.dialogConfig);
 
     this.modalPositionCloseDialog.afterClosed().subscribe(x => this.dialogRef.close())
+  }
+
+  openScheduleInterviewModal(position: Position){
+    this.dialogConfig.width = "30%";
+    this.dialogConfig.data = {
+      token: this.token,
+      position: position
+    }
+
+    this.modalScheduleInterviewDialog = this.matDialog.open(CompanyScheduleInterviewComponent, this.dialogConfig);
+
   }
 
   onCancel() {

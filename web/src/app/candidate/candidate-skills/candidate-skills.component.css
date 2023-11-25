@@ -88,3 +88,11 @@ fieldset {
   margin: 0px;
   display: inline;
 }
+
+.star-result {
+  color: var(--deactiveColor);
+}
+
+.star-result-complete {
+  color: var(--contrastCandidateColor)
+}

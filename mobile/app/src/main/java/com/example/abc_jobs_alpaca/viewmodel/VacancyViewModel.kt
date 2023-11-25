@@ -53,7 +53,7 @@ class VacancyViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewM
                 //TODO: message
             }
         } catch (e: Exception) {
-
+            //TODO: exception
         }
 
     }

@@ -29,3 +29,11 @@
 .form{
     margin-top: 1rem;
 }
+
+.success {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
+}

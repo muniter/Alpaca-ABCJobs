@@ -4,11 +4,11 @@
     <app-login-logon-container>
       <div class="suggested-quizzes">
         <h1 i18n="@@techtestsuggestedquizzestitle">Pruebas Técnicas Sugeridas</h1>
-        <drag-scroll [scroll-x-wheel-enabled]="true" 
+        <drag-scroll [scroll-x-wheel-enabled]="true"
           [ngClass]="{ 'noempty': suggestedQuizzes.length > 0 }">
           <div *ngFor="let quiz of suggestedQuizzes; let i = index" class="quiz-item"
            drag-scroll-item>
-            <img src="../../../assets/rocket.png">
+            <img src="../../../assets/rocket.png" alt="exam_icon">
             <p>{{ quiz.skill.name }}</p>
             <app-abc-button class="inline-button" color="primary" (click)="startExamDialog(quiz)"
             i18n="@@techteststart">COMENZAR</app-abc-button>
@@ -22,11 +22,11 @@
       </div>
       <div class="completed-quizzes">
         <h1 i18n="@@techtestcompletedquizzestitle">Pruebas Técnicas Realizadas</h1>
-        <drag-scroll [scroll-x-wheel-enabled]="true" 
+        <drag-scroll [scroll-x-wheel-enabled]="true"
           [ngClass]="{ 'noempty': completedQuizzes.length > 0 }">
           <div *ngFor="let quiz of completedQuizzes; let i = index" class="quiz-item"
            drag-scroll-item>
-            <img src="../../../assets/rocket.png">
+            <img src="../../../assets/rocket.png" alt="exam_icon">
             <p>{{ quiz.exam.skill.name }}</p>
             <mat-icon aria-hidden="false" aria-label="Star result" fontIcon="star"
                       [ngClass]="quiz.result > 0 ? 'star-result-complete' : 'star-result'" >

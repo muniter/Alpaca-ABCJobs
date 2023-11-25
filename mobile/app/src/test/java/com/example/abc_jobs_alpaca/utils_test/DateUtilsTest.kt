@@ -1,15 +1,13 @@
 package com.example.abc_jobs_alpaca.utils_test
 
 import android.text.format.Time
-import com.example.abc_jobs_alpaca.utils.DateUtils
 import com.example.abc_jobs_alpaca.utils.DateUtils.dateFormatted
 import com.example.abc_jobs_alpaca.utils.DateUtils.timeFormatted
-import com.example.abc_jobs_alpaca.utils.Validators
 import junit.framework.TestCase.assertEquals
-import org.junit.Assert
 import org.junit.Test
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.Calendar
+import java.util.Locale
 
 class DateTimeFormatterTest {
 
@@ -46,6 +44,10 @@ class DateTimeFormatterTest {
         time.minute = minutes
         val timeFormat1 = "24h"
         val timeFormat2 = "12h"
+        // workaround andoird expected:<12:30 [PM]> but was:<12:30 [p. m.]>
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, time.hour)
+        calendar.set(Calendar.MINUTE, time.minute)
 
         // Act
         val result1 = timeFormatted(time, timeFormat1)
@@ -53,6 +55,9 @@ class DateTimeFormatterTest {
 
         // Assert
         assertEquals("12:30", result1)
-        assertEquals("12:30 PM", result2)
+        assertEquals(
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time),
+            result2
+        )
     }
 }

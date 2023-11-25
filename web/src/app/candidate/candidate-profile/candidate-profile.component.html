@@ -32,7 +32,8 @@
                       color="accent">
 
                       <input matInput (focus)="picker1.open()" [max]="maxDate" [matDatepicker]="picker1"
-                        formControlName="birthdate">
+                        formControlName="birthdate" placeholder="Seleccione una fecha"
+                        i18n-placeholder="@@birthdateplaceholder">
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
 
@@ -49,7 +50,8 @@
                     <div class="right-field space-between">
                       <mat-form-field class="form-field half-right-field" appearance="outline"
                         subscriptSizing="dynamic">
-                        <mat-select formControlName="candidateCountry">
+                        <mat-select formControlName="candidateCountry" placeholder="Seleccione"
+                        i18n-placeholder="@@candidatecountryplaceholder">
                           <mat-option *ngFor="let country of countries" [value]="country">
                             {{country.en_short_name}}
                           </mat-option>
@@ -60,7 +62,8 @@
                       </mat-form-field>
                       <mat-form-field class="form-field half-right-field" appearance="outline"
                         subscriptSizing="dynamic">
-                        <input matInput id="candidateCity" class="form-control" formControlName="candidateCity">
+                        <input matInput id="candidateCity" class="form-control" formControlName="candidateCity"
+                        placeholder="Digite la ciudad" i18n-placeholder="@@candidatecityplaceholder">
                         <mat-error *ngIf="false">
                           {{ 'a' }}
                         </mat-error>
@@ -73,7 +76,8 @@
                       <label class="form-row-label" i18n="@@candidateresidenceaddress">Dirección de residencia</label>
                     </div>
                     <mat-form-field class="form-field right-field" id="addressFormField" appearance="outline" subscriptSizing="dynamic">
-                      <input matInput id="candidateAddress" class="form-control" formControlName="candidateAddress">
+                      <input matInput id="candidateAddress" class="form-control" formControlName="candidateAddress"
+                      placeholder="Digite la dirección" i18n-placeholder="@@candidateaddressplaceholder">
 
                       <mat-error *ngIf="personalInformationForm.get('candidateAddress')!.invalid">
                         {{ getPersonalInfoErrorMessage('candidateAddress') }}
@@ -86,7 +90,8 @@
                       <label class="form-row-label" i18n="@@candidatemobile">Celular</label>
                     </div>
                     <mat-form-field class="form-field right-field" id="candidateMobileFormField" appearance="outline" subscriptSizing="dynamic">
-                      <input matInput id="candidateMobile" class="form-control" formControlName="candidateMobile">
+                      <input matInput id="candidateMobile" class="form-control" formControlName="candidateMobile"
+                      placeholder="Digite un número" i18n-placeholder="@@candidatemobileplaceholder">
 
                       <mat-error *ngIf="personalInformationForm.get('candidateMobile')!.invalid">
                         {{ getPersonalInfoErrorMessage('candidateMobile') }}
@@ -111,7 +116,8 @@
                       </mat-chip-grid>
                       <input #languageInput formControlName="candidateLanguages" [matChipInputFor]="chipGrid"
                         [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="addLanguage($event)" />
+                        (matChipInputTokenEnd)="addLanguage($event)" placeholder="Seleccione"
+                        i18n-placeholder="@@candidatelanguageplaceholder" />
                       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                         <mat-option *ngFor="let language of filteredLanguages | async" [value]="language">
                           {{language}}
@@ -126,7 +132,8 @@
                     </div>
                     <mat-form-field class="form-field right-field" id="candidateBioFormField" appearance="outline" subscriptSizing="dynamic">
                       <textarea matInput id="candidateBio" rows="5" class="form-control"
-                        formControlName="candidateBio"></textarea>
+                        formControlName="candidateBio" placeholder="Breve biografía"
+                        i18n-placeholder="@@candidatebioplaceholder"></textarea>
 
                       <mat-error *ngIf="personalInformationForm.get('candidateBio')!.invalid">
                         {{ getPersonalInfoErrorMessage('candidateBio') }}

@@ -11,6 +11,7 @@ import { JobResponse, JobServiceSchema } from './job';
 import { SkillResponse } from '../shared/skill';
 import { TechRequest, TechRequestRow, TechResponse } from './tech';
 import { Search } from '../company/search';
+import { CandidateInterviewsResponse } from './CandidateInterview';
 
 @Injectable({
   providedIn: 'root'
@@ -153,6 +154,11 @@ export class CandidateService {
   searchCandidate(request: Search, token: string){
     const headers = this.getHeader(token);
     return this.http.post<CandidateSearchResponse>(`${this.backCandidateUrl}/search`, request, { headers })
+  }
+
+  getInterviews(token: string): Observable<CandidateInterviewsResponse> {
+    const headers = this.getHeader(token);
+    return this.http.get<CandidateInterviewsResponse>(`${this.backCandidateUrl}/interviews`, { headers })
   }
 
   getHeader(token: string) {
