@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentShortlistedCandidateItemBinding
 import com.example.abc_jobs_alpaca.model.models.ShortlistedCandidateItem
-import com.google.gson.JsonObject
 import org.json.JSONObject
 
 class ShortlistedCandidateItemRecyclerViewAdapter(
@@ -40,11 +39,11 @@ class ShortlistedCandidateItemRecyclerViewAdapter(
             else -> holder.resultView.setTextColor(Color.RED)
         }
         holder.nameView.text = item.fullName
-        if(item.city != JSONObject.NULL && item.country != JSONObject.NULL)
+        if(item.city != JSONObject.NULL.toString() && item.country != JSONObject.NULL.toString())
             holder.locationView.text = "${item.city}, ${item.country}"
-        else if(item.city !=JSONObject.NULL)
+        else if(item.city !=JSONObject.NULL.toString())
             holder.locationView.text = item.city
-        else if(item.country != JSONObject.NULL)
+        else if(item.country != JSONObject.NULL.toString())
             holder.locationView.text = item.country
         else
             holder.locationView.text = ""

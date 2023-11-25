@@ -17,8 +17,8 @@ app-interview-card {
     justify-content: center;
 }
 
-::ng-deep .drag-scroll-content::-webkit-scrollbar { 
-    display: none; 
+::ng-deep .drag-scroll-content::-webkit-scrollbar {
+    display: none;
 }
 
 .scheduled-interviews-container {
@@ -33,5 +33,6 @@ app-interview-card {
 
 .interview-cards {
     align-items: center;
+    text-align: center;
     width: 100%;
 }

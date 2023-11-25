@@ -27,6 +27,7 @@ import com.example.abc_jobs_alpaca.viewmodel.TechnicalProofViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class TechnicalProofFragment : Fragment(),
     View.OnClickListener,
@@ -56,6 +57,7 @@ class TechnicalProofFragment : Fragment(),
             candidateId = it.getInt("candidateId")
             fullName = it.getString("fullName").toString()
             country = it.getString("country").toString()
+            country = if(country != JSONObject.NULL.toString()) country else ""
             city = it.getString("city").toString()
             result = it.getInt("result")
         }

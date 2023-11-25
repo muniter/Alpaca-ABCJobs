@@ -147,7 +147,7 @@
     <string name="technical_proof_result_placeholder">Enter percent</string>
     <string name="technical_proof_result_instructions">Technical test result (0 - 100%)</string>
     <string name="technical_proof_name_placeholder">Name</string>
-    <string name="technical_proof_location_placeholder">Location</string>
+    <string name="technical_proof_location_placeholder">Not defined location</string>
     <string name="technical_proof_saved">Saved successfully</string>
     <string name="interview_list_title">Interviews</string>
     <string name="exams_title">Exam List</string>
@@ -159,9 +159,9 @@
     <string name="pending_message">Pending</string>
     <string name="completed_message">Completed</string>
     <string name="noresults_messages">No Results Recorded</string>
-    <string name="team_list_title">Equipos</string>
+    <string name="team_list_title">Teams</string>
     <string name="technical_proof_error_result_null">You must enter a numerical value between 1 and 100</string>
-    <string name="select_button_label">Elegir candidato</string>
+    <string name="select_button_label">Choose candidate</string>
 
 
 </resources>
