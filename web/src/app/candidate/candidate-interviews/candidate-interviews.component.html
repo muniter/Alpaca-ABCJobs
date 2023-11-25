@@ -10,6 +10,7 @@
           <drag-scroll [drag-scroll-y-disabled]="true">
             <app-interview-card drag-scroll-item *ngFor="let interview of scheduledInterviews" [interview]="interview" />
           </drag-scroll>
+          <p id="scheduledinterviewsnotfound" *ngIf="!(scheduledInterviews.length > 0)" i18n="@@scheduledinterviewsnotfound">No hay entrevistas programadas</p>
         </div>
 
       </app-login-logon-container>
@@ -23,6 +24,7 @@
           <drag-scroll [drag-scroll-y-disabled]="true">
             <app-interview-card drag-scroll-item *ngFor="let interview of finishedInterviews" [interview]="interview" />
           </drag-scroll>
+          <p id="finishedinterviewsnotfound" *ngIf="!(finishedInterviews.length > 0)" i18n="@@finishedinterviewsnotfound">No hay entrevistas finalizadas</p>
         </div>
 
       </app-login-logon-container>
