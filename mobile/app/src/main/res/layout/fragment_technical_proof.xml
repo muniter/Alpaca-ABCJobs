@@ -47,7 +47,7 @@
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="@dimen/label_primary_text_size"
-            android:hint="@string/technical_proof_location_placeholder"
+            android:hint=  "@string/technical_proof_location_placeholder"
             android:text="@={viewModel.shortlistedCandidateItem.country}" />
         <TextView
             android:id="@+id/technical_proof_result_label"
