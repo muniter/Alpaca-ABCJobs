@@ -87,7 +87,7 @@
     <string name="country_header">Country of residence</string>
     <string name="languages_header">Languages</string>
     <string name="title_dialog">Confirmation</string>
-    <string name="question_dialog">Are you sure you want to delete this item?</string>
+    <string name="question_dialog">Are you sure to confirm your decision?</string>
     <string name="cancel_message">Cancel</string>
     <string name="confirm_message">Accept</string>
     <string name="type_degree_error_message">You must choose an education type</string>
@@ -161,6 +161,7 @@
     <string name="noresults_messages">No Results Recorded</string>
     <string name="team_list_title">Equipos</string>
     <string name="technical_proof_error_result_null">You must enter a numerical value between 1 and 100</string>
+    <string name="select_button_label">Elegir candidato</string>
 
 
 </resources>

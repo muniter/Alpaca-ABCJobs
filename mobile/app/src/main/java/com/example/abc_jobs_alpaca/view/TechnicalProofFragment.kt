@@ -22,12 +22,15 @@ import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentTechnicalProofBinding
 import com.example.abc_jobs_alpaca.model.models.TechnicalProofRequest
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
+import com.example.abc_jobs_alpaca.view.utils.ConfirmDialogFragment
 import com.example.abc_jobs_alpaca.viewmodel.TechnicalProofViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TechnicalProofFragment : Fragment(), View.OnClickListener {
+class TechnicalProofFragment : Fragment(),
+    View.OnClickListener,
+    ConfirmDialogFragment.ConfirmDialogListener {
 
     companion object {
         fun newInstance() = TechnicalProofFragment()
@@ -43,6 +46,7 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentTechnicalProofBinding
     private val tokenLiveData = MutableLiveData<String?>()
     private var token = ""
+    private lateinit var repository: ABCJobsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +97,8 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
         saveBtn.setOnClickListener(this)
         val cancelBtn: Button = view.findViewById(R.id.technical_proof_cancel_button)
         cancelBtn.setOnClickListener(this)
+        val selectBtn: Button = view.findViewById(R.id.select_button)
+        selectBtn.setOnClickListener(this)
 
         viewModel.shortlistedCandidateItem.observe(viewLifecycleOwner, Observer {
             Log.i("observer","shortlistedCandidateItem")
@@ -127,6 +133,10 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
             R.id.technical_proof_cancel_button -> {
                 backToShortlistedCandidatesList()
             }
+            R.id.select_button -> {
+                val confirmDialogFragment = ConfirmDialogFragment(candidateId, this)
+                confirmDialogFragment.show(childFragmentManager, "ConfirmDialogFragment")
+            }
         }
     }
 
@@ -140,4 +150,26 @@ class TechnicalProofFragment : Fragment(), View.OnClickListener {
         toast.show()
     }
 
+    override fun onConfirm(id: Int){
+        val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("token", null)
+        if (token != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                var response = viewModel.selectCandidate(token, vacancyId, id)
+                if (response != null) {
+                    showToast(
+                        "Candidate selected"
+                    )
+                    findNavController().navigate(R.id.action_technicalProofFragment_to_nav_vacancy)
+                }
+                else {
+                    showToast(
+                        "Error"
+                    )
+                }
+
+
+            }
+        }
+    }
 }

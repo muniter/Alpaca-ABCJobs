@@ -87,7 +87,7 @@
     <string name="country_header">País de Residencia</string>
     <string name="languages_header">Idiomas</string>
     <string name="title_dialog">Confirmación</string>
-    <string name="question_dialog">¿Está seguro que desea eliminar este elemento?</string>
+    <string name="question_dialog">¿Está seguro que desea confirmar la acción?</string>
     <string name="cancel_message">Cancelar</string>
     <string name="confirm_message">Aceptar</string>
     <string name="type_degree_error_message">Se debe elegir un tipo de formación</string>
@@ -161,5 +161,6 @@
     <string name="noresults_messages">No registra resultados</string>
     <string name="team_list_title">Equipos</string>
     <string name="technical_proof_error_result_null">Debe ingresar un valor numérico entre 1 y 100</string>
+    <string name="select_button_label">Seleccionar candidato</string>
 
 </resources>

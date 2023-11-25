@@ -152,6 +152,9 @@
         <argument
             android:name="result"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_technicalProofFragment_to_nav_vacancy"
+            app:destination="@id/nav_vacancy" />
     </fragment>
     <fragment
         android:id="@+id/nav_interview_list"

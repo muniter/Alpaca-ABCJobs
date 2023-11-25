@@ -34,6 +34,7 @@ import com.example.abc_jobs_alpaca.model.models.UserRegisterRequest
 import com.example.abc_jobs_alpaca.model.models.UserRegisterResponse
 import com.example.abc_jobs_alpaca.model.models.VacanciesResponse
 import com.example.abc_jobs_alpaca.model.models.VacancyResponse
+import com.example.abc_jobs_alpaca.model.models.VacancySelectCandidateResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItemDeleteResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItemResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoRequest
@@ -166,6 +167,10 @@ class ABCJobsRepository(private val applicationContext: Application) {
     suspend fun postTestResult(token: String, vacancyId: Int, request: ArrayList<TechnicalProofRequest>): Result<VacancyResponse>{
         val requestJson = serializeTechnicalProofRequest(request)
         return ABCJobsService.getInstance(applicationContext).postTestResult(token, vacancyId, requestJson)
+    }
+
+    suspend fun postSelectCandidate(token: String, vacancyId: Int, candidateId: Int): Result<VacancySelectCandidateResponse>{
+        return ABCJobsService.getInstance(applicationContext).postSelectCandidate(token, vacancyId, candidateId)
     }
 
 }
