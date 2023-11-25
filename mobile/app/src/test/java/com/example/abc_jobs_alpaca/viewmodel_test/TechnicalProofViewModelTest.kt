@@ -79,6 +79,7 @@ class TechnicalProofViewModelTest {
                     VacancyItem(
                         vacancyId,
                         faker.company.profession(),
+                        faker.random.nextBoolean(),
                         faker.company.department(),
                         TeamItem(faker.random.nextInt(), faker.team.name()),
                         listOf()

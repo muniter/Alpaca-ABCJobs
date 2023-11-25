@@ -17,7 +17,7 @@ class TechnicalProofViewModel(
 ) : ViewModel() {
 
     val shortlistedCandidateItem: MutableLiveData<ShortlistedCandidateItem?> = MutableLiveData(null)
-    private val messageLiveData = MutableLiveData<MessageEvent>()
+    val messageLiveData = MutableLiveData<MessageEvent>()
 
     fun loadTechnicalProofData() {
         shortlistedCandidateItem.value = ShortlistedCandidateItem(
