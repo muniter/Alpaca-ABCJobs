@@ -34,4 +34,14 @@ class TechnicalProofViewModel(
         }
     }
 
+    suspend fun selectCandidate(token: String, vacancyId: Int, candidateId: Int) {
+        val response = abcJobsRepository.postSelectCandidate(token, vacancyId, candidateId)
+        response.onSuccess { _ ->
+            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Guardado"))
+        }
+        response.onFailure { _ ->
+            messageLiveData.postValue(MessageEvent(MessageType.ERROR, "Error"))
+        }
+    }
+
 }

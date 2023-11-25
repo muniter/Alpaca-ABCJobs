@@ -20,6 +20,16 @@ data class Country (
     }
 }
 
+data class Skill(
+    val id: Int,
+    val name: String
+)
+
+data class Evaluation(
+    val id: Int,
+    val date: String,
+    val result: Int
+)
 
 fun deserializeCountries(response: JSONObject) : CountriesResponse{
 

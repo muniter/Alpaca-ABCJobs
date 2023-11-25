@@ -37,8 +37,13 @@ class VacancyViewModel(private val abcJobsRepository: ABCJobsRepository) : ViewM
                 abcJobsRepository.getVacancies(token.value!!)
                     .onSuccess { response ->
                         if (response.success) {
-                            _vacancyList.value = response.data
-                            navigationListener?.navigateToNextScreen()
+                            var list = mutableListOf<VacancyItem>()
+                            response.data?.forEach {
+                                if(it.open){
+                                    list.add(it)
+                                }
+                            }
+                            _vacancyList.value = list
                         }
                     }
                     .onFailure {

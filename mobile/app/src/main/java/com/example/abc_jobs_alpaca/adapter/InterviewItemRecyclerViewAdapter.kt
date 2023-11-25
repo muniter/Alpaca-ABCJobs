@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 
 import com.example.abc_jobs_alpaca.utils.DateUtils.dateFormatted
 import com.example.abc_jobs_alpaca.utils.DateUtils.timeFormatted
+import org.json.JSONObject
 import java.util.Date
 
 class InterviewItemRecyclerViewAdapter(
@@ -51,9 +52,10 @@ class InterviewItemRecyclerViewAdapter(
         val (dateString, timeString) = dateAndTimeFormat(item)
         holder.dateView.text = "$dateString $timeString"
 
-        if (item.result == "null") {
+        if (item.result != JSONObject.NULL) {
             holder.resultView.text = item.result.toString()
-        } else {
+        }
+        else{
             holder.resultView.text = noResult
         }
     }

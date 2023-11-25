@@ -9,7 +9,7 @@ import com.example.abc_jobs_alpaca.R
 class ConfirmDialogFragment(private val id: Int, private val listener: ConfirmDialogListener) : DialogFragment() {
 
     interface ConfirmDialogListener {
-        fun onConfirmDelete(id: Int)
+        fun onConfirm(id: Int)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -17,7 +17,7 @@ class ConfirmDialogFragment(private val id: Int, private val listener: ConfirmDi
             .setTitle(getString(R.string.title_dialog))
             .setMessage(getString(R.string.question_dialog))
             .setPositiveButton(getString(R.string.confirm_message)) { dialog, _ ->
-                listener.onConfirmDelete(id)
+                listener.onConfirm(id)
                 dismiss()
             }
             .setNegativeButton(getString(R.string.cancel_message)) { dialog, _ ->
