@@ -17,7 +17,7 @@ class TechnicalProofViewModel(
 ) : ViewModel() {
 
     val shortlistedCandidateItem: MutableLiveData<ShortlistedCandidateItem?> = MutableLiveData(null)
-    private val messageLiveData = MutableLiveData<MessageEvent>()
+    val messageLiveData = MutableLiveData<MessageEvent>()
 
     fun loadTechnicalProofData() {
         shortlistedCandidateItem.value = ShortlistedCandidateItem(
@@ -31,6 +31,16 @@ class TechnicalProofViewModel(
         val response = abcJobsRepository.postTestResult(token, vacancyId, request)
         response.onSuccess {
             messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Ok"))
+        }
+    }
+
+    suspend fun selectCandidate(token: String, vacancyId: Int, candidateId: Int) {
+        val response = abcJobsRepository.postSelectCandidate(token, vacancyId, candidateId)
+        response.onSuccess { _ ->
+            messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Guardado"))
+        }
+        response.onFailure { _ ->
+            messageLiveData.postValue(MessageEvent(MessageType.ERROR, "Error"))
         }
     }
 

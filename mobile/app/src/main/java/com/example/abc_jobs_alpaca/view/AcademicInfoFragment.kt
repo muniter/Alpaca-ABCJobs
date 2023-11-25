@@ -92,7 +92,7 @@ class AcademicInfoFragment : Fragment(),
     }
 
 
-    override fun onConfirmDelete(id: Int){
+    override fun onConfirm(id: Int){
         val sharedPreferences = requireActivity().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", null)
         if (token != null) {

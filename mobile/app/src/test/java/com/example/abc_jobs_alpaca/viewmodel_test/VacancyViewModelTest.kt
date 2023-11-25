@@ -81,6 +81,7 @@ class VacancyViewModelTest {
                         VacancyItem(
                             faker.random.nextInt(),
                             faker.company.profession(),
+                            true,
                             faker.company.department(),
                             TeamItem(faker.random.nextInt(), faker.team.name()),
                             listOf()
@@ -88,6 +89,7 @@ class VacancyViewModelTest {
                         VacancyItem(
                             faker.random.nextInt(),
                             faker.company.profession(),
+                            true,
                             faker.company.department(),
                             TeamItem(faker.random.nextInt(), faker.team.name()),
                             listOf()
