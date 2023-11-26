@@ -7,17 +7,22 @@
           subscriptSizing="dynamic">
           <input matInput id="name" class="form-control header-input" formControlName="name"
             placeholder="Nombre del equipo" i18n-placeholder="@@teamnameplaceholder">
-          <mat-error *ngIf="teamCreateForm.get('name')!.invalid" i18n="@@nonemptyteamname">
+          <mat-error *ngIf="teamCreateForm.get('name')!.invalid && !teamCreateForm.get('name')!.hasError('responseMessageError')" i18n="@@nonemptyteamname">
             El nombre de equipo no puede ser vacío
+          </mat-error>
+          <mat-error *ngIf="teamCreateForm.get('name')!.invalid && teamCreateForm.get('name')!.hasError('responseMessageError')" i18n="@@errorsavingteamlabel">
+            Ocurrió un error al guardar. Es posible que ya exista un equipo con este nombre.
           </mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
-        <mat-form-field class="form-field full-width select-employee" appearance="outline" subscriptSizing="dynamic" *ngFor="let employee of [].constructor(selectedEmployees.length+1); index as indexOfelement;">
-          <mat-select placeholder="Seleccionar miembro" i18n-placeholder="@@selectmember" (selectionChange)="handleSelection($event, indexOfelement)">
-            <mat-option [value]="null" >
-              
+        <mat-form-field class="form-field full-width select-employee" appearance="outline" subscriptSizing="dynamic"
+          *ngFor="let employee of [].constructor(selectedEmployees.length+1); index as indexOfelement;">
+          <mat-select placeholder="Seleccionar miembro" i18n-placeholder="@@selectmember"
+            (selectionChange)="handleSelection($event, indexOfelement)">
+            <mat-option [value]="null">
+
             </mat-option>
             <mat-option *ngFor="let employee of allEmployees" [value]="employee">
               {{employee.name}}
@@ -26,7 +31,7 @@
         </mat-form-field>
       </div>
       <mat-error class="error" *ngIf="repeatedMembers" i18n="@@nonrepeatedteammembers">
-        No es permitido seleccionar el mismo miembro más de una vez. 
+        No es permitido seleccionar el mismo miembro más de una vez.
       </mat-error>
 
       <div class="buttons">

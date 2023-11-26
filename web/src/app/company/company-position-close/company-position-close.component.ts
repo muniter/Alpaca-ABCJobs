@@ -39,11 +39,13 @@ export class CompanyPositionCloseComponent implements OnInit {
 
     this.companyService.selectCandidate(this.data.token, this.position.id, request).subscribe({
       error: (error) => {
+        this.closePositionForm.controls['candidate'].setErrors({ "responseMessageError": 'aaaaaaaaaaaa' });
         console.log("Error: " + error)
+      },
+      complete: () => {
+        this.dialogRef.close();
       }
     })
-
-    this.dialogRef.close();
   }
 
   onCancel() {

@@ -143,11 +143,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
@@ -155,7 +155,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-close/company-position-close.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-schedule-interview/company-schedule-interview.component.html</context>
@@ -199,11 +199,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-hired-evaluation/company-hired-evaluation.component.html</context>
@@ -211,7 +211,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-close/company-position-close.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-position-detail/company-position-detail.component.html</context>
@@ -1327,7 +1327,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="positiondescriptionplaceholder" datatype="html">
@@ -1355,7 +1355,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="selectteam" datatype="html">
@@ -1367,7 +1367,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyteamselect" datatype="html">
@@ -1379,7 +1379,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectnameplaceholder" datatype="html">
@@ -1403,7 +1403,7 @@
         <target> Project description </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonemptyprojectdescription" datatype="html">
@@ -1411,7 +1411,7 @@
         <target> Project description can not be empty </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="teamnameplaceholder" datatype="html">
@@ -1435,7 +1435,7 @@
         <target>Choose member</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nonrepeatedteammembers" datatype="html">
@@ -1443,7 +1443,7 @@
         <target> A member can not be selected more than once. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="candidatesportal" datatype="html">
@@ -2321,6 +2321,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/candidate/candidate-interviews/candidate-interviews.component.html</context>
           <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errorsavingprojectlabel" datatype="html">
+        <source> Ocurrió un error al guardar. Es posible que ya exista un proyecto con este nombre. </source>
+        <target> Error saving. There may already exist a project with this name. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-project/company-create-project.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errorsavingteamlabel" datatype="html">
+        <source> Ocurrió un error al guardar. Es posible que ya exista un equipo con este nombre. </source>
+        <target> Error saving. There may already exist a team with this name. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-create-team/company-create-team.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="errorsavingcandidateselect" datatype="html">
+        <source> Ocurrió un error al guardar. Es posible que este condidato ya haya sido contratado. </source>
+        <target> Error saving. This candidate may be already hired. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/company/company-position-close/company-position-close.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
     </body>
