@@ -14,6 +14,9 @@ import com.example.abc_jobs_alpaca.model.models.AnswerQuestionResponse
 import com.example.abc_jobs_alpaca.model.models.ConfigData
 import com.example.abc_jobs_alpaca.model.models.ConfigRequest
 import com.example.abc_jobs_alpaca.model.models.CountriesResponse
+import com.example.abc_jobs_alpaca.model.models.EmployeeResponse
+import com.example.abc_jobs_alpaca.model.models.EmployeesResponse
+import com.example.abc_jobs_alpaca.model.models.EvaluationEmployeeRequest
 import com.example.abc_jobs_alpaca.model.models.ExamStartResponse
 import com.example.abc_jobs_alpaca.model.models.ExamsExtendResponse
 import com.example.abc_jobs_alpaca.model.models.ExamsResponse
@@ -48,6 +51,8 @@ import com.example.abc_jobs_alpaca.model.models.serializePersonalInfo
 import com.example.abc_jobs_alpaca.model.models.serializeTechnicalInfo
 import com.example.abc_jobs_alpaca.model.models.serializeTechnicalProofRequest
 import com.example.abc_jobs_alpaca.model.models.serializeWorkInfo
+import org.json.JSONObject
+import java.util.Date
 
 class ABCJobsRepository(private val applicationContext: Application) {
 
@@ -173,4 +178,11 @@ class ABCJobsRepository(private val applicationContext: Application) {
         return ABCJobsService.getInstance(applicationContext).postSelectCandidate(token, vacancyId, candidateId)
     }
 
+    suspend fun getHiredEmployees(token: String): Result<EmployeesResponse>{
+        return ABCJobsService.getInstance(applicationContext).getHiredEmployees(token)
+    }
+
+    suspend fun postEvaluateEmployee(token: String, idEmployee: Int, requestBody: EvaluationEmployeeRequest):Result<EmployeeResponse>{
+        return ABCJobsService.getInstance(applicationContext).postEvaluateEmployee(token,idEmployee,requestBody)
+    }
 }

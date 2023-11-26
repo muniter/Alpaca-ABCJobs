@@ -58,7 +58,8 @@ class InterviewItemFragment : Fragment() {
 
         tokenLiveData.observe(viewLifecycleOwner) { token ->
             viewModel.onTokenUpdated(token)
-            lifecycleScope.launch { viewModel.loadInterviewsItemsInfo() }
+            lifecycleScope.launch {
+                viewModel.loadInterviewsItemsInfo() }
         }
 
         if (view is RecyclerView) {

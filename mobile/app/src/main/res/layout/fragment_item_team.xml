@@ -25,7 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"

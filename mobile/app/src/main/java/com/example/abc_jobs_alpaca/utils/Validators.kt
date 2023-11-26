@@ -59,4 +59,12 @@ object Validators {
 
         return true
     }
+
+    fun isValidPorcetage(value: String): Boolean {
+        val porcetage = value.toIntOrNull()
+        if (porcetage != null) {
+            return porcetage in 0..100
+        }
+        return false
+    }
 }

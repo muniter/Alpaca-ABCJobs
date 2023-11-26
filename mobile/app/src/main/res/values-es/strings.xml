@@ -162,5 +162,13 @@
     <string name="team_list_title">Equipos</string>
     <string name="technical_proof_error_result_null">Debe ingresar un valor numérico entre 1 y 100</string>
     <string name="select_button_label">Seleccionar candidato</string>
+    <string name="employee_label_pending">Pendiente</string>
+    <string name="employee_label_evaluated">Evaluado</string>
+    <string name="employee_list_title">Empleados contratados</string>
+    <string name="hired_employee_list_title">Empleados contratados</string>
+    <string name="performance_result_instructions">Desempeño</string>
+    <string name="date_evaluation_placeholder">Sin fecha disponible\n</string>
+    <string name="performance_employee_title">Registrar desempeño</string>
+    <string name="result_validation_message">Se debe ingresar valores entre 0 y 100</string>
 
 </resources>

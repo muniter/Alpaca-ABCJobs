@@ -86,7 +86,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_exam_list,
                 R.id.nav_interview_list,
                 R.id.nav_team_list,
-                R.id.nav_vacancy
+                R.id.nav_vacancy,
+                R.id.nav_employee_list
             ), drawerLayout
         )
         if (isCompany) {
@@ -100,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         else {
             navView.menu.findItem(R.id.nav_team_list).isVisible = false
             navView.menu.findItem(R.id.nav_vacancy).isVisible = false
+            navView.menu.findItem(R.id.nav_employee_list).isVisible = false
         }
         navView.menu.findItem(R.id.nav_home).isVisible = true
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -87,7 +87,7 @@ class TechnicalInfoCreateViewModelTest {
                     Result.success(
                         TechnicalInfoItemResponse(
                             true,
-                            TechnicalInfoItem("", 1, 1, TechnicalInfoType(1, "test"))
+                            TechnicalInfoItem("", 1, 1, TechnicalInfoType(1, "test"), 1)
                         )
                     )
                 )
