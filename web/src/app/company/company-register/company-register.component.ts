@@ -124,12 +124,7 @@ export class CompanyRegisterComponent implements OnInit {
 
     this.companyService.companySignUp(companyData).subscribe({
       error: (exception) => this.setErrorBack(exception),
-      complete: () => {
-        this.registerSucess = true
-          setTimeout(() => {
-            this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyLogin}`)
-          }, 2000);
-      }
+      next: (res) => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}/${res.data.token}`)
     })
   }
 

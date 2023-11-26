@@ -54,8 +54,9 @@ describe('CandidateRegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should register candidate", fakeAsync(() => {
-    let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(of({ success: true }));
+  it("should register candidate", () => {
+    let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(of({ success: true, data:{token: "abc123"}  }));
+    let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     spyOn(component, 'candidateRegister').and.callThrough();
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
@@ -69,14 +70,13 @@ describe('CandidateRegisterComponent', () => {
 
     component.candidateRegister(component.candidateRegisterForm.value);
     fixture.detectChanges();
-    let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     expect(component.candidateRegister).toHaveBeenCalled();
     expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
-    expect(component.registerSucess).toBeTruthy();
-    tick(3000);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
-  }));
+    expect(component.registerSucess).toBeTruthy();
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  });
 
   it("should put error on exception registering candidate", () => {
     let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(throwError(() => ({
@@ -215,7 +215,8 @@ describe('CandidateRegisterComponent', () => {
   });
 
   it('candidateRegister with custom object', () => {
-    let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(of({ success: true }));
+    let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(of({ success: true, data:{token: "abc123"}  }));
+    let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     let pass = faker.lorem.word({ length: { min: 8, max: 20 } });
 
@@ -231,6 +232,7 @@ describe('CandidateRegisterComponent', () => {
     fixture.detectChanges();
 
     expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
     expect(component.registerSucess).toBeTruthy();
   });
 

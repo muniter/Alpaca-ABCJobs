@@ -67,6 +67,7 @@ dependencies {
     implementation("org.jacoco:org.jacoco.core:0.8.7")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.test.espresso:espresso-contrib:3.5.1")
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.github.serpro69:kotlin-faker:1.15.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
@@ -79,6 +80,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test:runner:1.1.1")
     androidTestImplementation("androidx.test:rules:1.1.1")
+    androidTestImplementation("io.github.serpro69:kotlin-faker:1.15.0")
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
     implementation ("com.google.code.gson:gson:2.8.8")
 }

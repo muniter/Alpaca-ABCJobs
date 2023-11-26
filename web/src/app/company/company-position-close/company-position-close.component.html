@@ -16,8 +16,11 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-error *ngIf="closePositionForm.get('candidate')!.invalid" i18n="@@nonemptycandidateselect">
+        <mat-error *ngIf="closePositionForm.get('candidate')!.invalid && !closePositionForm.get('candidate')!.hasError('responseMessageError')" i18n="@@nonemptycandidateselect">
           Debe seleccionar un candidato
+        </mat-error>
+        <mat-error *ngIf="closePositionForm.get('candidate')!.invalid && closePositionForm.get('candidate')!.hasError('responseMessageError')" i18n="@@errorsavingcandidateselect">
+          Ocurrió un error al guardar. Es posible que este condidato ya haya sido contratado.
         </mat-error>
       </div>
 

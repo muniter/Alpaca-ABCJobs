@@ -11,13 +11,19 @@ app-team-project-card {
     padding-top: 0rem !important;
 }
 
+::ng-deep drag-scroll {
+    width: 100%;
+}
+
 ::ng-deep .drag-scroll-content {
     scrollbar-width: none;
-    display: flex !important;
+    text-align: center;
+    width: 100%;
 }
 
 ::ng-deep .drag-scroll-content::-webkit-scrollbar { 
     display: none; 
+    width: 100%;
 }
 
 h2 {
@@ -42,6 +48,7 @@ h2 {
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .project-cards {
@@ -49,6 +56,7 @@ h2 {
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .add-card {
