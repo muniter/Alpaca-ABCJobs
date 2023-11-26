@@ -20,6 +20,7 @@ export class CompanyRegisterComponent implements OnInit {
   };
 
   companyRegisterForm!: FormGroup;
+  registerSucess: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private companyService: CompanyService, private router: Router) {
   }

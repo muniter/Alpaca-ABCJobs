@@ -30,6 +30,7 @@ import com.example.abc_jobs_alpaca.model.models.UserRegisterResponse
 import com.example.abc_jobs_alpaca.model.models.UserTimeFormat
 import com.example.abc_jobs_alpaca.model.models.VacanciesResponse
 import com.example.abc_jobs_alpaca.model.models.VacancyResponse
+import com.example.abc_jobs_alpaca.model.models.VacancySelectCandidateResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItemDeleteResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoItemResponse
 import com.example.abc_jobs_alpaca.model.models.WorkInfoResponse
@@ -66,6 +67,8 @@ import com.example.abc_jobs_alpaca.model.models.deserializeTypesTitlesError
 import com.example.abc_jobs_alpaca.model.models.deserializeVacancies
 import com.example.abc_jobs_alpaca.model.models.deserializeVacancy
 import com.example.abc_jobs_alpaca.model.models.deserializeVacancyError
+import com.example.abc_jobs_alpaca.model.models.deserializeVacancySelectCandidateError
+import com.example.abc_jobs_alpaca.model.models.deserializeVacancySelectCandidateResponse
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfo
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItem
 import com.example.abc_jobs_alpaca.model.models.deserializeWorkInfoItemDelete
@@ -103,6 +106,7 @@ class ABCJobsService constructor(context: Context) {
         private var TEAM_PATH = "/team"
         private var VACANCY_PATH = "/vacancy"
         private var TEST_RESULT_PATH = "/test-result"
+        private var SELECT_CANDIDATE_PATH = "/select"
         private var instance: ABCJobsService? = null
 
         fun getInstance(context: Context) =
@@ -1074,6 +1078,35 @@ class ABCJobsService constructor(context: Context) {
             val response = fetchInfo(token, COMPANIES_PATH, TEAM_PATH)
             Result.success(deserializeTeams(response))
         } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun postSelectCandidate(token: String, vacancyId: Int, candidateId: Int): Result<VacancySelectCandidateResponse> {
+        return try {
+            val response =
+                    suspendCoroutine<JSONObject> { cont ->
+                        requestQueue.add(
+                                requestWithToken(
+                                        token,
+                                        Request.Method.POST,
+                                        COMPANIES_PATH,
+                                        "$VACANCY_PATH/$vacancyId$SELECT_CANDIDATE_PATH",
+                                        JSONObject().put("id_candidate", candidateId),
+                                        { response -> cont.resume(JSONObject(response)) },
+                                        { volleyError -> cont.resumeWithException(volleyError) }
+                                )
+                        )
+                    }
+            if (response.getBoolean("success")) {
+                val vacancyResponse = deserializeVacancySelectCandidateResponse(response)
+                Result.success(vacancyResponse)
+            } else {
+                val vacancyError = deserializeVacancySelectCandidateError(response)
+                Result.failure(vacancyError)
+            }
+        } catch (e: Exception) {
+            Log.d("NETWORK_ERROR", e.toString())
             Result.failure(e)
         }
     }

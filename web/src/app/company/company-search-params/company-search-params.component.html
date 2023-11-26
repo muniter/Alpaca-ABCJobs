@@ -15,6 +15,7 @@
                   subscriptSizing="dynamic">
                   <mat-select formControlName="country_code" placeholder="Seleccione"
                   i18n-placeholder="@@searchparamcountryplaceholder">
+                    <mat-option i18n="@@all">Todos</mat-option>
                     <mat-option *ngFor="let country of countries" [value]="country.num_code">
                       {{country.en_short_name}}
                     </mat-option>
@@ -77,6 +78,7 @@
                   subscriptSizing="dynamic">
                   <mat-select formControlName="personality_code" placeholder="Seleccione"
                   i18n-placeholder="@@searchparampersonalityplaceholder">
+                    <mat-option i18n="@@all">Todos</mat-option>
                     <mat-option *ngFor="let personality of personalities" [value]="personality.id">
                       {{personality.name}}
                     </mat-option>
@@ -91,6 +93,7 @@
                   subscriptSizing="dynamic">
                   <mat-select formControlName="least_academic_level" placeholder="Seleccione"
                   i18n-placeholder="@@searchparamdegreesplaceholder">
+                    <mat-option i18n="@@all">Todos</mat-option>
                     <mat-option *ngFor="let collegeDegree of collegeDegrees" [value]="collegeDegree.id">
                       {{collegeDegree.name}}
                     </mat-option>
