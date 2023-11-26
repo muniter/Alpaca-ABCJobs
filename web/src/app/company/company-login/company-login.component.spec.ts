@@ -16,10 +16,13 @@ import { faker } from '@faker-js/faker';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { CompanyService } from '../company.service';
+import { UserService } from 'src/app/user/user.service';
+import { UserSettings, UserConfig, UserSettingsDetail } from 'src/app/user/user';
 
 describe('CompanyLoginComponent', () => {
   let component: CompanyLoginComponent;
   let companyService: CompanyService;
+  let userService: UserService;
   let router: Router;
   let fixture: ComponentFixture<CompanyLoginComponent>;
   let debug: DebugElement;
@@ -43,6 +46,7 @@ describe('CompanyLoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CompanyLoginComponent);
     companyService = TestBed.inject(CompanyService)
+    userService = TestBed.inject(UserService)
     router = TestBed.inject(Router)
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -171,11 +175,13 @@ describe('CompanyLoginComponent', () => {
     );
 
     let companySignUpSpy = spyOn(companyService, 'companyLogin').and.returnValue(of({ success: true, data: {token: "123123"} }));
+    let userConfigSpy = spyOn(userService, 'getConfig').and.returnValue(of(new UserSettings(true, new UserConfig(new UserSettingsDetail("ES", "24h", "DD/MM/yyyy")))));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     component.loginCompany();
 
     expect(companySignUpSpy).toHaveBeenCalledTimes(1);
+    expect(userConfigSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
   });
 

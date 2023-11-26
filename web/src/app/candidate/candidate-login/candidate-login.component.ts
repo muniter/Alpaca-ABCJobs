@@ -5,6 +5,7 @@ import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validator
 import { CandidateLoginRequest, mapKeys } from '../candidate';
 import { Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-candidate-login',
@@ -18,6 +19,7 @@ export class CandidateLoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private candidateService: CandidateService,
+    private userService: UserService,
     private router: Router
   ) { }
 
@@ -71,8 +73,17 @@ export class CandidateLoginComponent implements OnInit {
     this.candidateService
       .login(candidate)
       .subscribe({ 
-        next: (response) => this.router.navigateByUrl(
-          `${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}/${response.data.token}`),
+        next: (response) => {
+            this.userService
+              .getConfig(response.data.token)
+              .subscribe({
+                next: (userSettings) => {
+                  localStorage.setItem('dateFormat', userSettings.data.config.dateFormat)
+                },
+              });
+          return this.router.navigateByUrl(
+            `${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}/${response.data.token}`);
+        },
         error: (exception) => this.setErrorBack(exception)
       })
   }
