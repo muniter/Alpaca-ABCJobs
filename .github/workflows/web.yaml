@@ -43,7 +43,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./web
-        run: npm ci
+        run: npm ci --force
 
       - name: Build
         working-directory: ./web
