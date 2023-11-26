@@ -40,49 +40,58 @@
             android:hint="@string/technical_proof_name_placeholder"
              />
         <TextView
-            android:id="@+id/permorfance_employee_location"
+            android:id="@+id/performance_employee_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/performance_employee_image"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="@dimen/label_primary_text_size"
-            android:hint=  "@string/technical_proof_location_placeholder"
+            android:hint=  "@string/date_evaluation_placeholder"
             />
-        <TextView
-            android:id="@+id/permorfance_employee_result_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:paddingVertical="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/performance_employee_image"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="@dimen/label_secondary_text_size"
-            android:text="@string/performance_result_instructions" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/performance_employee_result_field"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="20dp"
-            android:background="@drawable/border_field"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textColorHint="@color/accent"
-            android:textSize="@dimen/form_field_input"
-            android:hint="@string/technical_proof_result_placeholder"
-            tools:ignore="TouchTargetSizeCheck" />
-        <TextView
-            android:id="@+id/permorfance_employee_result_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/error_message"
-            android:visibility="gone" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/permorfance_employee_result_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingVertical="10dp"
+                android:text="@string/performance_result_instructions"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/label_secondary_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/performance_employee_image" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/performance_employee_result_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_field"
+                android:hint="@string/technical_proof_result_placeholder"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingVertical="20dp"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/accent"
+                android:textSize="@dimen/form_field_input"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/labelResultError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/error_message"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/permorfance_employee_divider"

@@ -86,6 +86,7 @@ class EmployeeListFragment : Fragment() {
                 }
             }
         }
+        (activity as MainActivity).hideButton();
         return view
     }
 

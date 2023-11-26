@@ -168,4 +168,5 @@
     <string name="employee_list_title">Empleados contratados</string>
     <string name="hired_employee_list_title">Empleados contratados</string>
     <string name="performance_result_instructions">Desempeño</string>
+    <string name="date_evaluation_placeholder">Sin fecha disponible\n</string>
 </resources>
