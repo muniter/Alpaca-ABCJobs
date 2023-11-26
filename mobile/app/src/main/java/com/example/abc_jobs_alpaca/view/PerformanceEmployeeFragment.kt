@@ -26,6 +26,8 @@ import com.example.abc_jobs_alpaca.viewmodel.PerformanceEmployeeViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import java.util.Date
+import androidx.navigation.fragment.findNavController
+
 
 class PerformanceEmployeeFragment : Fragment(),
     View.OnClickListener
@@ -87,6 +89,7 @@ class PerformanceEmployeeFragment : Fragment(),
         binding.performanceEmployeeDate.text = dateFormatted(Date(), dateFormat!!)
 
         val saveBtn = binding.permorfanceEmployeeSaveButton
+        saveBtn.isEnabled = false
         saveBtn.setOnClickListener(this)
 
         val cancelBtn = binding.permorfanceEmployeeCancelButton
@@ -96,6 +99,7 @@ class PerformanceEmployeeFragment : Fragment(),
         viewModel.employeeItem.observe(viewLifecycleOwner, Observer {
             Log.i("observer","employeeItem: $it")
         })
+
 
         setupFieldValidation(
             binding.performanceEmployeeResultField,
@@ -120,7 +124,20 @@ class PerformanceEmployeeFragment : Fragment(),
                 val resultValue : TextInputEditText = binding.performanceEmployeeResultField
                 result = resultValue.text.toString().toInt()
                 Log.i("onClick","permorfance_employee_save_button $result $employeeId")
-                //lifecycleScope.launch { viewModel.savePerformanceEmployee(token, employeeId, result) }
+                lifecycleScope.launch { viewModel.savePerformanceEmployee(token, employeeId, result) }
+                if(viewModel.isSaved.value == true) {
+                    findNavController().navigate(
+                        com.example.abc_jobs_alpaca.R.id.action_performanceEmployeeFragment_to_nav_employee_list)
+                }
+                else {
+                    findNavController().navigate(
+                        com.example.abc_jobs_alpaca.R.id.action_performanceEmployeeFragment_to_nav_employee_list)
+                }
+            }
+            com.example.abc_jobs_alpaca.R.id.permorfance_employee_cancel_button -> {
+                Log.i("onClick","permorfance_employee_cancel_button")
+                findNavController().navigate(
+                    com.example.abc_jobs_alpaca.R.id.action_performanceEmployeeFragment_to_nav_employee_list)
             }
 
         }
@@ -131,7 +148,7 @@ class PerformanceEmployeeFragment : Fragment(),
 
         if (!isValid) {
             labelError.visibility = View.VISIBLE
-            labelError.text = "Se debe ingresar valores entre 0 y 100"
+            labelError.text = getString(R.string.result_validation_message)
             isValidResult = false
             disableButton(view?.findViewById(R.id.permorfance_employee_save_button)!!)
         } else {

@@ -168,5 +168,7 @@
     <string name="hired_employee_list_title">Empleados contratados</string>
     <string name="performance_result_instructions">Desempeño</string>
     <string name="date_evaluation_placeholder">Sin fecha disponible\n</string>
+    <string name="performance_employee_title">Registrar desempeño</string>
+    <string name="result_validation_message">Se debe ingresar valores entre 0 y 100</string>
 
 </resources>

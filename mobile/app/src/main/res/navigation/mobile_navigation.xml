@@ -187,7 +187,7 @@
     <fragment
         android:id="@+id/performanceEmployeeFragment"
         android:name="com.example.abc_jobs_alpaca.view.PerformanceEmployeeFragment"
-        android:label="PerformanceEmployeeFragment" >
+        android:label="@string/performance_employee_title" >
         <action
             android:id="@+id/action_performanceEmployeeFragment_to_nav_employee_list"
             app:destination="@id/nav_employee_list" />

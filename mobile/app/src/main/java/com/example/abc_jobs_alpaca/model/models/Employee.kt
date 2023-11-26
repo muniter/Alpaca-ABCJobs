@@ -24,7 +24,7 @@ data class EmployeePerformance(
 )
 
 data class EvaluationEmployeeRequest(
-    val date: Date,
+    val date: String,
     val result: Int
 )
 
