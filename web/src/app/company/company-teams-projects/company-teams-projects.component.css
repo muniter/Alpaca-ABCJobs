@@ -13,7 +13,8 @@ app-team-project-card {
 
 ::ng-deep .drag-scroll-content {
     scrollbar-width: none;
-    display: flex !important;
+    text-align: center;
+    width: 100%;
 }
 
 ::ng-deep .drag-scroll-content::-webkit-scrollbar { 

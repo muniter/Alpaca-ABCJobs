@@ -1,12 +1,13 @@
 <div class="candidate-login-body candidate-theme">
   <app-login-logon-container>
-    <div class="logo-div" >
+    <div class="logo-div">
       <img class="logo-img" src="../../../assets/logo.png" alt="logo">
     </div>
-    <form [formGroup]="candidateLoginForm" (ngSubmit)="candidateLogin(candidateLoginForm.value)" >
+    <form [formGroup]="candidateLoginForm" (ngSubmit)="candidateLogin(candidateLoginForm.value)">
       <div class="form">
 
-        <mat-form-field class="form-field full-width" id="candidateEmailFormField" appearance="outline" subscriptSizing="dynamic">
+        <mat-form-field class="form-field full-width" id="candidateEmailFormField" appearance="outline"
+          subscriptSizing="dynamic">
           <mat-label i18n="@@email">Correo electrónico</mat-label>
           <input matInput id="email" class="form-control" formControlName="email">
           <mat-error *ngIf="candidateLoginForm.get('email')!.invalid">
@@ -14,7 +15,8 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="form-field full-width"  id="passwordFormField" appearance="outline" subscriptSizing="dynamic">
+        <mat-form-field class="form-field full-width" id="passwordFormField" appearance="outline"
+          subscriptSizing="dynamic">
           <mat-label i18n="@@password">Contraseña</mat-label>
           <input matInput id="password" type="password" class="form-control" formControlName="password">
           <mat-error *ngIf="candidateLoginForm.get('password')!.invalid">
@@ -22,10 +24,13 @@
           </mat-error>
         </mat-form-field>
 
-        <app-abc-button type="submit" [disabled]="!candidateLoginForm.valid" class="inline-button bottom-margin" color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
-        <app-abc-button type="button" class="inline-button bottom-margin" routerLink="/candidate/register" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
+        <app-abc-button type="submit" [disabled]="!candidateLoginForm.valid" class="inline-button bottom-margin"
+          color="primary" i18n="@@login">INICIAR SESIÓN</app-abc-button>
+        <app-abc-button type="button" class="inline-button bottom-margin" routerLink="/candidate/register"
+          [bordered]="false" color="basic" i18n="@@registerinabc">REGISTRARSE EN ABC JOBS</app-abc-button>
         <mat-divider></mat-divider>
-        <app-abc-button type="button" class="inline-button top-margin" routerLink="/company/login" color="basic" i18n="@@companyportal">PORTAL DE EMPRESAS</app-abc-button>
+        <app-abc-button type="button" class="inline-button top-margin" routerLink="/company/login" [bordered]="false"
+          color="basic" i18n="@@companyportal">PORTAL DE EMPRESAS</app-abc-button>
       </div>
     </form>
   </app-login-logon-container>

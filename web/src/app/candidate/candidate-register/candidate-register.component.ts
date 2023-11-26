@@ -141,6 +141,7 @@ export class CandidateRegisterComponent implements OnInit {
       .userSignUp(candidate)
       .subscribe({
         error: (exception) => this.setErrorBack(exception),
+        next: (res) => this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}/${res.data.token}`),
         complete: () => {
           this.registerSucess = true
           setTimeout(() => {
