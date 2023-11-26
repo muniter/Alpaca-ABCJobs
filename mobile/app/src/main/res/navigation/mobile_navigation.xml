@@ -166,4 +166,30 @@
         android:name="com.example.abc_jobs_alpaca.view.TeamsFragment"
         android:label="@string/team_list_title"
         tools:layout="@layout/fragment_item_team_list" />
+    <fragment
+        android:id="@+id/nav_employee_list"
+        android:name="com.example.abc_jobs_alpaca.view.EmployeeListFragment"
+        android:label="@string/hired_employee_list_title"
+        tools:layout="@layout/fragment_item_employee_list" >
+        <argument
+            android:name="employeeId"
+            app:argType="integer" />
+        <argument
+            android:name="fullName"
+            app:argType="string" />
+        <argument
+            android:name="result"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_nav_employee_list_to_performanceEmployeeFragment"
+            app:destination="@id/performanceEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performanceEmployeeFragment"
+        android:name="com.example.abc_jobs_alpaca.view.PerformanceEmployeeFragment"
+        android:label="PerformanceEmployeeFragment" >
+        <action
+            android:id="@+id/action_performanceEmployeeFragment_to_nav_employee_list"
+            app:destination="@id/nav_employee_list" />
+    </fragment>
 </navigation>

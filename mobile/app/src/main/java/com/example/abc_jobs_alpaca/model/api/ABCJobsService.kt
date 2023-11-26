@@ -118,7 +118,8 @@ class ABCJobsService constructor(context: Context) {
         private var TEST_RESULT_PATH = "/test-result"
         private var SELECT_CANDIDATE_PATH = "/select"
         private var EMPLOYEE_PATH = "/employee"
-        private var HIRED_EMPLOYEES_PATH = "$EMPLOYEE_PATH?hired_abc=1"
+        private var HIRED_EMPLOYEES_PATH = "$EMPLOYEE_PATH?hired_abc=true"
+
         private var EVALUATION_PATH = "/evaluation"
         private var instance: ABCJobsService? = null
 
@@ -1128,7 +1129,6 @@ class ABCJobsService constructor(context: Context) {
         return try {
             val response = fetchInfo(token, COMPANIES_PATH, HIRED_EMPLOYEES_PATH)
             Result.success(deserializeEmployeesResponse(response))
-            Result.failure(deserializeEmployeesError(response))
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -1165,7 +1165,4 @@ class ABCJobsService constructor(context: Context) {
             Result.failure(e)
         }
     }
-
-
-
 }

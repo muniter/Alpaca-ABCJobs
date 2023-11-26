@@ -13,8 +13,14 @@ data class Employee(
     val company: CompanyDetails,
     val personality: Personality,
     val skills: List<SkillInfoType>,
-    val evaluations: List<Any>,
+    val evaluations: List<Evaluation>,
     val teams: List<Team>
+)
+
+data class EmployeePerformance(
+    val id: Int,
+    val fullName: String,
+    val result: Int
 )
 
 data class EvaluationEmployeeRequest(

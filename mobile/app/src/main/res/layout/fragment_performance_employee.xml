@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.PerformanceEmployeeFragment">
+
+    <LinearLayout
+        android:id="@+id/performance_employee_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/custom_text_input_background"
+        android:layout_margin="5dp"
+        android:paddingTop="30dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/performance_employee_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/account_circle" />
+        <TextView
+            android:id="@+id/performance_employee_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/performance_employee_image"
+            android:textAlignment="textStart"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/label_title_text_size"
+            android:textStyle="bold"
+            android:hint="@string/technical_proof_name_placeholder"
+             />
+        <TextView
+            android:id="@+id/permorfance_employee_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/performance_employee_image"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/label_primary_text_size"
+            android:hint=  "@string/technical_proof_location_placeholder"
+            />
+        <TextView
+            android:id="@+id/permorfance_employee_result_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/performance_employee_image"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/label_secondary_text_size"
+            android:text="@string/performance_result_instructions" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/performance_employee_result_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:background="@drawable/border_field"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorHint="@color/accent"
+            android:textSize="@dimen/form_field_input"
+            android:hint="@string/technical_proof_result_placeholder"
+            tools:ignore="TouchTargetSizeCheck" />
+        <TextView
+            android:id="@+id/permorfance_employee_result_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/error_message"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/permorfance_employee_divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="50dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:id="@+id/permorfance_employee_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/permorfance_employee_divider">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/permorfance_employee_save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_rounded_black"
+                android:text="@string/confirm_message"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/permorfance_employee_cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_layout_background"
+                android:text="@string/cancel_message"
+                android:textColor="@color/accent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toEndOf="@+id/academicInfoSaveButton" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/permorfance_employee_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="50dp"
+            android:background="?android:attr/listDivider"/>
+
+    </LinearLayout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.abc_jobs_alpaca.viewmodel.PerformanceEmployeeViewModel" />
+    </data>
+</layout>

@@ -162,6 +162,11 @@
     <string name="team_list_title">Teams</string>
     <string name="technical_proof_error_result_null">You must enter a numerical value between 1 and 100</string>
     <string name="select_button_label">Choose candidate</string>
+    <string name="employee_label_pending">Pendiente</string>
+    <string name="employee_label_evaluated">Evaluado</string>
+    <string name="employee_list_title">Empleados contratados</string>
+    <string name="hired_employee_list_title">Empleados contratados</string>
+    <string name="performance_result_instructions">Desempeño</string>
 
 
 </resources>
