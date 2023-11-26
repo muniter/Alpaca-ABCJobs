@@ -352,6 +352,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/button_rounded_black"
+                            android:enabled="false"
                             android:text="@string/save_preferences_button"
                             android:textColor="@color/white"
                             app:backgroundTint="@null"
