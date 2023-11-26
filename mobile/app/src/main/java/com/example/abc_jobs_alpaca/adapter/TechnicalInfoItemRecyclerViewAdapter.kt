@@ -29,6 +29,7 @@ class TechnicalInfoItemRecyclerViewAdapter(
         holder.idView.text = item.id.toString()
         holder.typeTechnicalInfoItem.text = item.type.name
         holder.additionalInfo.text = item.description
+        holder.ratingBar.rating = item.score?.toFloat()!!
 
         holder.btnDelete.setOnClickListener {
             onItemClick(item)
@@ -43,6 +44,7 @@ class TechnicalInfoItemRecyclerViewAdapter(
         val typeTechnicalInfoItem : TextView = binding.spinnerTechnicalItem
         val additionalInfo: TextView = binding.editTextAdditionalInfo
         val btnDelete = binding.deleteTechnicalInfoItem
+        val ratingBar = binding.ratingBar
 
         override fun toString(): String {
             return super.toString() + " '" + typeTechnicalInfoItem.text + "'"

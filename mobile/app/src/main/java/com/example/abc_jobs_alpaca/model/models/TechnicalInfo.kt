@@ -1,5 +1,6 @@
 package com.example.abc_jobs_alpaca.model.models
 
+import com.google.android.material.color.utilities.Score
 import org.json.JSONObject
 
 
@@ -17,7 +18,8 @@ data class TechnicalInfoItem(
     val description: String,
     val id: Int,
     val id_persona: Int,
-    val type: TechnicalInfoType
+    val type: TechnicalInfoType,
+    val score: Int?
 )
 
 
@@ -40,6 +42,7 @@ fun deserializeTechnicalInfoItem(response: JSONObject): TechnicalInfoItemRespons
         val description = dataObject.optString("description")
         val id = dataObject.optInt("id")
         val id_persona = dataObject.optInt("id_persona")
+        val score = dataObject.optInt("score")
         val typeObject = dataObject.optJSONObject("type")
         val type = if (typeObject != null) {
             val id = typeObject.optInt("id")
@@ -49,10 +52,10 @@ fun deserializeTechnicalInfoItem(response: JSONObject): TechnicalInfoItemRespons
             TechnicalInfoType(0, "")
         }
 
-        return TechnicalInfoItemResponse(success, TechnicalInfoItem(description, id, id_persona, type))
+        return TechnicalInfoItemResponse(success, TechnicalInfoItem(description, id, id_persona, type, score))
     }
 
-    return TechnicalInfoItemResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, "")))
+    return TechnicalInfoItemResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, ""),0))
 }
 
 
@@ -83,6 +86,7 @@ fun deserializeTechnicalInfo(response: JSONObject): TechnicalInfoResponse {
                 val description = typeObject.optString("description")
                 val id = typeObject.optInt("id")
                 val id_persona = typeObject.optInt("id_persona")
+                val score = typeObject.optInt("score")
                 val typeObject = typeObject.optJSONObject("type")
                 val type = if (typeObject != null) {
                     val id = typeObject.optInt("id")
@@ -91,8 +95,9 @@ fun deserializeTechnicalInfo(response: JSONObject): TechnicalInfoResponse {
                 } else {
                     TechnicalInfoType(0, "")
                 }
-                types.add(TechnicalInfoItem(description, id, id_persona, type))
+                types.add(TechnicalInfoItem(description, id, id_persona, type, score ))
             }
+
         }
     }
 
@@ -108,6 +113,7 @@ fun deserializeTechnicalInfoItemDelete(response: JSONObject): TechnicalInfoItemD
         val id = dataObject.optInt("id")
         val id_persona = dataObject.optInt("id_persona")
         val typeObject = dataObject.optJSONObject("type")
+        val score = dataObject.optInt("score")
         val type = if (typeObject != null) {
             val id = typeObject.optInt("id")
             val name = typeObject.optString("name")
@@ -116,10 +122,10 @@ fun deserializeTechnicalInfoItemDelete(response: JSONObject): TechnicalInfoItemD
             TechnicalInfoType(0, "")
         }
 
-        return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem(description, id, id_persona, type))
+        return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem(description, id, id_persona, type, score))
     }
 
-    return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, "")))
+    return TechnicalInfoItemDeleteResponse(success, TechnicalInfoItem("", 0, 0, TechnicalInfoType(0, ""), 0))
 }
 
 fun deserializeTechnicalInfoItemDeleteError(response: JSONObject): Exception {

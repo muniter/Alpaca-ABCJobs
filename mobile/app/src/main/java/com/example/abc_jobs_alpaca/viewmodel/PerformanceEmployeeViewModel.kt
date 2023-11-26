@@ -27,7 +27,7 @@ class PerformanceEmployeeViewModel (
         )
     }
 
-    fun formatDate(date: Date): String {
+    private fun formatDate(date: Date): String {
         val pattern = "yyyy-MM-dd"
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         return sdf.format(date)
@@ -39,8 +39,8 @@ class PerformanceEmployeeViewModel (
         val response = abcJobsRepository.postEvaluateEmployee(
             token, employeeId, request)
         response.onSuccess {
-            isSaved.postValue(true)
             messageLiveData.postValue(MessageEvent(MessageType.SUCCESS, "Ok"))
+            isSaved.postValue(true)
         }
     }
 }
