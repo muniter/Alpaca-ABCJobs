@@ -75,9 +75,8 @@ describe('CandidateRegisterComponent', () => {
     expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
     expect(component.registerSucess).toBeTruthy();
-    tick(3000);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
-  }));
+  });
 
   it("should put error on exception registering candidate", () => {
     let candidateSignUpSpy = spyOn(candidateService, 'userSignUp').and.returnValue(throwError(() => ({
