@@ -49,11 +49,14 @@ export class CompanyCreateTeamComponent implements OnInit {
 
     this.companyService.postTeam(this.data.token, teamCreationRequest).subscribe({
       error: (error) => {
+        this.teamCreateForm.controls['name'].setErrors({ "responseMessageError": 'aaaaaaaaaaaa' });
         console.log("Error: " + error)
+      },
+      complete: () => {
+        this.dialogRef.close();
       }
     })
 
-    this.dialogRef.close();
   }
 
   onCancel() {
