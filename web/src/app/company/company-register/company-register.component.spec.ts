@@ -327,7 +327,7 @@ describe('CompanyRegisterComponent', () => {
       "false"
     );
 
-    let companySignUpSpy = spyOn(companyService, 'companySignUp').and.returnValue(of({ success: true }));
+    let companySignUpSpy = spyOn(companyService, 'companySignUp').and.returnValue(of({ success: true, data:{token: "abc123"} }));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     component.registerCompany();
