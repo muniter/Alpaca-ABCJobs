@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import SharedCustomValidators from 'src/app/shared/utils/shared-custom-validators';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -7,17 +7,29 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Country, CountryResponse } from 'src/app/shared/Country';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CandidateService } from '../candidate.service';
 import { Language } from 'src/app/shared/Language';
 import { PersonalInfo, SavePersonalInfoRequest } from '../candidate';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
 import { DatePipe } from '@angular/common';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { CUSTOM_DATE_FORMAT } from 'src/app/shared/Format';
+import * as _moment from 'moment';
 
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
-  styleUrls: ['./candidate-profile.component.css']
+  styleUrls: ['./candidate-profile.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT},
+  ]
 })
 export class CandidateProfileComponent implements OnInit {
 
@@ -33,7 +45,8 @@ export class CandidateProfileComponent implements OnInit {
   token: string;
   personalInfoDisabled: boolean = true;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private activatedRouter: ActivatedRoute,
     private router: Router,
     private candidateService: CandidateService,
@@ -153,7 +166,7 @@ export class CandidateProfileComponent implements OnInit {
 
   savePersonalInfo() {
 
-    let date: Date = this.personalInformationForm.get('birthdate')?.value;
+    let date: Date = new Date(this.personalInformationForm.get('birthdate')?.value);
 
     let personalData = new SavePersonalInfoRequest(
       date ? this.datepipe.transform(new Date(date.getFullYear(), date.getMonth(), date.getDate()), 'yyyy-MM-dd') || null : null,

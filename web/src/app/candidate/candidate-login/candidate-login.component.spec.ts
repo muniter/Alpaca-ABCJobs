@@ -18,10 +18,13 @@ import { of, throwError } from 'rxjs';
 
 import { CandidateLoginComponent } from './candidate-login.component';
 import { CandidateService } from '../candidate.service';
+import { UserService } from 'src/app/user/user.service';
+import { UserConfig, UserSettings, UserSettingsDetail } from 'src/app/user/user';
 
 describe('CandidateLoginComponent', () => {
   let component: CandidateLoginComponent;
   let candidateService: CandidateService;
+  let userService: UserService;
   let router: Router;
   let fixture: ComponentFixture<CandidateLoginComponent>;
   let debug: DebugElement;
@@ -48,6 +51,7 @@ describe('CandidateLoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CandidateLoginComponent);
     candidateService = TestBed.inject(CandidateService)
+    userService = TestBed.inject(UserService)
     router = TestBed.inject(Router)
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -175,11 +179,13 @@ describe('CandidateLoginComponent', () => {
     );
 
     let candidateSignUpSpy = spyOn(candidateService, 'login').and.returnValue(of({ success: true, data: {token: "asd"} }));
+    let userConfigSpy = spyOn(userService, 'getConfig').and.returnValue(of(new UserSettings(true, new UserConfig(new UserSettingsDetail("ES", "24h", "DD/MM/yyyy")))));
     let navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
 
     component.candidateLogin(component.candidateLoginForm.value);
 
     expect(candidateSignUpSpy).toHaveBeenCalledTimes(1);
+    expect(userConfigSpy).toHaveBeenCalledTimes(1);
     expect(navigateSpy).toHaveBeenCalledTimes(1);
   });
 

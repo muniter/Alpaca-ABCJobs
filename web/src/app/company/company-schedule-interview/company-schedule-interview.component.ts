@@ -5,11 +5,22 @@ import { CompanyPositionDetailComponent } from '../company-position-detail/compa
 import { CompanyService } from '../company.service';
 import { Position } from '../Position';
 import { ScheduleInterviewRequest } from '../vacancy';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { CUSTOM_DATE_FORMAT } from 'src/app/shared/Format';
 
 @Component({
   selector: 'app-company-schedule-interview',
   templateUrl: './company-schedule-interview.component.html',
-  styleUrls: ['./company-schedule-interview.component.css']
+  styleUrls: ['./company-schedule-interview.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT},
+  ]
 })
 export class CompanyScheduleInterviewComponent implements OnInit {
 
@@ -35,7 +46,7 @@ export class CompanyScheduleInterviewComponent implements OnInit {
   }
 
   scheduleInterview() {
-    let date: Date = this.scheduleInterviewForm.get('date')?.value;
+    let date: Date = new Date(this.scheduleInterviewForm.get('date')?.value);
     let hour: Date = this.scheduleInterviewForm.get('hour')?.value;
     let splitHour = hour.toString().split(':');
 

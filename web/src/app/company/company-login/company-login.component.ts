@@ -5,6 +5,7 @@ import { CompanyLoginRequest } from '../company';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { AppRoutesEnum } from 'src/app/core/enums';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-company-login',
@@ -15,7 +16,7 @@ export class CompanyLoginComponent implements OnInit {
 
   companyLoginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private companyService: CompanyService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private companyService: CompanyService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.companyLoginForm = this.formBuilder.group({
@@ -66,7 +67,18 @@ export class CompanyLoginComponent implements OnInit {
 
     this.companyService.companyLogin(loginData).subscribe({
       error: (exception) => this.setErrorBack(exception),
-      next: (response) => this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}/${response.data.token}`)
+      next: (response) => {
+        
+        this.userService
+        .getConfig(response.data.token)
+        .subscribe({
+          next: (userSettings) => {
+            localStorage.setItem('dateFormat', userSettings.data.config.dateFormat)
+          },
+        });
+
+        return this.router.navigateByUrl(`${AppRoutesEnum.company}/${AppRoutesEnum.companyHome}/${response.data.token}`);
+      }
     })
   }
 }

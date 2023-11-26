@@ -112,6 +112,7 @@ export class UserSettingsComponent implements OnInit {
           }, 3000);
         },
         complete: () => { 
+          localStorage.setItem('dateFormat', userSettings.dateFormat)
           this.setConfigSucess = true;
           setTimeout(() => {
             this.setConfigSucess = false;
