@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.databinding.FragmentShortlistedCandidateItemBinding
 import com.example.abc_jobs_alpaca.model.models.ShortlistedCandidateItem
+import org.json.JSONObject
 
 class ShortlistedCandidateItemRecyclerViewAdapter(
     private val values: List<ShortlistedCandidateItem>,
@@ -38,7 +39,15 @@ class ShortlistedCandidateItemRecyclerViewAdapter(
             else -> holder.resultView.setTextColor(Color.RED)
         }
         holder.nameView.text = item.fullName
-        holder.locationView.text = "${item.city}, ${item.country}"
+        if(item.city != JSONObject.NULL.toString() && item.country != JSONObject.NULL.toString())
+            holder.locationView.text = "${item.city}, ${item.country}"
+        else if(item.city !=JSONObject.NULL.toString())
+            holder.locationView.text = item.city
+        else if(item.country != JSONObject.NULL.toString())
+            holder.locationView.text = item.country
+        else
+            holder.locationView.text = ""
+
         holder.resultValueView.text = "${item.result.toString()} %"
 
         val buttonView = holder.buttonResultSet

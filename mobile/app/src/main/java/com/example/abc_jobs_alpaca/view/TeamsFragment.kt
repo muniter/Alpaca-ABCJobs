@@ -16,8 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.abc_jobs_alpaca.R
 import com.example.abc_jobs_alpaca.adapter.TeamRecyclerViewAdapter
 import com.example.abc_jobs_alpaca.model.repository.ABCJobsRepository
-import com.example.abc_jobs_alpaca.view.placeholder.PlaceholderContent
-import com.example.abc_jobs_alpaca.viewmodel.AcademicInfoViewModel
 import com.example.abc_jobs_alpaca.viewmodel.TeamListViewModel
 import kotlinx.coroutines.launch
 

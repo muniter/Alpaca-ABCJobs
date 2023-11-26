@@ -17,6 +17,7 @@ data class InterviewItem(
 )
 
 
+
 fun deserializeInterviews(json: JSONObject): InterviewsResponse {
     val success = json.optBoolean("success", false)
     val dataArray = json.optJSONArray("data")

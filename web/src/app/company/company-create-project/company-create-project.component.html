@@ -7,8 +7,11 @@
           subscriptSizing="dynamic">
           <input matInput id="name" class="form-control header-input" formControlName="name"
             placeholder="Nombre del proyecto" i18n-placeholder="@@projectnameplaceholder">
-          <mat-error *ngIf="projectCreateForm.get('name')!.invalid" i18n="@@nonemptyprojectname">
+          <mat-error *ngIf="projectCreateForm.get('name')!.invalid && !projectCreateForm.get('name')!.hasError('responseMessageError')" i18n="@@nonemptyprojectname">
             El nombre de proyecto no puede ser vacío
+          </mat-error>
+          <mat-error *ngIf="projectCreateForm.get('name')!.invalid && projectCreateForm.get('name')!.hasError('responseMessageError')" i18n="@@errorsavingprojectlabel">
+            Ocurrió un error al guardar. Es posible que ya exista un proyecto con este nombre.
           </mat-error>
         </mat-form-field>
       </div>

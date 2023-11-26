@@ -46,11 +46,13 @@ export class CompanyCreateProjectComponent implements OnInit {
 
     this.companyService.postProject(this.data.token, projectCreationRequest).subscribe({
       error: (error) => {
+        this.projectCreateForm.controls['name'].setErrors({ "responseMessageError": 'aaaaaaaaaaaa' });
         console.log("Error: " + error)
+      },
+      complete: () => {
+        this.dialogRef.close();
       }
     })
-
-    this.dialogRef.close();
   }
 
   onCancel() {

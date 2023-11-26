@@ -46,14 +46,14 @@
               {{ getErrorMessage('termsCheck') }}
             </mat-error>
           </mat-form-field>
-  
+
         </div>
 
         <app-abc-button type="submit" [disabled]="!companyRegisterForm.valid" class="inline-button" color="primary" i18n="@@register">REGISTRARSE</app-abc-button>
-
+        <p class="success" *ngIf="registerSucess" i18n="@@companyregistersuccess">Registro exitoso</p>
       </div>
     </form>
   </app-login-logon-container>
   <app-unlogged-lang-picker route="company/register"></app-unlogged-lang-picker>
-  
+
 </div>
