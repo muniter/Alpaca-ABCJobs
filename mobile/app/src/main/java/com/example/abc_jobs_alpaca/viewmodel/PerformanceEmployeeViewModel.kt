@@ -18,7 +18,7 @@ class PerformanceEmployeeViewModel (
     private val result: Int
 ): ViewModel() {
     var employeeItem: MutableLiveData<EmployeePerformance?> = MutableLiveData(null)
-    private val messageLiveData = MutableLiveData<MessageEvent>()
+    val messageLiveData = MutableLiveData<MessageEvent>()
     val isSaved = MutableLiveData(false)
 
     fun loadEmployeeData() {

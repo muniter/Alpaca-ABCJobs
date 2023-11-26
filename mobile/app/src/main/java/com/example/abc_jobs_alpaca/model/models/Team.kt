@@ -10,7 +10,7 @@ data class Team(
         val employees: List<Employee>
 )
 
-data class TeamsResponse(val success: Boolean, val data: List<Team>)
+data class TeamsResponse(val success: Boolean, val data: List<Team>?)
 
 fun deserializeTeams(response: JSONObject): TeamsResponse {
     val gson = Gson()
