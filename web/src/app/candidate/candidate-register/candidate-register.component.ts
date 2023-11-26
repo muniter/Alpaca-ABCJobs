@@ -144,9 +144,6 @@ export class CandidateRegisterComponent implements OnInit {
         next: (res) => this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateHome}/${res.data.token}`),
         complete: () => {
           this.registerSucess = true
-          setTimeout(() => {
-            this.router.navigateByUrl(`${AppRoutesEnum.candidate}/${AppRoutesEnum.candidateLogin}`)
-          }, 2000);
         }
       })
   }
